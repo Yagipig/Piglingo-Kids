@@ -1,7 +1,7 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
@@ -45,6 +45,70 @@ export default function PracticeScreen() {
             {pack.targetLanguage}
           </Text>
         </View>
+
+        <Text style={styles.gamesHeading} maxFontSizeMultiplier={1.3}>
+          🎮 Trò chơi
+        </Text>
+        {[
+          {
+            route: "/game-memory" as const,
+            emoji: "🧠",
+            title: "Ghép thẻ trí nhớ",
+            desc: "Lật thẻ và ghép chữ với nghĩa của chúng",
+            bg: colors.indigo,
+          },
+          {
+            route: "/game-listen" as const,
+            emoji: "🎧",
+            title: "Nghe và chọn",
+            desc: "Nghe phát âm rồi chọn nghĩa đúng, 10 câu mỗi ván",
+            bg: colors.rose,
+          },
+          {
+            route: "/game-scramble" as const,
+            emoji: "🧩",
+            title: "Xếp câu cho đúng",
+            desc: "Bấm các từ theo đúng thứ tự để ghép thành câu",
+            bg: colors.skyDark,
+          },
+          {
+            route: "/game-speed" as const,
+            emoji: "⚡",
+            title: "Đố nhanh 60 giây",
+            desc: "Trả lời đúng càng nhiều càng tốt trong 60 giây",
+            bg: colors.amber,
+          },
+          {
+            route: "/game-letters" as const,
+            emoji: "🔤",
+            title: "Đoán chữ bí mật",
+            desc: "Nhìn hình và nghĩa, đoán từng chữ cái của từ",
+            bg: colors.green,
+          },
+        ].map((game) => (
+          <Pressable
+            key={game.route}
+            onPress={() => router.push(game.route)}
+            accessibilityRole="button"
+            accessibilityLabel={`Chơi game ${game.title}`}
+            style={({ pressed }) => [
+              styles.gameCard,
+              { backgroundColor: game.bg },
+              pressed && { opacity: 0.85 },
+            ]}
+          >
+            <Text style={styles.gameEmoji}>{game.emoji}</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.gameTitle} maxFontSizeMultiplier={1.3}>
+                {game.title}
+              </Text>
+              <Text style={styles.gameDesc} maxFontSizeMultiplier={1.3}>
+                {game.desc}
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={22} color={colors.white} />
+          </Pressable>
+        ))}
 
         <View style={styles.card}>
           <View style={styles.cardHeader}>
@@ -213,6 +277,19 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   body: { padding: 20, gap: 16, paddingBottom: 60 },
   heading: { fontSize: 26, fontWeight: "800", color: colors.neutral700 },
+  gamesHeading: { fontSize: 20, fontWeight: "800", color: colors.neutral700, marginTop: 2 },
+  gameCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    borderRadius: radius.xl,
+    padding: 18,
+  },
+  gameCardIndigo: { backgroundColor: colors.indigo },
+  gameCardRose: { backgroundColor: colors.rose },
+  gameEmoji: { fontSize: 36 },
+  gameTitle: { fontSize: 18, fontWeight: "800", color: colors.white },
+  gameDesc: { fontSize: 13, color: colors.white, opacity: 0.9 },
   courseRow: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: -8 },
   courseLabel: { fontSize: 14, fontWeight: "700", color: colors.textMuted },
   cardHeader: { flexDirection: "row", alignItems: "center", gap: 8 },

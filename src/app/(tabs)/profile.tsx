@@ -1,19 +1,23 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Image } from "expo-image";
-import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { DuoButton } from "@/components/duo-button";
 import { Flag } from "@/components/flag";
+import { useAuth } from "@/features/supabase/AuthContext";
 import { useCourseContent } from "@/lib/content";
 import {
   currentStreak,
   dailyXpToday,
   lastSevenDays,
+  LEARNER_LEVELS,
   useProgress,
   type ThemePreference,
 } from "@/lib/store";
+import { isAllUnlocked, isValidUnlockCode } from "@/lib/unlock";
 import { makeThemedStyles, radius, useResolvedScheme, useThemeColors } from "@/lib/theme";
 
 const THEME_OPTIONS: { value: ThemePreference; label: string; icon: string }[] = [
@@ -28,6 +32,21 @@ export default function ProfileScreen() {
   const styles = useStyles();
   const progress = useProgress();
   const { themePreference, setThemePreference } = progress;
+  const { learnerLevel, setLearnerLevel, unlockAll } = progress;
+  const { user } = useAuth();
+  const unlockedAll = isAllUnlocked(progress, user?.email);
+  const [unlockCode, setUnlockCode] = useState("");
+  const [unlockMessage, setUnlockMessage] = useState<string | null>(null);
+
+  const submitUnlockCode = () => {
+    if (isValidUnlockCode(unlockCode)) {
+      unlockAll();
+      setUnlockCode("");
+      setUnlockMessage("Đã mở khóa toàn bộ bài học 🎉");
+    } else {
+      setUnlockMessage("Mã chưa đúng, em nhờ ba/mẹ kiểm tra lại nhé.");
+    }
+  };
   const { activeCourseId, dailyGoal } = progress;
   const courseProgress = progress.course();
   const { pack, allLessons, allWords } = useCourseContent(activeCourseId);
@@ -173,6 +192,85 @@ export default function ProfileScreen() {
               </Text>
             </View>
           ))}
+        </View>
+
+        <View style={styles.settingsCard}>
+          <View style={styles.settingsHeader}>
+            <Ionicons name="lock-open-outline" size={22} color={colors.amber} />
+            <Text style={styles.settingsTitle} maxFontSizeMultiplier={1.3}>
+              Mã mở khóa bài học
+            </Text>
+          </View>
+          {unlockedAll ? (
+            <Text style={styles.unlockDone} maxFontSizeMultiplier={1.3}>
+              Đã mở khóa toàn bộ 🎉
+            </Text>
+          ) : (
+            <>
+              <Text style={styles.settingsHint} maxFontSizeMultiplier={1.3}>
+                Có mã mở khóa thì nhập vào đây để mở toàn bộ bài học, không cần
+                học lần lượt từng bài.
+              </Text>
+              <TextInput
+                value={unlockCode}
+                onChangeText={(t) => {
+                  setUnlockCode(t);
+                  setUnlockMessage(null);
+                }}
+                placeholder="Nhập mã mở khóa"
+                autoCapitalize="characters"
+                autoCorrect={false}
+                accessibilityLabel="Ô nhập mã mở khóa bài học"
+                style={styles.unlockInput}
+              />
+              <DuoButton label="Mở khóa" onPress={submitUnlockCode} />
+              {unlockMessage ? (
+                <Text style={styles.unlockMessage} maxFontSizeMultiplier={1.3}>
+                  {unlockMessage}
+                </Text>
+              ) : null}
+            </>
+          )}
+        </View>
+
+        <View style={styles.settingsCard}>
+          <View style={styles.settingsHeader}>
+            <Ionicons name="school-outline" size={22} color={colors.skyDark} />
+            <Text style={styles.settingsTitle} maxFontSizeMultiplier={1.3}>
+              Cấp độ của em
+            </Text>
+          </View>
+          <View style={styles.levelList}>
+            {LEARNER_LEVELS.map((l) => {
+              const active = learnerLevel === l.value;
+              return (
+                <Pressable
+                  key={l.value}
+                  onPress={() => setLearnerLevel(l.value)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${l.label}. ${l.hint}`}
+                  accessibilityState={{ selected: active }}
+                  style={[styles.levelCard, active && styles.levelCardActive]}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={[styles.levelName, active && { color: activeGreen }]}
+                      maxFontSizeMultiplier={1.3}
+                    >
+                      {l.label}
+                    </Text>
+                    <Text style={styles.levelHint} maxFontSizeMultiplier={1.3}>
+                      {l.hint}
+                    </Text>
+                  </View>
+                  <Text style={styles.levelCheck}>{active ? "✅" : "⚪"}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          <Text style={styles.settingsHint} maxFontSizeMultiplier={1.3}>
+            Màn hình học sẽ gợi ý bài phù hợp với cấp độ này.
+          </Text>
         </View>
 
         <View style={styles.settingsCard}>
@@ -324,6 +422,36 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   themeLabel: { fontSize: 13, fontWeight: "700", color: colors.textMuted },
   themeLabelActive: { color: colors.greenDark },
   settingsHint: { fontSize: 12, color: colors.textMuted },
+  unlockDone: { fontSize: 16, fontWeight: "800", color: colors.correctText },
+  unlockInput: {
+    borderWidth: 2,
+    borderColor: colors.neutral200,
+    borderRadius: radius.lg,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 16,
+    fontWeight: "700",
+    color: colors.text,
+    backgroundColor: colors.surface,
+  },
+  unlockMessage: { fontSize: 13, color: colors.textMuted },
+  levelList: { gap: 10 },
+  levelCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderWidth: 2,
+    borderColor: colors.neutral200,
+    borderRadius: radius.lg,
+    padding: 12,
+  },
+  levelCardActive: {
+    borderColor: colors.green,
+    backgroundColor: colors.greenLight + "22",
+  },
+  levelName: { fontSize: 15, fontWeight: "800", color: colors.neutral700 },
+  levelHint: { fontSize: 12, color: colors.textMuted },
+  levelCheck: { fontSize: 18 },
   linkLabel: { flex: 1, fontSize: 16, fontWeight: "800", color: colors.neutral700 },
   linkRow: {
     flexDirection: "row",
