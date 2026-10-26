@@ -7,7 +7,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { DuoButton } from "@/components/duo-button";
 import { Flag } from "@/components/flag";
 import { catalog, orderedCourses } from "@/lib/content";
-import { DAILY_GOAL_OPTIONS, DEFAULT_COURSE, useProgress } from "@/lib/store";
+import {
+  DAILY_GOAL_OPTIONS,
+  DEFAULT_COURSE,
+  LEARNER_LEVELS,
+  useProgress,
+  type LearnerLevel,
+} from "@/lib/store";
 import { makeThemedStyles, radius, useResolvedScheme, useThemeColors } from "@/lib/theme";
 
 export default function OnboardingScreen() {
@@ -15,6 +21,8 @@ export default function OnboardingScreen() {
   const scheme = useResolvedScheme();
   const styles = useStyles();
   const finishOnboarding = useProgress((s) => s.finishOnboarding);
+  const setLearnerLevel = useProgress((s) => s.setLearnerLevel);
+  const [level, setLevel] = useState<LearnerLevel>("moi");
   const [courseId, setCourseId] = useState(
     catalog.courses.some((c) => c.id === DEFAULT_COURSE)
       ? DEFAULT_COURSE
@@ -71,6 +79,35 @@ export default function OnboardingScreen() {
         </View>
 
         <Text style={styles.sectionLabel} maxFontSizeMultiplier={1.3}>
+          Em đang ở cấp độ nào?
+        </Text>
+        <View style={styles.levelList}>
+          {LEARNER_LEVELS.map((l) => (
+            <Pressable
+              key={l.value}
+              onPress={() => setLevel(l.value)}
+              accessibilityRole="button"
+              accessibilityLabel={`${l.label}. ${l.hint}`}
+              accessibilityState={{ selected: level === l.value }}
+              style={[styles.levelCard, level === l.value && styles.levelCardActive]}
+            >
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={[styles.levelName, level === l.value && { color: activeGreen }]}
+                  maxFontSizeMultiplier={1.3}
+                >
+                  {l.label}
+                </Text>
+                <Text style={styles.levelHint} maxFontSizeMultiplier={1.3}>
+                  {l.hint}
+                </Text>
+              </View>
+              <Text style={styles.levelCheck}>{level === l.value ? "✅" : "⚪"}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <Text style={styles.sectionLabel} maxFontSizeMultiplier={1.3}>
           Mục tiêu XP mỗi ngày
         </Text>
         <View style={styles.goals}>
@@ -102,6 +139,7 @@ export default function OnboardingScreen() {
         <DuoButton
           label={selected ? `Học ${selected.targetLanguage}` : "Bắt đầu học"}
           onPress={() => {
+            setLearnerLevel(level);
             finishOnboarding(courseId, goal);
             router.replace("/(tabs)");
           }}
@@ -145,6 +183,23 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     borderColor: colors.green,
     backgroundColor: colors.greenLight + "22",
   },
+  levelList: { gap: 10 },
+  levelCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderWidth: 2,
+    borderColor: colors.neutral200,
+    borderRadius: radius.lg,
+    padding: 14,
+  },
+  levelCardActive: {
+    borderColor: colors.green,
+    backgroundColor: colors.greenLight + "22",
+  },
+  levelName: { fontSize: 16, fontWeight: "800", color: colors.neutral700 },
+  levelHint: { fontSize: 12, color: colors.textMuted },
+  levelCheck: { fontSize: 20 },
   langName: { fontSize: 17, fontWeight: "800", color: colors.neutral700 },
   langNameActive: { color: colors.greenDark },
   langMeta: { fontSize: 11, color: colors.textMuted },
