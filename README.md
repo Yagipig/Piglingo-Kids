@@ -4,7 +4,7 @@ App học tiếng Anh, tiếng Nhật và tiếng Trung cho bé từ 7 tuổi (g
 
 Tiến độ (XP, chuỗi ngày, bài đã học, ôn tập SRS) **dùng chung** giữa 3 ngôn ngữ và được lưu trên máy, không mất khi tắt app.
 
-## Trạng thái (Bước 0 + Bước 1)
+## Trạng thái (Bước 0 + Bước 1 + Bước 2 đã tích hợp)
 
 | Hạng mục | Trạng thái |
 |---|---|
@@ -12,7 +12,11 @@ Tiến độ (XP, chuỗi ngày, bài đã học, ôn tập SRS) **dùng chung**
 | APK Android | Chưa build được trong môi trường phát triển; workflow GitHub Actions có sẵn (xem dưới) |
 | 3 khóa học mẫu | en-vi (6 chủ đề, 24 bài), ja-vi (6, 19), zh-vi (5, 19) |
 | Lưu tiến độ local | Có (zustand + AsyncStorage) |
-| Ghi âm / chấm phát âm, khu vực phụ huynh, tài khoản Supabase | **Chưa làm** (Bước 2) |
+| Ghi âm / chấm phát âm | **Đã tích hợp (Bước 2):** route `/speaking` lấy câu mẫu từ khóa đang học, ghi âm bằng `expo-audio`, nghe mẫu bằng `expo-speech`, chấm phát âm **mô phỏng** (offline) qua `MockPronunciationProvider` — thay provider thật về sau, xem `docs/STEP2-INTEGRATION.md` |
+| Khu vực phụ huynh | **Đã tích hợp (Bước 2):** route `/parents`, cổng phép tính cho người lớn, dashboard đọc tiến độ thật từ store (adapter `src/lib/parentProgress.ts`), giới hạn thời gian dùng app — chỉ áp dụng sau khi phụ huynh đã tự đặt giới hạn |
+| Tài khoản Supabase | **Đã tích hợp, tùy chọn (Bước 2):** route `/account`, đăng nhập email + đồng bộ tiến độ; chỉ bật khi có file `.env` với `EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` (mẫu ở `src/features/supabase/.env.example`, schema ở `src/features/supabase/schema.sql`). Không có `.env` thì app chạy local như cũ |
+
+`package-lock.json` đã được cập nhật sau khi cài thêm 2 dependency của Bước 2 (`@supabase/supabase-js`, `react-native-url-polyfill`) bằng `npm install --legacy-peer-deps`.
 
 ## Chạy thử
 
