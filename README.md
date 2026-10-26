@@ -10,7 +10,12 @@ Tiến độ (XP, chuỗi ngày, bài đã học, ôn tập SRS) **dùng chung**
 |---|---|
 | Web (`expo export --platform web`) | Đã build và test trên trình duyệt headless |
 | APK Android | Chưa build được trong môi trường phát triển; workflow GitHub Actions có sẵn (xem dưới) |
-| 3 khóa học mẫu | en-vi (6 chủ đề, 24 bài), ja-vi (6, 19), zh-vi (5, 19) |
+| 3 khóa học mẫu | en-vi (11 chủ đề, 44 bài), ja-vi (11, 39), zh-vi (10, 39) |
+| Giao diện học | **Khu vườn của bé**: mỗi chủ đề là một luống hoa — học xong bài nào hoa nở bài đó; có nhạc nền du dương bật/tắt ở đầu màn hình học |
+| Mở khóa bài học | Mặc định học lần lượt; nhập **mã mở khóa** ở tab Hồ sơ (hoặc đăng nhập bằng tài khoản admin) để mở toàn bộ — xem mục "Mã mở khóa & cấp độ" |
+| Cấp độ người học | 3 cấp độ tự chọn: Mới bắt đầu / Đã biết cơ bản / Chuyên nghiệp — màn hình học gợi ý bài theo cấp độ |
+| Trò chơi | 5 game trong tab Luyện tập: **Ghép thẻ trí nhớ** (`/game-memory`), **Nghe và chọn** (`/game-listen`), **Xếp câu cho đúng** (`/game-scramble`), **Đố nhanh 60 giây** (`/game-speed`, có lưu kỷ lục), **Đoán chữ bí mật** (`/game-letters`) — chơi thắng được thưởng XP |
+| Web PWA | Có manifest + service worker, triển khai tự động lên GitHub Pages (workflow `web-pages.yml`) — xem mục "Chạy trên web (PWA)" |
 | Lưu tiến độ local | Có (zustand + AsyncStorage) |
 | Ghi âm / chấm phát âm | **Đã tích hợp (Bước 2):** route `/speaking` lấy câu mẫu từ khóa đang học, ghi âm bằng `expo-audio`, nghe mẫu bằng `expo-speech`, chấm phát âm **mô phỏng** (offline) qua `MockPronunciationProvider` — thay provider thật về sau, xem `docs/STEP2-INTEGRATION.md` |
 | Khu vực phụ huynh | **Đã tích hợp (Bước 2):** route `/parents`, cổng phép tính cho người lớn, dashboard đọc tiến độ thật từ store (adapter `src/lib/parentProgress.ts`), giới hạn thời gian dùng app — chỉ áp dụng sau khi phụ huynh đã tự đặt giới hạn |
@@ -27,7 +32,30 @@ npx expo export --platform web   # build web tĩnh vào dist/
 npx tsc --noEmit                 # kiểm tra kiểu
 ```
 
-Bản web xuất ra là SPA (`web.output = single`): máy chủ cần trả `index.html` cho mọi đường dẫn.
+Bản web xuất ra dạng tĩnh (`web.output = static`, có `src/app/+html.tsx` tùy biến thẻ PWA): mỗi route có sẵn file HTML riêng trong `dist/`, triển khai thẳng lên GitHub Pages.
+
+## Chạy trên web (PWA)
+
+Hướng đi hiện tại là **làm trên web trước**: bản web được triển khai tự động lên GitHub Pages mỗi khi đẩy code lên nhánh `main` (workflow `.github/workflows/web-pages.yml`), chạy tại:
+
+**https://yagipig.github.io/Piglingo-Kids/**
+
+(Đường dẫn con `/Piglingo-Kids` khớp `experiments.baseUrl` trong `app.json`; chỉ ảnh hưởng bản web.)
+
+Bản web là PWA: có `public/manifest.json` và service worker `public/sw.js` (cache tài nguyên tĩnh để mở nhanh/chạy offline phần đã tải). Cài lên màn hình chính điện thoại Android như một app, **chưa cần build APK**:
+
+1. Mở Chrome trên điện thoại, vào https://yagipig.github.io/Piglingo-Kids/
+2. Bấm menu **⋮** ở góc phải → **Cài đặt ứng dụng** (hoặc **Thêm vào màn hình chính**).
+3. Bấm **Cài đặt** — biểu tượng Piglingo 🐷 sẽ xuất hiện trên màn hình chính, mở lên là chạy toàn màn hình như app thật.
+
+Build APK Android **tạm hoãn** tới khi bản web ổn định (workflow APK vẫn giữ trong repo, xem mục Build APK bên dưới).
+
+## Mã mở khóa & cấp độ
+
+- **Mã mở khóa toàn bộ bài học: `HEOVIP95`** — nhập ở tab **Hồ sơ → Mã mở khóa bài học**. Ai có mã này đều mở được toàn bộ bài học trên máy của mình (không cần học lần lượt). Khai báo mã ở `src/lib/unlock.ts` (đổi mã thì sửa hằng `UNLOCK_CODE` rồi build lại).
+- **Tài khoản admin:** danh sách `ADMIN_EMAILS` trong `src/lib/unlock.ts` đang có sẵn `tuyenjp23@gmail.com` — đăng nhập Supabase bằng email này là tự mở khóa toàn bộ, không cần nhập mã. Thêm admin khác bằng cách thêm email vào danh sách rồi build lại.
+- **Cấp độ người học:** chọn khi onboarding hoặc đổi bất cứ lúc nào ở tab Hồ sơ, gồm 3 mức: **Mới bắt đầu** (🌱), **Đã biết cơ bản** (🚀), **Chuyên nghiệp** (🏆). Bài học được phân tầng độ khó theo vị trí trong khóa (Cơ bản / Nâng cao / Chuyên sâu) và màn hình học hiển thị mục "Gợi ý theo cấp độ của bé" để nhảy nhanh tới bài phù hợp.
+- **Nhạc nền khu vườn:** bản nhạc du dương tự tổng hợp (`assets/sfx/ambient-garden.mp3`, sinh bởi `scripts/make-ambient-music.py`, vòng lặp 48 giây, nghe lặp liền mạch). Bật/tắt bằng nút 🔊/🔇 ở đầu màn hình học; mặc định tắt và chỉ phát sau khi người dùng bật — đúng chính sách autoplay của trình duyệt web.
 
 ## Supabase (đã tạo project thật)
 
