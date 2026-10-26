@@ -13,6 +13,19 @@ export const DEFAULT_COURSE = "en-vi";
 const DAY_HISTORY_LIMIT = 70;
 
 export type ThemePreference = "system" | "light" | "dark";
+
+/** Cấp độ người học, do bé/phụ huynh tự chọn ở onboarding hoặc tab Hồ sơ. */
+export type LearnerLevel = "moi" | "da-biet" | "chuyen-nghiep";
+
+export const LEARNER_LEVELS: { value: LearnerLevel; label: string; hint: string }[] = [
+  { value: "moi", label: "Mới bắt đầu", hint: "Chưa biết gì, học từ đầu 🌱" },
+  { value: "da-biet", label: "Đã biết cơ bản", hint: "Đã biết một ít, học tiếp 🚀" },
+  { value: "chuyen-nghiep", label: "Chuyên nghiệp", hint: "Đã giỏi, muốn thử thách 🏆" },
+];
+
+export function learnerLevelLabel(level: LearnerLevel): string {
+  return LEARNER_LEVELS.find((l) => l.value === level)?.label ?? "Mới bắt đầu";
+}
 export type WordStat = { correct: number; wrong: number; lastSeen: number };
 export type MistakeRef = { lessonId: string; exerciseId: string };
 export type DayActivity = { xp: number; lessons: number; perfect: number };
@@ -55,6 +68,14 @@ type ProgressState = {
   dailyXp: number;
   dailyXpDay: string | null;
   onboardingDone: boolean;
+  /** Đã nhập đúng mã mở khóa: toàn bộ bài học được mở (xem lib/unlock.ts). */
+  allUnlocked: boolean;
+  /** Cấp độ người học tự chọn: "moi" | "da-biet" | "chuyen-nghiep". */
+  learnerLevel: LearnerLevel;
+  /** Nhạc nền khu vườn đang bật hay tắt (mặc định tắt). */
+  musicOn: boolean;
+  /** Kỷ lục game "Đố nhanh 60 giây": số câu đúng cao nhất trong một ván. */
+  speedBest: number;
   /** "system" follows the device's light/dark setting. */
   themePreference: ThemePreference;
   courses: Record<string, CourseProgress>;
@@ -70,6 +91,14 @@ type ProgressState = {
   setActiveCourse: (courseId: string) => void;
   setThemePreference: (preference: ThemePreference) => void;
   finishOnboarding: (courseId: string, goal: number) => void;
+  /** Mở khóa toàn bộ bài học (sau khi nhập đúng mã mở khóa). */
+  unlockAll: () => void;
+  setLearnerLevel: (level: LearnerLevel) => void;
+  /** Cộng XP thưởng (game, hoạt động phụ) vào khóa hiện tại + XP ngày. */
+  addBonusXp: (amount: number) => void;
+  setMusicOn: (on: boolean) => void;
+  /** Ghi nhận điểm game Đố nhanh; chỉ giữ lại kỷ lục cao nhất. */
+  recordSpeedScore: (score: number) => void;
 };
 
 function bumpDailyXp(state: ProgressState, amount: number) {
@@ -106,6 +135,10 @@ export const useProgress = create<ProgressState>()(
       dailyXp: 0,
       dailyXpDay: null,
       onboardingDone: false,
+      allUnlocked: false,
+      learnerLevel: "moi",
+      musicOn: false,
+      speedBest: 0,
       themePreference: "system",
       courses: {},
       activeDays: {},
@@ -207,6 +240,33 @@ export const useProgress = create<ProgressState>()(
 
       finishOnboarding: (courseId, goal) =>
         set({ activeCourseId: courseId, dailyGoal: goal, onboardingDone: true }),
+
+      unlockAll: () => set({ allUnlocked: true }),
+
+      setMusicOn: (on) => set({ musicOn: on }),
+
+      recordSpeedScore: (score) =>
+        set((state) => ({ speedBest: Math.max(state.speedBest ?? 0, score) })),
+
+      setLearnerLevel: (level) => set({ learnerLevel: level }),
+
+      addBonusXp: (amount) =>
+        set((state) => {
+          if (!amount) return state;
+          const today = dayString(new Date());
+          const daily = bumpDailyXp(state, amount);
+          const days = state.activeDays ?? {};
+          const prevDay = days[today] ?? { xp: 0, lessons: 0, perfect: 0 };
+          const activeDays = pruneDays({
+            ...days,
+            [today]: { ...prevDay, xp: prevDay.xp + amount },
+          });
+          const courseUpdate = updateCourse(state, state.activeCourseId, (c) => ({
+            ...c,
+            xp: c.xp + amount,
+          }));
+          return { activeDays, ...daily, ...courseUpdate };
+        }),
     }),
     {
       name: "progress-v2",
@@ -236,6 +296,10 @@ export const useProgress = create<ProgressState>()(
           dailyXp: old.dailyXp ?? 0,
           dailyXpDay: old.dailyXpDay ?? null,
           onboardingDone: old.onboardingDone ?? false,
+          allUnlocked: (old.allUnlocked as boolean) ?? false,
+          learnerLevel: (old.learnerLevel as LearnerLevel) ?? "moi",
+          musicOn: (old.musicOn as boolean) ?? false,
+          speedBest: (old.speedBest as number) ?? 0,
           themePreference: (old.themePreference as ThemePreference) ?? "system",
           activeDays: (old.activeDays as Record<string, DayActivity>) ?? {},
           courses: {

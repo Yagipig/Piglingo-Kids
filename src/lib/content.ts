@@ -71,6 +71,38 @@ function getCourseCache(courseId: string): CourseCacheEntry {
   return cached;
 }
 
+/** Tầng độ khó của bài học, suy từ vị trí toàn cục trong khóa. */
+export type DifficultyTier = "co-ban" | "nang-cao" | "chuyen-sau";
+
+export const DIFFICULTY_LABELS: Record<DifficultyTier, string> = {
+  "co-ban": "Cơ bản",
+  "nang-cao": "Nâng cao",
+  "chuyen-sau": "Chuyên sâu",
+};
+
+/**
+ * Phân tầng theo vị trí toàn cục của bài trong toàn khóa:
+ * <40% số bài = Cơ bản, <75% = Nâng cao, còn lại = Chuyên sâu.
+ */
+export function difficultyForIndex(globalIndex: number, total: number): DifficultyTier {
+  if (total <= 0) return "co-ban";
+  const ratio = globalIndex / total;
+  if (ratio < 0.4) return "co-ban";
+  if (ratio < 0.75) return "nang-cao";
+  return "chuyen-sau";
+}
+
+export function difficultyLabel(globalIndex: number, total: number): string {
+  return DIFFICULTY_LABELS[difficultyForIndex(globalIndex, total)];
+}
+
+/** Cấp độ người học nên bắt đầu ở tầng độ khó nào. */
+export function tierForLearnerLevel(level: "moi" | "da-biet" | "chuyen-nghiep"): DifficultyTier {
+  if (level === "da-biet") return "nang-cao";
+  if (level === "chuyen-nghiep") return "chuyen-sau";
+  return "co-ban";
+}
+
 export function useCourseContent(courseId: string) {
   const cached = getCourseCache(courseId);
   return {
