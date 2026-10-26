@@ -1,0 +1,473 @@
+// Piglingo Kids — content generator (original content, authored for this project).
+// Run: node scripts/build-content.mjs
+// Writes src/content/packs/{en-vi,ja-vi,zh-vi}.json, packs/index.ts and catalog.json.
+import { writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const OUT = join(ROOT, "src/content/packs");
+
+// ---------- helpers ----------
+function rng(seedStr) {
+  let h = 2166136261;
+  for (const c of seedStr) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return () => {
+    h ^= h << 13; h ^= h >>> 17; h ^= h << 5;
+    return ((h >>> 0) % 100000) / 100000;
+  };
+}
+function shuffle(arr, seed) {
+  const r = rng(seed);
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(r() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+const W = (target, native, emoji, romanization) =>
+  romanization ? { target, native, emoji, romanization } : { target, native, emoji };
+
+// ---------- course data ----------
+// sentence: t = target tokens, n = native tokens, r = romanization line (optional),
+// blank = target token to blank out, dT/dN = distractor tokens.
+const COURSES = [
+  {
+    id: "en-vi",
+    targetLanguage: "Tiếng Anh",
+    targetCode: "en",
+    flag: "🇺🇸",
+    sectionTitle: "Phần 1: Bắt đầu",
+    kana: false,
+    joiner: " ",
+    listenTyping: true,
+    units: [
+      {
+        title: "Con vật",
+        description: "Gọi tên các con vật quen thuộc bằng tiếng Anh.",
+        guidebook:
+          "Chào mừng đến với tiếng Anh! 🇺🇸\n\n**Các con vật**\n- dog = con chó, cat = con mèo, bird = con chim.\n- Hãy bấm vào loa 🔊 để nghe phát âm và đọc theo thật to nhé!\n\n**Mẹo nhỏ**\nTrong tiếng Anh, trước tên con vật ta hay thêm *a* hoặc *the*: a dog (một con chó).",
+        words: [
+          W("dog", "chó", "🐶"), W("cat", "mèo", "🐱"), W("bird", "chim", "🐦"), W("fish", "cá", "🐟"),
+          W("rabbit", "thỏ", "🐰"), W("horse", "ngựa", "🐴"), W("cow", "bò", "🐮"), W("duck", "vịt", "🦆"),
+        ],
+        sentences: [
+          { t: ["I", "see", "a", "cat"], n: ["Tôi", "thấy", "một", "con", "mèo"], blank: "cat", dT: ["dog", "run"], dN: ["chó", "ăn"] },
+          { t: ["The", "bird", "can", "fly"], n: ["Con", "chim", "biết", "bay"], blank: "bird", dT: ["swim", "fish"], dN: ["bơi", "cá"] },
+          { t: ["The", "horse", "is", "big"], n: ["Con", "ngựa", "to"], blank: "horse", dT: ["small", "a"], dN: ["nhỏ", "chó"] },
+          { t: ["A", "duck", "can", "swim"], n: ["Một", "con", "vịt", "biết", "bơi"], blank: "duck", dT: ["fly", "bird"], dN: ["bay", "chim"] },
+        ],
+      },
+      {
+        title: "Màu sắc",
+        description: "Học tên các màu bằng tiếng Anh.",
+        guidebook:
+          "Thế giới đầy màu sắc! 🌈\n\n**Các màu**\n- red = đỏ, blue = xanh dương, green = xanh lá, yellow = vàng.\n- black = đen, white = trắng, orange = cam, purple = tím.\n\n**Mẹo nhỏ**\nTrong tiếng Anh, từ chỉ màu đứng *trước* danh từ: a red apple (một quả táo đỏ).",
+        words: [
+          W("red", "đỏ", "🔴"), W("blue", "xanh dương", "🔵"), W("green", "xanh lá", "🟢"), W("yellow", "vàng", "🟡"),
+          W("black", "đen", "⚫"), W("white", "trắng", "⚪"), W("orange", "cam", "🟠"), W("purple", "tím", "🟣"),
+        ],
+        sentences: [
+          { t: ["The", "apple", "is", "red"], n: ["Quả", "táo", "màu", "đỏ"], blank: "red", dT: ["blue", "an"], dN: ["đen", "vàng"] },
+          { t: ["The", "sky", "is", "blue"], n: ["Bầu", "trời", "màu", "xanh", "dương"], blank: "blue", dT: ["red", "cat"], dN: ["đỏ", "cam"] },
+          { t: ["The", "banana", "is", "yellow"], n: ["Quả", "chuối", "màu", "vàng"], blank: "yellow", dT: ["purple", "are"], dN: ["tím", "nước"] },
+          { t: ["I", "like", "green"], n: ["Tôi", "thích", "màu", "xanh", "lá"], blank: "green", dT: ["see", "red"], dN: ["ghét", "đỏ"] },
+        ],
+      },
+      {
+        title: "Gia đình",
+        description: "Nói về những người thân yêu của em.",
+        guidebook:
+          "Gia đình của em 👨‍👩‍👧‍👦\n\n**Người thân**\n- mom = mẹ, dad = bố, brother = anh/em trai, sister = chị/em gái.\n- grandma = bà, grandpa = ông, baby = em bé, friend = bạn.\n\n**Mẹo nhỏ**\n*my* nghĩa là \"của tôi\": my mom = mẹ của tôi.",
+        words: [
+          W("mom", "mẹ", "👩"), W("dad", "bố", "👨"), W("brother", "anh/em trai", "👦"), W("sister", "chị/em gái", "👧"),
+          W("grandma", "bà", "👵"), W("grandpa", "ông", "👴"), W("baby", "em bé", "👶"), W("friend", "bạn", "🧑‍🤝‍🧑"),
+        ],
+        sentences: [
+          { t: ["This", "is", "my", "mom"], n: ["Đây", "là", "mẹ", "của", "tôi"], blank: "mom", dT: ["dad", "your"], dN: ["bố", "bạn"] },
+          { t: ["I", "love", "my", "grandma"], n: ["Tôi", "yêu", "bà", "của", "tôi"], blank: "grandma", dT: ["grandpa", "hate"], dN: ["ông", "em"] },
+          { t: ["My", "brother", "is", "tall"], n: ["Anh", "trai", "tôi", "cao"], blank: "brother", dT: ["short", "sister"], dN: ["thấp", "chị"] },
+          { t: ["The", "baby", "is", "very", "small"], n: ["Em", "bé", "rất", "nhỏ"], blank: "baby", dT: ["big", "are"], dN: ["to", "bố"] },
+        ],
+      },
+      {
+        title: "Đồ ăn",
+        description: "Gọi tên các món ăn và đồ uống.",
+        guidebook:
+          "Đói bụng rồi! 🍽️\n\n**Đồ ăn, đồ uống**\n- apple = táo, banana = chuối, bread = bánh mì, milk = sữa.\n- egg = trứng, rice = cơm, cake = bánh ngọt, water = nước.\n\n**Mẹo nhỏ**\n*eat* = ăn, *drink* = uống: I eat rice. I drink milk.",
+        words: [
+          W("apple", "táo", "🍎"), W("banana", "chuối", "🍌"), W("bread", "bánh mì", "🍞"), W("milk", "sữa", "🥛"),
+          W("egg", "trứng", "🥚"), W("rice", "cơm", "🍚"), W("cake", "bánh ngọt", "🍰"), W("water", "nước", "💧"),
+        ],
+        sentences: [
+          { t: ["I", "eat", "an", "apple"], n: ["Tôi", "ăn", "một", "quả", "táo"], blank: "apple", dT: ["drink", "a"], dN: ["uống", "chuối"] },
+          { t: ["I", "drink", "milk"], n: ["Tôi", "uống", "sữa"], blank: "milk", dT: ["eat", "an"], dN: ["ăn", "nước"] },
+          { t: ["She", "eats", "bread"], n: ["Cô", "ấy", "ăn", "bánh", "mì"], blank: "bread", dT: ["drinks", "eat"], dN: ["uống", "anh"] },
+          { t: ["We", "eat", "rice"], n: ["Chúng", "ta", "ăn", "cơm"], blank: "rice", dT: ["drink", "eggs"], dN: ["uống", "trứng"] },
+        ],
+      },
+      {
+        title: "Con số",
+        description: "Đếm từ một đến tám.",
+        guidebook:
+          "Cùng đếm nào! 🔢\n\n**Các số**\n- one = 1, two = 2, three = 3, four = 4.\n- five = 5, six = 6, seven = 7, eight = 8.\n\n**Mẹo nhỏ**\nĐếm to: one, two, three! Rồi đếm đồ vật xung quanh em.",
+        words: [
+          W("one", "một", "1️⃣"), W("two", "hai", "2️⃣"), W("three", "ba", "3️⃣"), W("four", "bốn", "4️⃣"),
+          W("five", "năm", "5️⃣"), W("six", "sáu", "6️⃣"), W("seven", "bảy", "7️⃣"), W("eight", "tám", "8️⃣"),
+        ],
+        sentences: [
+          { t: ["I", "have", "one", "book"], n: ["Tôi", "có", "một", "quyển", "sách"], blank: "one", dT: ["two", "has"], dN: ["hai", "chó"] },
+          { t: ["I", "have", "two", "eyes"], n: ["Tôi", "có", "hai", "mắt"], blank: "two", dT: ["three", "ears"], dN: ["ba", "tai"] },
+          { t: ["There", "are", "three", "cats"], n: ["Có", "ba", "con", "mèo"], blank: "three", dT: ["four", "dogs"], dN: ["bốn", "chó"] },
+          { t: ["I", "am", "five", "years", "old"], n: ["Tôi", "năm", "tuổi"], blank: "five", dT: ["six", "are"], dN: ["sáu", "bảy"] },
+        ],
+      },
+      {
+        title: "Trường học",
+        description: "Những đồ vật quen thuộc ở trường.",
+        guidebook:
+          "Đến trường thôi! 🏫\n\n**Đồ dùng học tập**\n- book = sách, pen = bút, bag = cặp sách, ruler = thước kẻ.\n- teacher = giáo viên, desk = bàn học, school = trường học, clock = đồng hồ.\n\n**Mẹo nhỏ**\n*on the desk* = ở trên bàn học.",
+        words: [
+          W("book", "sách", "📖"), W("pen", "bút", "🖊️"), W("bag", "cặp sách", "🎒"), W("teacher", "giáo viên", "🧑‍🏫"),
+          W("desk", "bàn học", "🪑"), W("school", "trường học", "🏫"), W("clock", "đồng hồ", "⏰"), W("ruler", "thước kẻ", "📏"),
+        ],
+        sentences: [
+          { t: ["I", "read", "a", "book"], n: ["Tôi", "đọc", "một", "quyển", "sách"], blank: "book", dT: ["write", "pen"], dN: ["viết", "bút"] },
+          { t: ["I", "write", "with", "a", "pen"], n: ["Tôi", "viết", "bằng", "bút"], blank: "pen", dT: ["read", "book"], dN: ["đọc", "sách"] },
+          { t: ["The", "teacher", "is", "nice"], n: ["Giáo", "viên", "rất", "tốt"], blank: "teacher", dT: ["bad", "a"], dN: ["xấu", "bàn"] },
+          { t: ["My", "bag", "is", "on", "the", "desk"], n: ["Cặp", "sách", "của", "tôi", "ở", "trên", "bàn", "học"], blank: "bag", dT: ["under", "book"], dN: ["dưới", "sách"] },
+        ],
+      },
+    ],
+  },
+  {
+    id: "ja-vi",
+    targetLanguage: "Tiếng Nhật",
+    targetCode: "ja",
+    flag: "🇯🇵",
+    sectionTitle: "Phần 1: Bảng chữ cái và từ đầu tiên",
+    joiner: " ",
+    units: [
+      {
+        title: "Hiragana 1",
+        kana: true,
+        description: "Tám chữ Hiragana đầu tiên: a, i, u, e, o, ka, ki, ku.",
+        guidebook:
+          "Hiragana là bảng chữ mềm mại của tiếng Nhật 🎌\n\n**Mỗi chữ một âm**\n- あ (a) như trong あり (ari, con kiến)\n- い (i) như trong いぬ (inu, con chó)\n- う (u) như trong うま (uma, con ngựa)\n- え (e) như trong えんぴつ (enpitsu, bút chì)\n- お (o) như trong おにぎり (onigiri, cơm nắm)\n- か (ka) かめ, き (ki) きつね, く (ku) くるま\n\nBấm loa 🔊 và đọc theo nhé!",
+        words: [
+          W("あ", "a", "🐜"), W("い", "i", "🐶"), W("う", "u", "🐴"), W("え", "e", "✏️"),
+          W("お", "o", "🍙"), W("か", "ka", "🐢"), W("き", "ki", "🦊"), W("く", "ku", "🚗"),
+        ],
+      },
+      {
+        title: "Hiragana 2",
+        kana: true,
+        description: "Tám chữ tiếp theo: ke, ko, sa, shi, su, se, so, ta.",
+        guidebook:
+          "Thêm tám chữ Hiragana nữa! ✨\n\n- け (ke) けむし (sâu bướm)\n- こ (ko) こあら (gấu koala)\n- さ (sa) さかな (con cá)\n- し (shi) しか (con nai)\n- す (su) すし (sushi)\n- せ (se) せかい (thế giới)\n- そ (so) そら (bầu trời)\n- た (ta) たまご (quả trứng)",
+        words: [
+          W("け", "ke", "🐛"), W("こ", "ko", "🐨"), W("さ", "sa", "🐟"), W("し", "shi", "🦌"),
+          W("す", "su", "🍣"), W("せ", "se", "🌍"), W("そ", "so", "☁️"), W("た", "ta", "🥚"),
+        ],
+      },
+      {
+        title: "Hiragana 3",
+        kana: true,
+        description: "Tám chữ nữa: chi, tsu, te, to, na, ni, nu, ne.",
+        guidebook:
+          "Sắp thuộc hết rồi! 💪\n\n- ち (chi) ちず (bản đồ)\n- つ (tsu) つき (mặt trăng)\n- て (te) て (bàn tay)\n- と (to) とり (con chim)\n- な (na) なす (quả cà tím)\n- に (ni) にく (thịt)\n- ぬ (nu) ぬいぐるみ (thú nhồi bông)\n- ね (ne) ねこ (con mèo)",
+        words: [
+          W("ち", "chi", "🗺️"), W("つ", "tsu", "🌙"), W("て", "te", "✋"), W("と", "to", "🐦"),
+          W("な", "na", "🍆"), W("に", "ni", "🥩"), W("ぬ", "nu", "🧸"), W("ね", "ne", "🐱"),
+        ],
+      },
+      {
+        title: "Katakana 1",
+        kana: true,
+        description: "Katakana dùng để viết tên con vật và từ mượn: ア, イ, ウ, エ, オ, カ, キ, ク.",
+        guidebook:
+          "Katakana là bảng chữ thứ hai, nét cứng và gọn hơn 🦒\n\n- ア (a) アイス (kem)\n- イ (i) イルカ (cá heo)\n- ウ (u) ウサギ (con thỏ)\n- エ (e) エビ (con tôm)\n- オ (o) オウム (con vẹt)\n- カ (ka) カメラ (máy ảnh)\n- キ (ki) キリン (hươu cao cổ)\n- ク (ku) クマ (con gấu)",
+        words: [
+          W("ア", "a", "🍦"), W("イ", "i", "🐬"), W("ウ", "u", "🐰"), W("エ", "e", "🦐"),
+          W("オ", "o", "🦜"), W("カ", "ka", "📷"), W("キ", "ki", "🦒"), W("ク", "ku", "🐻"),
+        ],
+      },
+      {
+        title: "Từ đầu tiên",
+        description: "Những từ đơn giản viết bằng Hiragana.",
+        guidebook:
+          "Ghép chữ thành từ! 🍎\n\n- りんご (ringo) = quả táo, みず (mizu) = nước, ねこ (neko) = con mèo, いぬ (inu) = con chó.\n- さかな (sakana) = con cá, ほん (hon) = sách, いえ (ie) = ngôi nhà, くるま (kuruma) = xe hơi.\n\n**Mẫu câu**\nこれ は ～ です。= Đây là ～.\nChữ は ở đây đọc là *wa*.",
+        words: [
+          W("りんご", "quả táo", "🍎", "ringo"), W("みず", "nước", "💧", "mizu"), W("ねこ", "con mèo", "🐱", "neko"), W("いぬ", "con chó", "🐶", "inu"),
+          W("さかな", "con cá", "🐟", "sakana"), W("ほん", "quyển sách", "📖", "hon"), W("いえ", "ngôi nhà", "🏠", "ie"), W("くるま", "xe hơi", "🚗", "kuruma"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "りんご", "です"], n: ["Đây", "là", "quả", "táo"], r: "kore wa ringo desu", blank: "りんご", dT: ["ねこ", "みず"], dN: ["mèo", "nước"] },
+          { t: ["これ", "は", "ほん", "です"], n: ["Đây", "là", "quyển", "sách"], r: "kore wa hon desu", blank: "ほん", dT: ["いえ", "くるま"], dN: ["nhà", "xe"] },
+          { t: ["これ", "は", "さかな", "です"], n: ["Đây", "là", "con", "cá"], r: "kore wa sakana desu", blank: "さかな", dT: ["いぬ", "ねこ"], dN: ["chó", "mèo"] },
+          { t: ["これ", "は", "くるま", "です"], n: ["Đây", "là", "chiếc", "xe", "hơi"], r: "kore wa kuruma desu", blank: "くるま", dT: ["ほん", "みず"], dN: ["nhà", "sách"] },
+        ],
+      },
+      {
+        title: "Chào hỏi",
+        description: "Những câu chào hỏi lịch sự mỗi ngày.",
+        guidebook:
+          "Người Nhật rất lịch sự 🙇\n\n- おはよう (ohayou) = chào buổi sáng\n- こんにちは (konnichiwa) = xin chào\n- こんばんは (konbanwa) = chào buổi tối\n- ありがとう (arigatou) = cảm ơn\n- さようなら (sayounara) = tạm biệt\n- おやすみ (oyasumi) = chúc ngủ ngon\n- はい (hai) = vâng, いいえ (iie) = không",
+        words: [
+          W("おはよう", "chào buổi sáng", "🌅", "ohayou"), W("こんにちは", "xin chào", "☀️", "konnichiwa"),
+          W("こんばんは", "chào buổi tối", "🌙", "konbanwa"), W("ありがとう", "cảm ơn", "🙏", "arigatou"),
+          W("さようなら", "tạm biệt", "👋", "sayounara"), W("おやすみ", "chúc ngủ ngon", "😴", "oyasumi"),
+          W("はい", "vâng", "✅", "hai"), W("いいえ", "không", "❌", "iie"),
+        ],
+      },
+    ],
+  },
+  {
+    id: "zh-vi",
+    targetLanguage: "Tiếng Trung",
+    targetCode: "zh",
+    flag: "🇨🇳",
+    sectionTitle: "Phần 1: Chữ Hán đầu tiên",
+    joiner: " ",
+    units: [
+      {
+        title: "Con số",
+        description: "Đếm từ 一 đến 八 bằng chữ Hán và pinyin.",
+        guidebook:
+          "Chữ Hán và pinyin 🇨🇳\n\n**Pinyin** là cách đọc chữ Hán bằng chữ cái. Dấu trên chữ cho biết **thanh điệu** (giọng lên xuống).\n\n**Các số**\n- 一 (yī) = 1, 二 (èr) = 2, 三 (sān) = 3, 四 (sì) = 4\n- 五 (wǔ) = 5, 六 (liù) = 6, 七 (qī) = 7, 八 (bā) = 8\n\nĐếm to: yī, èr, sān!",
+        words: [
+          W("一", "một", "1️⃣", "yī"), W("二", "hai", "2️⃣", "èr"), W("三", "ba", "3️⃣", "sān"), W("四", "bốn", "4️⃣", "sì"),
+          W("五", "năm", "5️⃣", "wǔ"), W("六", "sáu", "6️⃣", "liù"), W("七", "bảy", "7️⃣", "qī"), W("八", "tám", "8️⃣", "bā"),
+        ],
+      },
+      {
+        title: "Chào hỏi",
+        description: "Những câu nói lịch sự đầu tiên.",
+        guidebook:
+          "Xin chào, 你好! 👋\n\n- 你好 (nǐ hǎo) = xin chào\n- 谢谢 (xièxie) = cảm ơn\n- 再见 (zàijiàn) = tạm biệt\n- 对不起 (duìbuqǐ) = xin lỗi\n- 没关系 (méi guānxi) = không sao đâu\n- 请 (qǐng) = xin mời / làm ơn\n- 是 (shì) = là, 不 (bù) = không",
+        words: [
+          W("你好", "xin chào", "👋", "nǐ hǎo"), W("谢谢", "cảm ơn", "🙏", "xièxie"), W("再见", "tạm biệt", "🚪", "zàijiàn"),
+          W("对不起", "xin lỗi", "😔", "duìbuqǐ"), W("没关系", "không sao đâu", "😊", "méi guānxi"), W("请", "xin mời", "🤲", "qǐng"),
+          W("是", "là", "✅", "shì"), W("不", "không", "❌", "bù"),
+        ],
+        sentences: [
+          { t: ["谢谢", "你"], n: ["Cảm", "ơn", "bạn"], r: "xièxie nǐ", blank: "谢谢", dT: ["请", "不"], dN: ["xin", "lỗi"] },
+          { t: ["再见", "朋友"], n: ["Tạm", "biệt", "bạn"], r: "zàijiàn péngyou", blank: "再见", dT: ["谢谢", "好"], dN: ["cảm", "ơn"] },
+        ],
+      },
+      {
+        title: "Gia đình",
+        description: "Gọi tên người thân trong gia đình.",
+        guidebook:
+          "Gia đình em 👨‍👩‍👧‍👦\n\n- 爸爸 (bàba) = bố, 妈妈 (māma) = mẹ\n- 哥哥 (gēge) = anh trai, 姐姐 (jiějie) = chị gái\n- 弟弟 (dìdi) = em trai, 妹妹 (mèimei) = em gái\n- 爷爷 (yéye) = ông nội, 奶奶 (nǎinai) = bà nội\n\n**Mẫu câu**\n这 是 我 ～ = Đây là ～ của tôi.",
+        words: [
+          W("爸爸", "bố", "👨", "bàba"), W("妈妈", "mẹ", "👩", "māma"), W("哥哥", "anh trai", "👦", "gēge"), W("姐姐", "chị gái", "👧", "jiějie"),
+          W("弟弟", "em trai", "🧒", "dìdi"), W("妹妹", "em gái", "👶", "mèimei"), W("爷爷", "ông nội", "👴", "yéye"), W("奶奶", "bà nội", "👵", "nǎinai"),
+        ],
+        sentences: [
+          { t: ["这", "是", "我", "爸爸"], n: ["Đây", "là", "bố", "của", "tôi"], r: "zhè shì wǒ bàba", blank: "爸爸", dT: ["妈妈", "不"], dN: ["mẹ", "không"] },
+          { t: ["我", "爱", "妈妈"], n: ["Tôi", "yêu", "mẹ"], r: "wǒ ài māma", blank: "妈妈", dT: ["喜欢", "狗"], dN: ["thích", "bố"] },
+          { t: ["这", "是", "我", "哥哥"], n: ["Đây", "là", "anh", "trai", "của", "tôi"], r: "zhè shì wǒ gēge", blank: "哥哥", dT: ["姐姐", "你"], dN: ["chị", "bạn"] },
+        ],
+      },
+      {
+        title: "Con vật",
+        description: "Gọi tên các con vật dễ thương.",
+        guidebook:
+          "Vườn thú nhỏ 🐼\n\n- 猫 (māo) = mèo, 狗 (gǒu) = chó, 鸟 (niǎo) = chim, 鱼 (yú) = cá\n- 马 (mǎ) = ngựa, 牛 (niú) = bò, 兔子 (tùzi) = thỏ, 熊猫 (xióngmāo) = gấu trúc\n\n**Mẹo nhỏ**\n一 只 ～ = một con ～ (只 là từ đếm con vật).",
+        words: [
+          W("猫", "mèo", "🐱", "māo"), W("狗", "chó", "🐶", "gǒu"), W("鸟", "chim", "🐦", "niǎo"), W("鱼", "cá", "🐟", "yú"),
+          W("马", "ngựa", "🐴", "mǎ"), W("牛", "bò", "🐮", "niú"), W("兔子", "thỏ", "🐰", "tùzi"), W("熊猫", "gấu trúc", "🐼", "xióngmāo"),
+        ],
+        sentences: [
+          { t: ["我", "喜欢", "猫"], n: ["Tôi", "thích", "mèo"], r: "wǒ xǐhuan māo", blank: "猫", dT: ["狗", "不"], dN: ["chó", "không"] },
+          { t: ["这", "是", "一", "只", "狗"], n: ["Đây", "là", "một", "con", "chó"], r: "zhè shì yì zhī gǒu", blank: "狗", dT: ["猫", "我"], dN: ["mèo", "tôi"] },
+          { t: ["我", "有", "一", "只", "鸟"], n: ["Tôi", "có", "một", "con", "chim"], r: "wǒ yǒu yì zhī niǎo", blank: "鸟", dT: ["鱼", "是"], dN: ["cá", "là"] },
+        ],
+      },
+      {
+        title: "Màu sắc",
+        description: "Màu sắc và những thứ trên bầu trời.",
+        guidebook:
+          "Thế giới rực rỡ 🌈\n\n- 红色 (hóngsè) = đỏ, 蓝色 (lánsè) = xanh dương, 绿色 (lǜsè) = xanh lá, 黄色 (huángsè) = vàng\n- 黑色 (hēisè) = đen, 白色 (báisè) = trắng\n- 太阳 (tàiyáng) = mặt trời, 月亮 (yuèliang) = mặt trăng\n\n**Mẫu câu**\n～ 是 红色 = ～ màu đỏ.",
+        words: [
+          W("红色", "đỏ", "🔴", "hóngsè"), W("蓝色", "xanh dương", "🔵", "lánsè"), W("绿色", "xanh lá", "🟢", "lǜsè"), W("黄色", "vàng", "🟡", "huángsè"),
+          W("黑色", "đen", "⚫", "hēisè"), W("白色", "trắng", "⚪", "báisè"), W("太阳", "mặt trời", "☀️", "tàiyáng"), W("月亮", "mặt trăng", "🌙", "yuèliang"),
+        ],
+        sentences: [
+          { t: ["太阳", "是", "黄色"], n: ["Mặt", "trời", "màu", "vàng"], r: "tàiyáng shì huángsè", blank: "黄色", dT: ["红色", "不"], dN: ["đỏ", "không"] },
+          { t: ["月亮", "是", "白色"], n: ["Mặt", "trăng", "màu", "trắng"], r: "yuèliang shì báisè", blank: "白色", dT: ["黑色", "我"], dN: ["đen", "tôi"] },
+          { t: ["天", "是", "蓝色"], n: ["Bầu", "trời", "màu", "xanh", "dương"], r: "tiān shì lánsè", blank: "蓝色", dT: ["绿色", "狗"], dN: ["đỏ", "chó"] },
+        ],
+      },
+    ],
+  },
+];
+
+// ---------- exercise builders ----------
+function build(course) {
+  const packId = course.id;
+  const sections = [{ id: `${packId}:section-1`, title: course.sectionTitle, units: [] }];
+
+  course.units.forEach((unit, ui) => {
+    const kana = !!unit.kana;
+    const words = unit.words;
+    const seedBase = `${packId}:${ui}`;
+    const display = (w) => (w.romanization ? `${w.target} (${w.romanization})` : w.target);
+    const tgtSentence = (s) => s.t.join(course.joiner);
+
+    const others = (w, n, seed) =>
+      shuffle(words.filter((x) => x.target !== w.target && x.native !== w.native), seed).slice(0, n);
+
+    const mkSelect = (w, mode, id) => {
+      const distract = others(w, 3, `${seedBase}:${id}`);
+      if (mode === "targetToNative") {
+        const opts = shuffle([w, ...distract], `${seedBase}:o:${id}`);
+        return {
+          type: "select", id, mode, prompt: display(w), audioTarget: w.target,
+          options: opts.map((o) => ({ text: o.native, emoji: o.emoji })),
+          correct: opts.findIndex((o) => o.target === w.target),
+        };
+      }
+      const opts = shuffle([w, ...distract], `${seedBase}:o:${id}`);
+      return {
+        type: "select", id, mode,
+        prompt: mode === "listen" ? w.target : kana ? `Chữ nào đọc là "${w.native}"?` : w.native,
+        audioTarget: mode === "listen" ? w.target : undefined,
+        options: opts.map((o) => ({ text: o.target, emoji: o.emoji })),
+        correct: opts.findIndex((o) => o.target === w.target),
+      };
+    };
+    const mkMatch = (ws, id) => ({
+      type: "match", id,
+      pairs: ws.map((w) => ({ target: w.target, native: w.native })),
+    });
+    const mkTyping = (w, mode, id) => ({
+      type: "typeAnswer", id, mode,
+      prompt: mode === "listen" ? w.target : w.native,
+      audioTarget: mode === "listen" ? w.target : undefined,
+      answer: w.target, alternatives: [],
+    });
+
+    const sentences = unit.sentences ?? [];
+    const mkWordBank = (s, i, id) => {
+      const t2n = i % 2 === 0;
+      const promptText = tgtSentence(s) + (course.targetCode === "en" ? "." : "。");
+      if (t2n) {
+        return {
+          type: "wordBank", id, direction: "targetToNative",
+          prompt: s.r ? `${promptText}\n${s.r}` : promptText,
+          audioTarget: tgtSentence(s),
+          tokens: shuffle([...s.n, ...s.dN], `${seedBase}:wb:${id}`),
+          answer: s.n,
+        };
+      }
+      return {
+        type: "wordBank", id, direction: "nativeToTarget",
+        prompt: s.n.join(" ") + ".",
+        tokens: shuffle([...s.t, ...s.dT], `${seedBase}:wb:${id}`),
+        answer: s.t,
+      };
+    };
+    const mkFill = (s, id) => {
+      const idx = s.t.findIndex((x) => x.toLowerCase() === s.blank.toLowerCase());
+      if (idx < 0) throw new Error(`blank "${s.blank}" not in sentence ${tgtSentence(s)}`);
+      const shown = s.t.map((x, k) => (k === idx ? "___" : x)).join(course.joiner);
+      const correctToken = s.t[idx];
+      const pool = words.map((w) => w.target).filter((x) => x.toLowerCase() !== correctToken.toLowerCase());
+      const opts = shuffle([correctToken, ...shuffle(pool, `${seedBase}:f:${id}`).slice(0, 3)], `${seedBase}:fo:${id}`);
+      return {
+        type: "fillBlank", id,
+        sentence: shown + (course.targetCode === "en" ? "." : "。"),
+        translation: s.n.join(" ") + ".",
+        audioTarget: tgtSentence(s),
+        options: opts, correct: opts.indexOf(correctToken),
+      };
+    };
+
+    const lessons = [];
+    const addLesson = (title, makers) => {
+      const li = lessons.length;
+      const lid = `${packId}:u${ui}-l${li}`;
+      const exercises = makers.map((fn, ei) => fn(`${lid}-e${ei}`));
+      lessons.push({ id: lid, title, exercises });
+    };
+
+    const group = (from) => words.slice(from, from + 4);
+    for (const [gi, from] of [[1, 0], [2, 4]]) {
+      const g = group(from);
+      addLesson(`Bài ${gi}`, [
+        ...g.map((w) => (id) => mkSelect(w, "targetToNative", id)),
+        (id) => mkSelect(g[1], "nativeToTarget", id),
+        (id) => mkSelect(g[3], "nativeToTarget", id),
+        (id) => mkMatch(g, id),
+      ]);
+    }
+    addLesson("Bài 3: Ôn tập", [
+      ...[0, 2, 4, 6].map((k) => (id) => mkSelect(words[k], "listen", id)),
+      ...[1, 3, 5, 7].map((k) => (id) => mkSelect(words[k], "nativeToTarget", id)),
+      (id) => mkMatch([words[1], words[2], words[5], words[7]], id),
+      ...(course.listenTyping
+        ? [(id) => mkTyping(words[0], "listen", id), (id) => mkTyping(words[5], "translate", id)]
+        : []),
+    ]);
+    if (sentences.length) {
+      addLesson("Bài 4: Câu", sentences.flatMap((s, i) => [
+        (id) => mkWordBank(s, i, id),
+        (id) => mkFill(s, id),
+      ]));
+    }
+
+    sections[0].units.push({
+      id: `${packId}:unit-${ui + 1}`,
+      title: unit.title,
+      description: unit.description,
+      guidebook: unit.guidebook,
+      words,
+      lessons,
+    });
+  });
+
+  return {
+    id: packId, version: 1,
+    targetLanguage: course.targetLanguage, targetCode: course.targetCode,
+    nativeLanguage: "Tiếng Việt", nativeCode: "vi",
+    flag: course.flag, sections,
+  };
+}
+
+// ---------- validate + write ----------
+const catalog = { version: 1, courses: [] };
+for (const course of COURSES) {
+  const pack = build(course);
+  for (const u of pack.sections[0].units) {
+    for (const l of u.lessons) {
+      for (const e of l.exercises) {
+        if (e.type === "select" && (e.correct < 0 || !e.options[e.correct])) throw new Error(`bad select ${e.id}`);
+        if (e.type === "fillBlank" && e.correct < 0) throw new Error(`bad fill ${e.id}`);
+        if (e.type === "wordBank" && !e.answer.every((a) => e.tokens.includes(a))) throw new Error(`bad wb ${e.id}`);
+      }
+    }
+  }
+  writeFileSync(join(OUT, `${pack.id}.json`), JSON.stringify(pack));
+  catalog.courses.push({
+    id: pack.id, targetLanguage: pack.targetLanguage, targetCode: pack.targetCode,
+    nativeLanguage: pack.nativeLanguage, flag: pack.flag,
+    unitCount: pack.sections[0].units.length,
+    lessonCount: pack.sections[0].units.reduce((n, u) => n + u.lessons.length, 0),
+  });
+}
+writeFileSync(join(ROOT, "src/content/catalog.json"), JSON.stringify(catalog, null, 2) + "\n");
+
+const ids = COURSES.map((c) => c.id);
+const ident = (id) => id.replace("-", "_");
+writeFileSync(
+  join(OUT, "index.ts"),
+  `// Generated by scripts/build-content.mjs — do not edit.\n` +
+    ids.map((id) => `import ${ident(id)} from "./${id}.json";`).join("\n") +
+    `\nimport type { Pack } from "../../lib/types";\n\nexport const PACKS: Record<string, Pack> = {\n` +
+    ids.map((id) => `  "${id}": ${ident(id)} as Pack,`).join("\n") +
+    `\n};\n`
+);
+console.log("OK", JSON.stringify(catalog.courses.map((c) => [c.id, c.unitCount, c.lessonCount])));
