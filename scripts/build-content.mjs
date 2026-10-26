@@ -139,6 +139,86 @@ const COURSES = [
           { t: ["My", "bag", "is", "on", "the", "desk"], n: ["Cặp", "sách", "của", "tôi", "ở", "trên", "bàn", "học"], blank: "bag", dT: ["under", "book"], dN: ["dưới", "sách"] },
         ],
       },
+      {
+        title: "Gia đình 2",
+        description: "Thêm người thân: dì, chú, anh em họ và cả gia đình.",
+        guidebook:
+          "Gia đình lớn của em 👨‍👩‍👧‍👦\n\n**Thêm người thân**\n- aunt = dì, uncle = chú, cousin = anh/em họ, son = con trai.\n- daughter = con gái, children = các con, family = gia đình, parents = cha mẹ.\n\n**Mẹo nhỏ**\nHỏi thăm gia đình bạn: How is your family?",
+        words: [
+          W("aunt", "dì", "👩‍🦱"), W("uncle", "chú", "👨‍🦱"), W("cousin", "anh/em họ", "🧒"), W("son", "con trai", "👦"),
+          W("daughter", "con gái", "👧"), W("children", "các con", "👨‍👩‍👧‍👦"), W("family", "gia đình", "🏠"), W("parents", "cha mẹ", "👨‍👩‍👧"),
+        ],
+        sentences: [
+          { t: ["This", "is", "my", "aunt"], n: ["Đây", "là", "dì", "của", "tôi"], blank: "aunt", dT: ["uncle", "your"], dN: ["chú", "bạn"] },
+          { t: ["I", "love", "my", "family"], n: ["Tôi", "yêu", "gia", "đình", "của", "tôi"], blank: "family", dT: ["house", "hate"], dN: ["nhà", "ghét"] },
+          { t: ["My", "cousin", "is", "my", "friend"], n: ["Anh", "họ", "là", "bạn", "của", "tôi"], blank: "cousin", dT: ["sister", "tall"], dN: ["chị", "cao"] },
+          { t: ["My", "parents", "are", "kind"], n: ["Cha", "mẹ", "tôi", "rất", "tốt"], blank: "parents", dT: ["children", "is"], dN: ["các con", "là"] },
+        ],
+      },
+      {
+        title: "Số đếm 2",
+        description: "Đếm tiếp từ chín đến mười sáu.",
+        guidebook:
+          "Đếm cao hơn nữa! 🔢\n\n**Các số tiếp theo**\n- nine = 9, ten = 10, eleven = 11, twelve = 12.\n- thirteen = 13, fourteen = 14, fifteen = 15, sixteen = 16.\n\n**Mẹo nhỏ**\nTừ 13 đến 19 trong tiếng Anh thường kết thúc bằng *-teen*.",
+        words: [
+          W("nine", "chín", "9️⃣"), W("ten", "mười", "🔟"), W("eleven", "mười một", "⑪"), W("twelve", "mười hai", "⑫"),
+          W("thirteen", "mười ba", "⑬"), W("fourteen", "mười bốn", "⑭"), W("fifteen", "mười lăm", "⑮"), W("sixteen", "mười sáu", "⑯"),
+        ],
+        sentences: [
+          { t: ["I", "have", "nine", "books"], n: ["Tôi", "có", "chín", "quyển", "sách"], blank: "nine", dT: ["ten", "has"], dN: ["mười", "sách"] },
+          { t: ["There", "are", "ten", "cats"], n: ["Có", "mười", "con", "mèo"], blank: "ten", dT: ["nine", "dogs"], dN: ["chín", "chó"] },
+          { t: ["I", "am", "eleven", "years", "old"], n: ["Tôi", "mười", "một", "tuổi"], blank: "eleven", dT: ["twelve", "are"], dN: ["mười hai", "sáu"] },
+          { t: ["He", "has", "twelve", "books"], n: ["Anh", "ấy", "có", "mười", "hai", "quyển", "sách"], blank: "twelve", dT: ["eleven", "book"], dN: ["mười một", "bút"] },
+        ],
+      },
+      {
+        title: "Màu sắc 2",
+        description: "Thêm nhiều màu đẹp: hồng, nâu, xám và cầu vồng.",
+        guidebook:
+          "Thêm màu mới! 🎨\n\n- pink = hồng, brown = nâu, gray = xám, light blue = xanh nhạt.\n- dark green = xanh đậm, rainbow = cầu vồng, color = màu sắc, golden = ánh vàng.\n\n**Mẹo nhỏ**\n*light* = nhạt/sáng, *dark* = đậm/tối: light blue, dark green.",
+        words: [
+          W("pink", "hồng", "🩷"), W("brown", "nâu", "🟤"), W("gray", "xám", "🩶"), W("light blue", "xanh nhạt", "🩵"),
+          W("dark green", "xanh đậm", "💚"), W("rainbow", "cầu vồng", "🌈"), W("color", "màu sắc", "🎨"), W("golden", "ánh vàng", "✨"),
+        ],
+        sentences: [
+          { t: ["The", "flower", "is", "pink"], n: ["Bông", "hoa", "màu", "hồng"], blank: "pink", dT: ["brown", "a"], dN: ["nâu", "xám"] },
+          { t: ["The", "bear", "is", "brown"], n: ["Con", "gấu", "màu", "nâu"], blank: "brown", dT: ["gray", "big"], dN: ["xám", "hồng"] },
+          { t: ["I", "see", "a", "rainbow"], n: ["Tôi", "thấy", "một", "cầu", "vồng"], blank: "rainbow", dT: ["color", "sky"], dN: ["màu", "mây"] },
+          { t: ["My", "favorite", "color", "is", "pink"], n: ["Màu", "tôi", "thích", "nhất", "là", "màu", "hồng"], blank: "color", dT: ["colors", "pink"], dN: ["màu sắc", "hoa"] },
+        ],
+      },
+      {
+        title: "Thức ăn 2",
+        description: "Món ngon nữa: pizza, mì, súp, kẹo và kem.",
+        guidebook:
+          "Ăn ngon miệng! 😋\n\n- pizza = pizza, noodle = mì, soup = súp, candy = kẹo.\n- cookie = bánh quy, juice = nước ép, cheese = phô mai, ice cream = kem.\n\n**Mẹo nhỏ**\n*yummy* nghĩa là ngon tuyệt: This pizza is yummy!",
+        words: [
+          W("pizza", "pizza", "🍕"), W("noodle", "mì", "🍜"), W("soup", "súp", "🍲"), W("candy", "kẹo", "🍬"),
+          W("cookie", "bánh quy", "🍪"), W("juice", "nước ép", "🧃"), W("cheese", "phô mai", "🧀"), W("ice cream", "kem", "🍦"),
+        ],
+        sentences: [
+          { t: ["I", "eat", "pizza"], n: ["Tôi", "ăn", "pizza"], blank: "pizza", dT: ["drink", "soup"], dN: ["uống", "mì"] },
+          { t: ["I", "drink", "juice"], n: ["Tôi", "uống", "nước", "ép"], blank: "juice", dT: ["eat", "milk"], dN: ["ăn", "súp"] },
+          { t: ["The", "soup", "is", "hot"], n: ["Món", "súp", "nóng"], blank: "soup", dT: ["cold", "candy"], dN: ["nguội", "kẹo"] },
+          { t: ["She", "likes", "ice", "cream"], n: ["Cô", "ấy", "thích", "kem"], blank: "cream", dT: ["cookie", "eats"], dN: ["bánh", "ăn"] },
+        ],
+      },
+      {
+        title: "Trường học 2",
+        description: "Thêm đồ dùng học tập: bút chì, kéo, vở và máy tính.",
+        guidebook:
+          "Đồ dùng của em ✏️\n\n- pencil = bút chì, crayon = bút sáp màu, scissors = kéo, notebook = vở.\n- paper = giấy, map = bản đồ, globe = quả địa cầu, computer = máy tính.\n\n**Mẹo nhỏ**\n*draw* = vẽ: I draw with a crayon.",
+        words: [
+          W("pencil", "bút chì", "✏️"), W("crayon", "bút sáp màu", "🖍️"), W("scissors", "kéo", "✂️"), W("notebook", "vở", "📓"),
+          W("paper", "giấy", "📄"), W("map", "bản đồ", "🗺️"), W("globe", "quả địa cầu", "🌍"), W("computer", "máy tính", "💻"),
+        ],
+        sentences: [
+          { t: ["I", "write", "with", "a", "pencil"], n: ["Tôi", "viết", "bằng", "bút", "chì"], blank: "pencil", dT: ["crayon", "read"], dN: ["sáp", "đọc"] },
+          { t: ["I", "draw", "on", "paper"], n: ["Tôi", "vẽ", "trên", "giấy"], blank: "paper", dT: ["notebook", "under"], dN: ["vở", "dưới"] },
+          { t: ["The", "map", "is", "big"], n: ["Tấm", "bản", "đồ", "to"], blank: "map", dT: ["small", "globe"], dN: ["nhỏ", "giấy"] },
+          { t: ["We", "use", "a", "computer"], n: ["Chúng", "ta", "dùng", "máy", "tính"], blank: "computer", dT: ["notebook", "an"], dN: ["vở", "kéo"] },
+        ],
+      },
     ],
   },
   {
@@ -221,6 +301,86 @@ const COURSES = [
           W("はい", "vâng", "✅", "hai"), W("いいえ", "không", "❌", "iie"),
         ],
       },
+      {
+        title: "Gia đình",
+        description: "Gọi tên những người thân yêu: かぞく (gia đình).",
+        guidebook:
+          "Gia đình của em 👨‍👩‍👧‍👦\n\n- おとうさん (otousan) = bố, おかあさん (okaasan) = mẹ\n- おにいさん (oniisan) = anh trai, おねえさん (oneesan) = chị gái\n- あかちゃん (akachan) = em bé, おじいさん (ojiisan) = ông, おばあさん (obaasan) = bà\n- ともだち (tomodachi) = bạn\n\n**Mẫu câu**\nこれ は わたし の ～ です。= Đây là ～ của tôi.",
+        words: [
+          W("おとうさん", "bố", "👨", "otousan"), W("おかあさん", "mẹ", "👩", "okaasan"), W("おにいさん", "anh trai", "👦", "oniisan"), W("おねえさん", "chị gái", "👧", "oneesan"),
+          W("あかちゃん", "em bé", "👶", "akachan"), W("おじいさん", "ông", "👴", "ojiisan"), W("おばあさん", "bà", "👵", "obaasan"), W("ともだち", "bạn", "🧑‍🤝‍🧑", "tomodachi"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "わたし", "の", "おとうさん", "です"], n: ["Đây", "là", "bố", "của", "tôi"], r: "kore wa watashi no otousan desu", blank: "おとうさん", dT: ["おかあさん", "ねこ"], dN: ["mẹ", "mèo"] },
+          { t: ["これ", "は", "わたし", "の", "おかあさん", "です"], n: ["Đây", "là", "mẹ", "của", "tôi"], r: "kore wa watashi no okaasan desu", blank: "おかあさん", dT: ["おとうさん", "いぬ"], dN: ["bố", "chó"] },
+          { t: ["これ", "は", "わたし", "の", "おじいさん", "です"], n: ["Đây", "là", "ông", "của", "tôi"], r: "kore wa watashi no ojiisan desu", blank: "おじいさん", dT: ["おばあさん", "とり"], dN: ["bà", "chim"] },
+          { t: ["これ", "は", "わたし", "の", "ともだち", "です"], n: ["Đây", "là", "bạn", "của", "tôi"], r: "kore wa watashi no tomodachi desu", blank: "ともだち", dT: ["あかちゃん", "ほん"], dN: ["em bé", "sách"] },
+        ],
+      },
+      {
+        title: "Số đếm",
+        description: "Đếm từ một đến tám bằng tiếng Nhật.",
+        guidebook:
+          "Cùng đếm nào! 🔢\n\n- いち (ichi) = 1, に (ni) = 2, さん (san) = 3, よん (yon) = 4\n- ご (go) = 5, ろく (roku) = 6, なな (nana) = 7, はち (hachi) = 8\n\nĐếm to: いち、に、さん!",
+        words: [
+          W("いち", "một", "1️⃣", "ichi"), W("に", "hai", "2️⃣", "ni"), W("さん", "ba", "3️⃣", "san"), W("よん", "bốn", "4️⃣", "yon"),
+          W("ご", "năm", "5️⃣", "go"), W("ろく", "sáu", "6️⃣", "roku"), W("なな", "bảy", "7️⃣", "nana"), W("はち", "tám", "8️⃣", "hachi"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "さん", "です"], n: ["Đây", "là", "số", "ba"], r: "kore wa san desu", blank: "さん", dT: ["に", "ご"], dN: ["hai", "năm"] },
+          { t: ["これ", "は", "ご", "です"], n: ["Đây", "là", "số", "năm"], r: "kore wa go desu", blank: "ご", dT: ["よん", "ろく"], dN: ["bốn", "sáu"] },
+          { t: ["これ", "は", "はち", "です"], n: ["Đây", "là", "số", "tám"], r: "kore wa hachi desu", blank: "はち", dT: ["なな", "いち"], dN: ["bảy", "một"] },
+          { t: ["これ", "は", "いち", "です"], n: ["Đây", "là", "số", "một"], r: "kore wa ichi desu", blank: "いち", dT: ["に", "さん"], dN: ["hai", "ba"] },
+        ],
+      },
+      {
+        title: "Màu sắc",
+        description: "Tên các màu bằng tiếng Nhật.",
+        guidebook:
+          "Thế giới đầy màu sắc! 🌈\n\n- あか (aka) = đỏ, あお (ao) = xanh dương, みどり (midori) = xanh lá, きいろ (kiiro) = vàng\n- くろ (kuro) = đen, しろ (shiro) = trắng, ピンク (pinku) = hồng, オレンジ (orenji) = cam\n\n**Mẫu câu**\nこれ は あか です。= Đây là màu đỏ.",
+        words: [
+          W("あか", "đỏ", "🔴", "aka"), W("あお", "xanh dương", "🔵", "ao"), W("みどり", "xanh lá", "🟢", "midori"), W("きいろ", "vàng", "🟡", "kiiro"),
+          W("くろ", "đen", "⚫", "kuro"), W("しろ", "trắng", "⚪", "shiro"), W("ピンク", "hồng", "🩷", "pinku"), W("オレンジ", "cam", "🟠", "orenji"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "あか", "です"], n: ["Đây", "là", "màu", "đỏ"], r: "kore wa aka desu", blank: "あか", dT: ["あお", "くろ"], dN: ["xanh dương", "đen"] },
+          { t: ["これ", "は", "みどり", "です"], n: ["Đây", "là", "màu", "xanh", "lá"], r: "kore wa midori desu", blank: "みどり", dT: ["きいろ", "しろ"], dN: ["vàng", "trắng"] },
+          { t: ["これ", "は", "ピンク", "です"], n: ["Đây", "là", "màu", "hồng"], r: "kore wa pinku desu", blank: "ピンク", dT: ["オレンジ", "あか"], dN: ["cam", "đỏ"] },
+          { t: ["これ", "は", "しろ", "です"], n: ["Đây", "là", "màu", "trắng"], r: "kore wa shiro desu", blank: "しろ", dT: ["くろ", "あお"], dN: ["đen", "xanh"] },
+        ],
+      },
+      {
+        title: "Thức ăn",
+        description: "Các món ăn ngon bằng tiếng Nhật.",
+        guidebook:
+          "Đói bụng rồi! 🍽️\n\n- パン (pan) = bánh mì, たまご (tamago) = trứng, ぎゅうにゅう (gyuunyuu) = sữa, おかし (okashi) = bánh kẹo\n- アイス (aisu) = kem, バナナ (banana) = chuối, みかん (mikan) = quýt, すいか (suika) = dưa hấu\n\n**Mẫu câu**\nこれ は パン です。= Đây là bánh mì.",
+        words: [
+          W("パン", "bánh mì", "🍞", "pan"), W("たまご", "trứng", "🥚", "tamago"), W("ぎゅうにゅう", "sữa", "🥛", "gyuunyuu"), W("おかし", "bánh kẹo", "🍬", "okashi"),
+          W("アイス", "kem", "🍦", "aisu"), W("バナナ", "chuối", "🍌", "banana"), W("みかん", "quýt", "🍊", "mikan"), W("すいか", "dưa hấu", "🍉", "suika"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "パン", "です"], n: ["Đây", "là", "bánh", "mì"], r: "kore wa pan desu", blank: "パン", dT: ["たまご", "みず"], dN: ["trứng", "nước"] },
+          { t: ["これ", "は", "すいか", "です"], n: ["Đây", "là", "dưa", "hấu"], r: "kore wa suika desu", blank: "すいか", dT: ["みかん", "ほん"], dN: ["quýt", "sách"] },
+          { t: ["これ", "は", "アイス", "です"], n: ["Đây", "là", "kem"], r: "kore wa aisu desu", blank: "アイス", dT: ["バナナ", "ねこ"], dN: ["chuối", "mèo"] },
+          { t: ["これ", "は", "ぎゅうにゅう", "です"], n: ["Đây", "là", "sữa"], r: "kore wa gyuunyuu desu", blank: "ぎゅうにゅう", dT: ["おかし", "いぬ"], dN: ["kẹo", "chó"] },
+        ],
+      },
+      {
+        title: "Trường học",
+        description: "Đồ dùng học tập bằng tiếng Nhật.",
+        guidebook:
+          "Đến trường thôi! 🏫\n\n- えんぴつ (enpitsu) = bút chì, ノート (nooto) = vở, ペン (pen) = bút, かばん (kaban) = cặp sách\n- せんせい (sensei) = giáo viên, がっこう (gakkou) = trường học, とけい (tokei) = đồng hồ, けしゴム (keshigomu) = cục tẩy\n\n**Mẫu câu**\nこれ は えんぴつ です。= Đây là bút chì.",
+        words: [
+          W("えんぴつ", "bút chì", "✏️", "enpitsu"), W("ノート", "vở", "📓", "nooto"), W("ペン", "bút", "🖊️", "pen"), W("かばん", "cặp sách", "🎒", "kaban"),
+          W("せんせい", "giáo viên", "🧑‍🏫", "sensei"), W("がっこう", "trường học", "🏫", "gakkou"), W("とけい", "đồng hồ", "⏰", "tokei"), W("けしゴム", "cục tẩy", "🧽", "keshigomu"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "えんぴつ", "です"], n: ["Đây", "là", "bút", "chì"], r: "kore wa enpitsu desu", blank: "えんぴつ", dT: ["ペン", "ほん"], dN: ["bút", "sách"] },
+          { t: ["これ", "は", "ノート", "です"], n: ["Đây", "là", "quyển", "vở"], r: "kore wa nooto desu", blank: "ノート", dT: ["かばん", "みず"], dN: ["cặp", "nước"] },
+          { t: ["これ", "は", "がっこう", "です"], n: ["Đây", "là", "trường", "học"], r: "kore wa gakkou desu", blank: "がっこう", dT: ["いえ", "くるま"], dN: ["nhà", "xe"] },
+          { t: ["これ", "は", "とけい", "です"], n: ["Đây", "là", "đồng", "hồ"], r: "kore wa tokei desu", blank: "とけい", dT: ["けしゴム", "ねこ"], dN: ["tẩy", "mèo"] },
+        ],
+      },
     ],
   },
   {
@@ -299,6 +459,86 @@ const COURSES = [
           { t: ["太阳", "是", "黄色"], n: ["Mặt", "trời", "màu", "vàng"], r: "tàiyáng shì huángsè", blank: "黄色", dT: ["红色", "不"], dN: ["đỏ", "không"] },
           { t: ["月亮", "是", "白色"], n: ["Mặt", "trăng", "màu", "trắng"], r: "yuèliang shì báisè", blank: "白色", dT: ["黑色", "我"], dN: ["đen", "tôi"] },
           { t: ["天", "是", "蓝色"], n: ["Bầu", "trời", "màu", "xanh", "dương"], r: "tiān shì lánsè", blank: "蓝色", dT: ["绿色", "狗"], dN: ["đỏ", "chó"] },
+        ],
+      },
+      {
+        title: "Gia đình 2",
+        description: "Thêm người thân: ông bà ngoại, chú, dì và các con.",
+        guidebook:
+          "Gia đình lớn của em 👨‍👩‍👧‍👦\n\n- 外公 (wàigōng) = ông ngoại, 外婆 (wàipó) = bà ngoại\n- 叔叔 (shūshu) = chú, 阿姨 (āyí) = dì\n- 儿子 (érzi) = con trai, 女儿 (nǚ'ér) = con gái\n- 孩子 (háizi) = trẻ em, 家人 (jiārén) = người nhà\n\n**Mẫu câu**\n这 是 我 ～ = Đây là ～ của tôi.",
+        words: [
+          W("外公", "ông ngoại", "👨‍🦳", "wàigōng"), W("外婆", "bà ngoại", "👩‍🦳", "wàipó"), W("叔叔", "chú", "👨", "shūshu"), W("阿姨", "dì", "👩", "āyí"),
+          W("儿子", "con trai", "👦", "érzi"), W("女儿", "con gái", "👧", "nǚ'ér"), W("孩子", "trẻ em", "🧒", "háizi"), W("家人", "gia đình", "🏠", "jiārén"),
+        ],
+        sentences: [
+          { t: ["这", "是", "我", "外公"], n: ["Đây", "là", "ông", "ngoại", "của", "tôi"], r: "zhè shì wǒ wàigōng", blank: "外公", dT: ["外婆", "不"], dN: ["bà ngoại", "không"] },
+          { t: ["我", "爱", "我", "的", "家人"], n: ["Tôi", "yêu", "gia", "đình", "của", "tôi"], r: "wǒ ài wǒ de jiārén", blank: "家人", dT: ["孩子", "狗"], dN: ["trẻ em", "chó"] },
+          { t: ["这", "是", "我", "阿姨"], n: ["Đây", "là", "dì", "của", "tôi"], r: "zhè shì wǒ āyí", blank: "阿姨", dT: ["叔叔", "你"], dN: ["chú", "bạn"] },
+          { t: ["叔叔", "有", "一", "个", "孩子"], n: ["Chú", "có", "một", "đứa", "trẻ"], r: "shūshu yǒu yí gè háizi", blank: "孩子", dT: ["儿子", "是"], dN: ["con trai", "là"] },
+        ],
+      },
+      {
+        title: "Số đếm 2",
+        description: "Đếm tiếp: 九 đến 二十.",
+        guidebook:
+          "Đếm cao hơn nữa! 🔢\n\n- 九 (jiǔ) = 9, 十 (shí) = 10\n- 十一 (shíyī) = 11, 十二 (shí'èr) = 12, 十三 (shísān) = 13\n- 十四 (shísì) = 14, 十五 (shíwǔ) = 15, 二十 (èrshí) = 20\n\n**Mẹo nhỏ**\nSố từ 11 đến 19 là 十 + số đơn vị: 十一 = mười một.",
+        words: [
+          W("九", "chín", "9️⃣", "jiǔ"), W("十", "mười", "🔟", "shí"), W("十一", "mười một", "⑪", "shíyī"), W("十二", "mười hai", "⑫", "shí'èr"),
+          W("十三", "mười ba", "⑬", "shísān"), W("十四", "mười bốn", "⑭", "shísì"), W("十五", "mười lăm", "⑮", "shíwǔ"), W("二十", "hai mươi", "⑳", "èrshí"),
+        ],
+        sentences: [
+          { t: ["我", "有", "九", "本", "书"], n: ["Tôi", "có", "chín", "quyển", "sách"], r: "wǒ yǒu jiǔ běn shū", blank: "九", dT: ["十", "是"], dN: ["mười", "là"] },
+          { t: ["这", "是", "十", "只", "猫"], n: ["Đây", "là", "mười", "con", "mèo"], r: "zhè shì shí zhī māo", blank: "十", dT: ["九", "我"], dN: ["chín", "tôi"] },
+          { t: ["我", "十一", "岁"], n: ["Tôi", "mười", "một", "tuổi"], r: "wǒ shíyī suì", blank: "十一", dT: ["十二", "八"], dN: ["mười hai", "tám"] },
+          { t: ["他", "有", "二十", "本", "书"], n: ["Anh", "ấy", "có", "hai", "mươi", "quyển", "sách"], r: "tā yǒu èrshí běn shū", blank: "二十", dT: ["十五", "不"], dN: ["mười lăm", "không"] },
+        ],
+      },
+      {
+        title: "Màu sắc 2",
+        description: "Thêm màu đẹp: hồng, tím, cam và cầu vồng.",
+        guidebook:
+          "Thêm màu mới! 🎨\n\n- 粉色 (fěnsè) = hồng, 棕色 (zōngsè) = nâu, 灰色 (huīsè) = xám, 紫色 (zǐsè) = tím\n- 橙色 (chéngsè) = cam, 金色 (jīnsè) = vàng kim, 银色 (yínsè) = bạc, 彩虹 (cǎihóng) = cầu vồng\n\n**Mẫu câu**\n这 是 粉色 = Đây là màu hồng.",
+        words: [
+          W("粉色", "hồng", "🩷", "fěnsè"), W("棕色", "nâu", "🟤", "zōngsè"), W("灰色", "xám", "🩶", "huīsè"), W("紫色", "tím", "🟣", "zǐsè"),
+          W("橙色", "cam", "🟠", "chéngsè"), W("金色", "vàng kim", "🥇", "jīnsè"), W("银色", "bạc", "🥈", "yínsè"), W("彩虹", "cầu vồng", "🌈", "cǎihóng"),
+        ],
+        sentences: [
+          { t: ["这", "是", "粉色"], n: ["Đây", "là", "màu", "hồng"], r: "zhè shì fěnsè", blank: "粉色", dT: ["紫色", "不"], dN: ["tím", "không"] },
+          { t: ["我", "喜欢", "紫色"], n: ["Tôi", "thích", "màu", "tím"], r: "wǒ xǐhuan zǐsè", blank: "紫色", dT: ["灰色", "狗"], dN: ["xám", "chó"] },
+          { t: ["天上", "有", "彩虹"], n: ["Trên", "trời", "có", "cầu", "vồng"], r: "tiānshàng yǒu cǎihóng", blank: "彩虹", dT: ["月亮", "我"], dN: ["mặt trăng", "tôi"] },
+          { t: ["这", "是", "橙色"], n: ["Đây", "là", "màu", "cam"], r: "zhè shì chéngsè", blank: "橙色", dT: ["金色", "是"], dN: ["vàng kim", "là"] },
+        ],
+      },
+      {
+        title: "Thức ăn 2",
+        description: "Món ngon nữa: mì, súp, kẹo và kem.",
+        guidebook:
+          "Ăn ngon miệng! 😋\n\n- 面条 (miàntiáo) = mì, 汤 (tāng) = súp, 糖果 (tángguǒ) = kẹo, 饼干 (bǐnggān) = bánh quy\n- 果汁 (guǒzhī) = nước ép, 奶酪 (nǎilào) = phô mai, 冰淇淋 (bīngqílín) = kem, 比萨 (bǐsà) = pizza\n\n**Mẫu câu**\n我 喜欢 吃 ～ = Tôi thích ăn ～.",
+        words: [
+          W("面条", "mì", "🍜", "miàntiáo"), W("汤", "súp", "🍲", "tāng"), W("糖果", "kẹo", "🍬", "tángguǒ"), W("饼干", "bánh quy", "🍪", "bǐnggān"),
+          W("果汁", "nước ép", "🧃", "guǒzhī"), W("奶酪", "phô mai", "🧀", "nǎilào"), W("冰淇淋", "kem", "🍦", "bīngqílín"), W("比萨", "pizza", "🍕", "bǐsà"),
+        ],
+        sentences: [
+          { t: ["我", "喜欢", "吃", "面条"], n: ["Tôi", "thích", "ăn", "mì"], r: "wǒ xǐhuan chī miàntiáo", blank: "面条", dT: ["汤", "不"], dN: ["súp", "không"] },
+          { t: ["我", "喝", "果汁"], n: ["Tôi", "uống", "nước", "ép"], r: "wǒ hē guǒzhī", blank: "果汁", dT: ["汤", "猫"], dN: ["súp", "mèo"] },
+          { t: ["这", "是", "冰淇淋"], n: ["Đây", "là", "kem"], r: "zhè shì bīngqílín", blank: "冰淇淋", dT: ["糖果", "我"], dN: ["kẹo", "tôi"] },
+          { t: ["妹妹", "吃", "糖果"], n: ["Em", "gái", "ăn", "kẹo"], r: "mèimei chī tángguǒ", blank: "糖果", dT: ["饼干", "是"], dN: ["bánh quy", "là"] },
+        ],
+      },
+      {
+        title: "Trường học 2",
+        description: "Thêm đồ dùng học tập: bút chì, kéo, vở và máy tính.",
+        guidebook:
+          "Đồ dùng của em ✏️\n\n- 铅笔 (qiānbǐ) = bút chì, 蜡笔 (làbǐ) = bút sáp màu, 剪刀 (jiǎndāo) = kéo, 本子 (běnzi) = vở\n- 纸 (zhǐ) = giấy, 地图 (dìtú) = bản đồ, 地球 (dìqiú) = quả địa cầu, 电脑 (diànnǎo) = máy tính\n\n**Mẫu câu**\n这 是 我 的 ～ = Đây là ～ của tôi.",
+        words: [
+          W("铅笔", "bút chì", "✏️", "qiānbǐ"), W("蜡笔", "bút sáp màu", "🖍️", "làbǐ"), W("剪刀", "kéo", "✂️", "jiǎndāo"), W("本子", "vở", "📓", "běnzi"),
+          W("纸", "giấy", "📄", "zhǐ"), W("地图", "bản đồ", "🗺️", "dìtú"), W("地球", "quả địa cầu", "🌍", "dìqiú"), W("电脑", "máy tính", "💻", "diànnǎo"),
+        ],
+        sentences: [
+          { t: ["这", "是", "我", "的", "铅笔"], n: ["Đây", "là", "bút", "chì", "của", "tôi"], r: "zhè shì wǒ de qiānbǐ", blank: "铅笔", dT: ["蜡笔", "不"], dN: ["sáp màu", "không"] },
+          { t: ["我", "有", "一", "本", "本子"], n: ["Tôi", "có", "một", "quyển", "vở"], r: "wǒ yǒu yì běn běnzi", blank: "本子", dT: ["纸", "狗"], dN: ["giấy", "chó"] },
+          { t: ["这", "是", "地图"], n: ["Đây", "là", "bản", "đồ"], r: "zhè shì dìtú", blank: "地图", dT: ["地球", "我"], dN: ["địa cầu", "tôi"] },
+          { t: ["哥哥", "用", "电脑"], n: ["Anh", "trai", "dùng", "máy", "tính"], r: "gēge yòng diànnǎo", blank: "电脑", dT: ["剪刀", "是"], dN: ["kéo", "là"] },
         ],
       },
     ],
