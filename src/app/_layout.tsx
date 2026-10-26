@@ -103,6 +103,11 @@ export default function RootLayout() {
           <Stack.Screen name="parents" options={{ presentation: "modal" }} />
           <Stack.Screen name="account" options={{ presentation: "modal" }} />
           <Stack.Screen name="speaking" options={{ presentation: "modal" }} />
+          <Stack.Screen name="game-memory" options={{ presentation: "modal" }} />
+          <Stack.Screen name="game-listen" options={{ presentation: "modal" }} />
+          <Stack.Screen name="game-scramble" options={{ presentation: "modal" }} />
+          <Stack.Screen name="game-speed" options={{ presentation: "modal" }} />
+          <Stack.Screen name="game-letters" options={{ presentation: "modal" }} />
         </Stack>
       </KidsTimeLimit>
     </AuthProvider>
