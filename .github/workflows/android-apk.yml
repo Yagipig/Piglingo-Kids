@@ -9,6 +9,11 @@ jobs:
   apk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    # Thông tin Supabase CÔNG KHAI (URL + publishable key) nạp từ GitHub Secrets
+    # để bản APK có đăng nhập/đồng bộ. Thiếu secret thì app tự chạy offline.
+    env:
+      EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
     steps:
       - uses: actions/checkout@v4
 
