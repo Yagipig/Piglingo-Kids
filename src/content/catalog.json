@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "courses": [
+    {
+      "id": "en-vi",
+      "targetLanguage": "Tiếng Anh",
+      "targetCode": "en",
+      "nativeLanguage": "Tiếng Việt",
+      "flag": "🇺🇸",
+      "unitCount": 6,
+      "lessonCount": 24
+    },
+    {
+      "id": "ja-vi",
+      "targetLanguage": "Tiếng Nhật",
+      "targetCode": "ja",
+      "nativeLanguage": "Tiếng Việt",
+      "flag": "🇯🇵",
+      "unitCount": 6,
+      "lessonCount": 19
+    },
+    {
+      "id": "zh-vi",
+      "targetLanguage": "Tiếng Trung",
+      "targetCode": "zh",
+      "nativeLanguage": "Tiếng Việt",
+      "flag": "🇨🇳",
+      "unitCount": 5,
+      "lessonCount": 19
+    }
+  ]
+}
