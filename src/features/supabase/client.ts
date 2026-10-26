@@ -18,7 +18,15 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
-export const isSupabaseEnabled: boolean = Boolean(supabaseUrl && supabaseAnonKey);
+// Chỉ tạo client ở môi trường có `window` (trình duyệt / React Native).
+// Khi prerender bản web tĩnh (Node, không có window/AsyncStorage), client
+// tắt an toàn để không crash quá trình export; bản chạy thật trên trình
+// duyệt vẫn bật Supabase bình thường.
+const hasWindow = typeof window !== "undefined";
+
+export const isSupabaseEnabled: boolean = Boolean(
+  hasWindow && supabaseUrl && supabaseAnonKey
+);
 
 export const supabase: SupabaseClient | null = isSupabaseEnabled
   ? createClient(supabaseUrl as string, supabaseAnonKey as string, {
