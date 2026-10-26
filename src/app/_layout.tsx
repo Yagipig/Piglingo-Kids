@@ -7,7 +7,19 @@ import { TimeLimitGuard } from "@/features/parents/TimeLimitGuard";
 import { useParentSettings } from "@/features/parents/useParentSettings";
 import { AuthProvider } from "@/features/supabase/AuthContext";
 import { useProgress } from "@/lib/store";
+import { useProgressSync } from "@/lib/useProgressSync";
 import { useResolvedScheme, useThemeColors } from "@/lib/theme";
+
+/**
+ * Chạy đồng bộ tiến độ Supabase một lần cho mỗi phiên đăng nhập (xem
+ * src/lib/useProgressSync.ts). Phải nằm TRONG AuthProvider để đọc được
+ * phiên đăng nhập; không render gì và không chặn khởi động — chưa đăng
+ * nhập / Supabase tắt / mất mạng thì app vẫn chạy offline như cũ.
+ */
+function ProgressSyncRunner({ hydrated }: { hydrated: boolean }) {
+  useProgressSync(hydrated);
+  return null;
+}
 
 /**
  * Bước 2: bọc phần app của bé bằng TimeLimitGuard, với 2 điều kiện an toàn:
@@ -74,6 +86,7 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
+      <ProgressSyncRunner hydrated={hydrated} />
       <KidsTimeLimit>
         <StatusBar style={scheme === "dark" ? "light" : "dark"} />
         <Stack
