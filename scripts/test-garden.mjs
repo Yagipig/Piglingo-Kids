@@ -6,7 +6,7 @@
  * content.ts/rewards.ts) ra thư mục hệ thống, rồi kiểm tra: ánh xạ vương
  * quốc, cấp vườn, cây thần, hoa unit, tuần hiện tại, thời lượng ước tính,
  * khóa Mission, companion, reward highlights, hotspot có từ thật trong
- * pack, và baseline nội dung 62 unit / 242 bài / 1894 exercise.
+ * pack, và baseline nội dung 80 unit / 314 bài / 2488 exercise.
  */
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -140,7 +140,7 @@ check('2b. Cây thần đổi giai đoạn theo cùng ngưỡng XP', () => {
 
 check('3. Hoa unit: 0% = mầm, một phần = đang nở, 100% = nở đầy', () => {
   const fresh = gardenFlowers(emptyProgress());
-  assert.equal(fresh.length, 62);
+  assert.equal(fresh.length, 80);
   assert.ok(fresh.every((f) => f.state === 'seed'));
 
   const partial = emptyProgress();
@@ -324,8 +324,8 @@ check('11. Tổng XP vườn cộng cả ba khóa', () => {
   assert.equal(totalGardenXp(progress), 175);
 });
 
-check('12. Baseline nội dung: 62 unit / 242 bài / 1894 exercise', () => {
-  const expected = { 'en-vi': [21, 84, 697], 'ja-vi': [21, 79, 615], 'zh-vi': [20, 79, 582] };
+check('12. Baseline nội dung: 80 unit / 314 bài / 2488 exercise', () => {
+  const expected = { 'en-vi': [27, 108, 913], 'ja-vi': [27, 103, 813], 'zh-vi': [26, 103, 762] };
   let units = 0, lessons = 0, exercises = 0;
   for (const course of catalog.courses) {
     const pack = getPack(course.id);
@@ -342,14 +342,14 @@ check('12. Baseline nội dung: 62 unit / 242 bài / 1894 exercise', () => {
     assert.deepEqual([u, l, e], expected[course.id], course.id);
     units += u; lessons += l; exercises += e;
   }
-  assert.deepEqual([units, lessons, exercises], [62, 242, 1894]);
+  assert.deepEqual([units, lessons, exercises], [80, 314, 2488]);
 });
 
-check('13. Tên vùng đất: 62 đảo thật của Việt Nam, không trùng, không tên cũ', () => {
+check('13. Tên vùng đất: 80 đảo thật của Việt Nam, không trùng, không tên cũ', () => {
   const expected = {
-    'en-vi': ['Đảo Phú Quốc', 'Đảo Cát Bà', 'Côn Đảo', 'Đảo Lý Sơn', 'Đảo Cô Tô', 'Đảo Phú Quý', 'Quần đảo Nam Du', 'Cù Lao Chàm', 'Hòn Tre', 'Đảo Bạch Long Vĩ', 'Đảo Thổ Chu', 'Đảo Tuần Châu', 'Đảo Ti Tốp', 'Hòn Gầm Ghì', 'Quần Đảo Hải Tặc', 'Cồn Cỏ', 'Đảo Cái Chiên', 'Đảo Bản Sen', 'Hòn Mê', 'Đảo Sơn Chà', 'Hòn Khô'],
-    'ja-vi': ['Đảo Quan Lạn', 'Đảo Ngọc Vừng', 'Đảo Vĩnh Thực', 'Đảo Thanh Lân', 'Đảo Cái Bầu', 'Hòn Dấu', 'Hòn Chuối', 'Hòn Khoai', 'Hòn Sơn', 'Đảo Bình Ba', 'Đảo Bình Hưng', 'Hòn Phụ Tử', 'Cù Lao Câu', 'Đảo Long Sơn', 'Hòn Bà', 'Hòn Rái', 'Hòn Đốc', 'Hòn Bảy Cạnh', 'Hòn Tranh', 'Đảo Trần', 'Hòn La'],
-    'zh-vi': ['Hòn Mun', 'Hòn Tằm', 'Cù Lao Xanh', 'Đảo Khỉ', 'Đảo Yến', 'Đảo Diệp Sơn', 'Hòn Nghệ', 'Hòn Heo', 'Quần đảo Trường Sa', 'Quần đảo Hoàng Sa', 'Đảo Ó', 'Đảo Cống Tây', 'Hòn Rơm', 'Đảo Mắt Rồng', 'Hòn Gió', 'Hòn Nẹ', 'Hòn Ông Căn', 'Hòn Giang', 'Hòn Cau', 'Hòn Sẹo'],
+    'en-vi': ['Đảo Phú Quốc', 'Đảo Cát Bà', 'Côn Đảo', 'Đảo Lý Sơn', 'Đảo Cô Tô', 'Đảo Phú Quý', 'Quần đảo Nam Du', 'Cù Lao Chàm', 'Hòn Tre', 'Đảo Bạch Long Vĩ', 'Đảo Thổ Chu', 'Đảo Tuần Châu', 'Đảo Ti Tốp', 'Hòn Gầm Ghì', 'Quần Đảo Hải Tặc', 'Cồn Cỏ', 'Đảo Cái Chiên', 'Đảo Bản Sen', 'Hòn Mê', 'Đảo Sơn Chà', 'Hòn Khô', 'Hòn Móng Tay', 'Hòn Thơm', 'Hòn May Rút', 'Đảo Long Châu', 'Hòn Miễu', 'Cù Lao Mái Nhà'],
+    'ja-vi': ['Đảo Quan Lạn', 'Đảo Ngọc Vừng', 'Đảo Vĩnh Thực', 'Đảo Thanh Lân', 'Đảo Cái Bầu', 'Hòn Dấu', 'Hòn Chuối', 'Hòn Khoai', 'Hòn Sơn', 'Đảo Bình Ba', 'Đảo Bình Hưng', 'Hòn Phụ Tử', 'Cù Lao Câu', 'Đảo Long Sơn', 'Hòn Bà', 'Hòn Rái', 'Hòn Đốc', 'Hòn Bảy Cạnh', 'Hòn Tranh', 'Đảo Trần', 'Hòn La', 'Đảo Bé', 'Hòn Mù Cu', 'Hòn Ngư', 'Hòn Mắt', 'Đảo Lan Châu', 'Hòn Biện Sơn'],
+    'zh-vi': ['Hòn Mun', 'Hòn Tằm', 'Cù Lao Xanh', 'Đảo Khỉ', 'Đảo Yến', 'Đảo Diệp Sơn', 'Hòn Nghệ', 'Hòn Heo', 'Quần đảo Trường Sa', 'Quần đảo Hoàng Sa', 'Đảo Ó', 'Đảo Cống Tây', 'Hòn Rơm', 'Đảo Mắt Rồng', 'Hòn Gió', 'Hòn Nẹ', 'Hòn Ông Căn', 'Hòn Giang', 'Hòn Cau', 'Hòn Sẹo', 'Hòn Trác', 'Hòn Tài', 'Hòn Trứng', 'Hòn Bông Lan', 'Hòn Nồm', 'Quần Đảo Bà Lụa'],
   };
   const seen = new Set();
   for (const course of catalog.courses) {
@@ -367,7 +367,7 @@ check('13. Tên vùng đất: 62 đảo thật của Việt Nam, không trùng, 
     }
     assert.deepEqual(names, expected[course.id], course.id);
   }
-  assert.equal(seen.size, 62);
+  assert.equal(seen.size, 80);
 });
 
 console.log(`\nTất cả ${passed} nhóm kiểm tra PASS.`);

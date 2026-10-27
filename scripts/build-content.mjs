@@ -387,6 +387,117 @@ const COURSES = [
           { t: ["A", "robot", "can", "help", "people", "work"], n: ["Người", "máy", "có", "thể", "giúp", "con", "người", "làm", "việc"], blank: "robot", dT: ["smartphone", "engineer"], dN: ["internet", "kỹ sư"] },
         ],
       },
+      {
+        title: "Câu điều kiện nâng cao và câu ước",
+        band: "thpt",
+        description: "Điều kiện loại 3, câu ước wish và if only cho những điều trái với quá khứ.",
+        guidebook:
+          "Điều kiện loại 3 và câu ước 🎓\n\n**Loại 3 — trái với quá khứ**: If + had + V3, would have + V3\n- If I had studied hard, I would have passed the exam. = Nếu tôi đã học chăm thì tôi đã thi đỗ.\n\n**Câu ước**\n- *wish* = ước: I wish I were taller. = Tôi ước tôi cao hơn.\n- *if only* = giá mà: If only I had listened to my mother.\n\n**Cụm hay gặp**\n- even if = ngay cả khi, as if = như thể, in case = phòng khi, only if = chỉ khi.",
+        words: [
+          W("had", "đã (quá khứ hoàn thành, had + V3)", "⏪"), W("would have", "đã sẽ (kết quả loại 3)", "💭"), W("wish", "ước, mong ước", "🌠"), W("if only", "giá mà", "🙏"),
+          W("even if", "ngay cả khi", "🌧️"), W("as if", "như thể", "🎭"), W("in case", "phòng khi", "☂️"), W("only if", "chỉ khi", "🔑"),
+        ],
+        sentences: [
+          { t: ["If", "I", "had", "studied", "hard", "I", "would", "have", "passed", "the", "exam"], n: ["Nếu", "tôi", "đã", "học", "chăm", "tôi", "đã", "thi", "đỗ"], blank: "had", dT: ["were", "will"], dN: ["đang", "sẽ"] },
+          { t: ["I", "wish", "I", "were", "taller"], n: ["Tôi", "ước", "tôi", "cao", "hơn"], blank: "wish", dT: ["want", "hope"], dN: ["muốn", "thích"] },
+          { t: ["If", "only", "I", "had", "listened", "to", "my", "mother"], n: ["Giá", "mà", "tôi", "đã", "nghe", "lời", "mẹ"], blank: "had", dT: ["have", "did"], dN: ["đang", "sẽ"] },
+          { t: ["We", "will", "go", "out", "even", "if", "it", "rains", "tomorrow"], n: ["Chúng", "ta", "sẽ", "đi", "ra", "ngoài", "ngay", "cả", "khi", "trời", "mưa", "vào", "ngày", "mai"], blank: "even", dT: ["as", "only"], dN: ["như", "chỉ"] },
+          { t: ["He", "talks", "as", "if", "he", "knew", "everything"], n: ["Anh", "ấy", "nói", "như", "thể", "anh", "ấy", "biết", "mọi", "thứ"], blank: "as", dT: ["even", "like"], dN: ["ngay", "giống"] },
+          { t: ["You", "can", "play", "only", "if", "you", "finish", "your", "homework"], n: ["Bạn", "có", "thể", "chơi", "chỉ", "khi", "bạn", "làm", "xong", "bài", "tập"], blank: "only", dT: ["even", "as"], dN: ["ngay", "như"] },
+        ],
+      },
+      {
+        title: "Mệnh đề quan hệ nâng cao",
+        band: "thpt",
+        description: "Dùng whom, what, when, why và rút gọn mệnh đề quan hệ bằng phân từ.",
+        guidebook:
+          "Mệnh đề quan hệ nâng cao 🔗\n\n**Đại từ nâng cao**\n- *whom* chỉ người làm tân ngữ, thường sau giới từ: the man to whom I talked.\n- *what* = điều mà, *when* = khi mà, *why* = lý do mà.\n\n**Rút gọn bằng phân từ**\n- The boy standing there = cậu bé mà đang đứng ở đó (V-ing khi chủ động).\n- wearing = đang mặc, holding = đang cầm, carrying = đang mang, đang bê.",
+        words: [
+          W("whom", "người mà (làm tân ngữ)", "🧑"), W("what", "điều mà, cái mà", "💡"), W("when", "khi mà, lúc mà", "🕰️"), W("why", "lý do mà", "❓"),
+          W("standing", "đang đứng", "🧍"), W("wearing", "đang mặc", "👕"), W("holding", "đang cầm, đang ôm", "🤲"), W("carrying", "đang mang, đang bê", "🎒"),
+        ],
+        sentences: [
+          { t: ["The", "man", "to", "whom", "I", "talked", "is", "my", "teacher"], n: ["Người", "đàn", "ông", "mà", "tôi", "đã", "nói", "chuyện", "là", "thầy", "giáo", "của", "tôi"], blank: "whom", dT: ["who", "which"], dN: ["vật mà", "nơi mà"] },
+          { t: ["The", "boy", "standing", "there", "is", "my", "brother"], n: ["Cậu", "bé", "đang", "đứng", "ở", "đó", "là", "anh", "trai", "của", "tôi"], blank: "standing", dT: ["wearing", "holding"], dN: ["đang mặc", "đang cầm"] },
+          { t: ["The", "girl", "wearing", "a", "red", "dress", "is", "Lan"], n: ["Cô", "gái", "đang", "mặc", "váy", "đỏ", "là", "Lan"], blank: "wearing", dT: ["standing", "carrying"], dN: ["đang đứng", "đang mang"] },
+          { t: ["I", "know", "the", "reason", "why", "he", "left", "early"], n: ["Tôi", "biết", "lý", "do", "mà", "anh", "ấy", "đã", "về", "sớm"], blank: "why", dT: ["when", "what"], dN: ["khi mà", "điều mà"] },
+          { t: ["Sunday", "is", "the", "day", "when", "we", "rest"], n: ["Chủ", "nhật", "là", "ngày", "mà", "chúng", "ta", "nghỉ", "ngơi"], blank: "when", dT: ["why", "whom"], dN: ["lý do mà", "người mà"] },
+          { t: ["What", "the", "man", "carrying", "a", "bag", "said", "was", "true"], n: ["Điều", "người", "đàn", "ông", "đang", "mang", "túi", "nói", "là", "đúng"], blank: "What", dT: ["Why", "When"], dN: ["lý do", "khi"] },
+        ],
+      },
+      {
+        title: "Câu bị động nâng cao",
+        band: "thpt",
+        description: "Bị động với have/get something done và bị động tường thuật is said, is known.",
+        guidebook:
+          "Bị động nâng cao 🔧\n\n**Nhờ ai làm việc gì**: have/get + vật + V3\n- I had my bike repaired yesterday. = Tôi đã cho sửa xe đạp hôm qua.\n- She got her hair cut last week. = Cô ấy đã đi cắt tóc tuần trước.\n\n**Bị động tường thuật**\n- She is known to be very kind. = Cô ấy được biết là rất tốt bụng.\n- He is said to be rich. = Người ta nói anh ấy giàu.\n\n**Các V3 mới**: given, sent, taught, stolen, repaired, delivered, known, cut.",
+        words: [
+          W("given", "được cho, được tặng (V3 của give)", "🎁"), W("sent", "được gửi đi (V3 của send)", "✉️"), W("taught", "được dạy (V3 của teach)", "📚"), W("stolen", "bị lấy trộm (V3 của steal)", "🚨"),
+          W("repaired", "được sửa chữa", "🔧"), W("delivered", "được giao đến", "📦"), W("known", "được biết đến (V3 của know)", "🌟"), W("cut", "được cắt (V3 của cut)", "✂️"),
+        ],
+        sentences: [
+          { t: ["I", "had", "my", "bike", "repaired", "yesterday"], n: ["Tôi", "đã", "cho", "sửa", "xe", "đạp", "hôm", "qua"], blank: "repaired", dT: ["delivered", "stolen"], dN: ["giao đến", "lấy trộm"] },
+          { t: ["The", "letter", "given", "to", "me", "was", "delivered", "this", "morning"], n: ["Bức", "thư", "được", "đưa", "cho", "tôi", "đã", "được", "giao", "sáng", "nay"], blank: "delivered", dT: ["repaired", "sent"], dN: ["sửa chữa", "gửi đi"] },
+          { t: ["He", "is", "known", "to", "have", "been", "taught", "piano", "as", "a", "child"], n: ["Anh", "ấy", "được", "biết", "là", "đã", "được", "dạy", "đàn", "piano", "khi", "còn", "nhỏ"], blank: "known", dT: ["given", "said"], dN: ["cho", "nói"] },
+          { t: ["My", "wallet", "was", "stolen", "last", "night"], n: ["Ví", "của", "tôi", "đã", "bị", "lấy", "trộm", "đêm", "qua"], blank: "stolen", dT: ["cut", "sent"], dN: ["cắt", "gửi"] },
+          { t: ["She", "got", "her", "hair", "cut", "last", "week"], n: ["Cô", "ấy", "đã", "đi", "cắt", "tóc", "tuần", "trước"], blank: "cut", dT: ["stolen", "given"], dN: ["lấy trộm", "cho"] },
+          { t: ["The", "parcel", "was", "sent", "to", "my", "house", "yesterday"], n: ["Bưu", "kiện", "đã", "được", "gửi", "đến", "nhà", "tôi", "hôm", "qua"], blank: "sent", dT: ["taught", "delivered"], dN: ["dạy", "giao đến"] },
+        ],
+      },
+      {
+        title: "Lời nói gián tiếp nâng cao",
+        band: "thpt",
+        description: "Thuật lại câu hỏi, mệnh lệnh và lời hứa với whether, ordered, suggested.",
+        guidebook:
+          "Lời nói gián tiếp nâng cao 💬\n\n**Thuật câu hỏi**\n- He asked me whether I liked coffee. = Anh ấy hỏi tôi có thích cà phê không.\n- *whether* = liệu có... không (giống if trong câu hỏi gián tiếp).\n\n**Mệnh lệnh, lời khuyên, đề nghị**\n- ordered = ra lệnh, advised = khuyên, suggested = gợi ý.\n- She suggested going to the beach. = Cô ấy gợi ý đi biển (suggest + V-ing).\n\n**Các động từ thuật lại khác**: promised = hứa, agreed = đồng ý, explained = giải thích, refused = từ chối.",
+        words: [
+          W("whether", "liệu có... không", "🤔"), W("ordered", "đã ra lệnh", "📢"), W("advised", "đã khuyên", "🩺"), W("suggested", "đã gợi ý", "💡"),
+          W("promised", "đã hứa", "🤞"), W("agreed", "đã đồng ý", "🤝"), W("explained", "đã giải thích", "📖"), W("refused", "đã từ chối", "🚫"),
+        ],
+        sentences: [
+          { t: ["He", "asked", "me", "whether", "I", "liked", "coffee"], n: ["Anh", "ấy", "hỏi", "tôi", "liệu", "tôi", "có", "thích", "cà", "phê", "không"], blank: "whether", dT: ["that", "why"], dN: ["rằng", "tại sao"] },
+          { t: ["The", "teacher", "ordered", "us", "to", "open", "our", "books"], n: ["Thầy", "giáo", "ra", "lệnh", "cho", "chúng", "tôi", "mở", "sách"], blank: "ordered", dT: ["advised", "asked"], dN: ["khuyên", "hỏi"] },
+          { t: ["The", "doctor", "advised", "me", "to", "rest", "more"], n: ["Bác", "sĩ", "khuyên", "tôi", "nghỉ", "ngơi", "nhiều", "hơn"], blank: "advised", dT: ["ordered", "promised"], dN: ["ra lệnh", "hứa"] },
+          { t: ["She", "suggested", "going", "to", "the", "beach"], n: ["Cô", "ấy", "gợi", "ý", "đi", "biển"], blank: "suggested", dT: ["refused", "explained"], dN: ["từ chối", "giải thích"] },
+          { t: ["He", "promised", "to", "come", "and", "agreed", "to", "help", "us"], n: ["Anh", "ấy", "hứa", "sẽ", "đến", "và", "đồng", "ý", "giúp", "chúng", "tôi"], blank: "promised", dT: ["suggested", "refused"], dN: ["gợi ý", "từ chối"] },
+          { t: ["He", "explained", "why", "he", "refused", "to", "answer"], n: ["Anh", "ấy", "giải", "thích", "vì", "sao", "anh", "ấy", "từ", "chối", "trả", "lời"], blank: "explained", dT: ["agreed", "ordered"], dN: ["đồng ý", "ra lệnh"] },
+        ],
+      },
+      {
+        title: "Thế giới quanh ta",
+        band: "thpt",
+        description: "Từ vựng học thuật về khí hậu, dân số, văn hóa và những việc làm vì cộng đồng.",
+        guidebook:
+          "Thế giới quanh ta 🌏\n\n**Vấn đề toàn cầu**\n- climate change = biến đổi khí hậu, global warming = nóng lên toàn cầu.\n- population = dân số, future = tương lai.\n\n**Văn hóa và cộng đồng**\n- culture = văn hóa, tradition = truyền thống.\n- volunteer = tình nguyện viên, đi tình nguyện; charity = từ thiện, hội từ thiện.\n\n**Mẫu câu**\n- Global warming is part of climate change. = Nóng lên toàn cầu là một phần của biến đổi khí hậu.",
+        words: [
+          W("climate change", "biến đổi khí hậu", "🌡️"), W("global warming", "nóng lên toàn cầu", "🔥"), W("population", "dân số", "👥"), W("culture", "văn hóa", "🎎"),
+          W("tradition", "truyền thống", "🏮"), W("volunteer", "tình nguyện viên, đi tình nguyện", "🙋"), W("charity", "từ thiện", "❤️"), W("future", "tương lai", "🔮"),
+        ],
+        sentences: [
+          { t: ["Global", "warming", "is", "part", "of", "climate", "change"], n: ["Nóng", "lên", "toàn", "cầu", "là", "một", "phần", "của", "biến", "đổi", "khí", "hậu"], blank: "warming", dT: ["change", "future"], dN: ["thay đổi", "tương lai"] },
+          { t: ["The", "population", "will", "grow", "in", "the", "future"], n: ["Dân", "số", "sẽ", "tăng", "trong", "tương", "lai"], blank: "population", dT: ["culture", "tradition"], dN: ["văn hóa", "truyền thống"] },
+          { t: ["Students", "volunteer", "for", "charity", "work", "every", "summer"], n: ["Học", "sinh", "đi", "tình", "nguyện", "làm", "việc", "từ", "thiện", "mỗi", "mùa", "hè"], blank: "volunteer", dT: ["charity", "future"], dN: ["từ thiện", "tương lai"] },
+        ],
+      },
+      {
+        title: "Ôn tập tổng hợp",
+        band: "thpt",
+        description: "Ôn chung các thì, bị động, điều kiện, mệnh đề quan hệ và lời nói gián tiếp.",
+        guidebook:
+          "Ôn tập tổng hợp 🏆\n\n**Trạng từ dấu hiệu hay gặp**\n- already = đã rồi, yet = chưa (cuối câu hỏi, phủ định), ever = đã từng, never = chưa bao giờ.\n- since = kể từ khi, ago = cách đây, recently = gần đây, finally = cuối cùng.\n\n**Nhớ lại**\n- Hiện tại hoàn thành: have/has + V3, dùng với already, ever, never, since.\n- Điều kiện loại 3: If + had + V3, would have + V3.\n- Câu hỏi gián tiếp: asked me whether/if...; bị động: be + V3.",
+        words: [
+          W("already", "đã rồi", "✅"), W("yet", "chưa (dùng với phủ định, câu hỏi)", "⌛"), W("ever", "đã từng", "🌟"), W("never", "chưa bao giờ", "🚫"),
+          W("since", "kể từ khi, kể từ", "📅"), W("ago", "cách đây", "⏪"), W("recently", "gần đây", "🆕"), W("finally", "cuối cùng", "🏁"),
+        ],
+        sentences: [
+          { t: ["If", "I", "had", "already", "finished", "I", "would", "have", "gone", "out"], n: ["Nếu", "tôi", "đã", "làm", "xong", "rồi", "tôi", "đã", "đi", "ra", "ngoài"], blank: "already", dT: ["yet", "never"], dN: ["chưa", "chưa bao giờ"] },
+          { t: ["This", "house", "was", "built", "two", "years", "ago"], n: ["Ngôi", "nhà", "này", "được", "xây", "cách", "đây", "hai", "năm"], blank: "ago", dT: ["since", "ever"], dN: ["kể từ", "đã từng"] },
+          { t: ["If", "I", "ever", "won", "a", "lot", "of", "money", "I", "would", "travel"], n: ["Nếu", "tôi", "trúng", "nhiều", "tiền", "tôi", "sẽ", "đi", "du", "lịch"], blank: "ever", dT: ["never", "already"], dN: ["chưa bao giờ", "đã rồi"] },
+          { t: ["The", "book", "which", "I", "bought", "has", "never", "been", "read"], n: ["Quyển", "sách", "mà", "tôi", "đã", "mua", "chưa", "bao", "giờ", "được", "đọc"], blank: "never", dT: ["ever", "yet"], dN: ["đã từng", "chưa"] },
+          { t: ["He", "asked", "me", "whether", "I", "had", "finished", "yet"], n: ["Anh", "ấy", "hỏi", "tôi", "liệu", "tôi", "đã", "làm", "xong", "chưa"], blank: "yet", dT: ["already", "finally"], dN: ["đã rồi", "cuối cùng"] },
+          { t: ["Since", "2020", "we", "have", "lived", "here", "and", "recently", "we", "finally", "bought", "a", "car"], n: ["Kể", "từ", "năm", "2020", "chúng", "tôi", "đã", "sống", "ở", "đây", "và", "gần", "đây", "cuối", "cùng", "chúng", "tôi", "đã", "mua", "một", "chiếc", "xe", "hơi"], blank: "finally", dT: ["recently", "already"], dN: ["gần đây", "đã rồi"] },
+        ],
+      },
     ],
   },
   {
@@ -717,6 +828,114 @@ const COURSES = [
           { t: ["およげる", "ように", "れんしゅう", "します"], n: ["Tôi", "luyện", "tập", "để", "biết", "bơi"], r: "oyogeru youni renshuu shimasu", blank: "ように", dT: ["ために", "すぎる"], dN: ["vì", "quá"] },
         ],
       },
+      {
+        title: "Kanji N3 cơ bản 1",
+        band: "thpt",
+        description: "Tám chữ Kanji N3 quen thuộc về thời gian, công ty và gia đình.",
+        guidebook:
+          "Kanji trình độ N3! 🎌\n\n**Kanji quanh em**\n- 会 (au / kai) = gặp, hội; 社 (sha) = công ty\n- 年 (toshi / nen) = năm; 時 (toki / ji) = giờ, lúc\n- 今 (ima / kon) = bây giờ; 明 (akarui / mei) = sáng, ngày mai\n- 友 (tomo / yuu) = bạn; 母 (haha / bo) = mẹ\n\n**Ghép chữ quen thuộc**\n会社 (kaisha) = công ty; 友だち (tomodachi) = bạn bè; 明日 (ashita) = ngày mai.\n\n**Mẫu câu**\n今 は 三時 です。= Bây giờ là ba giờ.",
+        words: [
+          W("会", "gặp, hội", "🤝", "au / kai"), W("社", "công ty", "🏢", "sha"), W("年", "năm", "📅", "toshi / nen"), W("時", "giờ, lúc", "🕐", "toki / ji"),
+          W("今", "bây giờ", "⏰", "ima / kon"), W("明", "sáng, ngày mai", "🌅", "akarui / mei"), W("友", "bạn", "🧑‍🤝‍🧑", "tomo / yuu"), W("母", "mẹ", "👩", "haha / bo"),
+        ],
+        sentences: [
+          { t: ["今", "は", "三時", "です"], n: ["Bây", "giờ", "là", "ba", "giờ"], r: "ima wa sanji desu", blank: "今", dT: ["時", "年"], dN: ["giờ", "năm"] },
+          { t: ["あの", "人", "は", "母", "です"], n: ["Người", "kia", "là", "mẹ"], r: "ano hito wa haha desu", blank: "母", dT: ["友", "社"], dN: ["bạn", "công ty"] },
+          { t: ["友", "は", "やさしい", "です"], n: ["Bạn", "tôi", "rất", "hiền"], r: "tomo wa yasashii desu", blank: "友", dT: ["母", "会"], dN: ["mẹ", "hội"] },
+        ],
+      },
+      {
+        title: "Kanji N3 cơ bản 2",
+        band: "thpt",
+        description: "Tám chữ Kanji N3 nữa: trường học, điện, xe, nhà ga và ngôn ngữ.",
+        guidebook:
+          "Thêm tám chữ Kanji N3! 🚉\n\n**Kanji quanh em**\n- 先 (saki / sen) = trước, đầu; 生 (ikiru / sei) = sinh, sống\n- 校 (kou) = trường; 電 (den) = điện; 車 (kuruma / sha) = xe\n- 駅 (eki) = nhà ga; 語 (go) = ngôn ngữ; 間 (aida / kan) = khoảng, giữa\n\n**Ghép chữ quen thuộc**\n学校 (gakkou) = trường học; 電車 (densha) = tàu điện; 日本語 (nihongo) = tiếng Nhật.\n\n**Mẫu câu**\n駅 は 近い です。= Nhà ga ở gần đây.",
+        words: [
+          W("先", "trước, đầu", "👉", "saki / sen"), W("生", "sinh, sống", "🌱", "ikiru / sei"), W("校", "trường", "🏫", "kou"), W("電", "điện", "⚡", "den"),
+          W("車", "xe", "🚗", "kuruma / sha"), W("駅", "nhà ga", "🚉", "eki"), W("語", "ngôn ngữ", "🗣️", "go"), W("間", "khoảng, giữa", "↔️", "aida / kan"),
+        ],
+        sentences: [
+          { t: ["駅", "は", "近い", "です"], n: ["Nhà", "ga", "ở", "gần"], r: "eki wa chikai desu", blank: "駅", dT: ["車", "校"], dN: ["xe", "trường"] },
+          { t: ["この", "車", "は", "新しい", "です"], n: ["Chiếc", "xe", "này", "mới"], r: "kono kuruma wa atarashii desu", blank: "車", dT: ["駅", "間"], dN: ["ga", "khoảng"] },
+          { t: ["わたし", "は", "先", "に", "帰ります"], n: ["Tôi", "về", "trước"], r: "watashi wa saki ni kaerimasu", blank: "先", dT: ["間", "語"], dN: ["khoảng", "ngôn ngữ"] },
+        ],
+      },
+      {
+        title: "Thể bị động",
+        band: "thpt",
+        description: "Học thể bị động: được ai làm gì cho mình, hoặc bị ai làm gì.",
+        guidebook:
+          "Thể bị động (ukemi) 🎌\n\n- Thể bị động nói ai đó *được* hoặc *bị* làm gì đó.\n- Người thực hiện hành động đi với trợ từ に: せんせい に ほめられた = được thầy khen.\n\n**Các động từ bị động**\n- 食べられた (taberareta) bị ăn; 見られた (mirareta) bị xem; 聞かれた (kikareta) bị hỏi\n- 書かれた (kakareta) được viết; 読まれた (yomareta) được đọc; 叱られた (shikarareta) bị mắng\n- 褒められた (homerareta) được khen; 呼ばれた (yobareta) được gọi\n\n**Mẫu câu**\nわたし は せんせい に ほめられた。= Tôi được thầy khen.",
+        words: [
+          W("食べられた", "bị ăn, được ăn", "🍽️", "taberareta"), W("見られた", "bị xem, được xem", "👀", "mirareta"), W("聞かれた", "bị hỏi, được nghe", "👂", "kikareta"), W("書かれた", "được viết", "✍️", "kakareta"),
+          W("読まれた", "được đọc", "📖", "yomareta"), W("叱られた", "bị mắng", "😠", "shikarareta"), W("褒められた", "được khen", "🌟", "homerareta"), W("呼ばれた", "được gọi", "📣", "yobareta"),
+        ],
+        sentences: [
+          { t: ["わたし", "は", "せんせい", "に", "褒められた"], n: ["Tôi", "được", "thầy", "khen"], r: "watashi wa sensei ni homerareta", blank: "褒められた", dT: ["叱られた", "呼ばれた"], dN: ["bị mắng", "được gọi"] },
+          { t: ["わたし", "の", "ケーキ", "は", "犬", "に", "食べられた"], n: ["Bánh", "của", "tôi", "bị", "chó", "ăn"], r: "watashi no keeki wa inu ni taberareta", blank: "食べられた", dT: ["読まれた", "見られた"], dN: ["được đọc", "bị xem"] },
+          { t: ["わたし", "は", "雨", "に", "ふられた"], n: ["Tôi", "bị", "mưa", "làm", "ướt"], r: "watashi wa ame ni furareta", blank: "ふられた", dT: ["ほめられた", "しかれた"], dN: ["được khen", "bị mắng"] },
+          { t: ["この", "ほん", "は", "おおく", "の", "人", "に", "読まれた"], n: ["Quyển", "sách", "này", "được", "nhiều", "người", "đọc"], r: "kono hon wa ooku no hito ni yomareta", blank: "読まれた", dT: ["書かれた", "見られた"], dN: ["được viết", "bị xem"] },
+          { t: ["わたし", "は", "母", "に", "叱られた"], n: ["Tôi", "bị", "mẹ", "mắng"], r: "watashi wa haha ni shikarareta", blank: "叱られた", dT: ["褒められた", "呼ばれた"], dN: ["được khen", "được gọi"] },
+          { t: ["わたし", "の", "日記", "は", "友だち", "に", "見られた"], n: ["Nhật", "ký", "của", "tôi", "bị", "bạn", "xem"], r: "watashi no nikki wa tomodachi ni mirareta", blank: "見られた", dT: ["聞かれた", "食べられた"], dN: ["bị hỏi", "bị ăn"] },
+        ],
+      },
+      {
+        title: "Thể sai khiến và kính ngữ cơ bản",
+        band: "thpt",
+        description: "Thể sai khiến cùng kính ngữ và khiêm nhường ngữ khi nói với người trên.",
+        guidebook:
+          "Sai khiến và kính ngữ 🎩\n\n- Thể sai khiến させる (saseru) = bắt hoặc cho phép ai làm gì.\n- Kính ngữ dùng khi nói về việc của người trên: おっしゃる (nói), なさる (làm).\n- Khiêm nhường ngữ dùng khi nói về việc của mình: いただく (nhận), まいる (đi, đến).\n\n**Từ mới**\n- 行かせる (ikaseru) cho đi; 食べさせる (tabesaseru) cho ăn; 読ませる (yomaseru) cho đọc\n\n**Mẫu câu**\n社長 は 何 と おっしゃいました か。= Giám đốc đã nói gì vậy?",
+        words: [
+          W("させる", "bắt/cho làm (sai khiến)", "👉", "saseru"), W("行かせる", "bắt đi, cho đi", "🚶", "ikaseru"), W("食べさせる", "cho ăn, bắt ăn", "🥄", "tabesaseru"), W("読ませる", "cho đọc, bắt đọc", "📖", "yomaseru"),
+          W("おっしゃる", "nói (tôn kính)", "🎩", "ossharu"), W("なさる", "làm (tôn kính)", "🎩", "nasaru"), W("いただく", "nhận (khiêm nhường)", "🙏", "itadaku"), W("まいる", "đi/đến (khiêm nhường)", "🚶", "mairu"),
+        ],
+        sentences: [
+          { t: ["母", "は", "子ども", "に", "野菜", "を", "食べさせる"], n: ["Mẹ", "cho", "em", "bé", "ăn", "rau"], r: "haha wa kodomo ni yasai wo tabesaseru", blank: "食べさせる", dT: ["読ませる", "行かせる"], dN: ["cho đọc", "cho đi"] },
+          { t: ["母", "は", "弟", "を", "店", "へ", "行かせる"], n: ["Mẹ", "bảo", "em", "trai", "đi", "cửa", "hàng"], r: "haha wa otouto wo mise e ikaseru", blank: "行かせる", dT: ["食べさせる", "させる"], dN: ["cho ăn", "bắt làm"] },
+          { t: ["せんせい", "は", "学生", "に", "本", "を", "読ませる"], n: ["Thầy", "cho", "học", "sinh", "đọc", "sách"], r: "sensei wa gakusei ni hon wo yomaseru", blank: "読ませる", dT: ["行かせる", "食べさせる"], dN: ["cho đi", "cho ăn"] },
+          { t: ["社長", "は", "何", "と", "おっしゃいました", "か"], n: ["Giám", "đốc", "đã", "nói", "gì", "vậy"], r: "shachou wa nan to osshaimashita ka", blank: "おっしゃいました", dT: ["なさいました", "いただきました"], dN: ["đã làm (tôn kính)", "đã nhận (khiêm nhường)"] },
+          { t: ["わたし", "は", "せんせい", "から", "本", "を", "いただきました"], n: ["Tôi", "đã", "nhận", "sách", "từ", "thầy"], r: "watashi wa sensei kara hon wo itadakimashita", blank: "いただきました", dT: ["まいりました", "おっしゃいました"], dN: ["đã đến (khiêm nhường)", "đã nói (tôn kính)"] },
+          { t: ["わたし", "は", "明日", "学校", "へ", "まいります"], n: ["Ngày", "mai", "tôi", "sẽ", "đến", "trường"], r: "watashi wa ashita gakkou e mairimasu", blank: "まいります", dT: ["いただきます", "なさいます"], dN: ["nhận (khiêm nhường)", "làm (tôn kính)"] },
+        ],
+      },
+      {
+        title: "Mẫu câu N3 thường gặp",
+        band: "thpt",
+        description: "Tám mẫu câu N3 hay gặp trong hội thoại và bài đọc.",
+        guidebook:
+          "Mẫu câu N3 thường gặp 🎓\n\n- ばかり (bakari) = chỉ, toàn là; ところ (tokoro) = vừa mới, sắp\n- わけ (wake) = lý do, nghĩa là; はずがない (hazu ga nai) = không thể nào\n- くらい (kurai) = khoảng, đến mức; ば (ba) = nếu ~\n- ずに (zuni) = mà không; のに (noni) = mặc dù\n\n**Mẫu câu**\n食べた ばかり です。= Tôi vừa mới ăn xong.",
+        words: [
+          W("ばかり", "chỉ, toàn là", "🎯", "bakari"), W("ところ", "vừa mới, sắp", "⏳", "tokoro"), W("わけ", "lý do, nghĩa là", "💡", "wake"), W("はずがない", "không thể nào", "🚫", "hazu ga nai"),
+          W("くらい", "khoảng, đến mức", "📏", "kurai"), W("ば", "nếu (điều kiện)", "🌦️", "ba"), W("ずに", "mà không", "🙅", "zuni"), W("のに", "mặc dù", "😮", "noni"),
+        ],
+        sentences: [
+          { t: ["わたし", "は", "食べた", "ばかり", "です"], n: ["Tôi", "vừa", "mới", "ăn", "xong"], r: "watashi wa tabeta bakari desu", blank: "ばかり", dT: ["ところ", "わけ"], dN: ["vừa mới", "lý do"] },
+          { t: ["今", "から", "出かける", "ところ", "です"], n: ["Tôi", "sắp", "ra", "ngoài", "bây", "giờ"], r: "ima kara dekakeru tokoro desu", blank: "ところ", dT: ["ばかり", "くらい"], dN: ["chỉ", "khoảng"] },
+          { t: ["かれ", "が", "知らない", "はずがない"], n: ["Không", "thể", "nào", "anh", "ấy", "không", "biết"], r: "kare ga shiranai hazuganai", blank: "はずがない", dT: ["はず", "ばかり"], dN: ["chắc chắn", "chỉ"] },
+          { t: ["早く", "行け", "ば", "間に合います"], n: ["Nếu", "đi", "sớm", "thì", "sẽ", "kịp"], r: "hayaku ikeba maniaimasu", blank: "ば", dT: ["ずに", "のに"], dN: ["mà không", "mặc dù"] },
+          { t: ["朝ごはん", "を", "食べ", "ずに", "学校", "へ", "行った"], n: ["Tôi", "đi", "học", "mà", "không", "ăn", "sáng"], r: "asagohan wo tabezuni gakkou e itta", blank: "ずに", dT: ["のに", "ばかり"], dN: ["mặc dù", "chỉ"] },
+          { t: ["約束", "した", "のに", "かれ", "は", "来なかった"], n: ["Mặc", "dù", "đã", "hứa", "anh", "ấy", "vẫn", "không", "đến"], r: "yakusoku shita noni kare wa konakatta", blank: "のに", dT: ["ずに", "わけ"], dN: ["mà không", "lý do"] },
+        ],
+      },
+      {
+        title: "Hội thoại và đọc hiểu N3",
+        band: "thpt",
+        description: "Từ vựng và câu hội thoại tình huống ở trường học, nhà ga và chuyến du lịch.",
+        guidebook:
+          "Hội thoại tình huống N3 🗣️\n\n**Từ vựng tình huống**\n- 予約 (yoyaku) đặt trước; 切符 (kippu) vé; 案内 (annai) hướng dẫn\n- 遅れる (okureru) bị muộn; 忘れ物 (wasuremono) đồ bỏ quên; 窓口 (madoguchi) quầy\n- 助ける (tasukeru) giúp đỡ; 困る (komaru) gặp khó khăn\n\n**Mẫu câu**\nすみません、切符 は どこ で 買えます か。= Xin lỗi, vé mua ở đâu được ạ?",
+        words: [
+          W("予約", "đặt trước", "📅", "yoyaku"), W("切符", "vé", "🎫", "kippu"), W("案内", "hướng dẫn", "🪧", "annai"), W("遅れる", "bị muộn, trễ", "⏰", "okureru"),
+          W("忘れ物", "đồ bỏ quên", "🎒", "wasuremono"), W("窓口", "quầy, cửa sổ giao dịch", "🪟", "madoguchi"), W("助ける", "giúp đỡ", "🤝", "tasukeru"), W("困る", "gặp khó khăn", "😣", "komaru"),
+        ],
+        sentences: [
+          { t: ["すみません", "切符", "は", "どこ", "で", "買えます", "か"], n: ["Xin", "lỗi", "vé", "mua", "ở", "đâu", "được", "ạ"], r: "sumimasen kippu wa doko de kaemasu ka", blank: "切符", dT: ["予約", "窓口"], dN: ["đặt trước", "quầy"] },
+          { t: ["来週", "の", "ホテル", "を", "予約", "したい", "です"], n: ["Tôi", "muốn", "đặt", "khách", "sạn", "cho", "tuần", "tới"], r: "raishuu no hoteru wo yoyaku shitai desu", blank: "予約", dT: ["案内", "切符"], dN: ["hướng dẫn", "vé"] },
+          { t: ["わたし", "は", "バス", "が", "遅れて", "学校", "に", "遅れました"], n: ["Xe", "buýt", "đến", "trễ", "nên", "tôi", "bị", "muộn", "học"], r: "watashi wa basu ga okurete gakkou ni okuremashita", blank: "遅れました", dT: ["困りました", "助けました"], dN: ["gặp khó khăn", "đã giúp"] },
+          { t: ["すみません", "忘れ物", "は", "窓口", "に", "届いて", "います", "か"], n: ["Xin", "lỗi", "đồ", "bỏ", "quên", "có", "ở", "quầy", "không", "ạ"], r: "sumimasen wasuremono wa madoguchi ni todoite imasu ka", blank: "窓口", dT: ["案内", "予約"], dN: ["hướng dẫn", "đặt trước"] },
+          { t: ["困って", "いる", "人", "を", "助ける", "こと", "が", "大切", "です"], n: ["Giúp", "đỡ", "người", "đang", "gặp", "khó", "khăn", "là", "điều", "quan", "trọng"], r: "komatte iru hito wo tasukeru koto ga taisetsu desu", blank: "助ける", dT: ["困る", "遅れる"], dN: ["gặp khó khăn", "bị muộn"] },
+          { t: ["初めて", "の", "町", "で", "道", "に", "迷って", "困りました"], n: ["Ở", "thị", "trấn", "lạ", "tôi", "bị", "lạc", "đường", "và", "rất", "lo"], r: "hajimete no machi de michi ni mayotte komarimashita", blank: "困りました", dT: ["遅れました", "忘れました"], dN: ["bị muộn", "đã quên"] },
+        ],
+      },
     ],
   },
   {
@@ -1031,6 +1250,105 @@ const COURSES = [
           { t: ["我们", "要", "保护", "环境"], n: ["Chúng", "ta", "cần", "bảo", "vệ", "môi", "trường"], r: "wǒmen yào bǎohù huánjìng", blank: "保护", dT: ["空气", "污染"], dN: ["không khí", "sạch"] },
           { t: ["这儿", "的", "空气", "比", "城里", "干净"], n: ["Không", "khí", "ở", "đây", "sạch", "hơn", "trong", "thành", "phố"], r: "zhèr de kōngqì bǐ chénglǐ gānjìng", blank: "干净", dT: ["环境", "树"], dN: ["môi trường", "ô nhiễm"] },
           { t: ["大自然", "是", "我们", "的", "家"], n: ["Thiên", "nhiên", "là", "mái", "nhà", "của", "chúng", "ta"], r: "dàzìrán shì wǒmen de jiā", blank: "大自然", dT: ["河流", "保护"], dN: ["sông", "bảo vệ"] },
+        ],
+      },
+      {
+        title: "Công nghệ và internet",
+        band: "thpt",
+        description: "Dùng internet, điện thoại và phần mềm trong học tập mỗi ngày.",
+        guidebook:
+          "Lướt mạng thông minh! 🌐\n\n**Từ mới**\n- 网络 (wǎngluò) = mạng, 网站 (wǎngzhàn) = trang web, 软件 (ruǎnjiàn) = phần mềm, 下载 (xiàzài) = tải xuống\n- 信息 (xìnxī) = thông tin, 方便 (fāngbiàn) = tiện lợi, 手机 (shǒujī) = điện thoại di động, 电子邮件 (diànzǐ yóujiàn) = thư điện tử\n\n**Mẫu câu**\n这个 网站 很 方便。= Trang web này rất tiện lợi.\n**Mẹo nhỏ**\n上网 (shàngwǎng) nghĩa là *lên mạng*: học bài trên mạng nhớ chọn 网站 đáng tin nhé!",
+        words: [
+          W("网络", "mạng", "🌐", "wǎngluò"), W("网站", "trang web", "💻", "wǎngzhàn"), W("软件", "phần mềm", "🧩", "ruǎnjiàn"), W("下载", "tải xuống", "⬇️", "xiàzài"),
+          W("信息", "thông tin", "ℹ️", "xìnxī"), W("方便", "tiện lợi", "✅", "fāngbiàn"), W("手机", "điện thoại di động", "📱", "shǒujī"), W("电子邮件", "thư điện tử", "📧", "diànzǐ yóujiàn"),
+        ],
+        sentences: [
+          { t: ["我", "每天", "用", "手机", "看", "信息"], n: ["Tôi", "mỗi", "ngày", "dùng", "điện", "thoại", "xem", "thông", "tin"], r: "wǒ měitiān yòng shǒujī kàn xìnxī", blank: "手机", dT: ["网站", "软件"], dN: ["trang web", "phần mềm"] },
+          { t: ["这个", "网站", "很", "方便"], n: ["Trang", "web", "này", "rất", "tiện", "lợi"], r: "zhège wǎngzhàn hěn fāngbiàn", blank: "方便", dT: ["网络", "下载"], dN: ["mạng", "tải xuống"] },
+          { t: ["我", "下载", "了", "一个", "新", "软件"], n: ["Tôi", "đã", "tải", "xuống", "một", "phần", "mềm", "mới"], r: "wǒ xiàzài le yí gè xīn ruǎnjiàn", blank: "下载", dT: ["信息", "电子邮件"], dN: ["thông tin", "thư điện tử"] },
+        ],
+      },
+      {
+        title: "Văn hóa và lễ hội",
+        band: "thpt",
+        description: "Tìm hiểu văn hóa, lễ hội truyền thống và những câu chuyện hay.",
+        guidebook:
+          "Lễ hội rộn ràng! 🏮\n\n**Từ mới**\n- 文化 (wénhuà) = văn hóa, 节日 (jiérì) = lễ hội, 春节 (Chūnjié) = Tết Nguyên Đán, 传统 (chuántǒng) = truyền thống\n- 礼物 (lǐwù) = quà tặng, 故事 (gùshi) = câu chuyện, 表演 (biǎoyǎn) = biểu diễn, 热闹 (rènào) = náo nhiệt\n\n**Mẫu câu**\n春节 是 我们 重要 的 节日。= Tết Nguyên Đán là lễ hội quan trọng của chúng ta.\n**Mẹo nhỏ**\n春节 là tên riêng nên pinyin viết hoa chữ cái đầu: Chūnjié, giống như tên người vậy!",
+        words: [
+          W("文化", "văn hóa", "🏮", "wénhuà"), W("节日", "lễ hội", "🎉", "jiérì"), W("春节", "Tết Nguyên Đán", "🧧", "Chūnjié"), W("传统", "truyền thống", "🏯", "chuántǒng"),
+          W("礼物", "quà tặng", "🎁", "lǐwù"), W("故事", "câu chuyện", "📖", "gùshi"), W("表演", "biểu diễn", "🎭", "biǎoyǎn"), W("热闹", "náo nhiệt", "🎊", "rènào"),
+        ],
+        sentences: [
+          { t: ["春节", "是", "我们", "重要", "的", "节日"], n: ["Tết", "Nguyên", "Đán", "là", "lễ", "hội", "quan", "trọng", "của", "chúng", "ta"], r: "Chūnjié shì wǒmen zhòngyào de jiérì", blank: "节日", dT: ["文化", "礼物"], dN: ["văn hóa", "quà tặng"] },
+          { t: ["大家", "一起", "看", "表演", "很", "热闹"], n: ["Mọi", "người", "cùng", "xem", "biểu", "diễn", "rất", "náo", "nhiệt"], r: "dàjiā yìqǐ kàn biǎoyǎn hěn rènào", blank: "表演", dT: ["故事", "传统"], dN: ["câu chuyện", "truyền thống"] },
+          { t: ["奶奶", "给", "我", "讲", "故事"], n: ["Bà", "kể", "cho", "tôi", "nghe", "câu", "chuyện"], r: "nǎinai gěi wǒ jiǎng gùshi", blank: "故事", dT: ["礼物", "文化"], dN: ["quà tặng", "lễ hội"] },
+        ],
+      },
+      {
+        title: "Thiên nhiên và bảo vệ môi trường nâng cao",
+        band: "thpt",
+        description: "Bảo vệ rừng, biển và tài nguyên: tiết kiệm và giảm rác mỗi ngày.",
+        guidebook:
+          "Chung tay vì hành tinh xanh! 🌍\n\n**Từ mới**\n- 森林 (sēnlín) = rừng, 海洋 (hǎiyáng) = đại dương, 气候 (qìhòu) = khí hậu, 节约 (jiéyuē) = tiết kiệm\n- 垃圾 (lājī) = rác, 减少 (jiǎnshǎo) = giảm thiểu, 资源 (zīyuán) = tài nguyên, 动物 (dòngwù) = động vật\n\n**Mẫu câu**\n我们 要 节约 水 和 资源。= Chúng ta cần tiết kiệm nước và tài nguyên.\n**Mẹo nhỏ**\n节约 (tiết kiệm) khác 保护 (bảo vệ) đã học: một bên là *dùng ít đi*, một bên là *giữ gìn không để hỏng*.",
+        words: [
+          W("森林", "rừng", "🌲", "sēnlín"), W("海洋", "đại dương", "🌊", "hǎiyáng"), W("气候", "khí hậu", "🌦️", "qìhòu"), W("节约", "tiết kiệm", "💧", "jiéyuē"),
+          W("垃圾", "rác", "🗑️", "lājī"), W("减少", "giảm thiểu", "📉", "jiǎnshǎo"), W("资源", "tài nguyên", "💎", "zīyuán"), W("动物", "động vật", "🐾", "dòngwù"),
+        ],
+        sentences: [
+          { t: ["我们", "要", "节约", "水", "和", "资源"], n: ["Chúng", "ta", "cần", "tiết", "kiệm", "nước", "và", "tài", "nguyên"], r: "wǒmen yào jiéyuē shuǐ hé zīyuán", blank: "节约", dT: ["减少", "垃圾"], dN: ["giảm thiểu", "rác"] },
+          { t: ["森林", "里", "有", "很多", "动物"], n: ["Trong", "rừng", "có", "rất", "nhiều", "động", "vật"], r: "sēnlín lǐ yǒu hěn duō dòngwù", blank: "森林", dT: ["海洋", "气候"], dN: ["đại dương", "khí hậu"] },
+          { t: ["我们", "应该", "减少", "垃圾"], n: ["Chúng", "ta", "nên", "giảm", "thiểu", "rác"], r: "wǒmen yīnggāi jiǎnshǎo lājī", blank: "减少", dT: ["节约", "资源"], dN: ["tiết kiệm", "tài nguyên"] },
+        ],
+      },
+      {
+        title: "Học thuật và thi cử",
+        band: "thpt",
+        description: "Học tập nghiêm túc ở bậc cao hơn: luyện tập, điểm số và thành công.",
+        guidebook:
+          "Chinh phục tri thức! 🎓\n\n**Từ mới**\n- 大学 (dàxué) = đại học, 毕业 (bìyè) = tốt nghiệp, 成绩 (chéngjì) = thành tích, điểm số, 练习 (liànxí) = luyện tập\n- 认真 (rènzhēn) = nghiêm túc, chăm chỉ, 努力 (nǔlì) = nỗ lực, 成功 (chénggōng) = thành công, 知识 (zhīshi) = kiến thức\n\n**Mẫu câu**\n他 学习 很 认真。= Anh ấy học rất nghiêm túc.\n**Mẹo nhỏ**\n努力 (nǔlì, nỗ lực) là *quá trình cố gắng*, còn 成功 (chénggōng, thành công) là *kết quả* — cố gắng trước, thành công sau!",
+        words: [
+          W("大学", "đại học", "🎓", "dàxué"), W("毕业", "tốt nghiệp", "🧑‍🎓", "bìyè"), W("成绩", "thành tích, điểm số", "📊", "chéngjì"), W("练习", "luyện tập", "✍️", "liànxí"),
+          W("认真", "nghiêm túc, chăm chỉ", "📖", "rènzhēn"), W("努力", "nỗ lực", "💪", "nǔlì"), W("成功", "thành công", "🏆", "chénggōng"), W("知识", "kiến thức", "🧠", "zhīshi"),
+        ],
+        sentences: [
+          { t: ["哥哥", "明年", "从", "大学", "毕业"], n: ["Anh", "trai", "năm", "sau", "sẽ", "tốt", "nghiệp", "đại", "học"], r: "gēge míngnián cóng dàxué bìyè", blank: "大学", dT: ["成绩", "知识"], dN: ["điểm số", "kiến thức"] },
+          { t: ["他", "学习", "很", "认真"], n: ["Anh", "ấy", "học", "rất", "nghiêm", "túc"], r: "tā xuéxí hěn rènzhēn", blank: "认真", dT: ["努力", "练习"], dN: ["nỗ lực", "luyện tập"] },
+          { t: ["只要", "努力", "练习", "就", "能", "成功"], n: ["Chỉ", "cần", "nỗ", "lực", "luyện", "tập", "là", "có", "thể", "thành", "công"], r: "zhǐyào nǔlì liànxí jiù néng chénggōng", blank: "努力", dT: ["认真", "毕业"], dN: ["nghiêm túc", "tốt nghiệp"] },
+        ],
+      },
+      {
+        title: "Xã hội và truyền thông",
+        band: "thpt",
+        description: "Xem tin tức, chương trình và hiểu đời sống xã hội quanh em.",
+        guidebook:
+          "Theo dõi tin tức mỗi ngày! 📰\n\n**Từ mới**\n- 社会 (shèhuì) = xã hội, 新闻 (xīnwén) = tin tức, 广告 (guǎnggào) = quảng cáo, 节目 (jiémù) = chương trình\n- 明星 (míngxīng) = ngôi sao, người nổi tiếng, 报纸 (bàozhǐ) = báo giấy, 观众 (guānzhòng) = khán giả, 电视 (diànshì) = ti vi, truyền hình\n\n**Mẫu câu**\n这个 节目 有 很多 观众。= Chương trình này có rất nhiều khán giả.\n**Mẹo nhỏ**\n新闻 (tin tức) là nội dung, 报纸 (báo giấy) và 电视 (ti vi) là nơi em xem hoặc đọc tin — đừng nhầm nhé!",
+        words: [
+          W("社会", "xã hội", "🏙️", "shèhuì"), W("新闻", "tin tức", "📰", "xīnwén"), W("广告", "quảng cáo", "📢", "guǎnggào"), W("节目", "chương trình", "🎬", "jiémù"),
+          W("明星", "ngôi sao, người nổi tiếng", "⭐", "míngxīng"), W("报纸", "báo giấy", "🗞️", "bàozhǐ"), W("观众", "khán giả", "👀", "guānzhòng"), W("电视", "ti vi, truyền hình", "📺", "diànshì"),
+        ],
+        sentences: [
+          { t: ["爸爸", "每天", "看", "电视", "新闻"], n: ["Bố", "mỗi", "ngày", "xem", "tin", "tức", "trên", "truyền", "hình"], r: "bàba měitiān kàn diànshì xīnwén", blank: "新闻", dT: ["广告", "报纸"], dN: ["quảng cáo", "báo giấy"] },
+          { t: ["这个", "节目", "有", "很多", "观众"], n: ["Chương", "trình", "này", "có", "rất", "nhiều", "khán", "giả"], r: "zhège jiémù yǒu hěn duō guānzhòng", blank: "观众", dT: ["明星", "社会"], dN: ["ngôi sao", "xã hội"] },
+          { t: ["妈妈", "在", "报纸", "上", "看", "广告"], n: ["Mẹ", "đang", "xem", "quảng", "cáo", "trên", "báo", "giấy"], r: "māma zài bàozhǐ shang kàn guǎnggào", blank: "广告", dT: ["新闻", "节目"], dN: ["tin tức", "chương trình"] },
+        ],
+      },
+      {
+        title: "Ôn tập tổng hợp HSK",
+        band: "thpt",
+        description: "Ôn các cấu trúc HSK 4: câu chữ bǎ, câu bị động, so sánh và bổ ngữ kết quả.",
+        guidebook:
+          "Ôn cấu trúc như cao thủ! 🥋\n\n**Cấu trúc mới**\n- 把 (bǎ) = trợ từ 'đem' trong câu chữ bǎ, 被 (bèi) = bị (câu bị động), 比 (bǐ) = hơn (so sánh), 完 (wán) = xong (bổ ngữ kết quả)\n- 到 (dào) = được, đến (bổ ngữ kết quả), 懂 (dǒng) = hiểu (bổ ngữ kết quả), 越来越 (yuèláiyuè) = càng ngày càng, 离 (lí) = cách (khoảng cách)\n\n**Mẫu câu**\n我 把 作业 做 完 了。= Tôi đã làm xong bài tập.\n**Mẹo nhỏ**\n离 (lí) nói khoảng cách: 学校 离 我 家 很 近。= Trường học cách nhà tôi rất gần. Còn bổ ngữ kết quả đứng ngay sau động từ: 听懂 (nghe hiểu), 找到 (tìm thấy), 做完 (làm xong).",
+        words: [
+          W("把", "trợ từ đem (câu chữ bǎ)", "🖐️", "bǎ"), W("被", "bị (câu bị động)", "🔄", "bèi"), W("比", "hơn (so sánh)", "⚖️", "bǐ"), W("完", "xong (bổ ngữ kết quả)", "✅", "wán"),
+          W("到", "được, đến (bổ ngữ kết quả)", "🎯", "dào"), W("懂", "hiểu (bổ ngữ kết quả)", "💡", "dǒng"), W("越来越", "càng ngày càng", "📈", "yuèláiyuè"), W("离", "cách (khoảng cách)", "📏", "lí"),
+        ],
+        sentences: [
+          { t: ["我", "把", "作业", "做", "完", "了"], n: ["Tôi", "đã", "làm", "xong", "bài", "tập"], r: "wǒ bǎ zuòyè zuò wán le", blank: "把", dT: ["被", "比"], dN: ["bị", "hơn"] },
+          { t: ["杯子", "被", "打", "破", "了"], n: ["Cái", "cốc", "bị", "đánh", "vỡ", "rồi"], r: "bēizi bèi dǎ pò le", blank: "被", dT: ["把", "完"], dN: ["đem", "xong"] },
+          { t: ["今天", "比", "昨天", "冷"], n: ["Hôm", "nay", "lạnh", "hơn", "hôm", "qua"], r: "jīntiān bǐ zuótiān lěng", blank: "比", dT: ["离", "被"], dN: ["cách", "bị"] },
+          { t: ["我", "听", "懂", "了", "老师", "的", "话"], n: ["Tôi", "đã", "nghe", "hiểu", "lời", "của", "giáo", "viên"], r: "wǒ tīng dǒng le lǎoshī de huà", blank: "懂", dT: ["完", "到"], dN: ["xong", "được"] },
+          { t: ["天气", "越来越", "热", "了"], n: ["Thời", "tiết", "càng", "ngày", "càng", "nóng"], r: "tiānqì yuèláiyuè rè le", blank: "越来越", dT: ["比", "离"], dN: ["hơn", "cách"] },
+          { t: ["我", "找", "到", "了", "钥匙"], n: ["Tôi", "đã", "tìm", "thấy", "chìa", "khóa"], r: "wǒ zhǎo dào le yàoshi", blank: "到", dT: ["懂", "完"], dN: ["hiểu", "xong"] },
         ],
       },
     ],

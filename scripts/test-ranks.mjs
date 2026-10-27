@@ -60,13 +60,13 @@ check('RANK_TIERS: đúng 8 bậc biển đảo, ngưỡng tăng dần nghiêm n
     RANK_TIERS.map((t) => [t.level, t.title, t.minXp]),
     [
       [1, 'Người Bạn Ra Khơi', 0],
-      [2, 'Thủy Thủ Nhí', 100],
-      [3, 'Hoa Tiêu Nhí', 250],
-      [4, 'Thuyền Phó Tương Lai', 500],
-      [5, 'Thuyền Trưởng Nhí', 900],
-      [6, 'Chúa Đảo Nhí', 1400],
-      [7, 'Huyền Thoại Biển Khơi', 2000],
-      [8, 'Vua Biển Cả', 2800],
+      [2, 'Thủy Thủ Nhí', 200],
+      [3, 'Hoa Tiêu Nhí', 450],
+      [4, 'Thuyền Phó Tương Lai', 900],
+      [5, 'Thuyền Trưởng Nhí', 1650],
+      [6, 'Chúa Đảo Nhí', 2550],
+      [7, 'Huyền Thoại Biển Khơi', 3550],
+      [8, 'Vua Biển Cả', 4650],
     ],
   );
   for (let i = 1; i < RANK_TIERS.length; i += 1) {
@@ -75,61 +75,61 @@ check('RANK_TIERS: đúng 8 bậc biển đảo, ngưỡng tăng dần nghiêm n
   }
 });
 
-check('rankForXp(0): bậc 1, tiến độ 0, còn 100 XP lên bậc 2', () => {
+check('rankForXp(0): bậc 1, tiến độ 0, còn 200 XP lên bậc 2', () => {
   const rank = rankForXp(0);
   assert.equal(rank.level, 1);
   assert.equal(rank.title, 'Người Bạn Ra Khơi');
   assert.equal(rank.emoji, '🛶');
   assert.equal(rank.minXp, 0);
-  assert.equal(rank.nextXp, 100);
+  assert.equal(rank.nextXp, 200);
   assert.equal(rank.nextTitle, 'Thủy Thủ Nhí');
   assert.equal(rank.progress01, 0);
-  assert.equal(rank.xpToNext, 100);
+  assert.equal(rank.xpToNext, 200);
   assert.equal(rank.isMax, false);
 });
 
-check('rankForXp(99) sát mốc: vẫn bậc 1, còn đúng 1 XP', () => {
-  const rank = rankForXp(99);
+check('rankForXp(199) sát mốc: vẫn bậc 1, còn đúng 1 XP', () => {
+  const rank = rankForXp(199);
   assert.equal(rank.level, 1);
   assert.equal(rank.xpToNext, 1);
-  assert.ok(Math.abs(rank.progress01 - 0.99) < 1e-9);
+  assert.ok(Math.abs(rank.progress01 - 199 / 200) < 1e-9);
 });
 
-check('rankForXp(100): vừa lên bậc 2, tiến độ về 0', () => {
-  const rank = rankForXp(100);
+check('rankForXp(200): vừa lên bậc 2, tiến độ về 0', () => {
+  const rank = rankForXp(200);
   assert.equal(rank.level, 2);
   assert.equal(rank.title, 'Thủy Thủ Nhí');
-  assert.equal(rank.minXp, 100);
-  assert.equal(rank.nextXp, 250);
+  assert.equal(rank.minXp, 200);
+  assert.equal(rank.nextXp, 450);
   assert.equal(rank.progress01, 0);
-  assert.equal(rank.xpToNext, 150);
+  assert.equal(rank.xpToNext, 250);
 });
 
 check('rankForXp: mọi mốc giữa thang khớp bậc kỳ vọng', () => {
   const cases = [
-    [249, 2], [250, 3], [499, 3], [500, 4], [899, 4], [900, 5],
-    [1399, 5], [1400, 6], [1999, 6], [2000, 7],
+    [449, 2], [450, 3], [899, 3], [900, 4], [1649, 4], [1650, 5],
+    [2549, 5], [2550, 6], [3549, 6], [3550, 7],
   ];
   for (const [xp, level] of cases) {
     assert.equal(rankForXp(xp).level, level, `XP ${xp} phải ở bậc ${level}`);
   }
-  const mid = rankForXp(700); // giữa bậc 4 (500) và bậc 5 (900)
+  const mid = rankForXp(1275); // giữa bậc 4 (900) và bậc 5 (1650)
   assert.equal(mid.level, 4);
   assert.ok(Math.abs(mid.progress01 - 0.5) < 1e-9);
-  assert.equal(mid.xpToNext, 200);
+  assert.equal(mid.xpToNext, 375);
 });
 
-check('rankForXp(2799): bậc 7, còn đúng 1 XP lên ngôi Vua Biển Cả', () => {
-  const rank = rankForXp(2799);
+check('rankForXp(4649): bậc 7, còn đúng 1 XP lên ngôi Vua Biển Cả', () => {
+  const rank = rankForXp(4649);
   assert.equal(rank.level, 7);
   assert.equal(rank.title, 'Huyền Thoại Biển Khơi');
-  assert.equal(rank.nextXp, 2800);
+  assert.equal(rank.nextXp, 4650);
   assert.equal(rank.nextTitle, 'Vua Biển Cả');
   assert.equal(rank.xpToNext, 1);
 });
 
-check('rankForXp(2800) và (5000): bậc 8 cao nhất, progress01 = 1, không còn bậc sau', () => {
-  for (const xp of [2800, 5000]) {
+check('rankForXp(4650) và (7000): bậc 8 cao nhất, progress01 = 1, không còn bậc sau', () => {
+  for (const xp of [4650, 7000]) {
     const rank = rankForXp(xp);
     assert.equal(rank.level, 8);
     assert.equal(rank.title, 'Vua Biển Cả');
@@ -145,25 +145,28 @@ check('rankForXp(2800) và (5000): bậc 8 cao nhất, progress01 = 1, không c�
 check('rankForXp: XP âm/không hợp lệ được kẹp về bậc 1', () => {
   assert.equal(rankForXp(-50).level, 1);
   assert.equal(rankForXp(Number.NaN).level, 1);
-  assert.equal(rankForXp(99.9).xpToNext, 1); // làm tròn xuống trước khi tính
+  assert.equal(rankForXp(199.9).xpToNext, 1); // làm tròn xuống trước khi tính
 });
 
 check('ngưỡng bậc cuối với tới được theo quy tắc XP của store', () => {
-  // store.ts: XP_PER_LESSON = 15, XP_PERFECT_BONUS = 5; 170 bài.
+  // store.ts: XP_PER_LESSON = 15, XP_PERFECT_BONUS = 5; 314 bài (lộ trình 1–12).
   const storeSrc = readFileSync(path.join(root, 'src', 'lib', 'store.ts'), 'utf8');
   assert.ok(storeSrc.includes('XP_PER_LESSON = 15'));
   assert.ok(storeSrc.includes('XP_PERFECT_BONUS = 5'));
-  const maxLessonXp = 170 * (15 + 5); // 3400 — chưa kể XP thưởng từ game
-  const noPerfectXp = 170 * 15; // 2550
+  const maxLessonXp = 314 * (15 + 5); // 6280 — chưa kể XP thưởng từ game
+  const noPerfectXp = 314 * 15; // 4710
   const topThreshold = RANK_TIERS[RANK_TIERS.length - 1].minXp;
   assert.ok(topThreshold <= maxLessonXp, 'Bậc cuối phải đạt được bằng XP bài học');
   assert.ok(topThreshold > noPerfectXp - 500, 'Bậc cuối không được quá dễ');
+  // Hiệu chuẩn đợt 2: bậc cuối nằm ở 70–75% XP tối đa từ bài học.
+  assert.ok(topThreshold >= 0.7 * maxLessonXp, 'Bậc cuối phải từ 70% XP tối đa từ bài học');
+  assert.ok(topThreshold <= 0.75 * maxLessonXp, 'Bậc cuối phải tới 75% XP tối đa từ bài học');
 });
 
 check('rankTierState: current/achieved/locked nhất quán với rankForXp', () => {
   const at300 = RANK_TIERS.map((tier) => rankTierState(tier, 300));
   assert.deepEqual(at300, [
-    'achieved', 'achieved', 'current', 'locked', 'locked', 'locked', 'locked', 'locked',
+    'achieved', 'current', 'locked', 'locked', 'locked', 'locked', 'locked', 'locked',
   ]);
   const atMax = RANK_TIERS.map((tier) => rankTierState(tier, 9999));
   assert.deepEqual(atMax, [
@@ -195,7 +198,7 @@ check('leaderboard: SQL + client tồn tại, đúng RPC, giữ RLS owner-only',
   assert.ok(!client.includes('.email'));
 });
 
-check('baseline nội dung packs: 62 unit / 242 bài / 1894 exercise', () => {
+check('baseline nội dung packs: 80 unit / 314 bài / 2488 exercise', () => {
   const catalog = JSON.parse(
     readFileSync(path.join(root, 'src', 'content', 'catalog.json'), 'utf8'),
   );
@@ -214,7 +217,7 @@ check('baseline nội dung packs: 62 unit / 242 bài / 1894 exercise', () => {
       }
     }
   }
-  assert.deepEqual({ units, lessons, exercises }, { units: 62, lessons: 242, exercises: 1894 });
+  assert.deepEqual({ units, lessons, exercises }, { units: 80, lessons: 314, exercises: 2488 });
 });
 
 console.log(`\nTất cả ${passed} nhóm test cấp bậc PASS.`);
