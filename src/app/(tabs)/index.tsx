@@ -44,9 +44,35 @@ import {
   useProgress,
 } from "@/lib/store";
 import { makeThemedStyles, radius, unitPalette } from "@/lib/theme";
+import type { SchoolBand, UnitPack } from "@/lib/types";
 import { isAllUnlocked } from "@/lib/unlock";
 import { useAmbientMusic } from "@/lib/useAmbientMusic";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
+
+type StageFilter = "all" | SchoolBand;
+
+const STAGE_DEFS: { band: SchoolBand; title: string }[] = [
+  { band: "tieu-hoc", title: "Chặng 1 · Khối Tiểu học (lớp 1–5)" },
+  { band: "thcs", title: "Chặng 2 · Khối THCS (lớp 6–9)" },
+  { band: "thpt", title: "Chặng 3 · Khối THPT (lớp 10–12)" },
+];
+
+const STAGE_FILTERS: { value: StageFilter; label: string }[] = [
+  { value: "all", label: "Tất cả" },
+  { value: "tieu-hoc", label: "Tiểu học" },
+  { value: "thcs", label: "THCS" },
+  { value: "thpt", label: "THPT" },
+];
+
+function bandOfUnit(unit: UnitPack): SchoolBand {
+  return (unit.band as SchoolBand | undefined) ?? "tieu-hoc";
+}
+
+function initialStageFilter(band: SchoolBand | undefined): StageFilter {
+  if (band === "thpt") return "thcs";
+  if (band === "thcs") return "thcs";
+  return "tieu-hoc";
+}
 
 /**
  * Trang chủ "Magical Multilingual Learning Garden": cảnh vườn thần tiên
@@ -59,8 +85,15 @@ import { useReducedMotion } from "@/lib/use-reduced-motion";
 export default function LearnScreen() {
   const styles = useStyles();
   const progress = useProgress();
-  const { activeCourseId, dailyGoal, learnerLevel, musicOn, setMusicOn, setActiveCourse } =
-    progress;
+  const {
+    activeCourseId,
+    dailyGoal,
+    learnerLevel,
+    schoolBand,
+    musicOn,
+    setMusicOn,
+    setActiveCourse,
+  } = progress;
   const courseProgress = progress.course();
   const { pack, allLessons, getWord } = useCourseContent(activeCourseId);
   const { user } = useAuth();
@@ -129,9 +162,16 @@ export default function LearnScreen() {
 
   const scrollRef = useRef<ScrollView>(null);
   const unitYRef = useRef(new Map<string, number>());
-  const sectionYRef = useRef(new Map<string, number>());
+  const stageYRef = useRef(new Map<SchoolBand, number>());
   const mapYRef = useRef(0);
   const pendingMapScrollRef = useRef(false);
+  const pendingUnitScrollRef = useRef<{ unitId: string; band: SchoolBand } | null>(null);
+  // Người dùng mới (chưa qua onboarding, gồm cả bản prerender tĩnh) xem toàn
+  // bộ hành trình; sau khi đã chọn khối lớp ở onboarding, bản đồ tự mở đúng
+  // chặng của khối đó (THPT → mở chặng THCS + thẻ THPT "sắp ra mắt").
+  const [stageFilter, setStageFilter] = useState<StageFilter>(() =>
+    progress.onboardingDone ? initialStageFilter(schoolBand) : "all"
+  );
 
   const scrollToMapTop = () => {
     scrollRef.current?.scrollTo({
@@ -182,6 +222,53 @@ export default function LearnScreen() {
     )
   );
 
+  // Nhóm unit theo khối lớp (band), giữ nguyên thứ tự gốc của khóa.
+  // unitColor đã được tính ở trên theo thứ tự gốc toàn khóa, trước khi lọc.
+  const unitsByBand = useMemo(() => {
+    const map = new Map<SchoolBand, UnitPack[]>();
+    for (const def of STAGE_DEFS) map.set(def.band, []);
+    for (const section of pack.sections) {
+      for (const unit of section.units) {
+        const band = bandOfUnit(unit);
+        const list = map.get(band) ?? [];
+        list.push(unit);
+        map.set(band, list);
+      }
+    }
+    return map;
+  }, [pack]);
+
+  const isStageVisible = (band: SchoolBand, unitCount: number): boolean => {
+    if (band === "thpt") {
+      return stageFilter === "all" || stageFilter === "thcs" || stageFilter === "thpt";
+    }
+    if (!(stageFilter === "all" || stageFilter === band)) return false;
+    return unitCount > 0;
+  };
+
+  const scrollToUnit = (unitId: string, band: SchoolBand): boolean => {
+    const unitY = unitYRef.current.get(unitId);
+    if (unitY === undefined) return false;
+    const stageY = stageYRef.current.get(band) ?? 0;
+    scrollRef.current?.scrollTo({ y: Math.max(0, stageY + unitY - 8), animated: true });
+    return true;
+  };
+
+  // Sau khi đổi lọc chặng, cuộn tới unit đang chờ (nếu có).
+  useEffect(() => {
+    const pending = pendingUnitScrollRef.current;
+    if (!pending) return;
+    pendingUnitScrollRef.current = null;
+    const frame = requestAnimationFrame(() => {
+      if (!scrollToUnit(pending.unitId, pending.band)) {
+        setTimeout(() => scrollToUnit(pending.unitId, pending.band), 80);
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+    // Chỉ chạy khi lọc chặng thay đổi.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stageFilter]);
+
   // Gợi ý theo cấp độ: bài đầu tiên của tầng độ khó tương ứng cấp độ đã chọn.
   const targetTier = tierForLearnerLevel(learnerLevel);
   const suggestedRef = useMemo(
@@ -191,13 +278,23 @@ export default function LearnScreen() {
 
   const jumpToSuggestion = () => {
     if (!suggestedRef) return;
-    const unitY = unitYRef.current.get(suggestedRef.unit.id);
-    if (unitY === undefined) return;
-    const section = pack.sections.find((s) =>
-      s.units.some((u) => u.id === suggestedRef.unit.id)
-    );
-    const sectionY = section ? (sectionYRef.current.get(section.id) ?? 0) : 0;
-    scrollRef.current?.scrollTo({ y: Math.max(0, sectionY + unitY - 8), animated: true });
+    const band = bandOfUnit(suggestedRef.unit);
+    const stageUnits = unitsByBand.get(band) ?? [];
+    if (!isStageVisible(band, stageUnits.length)) {
+      pendingUnitScrollRef.current = { unitId: suggestedRef.unit.id, band };
+      setStageFilter(band);
+      return;
+    }
+    if (!scrollToUnit(suggestedRef.unit.id, band)) {
+      pendingUnitScrollRef.current = { unitId: suggestedRef.unit.id, band };
+      setTimeout(() => {
+        const pending = pendingUnitScrollRef.current;
+        if (pending) {
+          pendingUnitScrollRef.current = null;
+          scrollToUnit(pending.unitId, pending.band);
+        }
+      }, 80);
+    }
   };
 
   const showLockedHint = () => {
@@ -317,44 +414,77 @@ export default function LearnScreen() {
                 </View>
               ) : null}
 
-              {pack.sections.map((section, sectionIdx) => (
-                <View
-                  key={section.id}
-                  onLayout={(e) => {
-                    sectionYRef.current.set(section.id, e.nativeEvent.layout.y);
-                  }}
-                >
-                  <View style={styles.sectionHeader}>
-                    {sectionIdx > 0 ? <Text style={styles.gate}>🚪 · · · 🚪</Text> : null}
-                    <Text style={styles.sectionTitle} maxFontSizeMultiplier={1.3}>
-                      🧭 {section.title}
-                    </Text>
+              <View style={styles.filterRow}>
+                {STAGE_FILTERS.map((f) => {
+                  const active = stageFilter === f.value;
+                  return (
+                    <Pressable
+                      key={f.value}
+                      onPress={() => setStageFilter(f.value)}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Lọc chặng ${f.label}`}
+                      accessibilityState={{ selected: active }}
+                      style={[styles.filterChip, active && styles.filterChipActive]}
+                    >
+                      <Text
+                        style={[styles.filterChipText, active && styles.filterChipTextActive]}
+                        maxFontSizeMultiplier={1.3}
+                      >
+                        {f.label}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+
+              {STAGE_DEFS.map((stage) => {
+                const stageUnits = unitsByBand.get(stage.band) ?? [];
+                if (!isStageVisible(stage.band, stageUnits.length)) return null;
+                return (
+                  <View
+                    key={stage.band}
+                    onLayout={(e) => {
+                      stageYRef.current.set(stage.band, e.nativeEvent.layout.y);
+                    }}
+                  >
+                    <View style={styles.sectionHeader}>
+                      <Text style={styles.stageTitle} maxFontSizeMultiplier={1.3}>
+                        {stage.title}
+                      </Text>
+                    </View>
+                    {stageUnits.map((unit) => {
+                      const unitLessons = allLessons.filter((l) => l.unit.id === unit.id);
+                      const color = unitColor.get(unit.id) ?? unitPalette[0];
+                      return (
+                        <LandCard
+                          key={unit.id}
+                          unit={unit}
+                          land={landForUnit(unit)}
+                          color={color}
+                          accent={kingdom?.palette ?? null}
+                          lessons={unitLessons}
+                          completedLessons={courseProgress.completedLessons}
+                          currentIndex={currentIndex}
+                          unlockedAll={unlockedAll}
+                          totalLessons={total}
+                          onLessonPress={(ref) => router.push(`/lesson/${ref.lesson.id}`)}
+                          onLockedPress={showLockedHint}
+                          onMissionPress={(ref) => setMission(ref)}
+                          onGuidebookPress={() => router.push(`/guidebook/${unit.id}`)}
+                          onLayout={(y) => unitYRef.current.set(unit.id, y)}
+                        />
+                      );
+                    })}
+                    {stage.band === "thpt" && stageUnits.length === 0 ? (
+                      <View style={styles.comingSoonCard}>
+                        <Text style={styles.comingSoonText} maxFontSizeMultiplier={1.3}>
+                          {"🎓 Chặng THPT đang được biên soạn và sẽ ra mắt ở đợt sau. Trong lúc chờ đợi, em hãy chinh phục các chặng trước và ôn tập thật chắc nhé!"}
+                        </Text>
+                      </View>
+                    ) : null}
                   </View>
-                  {section.units.map((unit) => {
-                    const unitLessons = allLessons.filter((l) => l.unit.id === unit.id);
-                    const color = unitColor.get(unit.id) ?? unitPalette[0];
-                    return (
-                      <LandCard
-                        key={unit.id}
-                        unit={unit}
-                        land={landForUnit(unit)}
-                        color={color}
-                        accent={kingdom?.palette ?? null}
-                        lessons={unitLessons}
-                        completedLessons={courseProgress.completedLessons}
-                        currentIndex={currentIndex}
-                        unlockedAll={unlockedAll}
-                        totalLessons={total}
-                        onLessonPress={(ref) => router.push(`/lesson/${ref.lesson.id}`)}
-                        onLockedPress={showLockedHint}
-                        onMissionPress={(ref) => setMission(ref)}
-                        onGuidebookPress={() => router.push(`/guidebook/${unit.id}`)}
-                        onLayout={(y) => unitYRef.current.set(unit.id, y)}
-                      />
-                    );
-                  })}
-                </View>
-              ))}
+                );
+              })}
             </View>
 
             <Pressable
@@ -459,6 +589,38 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     letterSpacing: 1,
     paddingHorizontal: 4,
   },
+  filterRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 12, marginBottom: 2 },
+  filterChip: {
+    borderWidth: 2,
+    borderBottomWidth: 3,
+    borderColor: colors.neutral200,
+    borderRadius: radius.full,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    backgroundColor: colors.surface,
+  },
+  filterChipActive: {
+    borderColor: colors.green,
+    backgroundColor: colors.greenLight + "22",
+  },
+  filterChipText: { fontSize: 13, fontWeight: "800", color: colors.textMuted },
+  filterChipTextActive: { color: colors.greenDark },
+  stageTitle: {
+    fontSize: 15,
+    fontWeight: "900",
+    color: colors.neutral700,
+    paddingHorizontal: 4,
+    textAlign: "center",
+  },
+  comingSoonCard: {
+    marginTop: 14,
+    borderWidth: 2,
+    borderColor: colors.amber,
+    backgroundColor: colors.amber + "1A",
+    borderRadius: radius.xl,
+    padding: 16,
+  },
+  comingSoonText: { fontSize: 14, lineHeight: 20, color: colors.neutral700, fontWeight: "600" },
   rewardsCard: {
     flexDirection: "row",
     alignItems: "center",

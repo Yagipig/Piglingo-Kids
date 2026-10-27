@@ -15,6 +15,7 @@ import {
   dailyXpToday,
   lastSevenDays,
   LEARNER_LEVELS,
+  SCHOOL_BANDS,
   useProgress,
   type ThemePreference,
 } from "@/lib/store";
@@ -35,6 +36,7 @@ export default function ProfileScreen() {
   const progress = useProgress();
   const { themePreference, setThemePreference } = progress;
   const { learnerLevel, setLearnerLevel, unlockAll } = progress;
+  const { schoolBand, setSchoolBand } = progress;
   const { backgroundImage, setBackgroundImage } = progress;
   const [bgBusy, setBgBusy] = useState(false);
   const [bgMessage, setBgMessage] = useState<string | null>(null);
@@ -307,6 +309,46 @@ export default function ProfileScreen() {
           </View>
           <Text style={styles.settingsHint} maxFontSizeMultiplier={1.3}>
             Màn hình học sẽ gợi ý bài phù hợp với cấp độ này.
+          </Text>
+        </View>
+
+        <View style={styles.settingsCard}>
+          <View style={styles.settingsHeader}>
+            <Ionicons name="library-outline" size={22} color={colors.skyDark} />
+            <Text style={styles.settingsTitle} maxFontSizeMultiplier={1.3}>
+              Khối lớp của em
+            </Text>
+          </View>
+          <View style={styles.levelList}>
+            {SCHOOL_BANDS.map((b) => {
+              const active = schoolBand === b.value;
+              return (
+                <Pressable
+                  key={b.value}
+                  onPress={() => setSchoolBand(b.value)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${b.label}. ${b.hint}`}
+                  accessibilityState={{ selected: active }}
+                  style={[styles.levelCard, active && styles.levelCardActive]}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={[styles.levelName, active && { color: activeGreen }]}
+                      maxFontSizeMultiplier={1.3}
+                    >
+                      {b.label}
+                    </Text>
+                    <Text style={styles.levelHint} maxFontSizeMultiplier={1.3}>
+                      {b.hint}
+                    </Text>
+                  </View>
+                  <Text style={styles.levelCheck}>{active ? "✅" : "⚪"}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          <Text style={styles.settingsHint} maxFontSizeMultiplier={1.3}>
+            Bản đồ học sẽ mở ở chặng phù hợp với khối lớp này.
           </Text>
         </View>
 
