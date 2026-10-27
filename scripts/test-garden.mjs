@@ -26,6 +26,7 @@ execFileSync(
     '--ignoreConfig',
     'src/lib/kingdoms.ts',
     'src/lib/garden.ts',
+    'src/lib/lands.ts',
     '--module',
     'commonjs',
     '--target',
@@ -48,6 +49,7 @@ execFileSync(
 const require = createRequire(import.meta.url);
 const kingdoms = require(path.join(outDir, 'lib', 'kingdoms.js'));
 const garden = require(path.join(outDir, 'lib', 'garden.js'));
+const lands = require(path.join(outDir, 'lib', 'lands.js'));
 const content = require(path.join(outDir, 'lib', 'content.js'));
 
 const { kingdomForCourse, hotspotsForCourse, KINGDOMS } = kingdoms;
@@ -66,6 +68,7 @@ const {
   butterfliesReleased,
 } = garden;
 const { catalog, getPack, useCourseContent } = content;
+const { landForUnit } = lands;
 
 let passed = 0;
 function check(name, fn) {
@@ -105,9 +108,9 @@ function allLessonIds(courseId) {
 console.log('== Magical Garden logic tests ==');
 
 check('1. kingdomForCourse: 3 khóa thật, không có khóa Việt', () => {
-  assert.equal(kingdomForCourse('en-vi').kingdomName, 'Storybook Kingdom');
-  assert.equal(kingdomForCourse('ja-vi').kingdomName, 'Sakura Kingdom');
-  assert.equal(kingdomForCourse('zh-vi').kingdomName, 'Lantern Kingdom');
+  assert.equal(kingdomForCourse('en-vi').kingdomName, 'Vương quốc Cổ Tích');
+  assert.equal(kingdomForCourse('ja-vi').kingdomName, 'Vương quốc Hoa Anh Đào');
+  assert.equal(kingdomForCourse('zh-vi').kingdomName, 'Vương quốc Đèn Lồng');
   assert.equal(kingdomForCourse('vi-vi'), null);
   assert.equal(kingdomForCourse('vi'), null);
   assert.equal(KINGDOMS.length, 3);
@@ -340,6 +343,31 @@ check('12. Baseline nội dung: 32 unit / 122 bài / 956 exercise', () => {
     units += u; lessons += l; exercises += e;
   }
   assert.deepEqual([units, lessons, exercises], [32, 122, 956]);
+});
+
+check('13. Tên vùng đất: 32 đảo thật của Việt Nam, không trùng, không tên cũ', () => {
+  const expected = {
+    'en-vi': ['Đảo Phú Quốc', 'Đảo Cát Bà', 'Côn Đảo', 'Đảo Lý Sơn', 'Đảo Cô Tô', 'Đảo Phú Quý', 'Quần đảo Nam Du', 'Cù Lao Chàm', 'Hòn Tre', 'Đảo Bạch Long Vĩ', 'Đảo Thổ Chu'],
+    'ja-vi': ['Đảo Quan Lạn', 'Đảo Ngọc Vừng', 'Đảo Vĩnh Thực', 'Đảo Thanh Lân', 'Đảo Cái Bầu', 'Hòn Dấu', 'Hòn Chuối', 'Hòn Khoai', 'Hòn Sơn', 'Đảo Bình Ba', 'Đảo Bình Hưng'],
+    'zh-vi': ['Hòn Mun', 'Hòn Tằm', 'Cù Lao Xanh', 'Đảo Khỉ', 'Đảo Yến', 'Đảo Diệp Sơn', 'Hòn Nghệ', 'Hòn Heo', 'Quần đảo Trường Sa', 'Quần đảo Hoàng Sa'],
+  };
+  const seen = new Set();
+  for (const course of catalog.courses) {
+    const pack = getPack(course.id);
+    const names = [];
+    for (const section of pack.sections) {
+      for (const unit of section.units) {
+        const land = landForUnit(unit);
+        names.push(land.name);
+        seen.add(land.name);
+        assert.ok(land.emoji.length > 0, `${unit.id}: thiếu emoji`);
+        assert.ok(land.tagline.length > 0, `${unit.id}: thiếu tagline`);
+        assert.ok(!/Hiragana|Katakana|Kingdom|Explorers/.test(land.name), `${unit.id}: còn tên cũ: ${land.name}`);
+      }
+    }
+    assert.deepEqual(names, expected[course.id], course.id);
+  }
+  assert.equal(seen.size, 32);
 });
 
 console.log(`\nTất cả ${passed} nhóm kiểm tra PASS.`);
