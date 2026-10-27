@@ -11,9 +11,11 @@ import {
   DAILY_GOAL_OPTIONS,
   DEFAULT_COURSE,
   LEARNER_LEVELS,
+  SCHOOL_BANDS,
   useProgress,
   type LearnerLevel,
 } from "@/lib/store";
+import type { SchoolBand } from "@/lib/types";
 import { makeThemedStyles, radius, useResolvedScheme, useThemeColors } from "@/lib/theme";
 
 export default function OnboardingScreen() {
@@ -22,7 +24,10 @@ export default function OnboardingScreen() {
   const styles = useStyles();
   const finishOnboarding = useProgress((s) => s.finishOnboarding);
   const setLearnerLevel = useProgress((s) => s.setLearnerLevel);
+  const setSchoolBand = useProgress((s) => s.setSchoolBand);
+  const storedSchoolBand = useProgress((s) => s.schoolBand);
   const [level, setLevel] = useState<LearnerLevel>("moi");
+  const [band, setBand] = useState<SchoolBand>(storedSchoolBand ?? "tieu-hoc");
   const [courseId, setCourseId] = useState(
     catalog.courses.some((c) => c.id === DEFAULT_COURSE)
       ? DEFAULT_COURSE
@@ -116,6 +121,35 @@ export default function OnboardingScreen() {
         </View>
 
         <Text style={styles.sectionLabel} maxFontSizeMultiplier={1.3}>
+          Khối lớp của em
+        </Text>
+        <View style={styles.levelList}>
+          {SCHOOL_BANDS.map((b) => (
+            <Pressable
+              key={b.value}
+              onPress={() => setBand(b.value)}
+              accessibilityRole="button"
+              accessibilityLabel={`${b.label}. ${b.hint}`}
+              accessibilityState={{ selected: band === b.value }}
+              style={[styles.levelCard, band === b.value && styles.levelCardActive]}
+            >
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={[styles.levelName, band === b.value && { color: activeGreen }]}
+                  maxFontSizeMultiplier={1.3}
+                >
+                  {b.label}
+                </Text>
+                <Text style={styles.levelHint} maxFontSizeMultiplier={1.3}>
+                  {b.hint}
+                </Text>
+              </View>
+              <Text style={styles.levelCheck}>{band === b.value ? "✅" : "⚪"}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <Text style={styles.sectionLabel} maxFontSizeMultiplier={1.3}>
           Mục tiêu XP mỗi ngày
         </Text>
         <View style={styles.goals}>
@@ -148,6 +182,7 @@ export default function OnboardingScreen() {
           label={selected ? `Học ${selected.targetLanguage}` : "Bắt đầu học"}
           onPress={() => {
             setLearnerLevel(level);
+            setSchoolBand(band);
             finishOnboarding(courseId, goal);
             router.replace("/(tabs)");
           }}
