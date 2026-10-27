@@ -6,6 +6,7 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-nati
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Flag } from "@/components/flag";
+import { ScreenBackground } from "@/components/screen-background";
 import { useAuth } from "@/features/supabase/AuthContext";
 import {
   difficultyForIndex,
@@ -96,7 +97,8 @@ export default function LearnScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
+    <ScreenBackground>
+      <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
       <View style={styles.skyBand}>
         <View style={styles.headerRow}>
           <Text style={styles.sun}>☀️</Text>
@@ -294,7 +296,8 @@ export default function LearnScreen() {
           </View>
         ))}
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScreenBackground>
   );
 }
 
@@ -393,7 +396,7 @@ function Seedling({
 }
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.background },
+  screen: { flex: 1 },
   skyBand: {
     backgroundColor: colors.selectedBg,
     paddingHorizontal: 18,

@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
 import { Flag } from "@/components/flag";
+import { ScreenBackground } from "@/components/screen-background";
 import { useAuth } from "@/features/supabase/AuthContext";
 import { useCourseContent } from "@/lib/content";
 import {
@@ -17,6 +18,7 @@ import {
   useProgress,
   type ThemePreference,
 } from "@/lib/store";
+import { pickBackgroundImage } from "@/lib/pickBackgroundImage";
 import { isAllUnlocked, isValidUnlockCode } from "@/lib/unlock";
 import { makeThemedStyles, radius, useResolvedScheme, useThemeColors } from "@/lib/theme";
 
@@ -33,6 +35,35 @@ export default function ProfileScreen() {
   const progress = useProgress();
   const { themePreference, setThemePreference } = progress;
   const { learnerLevel, setLearnerLevel, unlockAll } = progress;
+  const { backgroundImage, setBackgroundImage } = progress;
+  const [bgBusy, setBgBusy] = useState(false);
+  const [bgMessage, setBgMessage] = useState<string | null>(null);
+
+  const handlePickBackground = async () => {
+    setBgBusy(true);
+    setBgMessage(null);
+    try {
+      const result = await pickBackgroundImage();
+      if (result.status === "ok") {
+        setBackgroundImage(result.dataUrl);
+        setBgMessage("Đã đổi ảnh nền 🎉");
+      } else if (result.status === "denied") {
+        setBgMessage(
+          "App chưa được cấp quyền xem thư viện ảnh. Em nhờ ba/mẹ cấp quyền trong phần Cài đặt của máy nhé."
+        );
+      } else if (result.status === "error") {
+        setBgMessage(result.message);
+      }
+      // "cancelled": người dùng tự đóng trình chọn ảnh, không cần thông báo.
+    } finally {
+      setBgBusy(false);
+    }
+  };
+
+  const handleRemoveBackground = () => {
+    setBackgroundImage(null);
+    setBgMessage("Đã xóa ảnh nền, app quay về nền mặc định.");
+  };
   const { user } = useAuth();
   const unlockedAll = isAllUnlocked(progress, user?.email);
   const [unlockCode, setUnlockCode] = useState("");
@@ -99,7 +130,8 @@ export default function ProfileScreen() {
   ];
 
   return (
-    <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
+    <ScreenBackground>
+      <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
       <ScrollView contentContainerStyle={styles.body}>
         <View style={styles.header}>
           <Image
@@ -316,6 +348,45 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.settingsCard}>
+          <View style={styles.settingsHeader}>
+            <Ionicons name="image-outline" size={22} color={colors.rose} />
+            <Text style={styles.settingsTitle} maxFontSizeMultiplier={1.3}>
+              🖼️ Ảnh nền ứng dụng
+            </Text>
+          </View>
+          {backgroundImage ? (
+            <Image
+              source={{ uri: backgroundImage }}
+              style={styles.bgPreview}
+              contentFit="cover"
+              accessibilityLabel="Ảnh nền hiện tại"
+            />
+          ) : (
+            <Text style={styles.settingsHint} maxFontSizeMultiplier={1.3}>
+              Chọn một ảnh bé yêu thích trong thư viện để làm nền cho các màn
+              chính của app.
+            </Text>
+          )}
+          <DuoButton
+            label={bgBusy ? "Đang mở thư viện..." : "Chọn ảnh từ thư viện"}
+            onPress={handlePickBackground}
+            disabled={bgBusy}
+          />
+          {backgroundImage ? (
+            <DuoButton
+              label="Xóa nền"
+              variant="white"
+              onPress={handleRemoveBackground}
+            />
+          ) : null}
+          {bgMessage ? (
+            <Text style={styles.unlockMessage} maxFontSizeMultiplier={1.3}>
+              {bgMessage}
+            </Text>
+          ) : null}
+        </View>
+
+        <View style={styles.settingsCard}>
           <Pressable
             onPress={() => router.push("/speaking")}
             style={styles.linkRow}
@@ -342,12 +413,14 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScreenBackground>
   );
 }
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.background },
+  screen: { flex: 1 },
+  bgPreview: { width: "100%", height: 150, borderRadius: radius.lg },
   body: { padding: 20, gap: 20, paddingBottom: 60 },
   header: { alignItems: "center", gap: 8, paddingTop: 12 },
   mascot: { width: 110, height: 110 },

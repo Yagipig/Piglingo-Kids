@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
 import { Flag } from "@/components/flag";
+import { ScreenBackground } from "@/components/screen-background";
 import { SpeakerButton } from "@/components/speaker-button";
 import { useCourseContent } from "@/lib/content";
 import { dueInDays } from "@/lib/srs";
@@ -34,7 +35,8 @@ export default function PracticeScreen() {
     .filter((w) => w.stat);
 
   return (
-    <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
+    <ScreenBackground>
+      <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
       <ScrollView contentContainerStyle={styles.body}>
         <Text style={styles.heading} maxFontSizeMultiplier={1.3}>
           Ôn tập
@@ -227,7 +229,8 @@ export default function PracticeScreen() {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScreenBackground>
   );
 }
 
@@ -274,7 +277,7 @@ function QuestRow({ quest }: { quest: Quest }) {
 }
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.background },
+  screen: { flex: 1 },
   body: { padding: 20, gap: 16, paddingBottom: 60 },
   heading: { fontSize: 26, fontWeight: "800", color: colors.neutral700 },
   gamesHeading: { fontSize: 20, fontWeight: "800", color: colors.neutral700, marginTop: 2 },
