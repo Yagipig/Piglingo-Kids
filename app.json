@@ -51,6 +51,12 @@
         {
           "microphonePermission": "Piglingo Kids cần dùng micro để bé ghi âm và luyện phát âm."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Piglingo Kids cần quyền truy cập thư viện ảnh để bạn chọn ảnh làm nền cho ứng dụng."
+        }
       ]
     ],
     "experiments": {

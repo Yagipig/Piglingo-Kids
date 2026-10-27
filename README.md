@@ -16,6 +16,7 @@ Tiến độ (XP, chuỗi ngày, bài đã học, ôn tập SRS) **dùng chung**
 | Cấp độ người học | 3 cấp độ tự chọn: Mới bắt đầu / Đã biết cơ bản / Chuyên nghiệp — màn hình học gợi ý bài theo cấp độ |
 | Trò chơi | 5 game trong tab Luyện tập: **Ghép thẻ trí nhớ** (`/game-memory`), **Nghe và chọn** (`/game-listen`), **Xếp câu cho đúng** (`/game-scramble`), **Đố nhanh 60 giây** (`/game-speed`, có lưu kỷ lục), **Đoán chữ bí mật** (`/game-letters`) — chơi thắng được thưởng XP |
 | Web PWA | Có manifest + service worker, triển khai tự động lên GitHub Pages (workflow `web-pages.yml`) — xem mục "Chạy trên web (PWA)" |
+| Ảnh nền tự chọn | Ở tab Hồ sơ: **chọn ảnh từ thư viện** (`expo-image-picker`) làm nền cho 3 màn tab chính (Học, Luyện tập, Hồ sơ). Ảnh được nén nhẹ và lưu trên thiết bị (data URL trong store), có lớp phủ mờ để chữ vẫn dễ đọc; bấm **Xóa nền** để quay về nền mặc định theo theme |
 | Lưu tiến độ local | Có (zustand + AsyncStorage) |
 | Ghi âm / chấm phát âm | **Đã tích hợp (Bước 2):** route `/speaking` lấy câu mẫu từ khóa đang học, ghi âm bằng `expo-audio`, nghe mẫu bằng `expo-speech`, chấm phát âm **mô phỏng** (offline) qua `MockPronunciationProvider` — thay provider thật về sau, xem `docs/STEP2-INTEGRATION.md` |
 | Khu vực phụ huynh | **Đã tích hợp (Bước 2):** route `/parents`, cổng phép tính cho người lớn, dashboard đọc tiến độ thật từ store (adapter `src/lib/parentProgress.ts`), giới hạn thời gian dùng app — chỉ áp dụng sau khi phụ huynh đã tự đặt giới hạn |
