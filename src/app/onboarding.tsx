@@ -40,7 +40,7 @@ export default function OnboardingScreen() {
           source={require("@/assets/images/world-hero.png")}
           style={styles.hero}
           contentFit="cover"
-          accessibilityLabel="Thế giới phiêu lưu Little Explorers"
+          accessibilityLabel="Thế giới phiêu lưu Nhà Thám Hiểm Nhí"
         />
         <Image
           source={require("@/assets/images/mascot.svg")}
@@ -48,7 +48,7 @@ export default function OnboardingScreen() {
           contentFit="contain"
         />
         <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-          Little Explorers 🧭
+          Nhà Thám Hiểm Nhí 🧭
         </Text>
         <Text style={styles.subtitle} maxFontSizeMultiplier={1.3}>
           Chào mừng nhà thám hiểm nhí đến với Piglingo Kids! Chọn một ngôn ngữ
