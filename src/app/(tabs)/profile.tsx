@@ -19,7 +19,7 @@ import {
   type ThemePreference,
 } from "@/lib/store";
 import { pickBackgroundImage } from "@/lib/pickBackgroundImage";
-import { isAllUnlocked, isValidUnlockCode } from "@/lib/unlock";
+import { isAdminEmail, isAllUnlocked, isValidUnlockCode } from "@/lib/unlock";
 import { makeThemedStyles, radius, shadow, useResolvedScheme, useThemeColors } from "@/lib/theme";
 
 const THEME_OPTIONS: { value: ThemePreference; label: string; icon: string }[] = [
@@ -393,6 +393,18 @@ export default function ProfileScreen() {
 
         <View style={styles.settingsCard}>
           <Pressable
+            onPress={() => router.push("/rewards")}
+            style={styles.linkRow}
+            accessibilityRole="button"
+            accessibilityLabel="Xem phần thưởng của em"
+          >
+            <Ionicons name="gift-outline" size={22} color={colors.amber} />
+            <Text style={styles.linkLabel} maxFontSizeMultiplier={1.3}>
+              Phần thưởng của em
+            </Text>
+            <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+          </Pressable>
+          <Pressable
             onPress={() => router.push("/speaking")}
             style={styles.linkRow}
             accessibilityRole="button"
@@ -416,6 +428,20 @@ export default function ProfileScreen() {
             </Text>
             <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
           </Pressable>
+          {isAdminEmail(user?.email) ? (
+            <Pressable
+              onPress={() => router.push("/admin-rewards")}
+              style={styles.linkRow}
+              accessibilityRole="button"
+              accessibilityLabel="Quản trị phần thưởng chung"
+            >
+              <Ionicons name="settings-outline" size={22} color={colors.rose} />
+              <Text style={styles.linkLabel} maxFontSizeMultiplier={1.3}>
+                Quản trị phần thưởng
+              </Text>
+              <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+            </Pressable>
+          ) : null}
         </View>
       </ScrollView>
       </SafeAreaView>

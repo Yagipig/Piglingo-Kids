@@ -196,6 +196,24 @@ export default function LearnScreen() {
                 })}
               </View>
             ))}
+
+            <Pressable
+              onPress={() => router.push("/rewards")}
+              accessibilityRole="button"
+              accessibilityLabel="Xem phần thưởng của em"
+              style={({ pressed }) => [styles.rewardsCard, pressed && { opacity: 0.86 }]}
+            >
+              <Text style={styles.rewardsEmoji}>🎁</Text>
+              <View style={{ flex: 1, gap: 2 }}>
+                <Text style={styles.rewardsTitle} maxFontSizeMultiplier={1.3}>
+                  Phần thưởng của em
+                </Text>
+                <Text style={styles.rewardsText} maxFontSizeMultiplier={1.3}>
+                  Xem huy hiệu, rương kho báu và quà bí mật từ ba/mẹ đang chờ con khám phá.
+                </Text>
+              </View>
+              <Text style={styles.rewardsArrow}>›</Text>
+            </Pressable>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -254,4 +272,19 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     letterSpacing: 1,
     paddingHorizontal: 4,
   },
+  rewardsCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginTop: 18,
+    borderWidth: 2,
+    borderColor: colors.amber,
+    backgroundColor: colors.amber + "1A",
+    borderRadius: radius.xl,
+    padding: 16,
+  },
+  rewardsEmoji: { fontSize: 34 },
+  rewardsTitle: { fontSize: 17, fontWeight: "900", color: colors.neutral700 },
+  rewardsText: { fontSize: 13, lineHeight: 18, color: colors.textMuted },
+  rewardsArrow: { fontSize: 30, fontWeight: "800", color: colors.amber },
 }));
