@@ -6,8 +6,11 @@ import React, { useEffect, useState } from "react";
 import { TimeLimitGuard } from "@/features/parents/TimeLimitGuard";
 import { useParentSettings } from "@/features/parents/useParentSettings";
 import { AuthProvider } from "@/features/supabase/AuthContext";
+import { useGlobalRewardsSync } from "@/lib/globalRewardsSync";
 import { useProgress } from "@/lib/store";
+import { useFamilyRewardsSync } from "@/lib/useFamilyRewardsSync";
 import { useProgressSync } from "@/lib/useProgressSync";
+import { useRewardCelebration } from "@/lib/useRewardCelebration";
 import { useResolvedScheme, useThemeColors } from "@/lib/theme";
 
 /**
@@ -18,6 +21,18 @@ import { useResolvedScheme, useThemeColors } from "@/lib/theme";
  */
 function ProgressSyncRunner({ hydrated }: { hydrated: boolean }) {
   useProgressSync(hydrated);
+  return null;
+}
+
+/**
+ * Đồng bộ phần thưởng + theo dõi mốc chúc mừng 100%. Tất cả đều chạy nền,
+ * offline-first: chưa đăng nhập, Supabase tắt hoặc mất mạng thì app vẫn
+ * dùng dữ liệu local như cũ. Phải nằm trong AuthProvider để đọc phiên.
+ */
+function RewardsRunner({ hydrated }: { hydrated: boolean }) {
+  useGlobalRewardsSync();
+  useFamilyRewardsSync(hydrated);
+  useRewardCelebration(hydrated);
   return null;
 }
 
@@ -35,7 +50,10 @@ function KidsTimeLimit({ children }: { children: React.ReactNode }) {
   const { settings, isLoaded } = useParentSettings();
   const segments = useSegments();
   const inGrownUpArea =
-    segments[0] === "parents" || segments[0] === "account" || segments[0] === "onboarding";
+    segments[0] === "parents" ||
+    segments[0] === "account" ||
+    segments[0] === "onboarding" ||
+    segments[0] === "admin-rewards";
   const parentConfigured = settings.updatedAt > 0;
   if (!isLoaded) return <>{children}</>;
   return (
@@ -87,6 +105,7 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <ProgressSyncRunner hydrated={hydrated} />
+      <RewardsRunner hydrated={hydrated} />
       <KidsTimeLimit>
         <StatusBar style={scheme === "dark" ? "light" : "dark"} />
         <Stack
@@ -101,6 +120,9 @@ export default function RootLayout() {
           <Stack.Screen name="lesson/[id]" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="guidebook/[unitId]" options={{ presentation: "modal" }} />
           <Stack.Screen name="parents" options={{ presentation: "modal" }} />
+          <Stack.Screen name="rewards" options={{ presentation: "modal" }} />
+          <Stack.Screen name="admin-rewards" options={{ presentation: "modal" }} />
+          <Stack.Screen name="celebration" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="account" options={{ presentation: "modal" }} />
           <Stack.Screen name="speaking" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-memory" options={{ presentation: "modal" }} />
