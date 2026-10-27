@@ -195,7 +195,7 @@ check('leaderboard: SQL + client tồn tại, đúng RPC, giữ RLS owner-only',
   assert.ok(!client.includes('.email'));
 });
 
-check('baseline nội dung packs: 44 unit / 170 bài / 1312 exercise', () => {
+check('baseline nội dung packs: 62 unit / 242 bài / 1894 exercise', () => {
   const catalog = JSON.parse(
     readFileSync(path.join(root, 'src', 'content', 'catalog.json'), 'utf8'),
   );
@@ -214,7 +214,7 @@ check('baseline nội dung packs: 44 unit / 170 bài / 1312 exercise', () => {
       }
     }
   }
-  assert.deepEqual({ units, lessons, exercises }, { units: 44, lessons: 170, exercises: 1312 });
+  assert.deepEqual({ units, lessons, exercises }, { units: 62, lessons: 242, exercises: 1894 });
 });
 
 console.log(`\nTất cả ${passed} nhóm test cấp bậc PASS.`);
