@@ -7,7 +7,7 @@ import { Flag } from "@/components/flag";
 import { exitScreen } from "@/lib/navigation";
 import { orderedCourses } from "@/lib/content";
 import { useProgress } from "@/lib/store";
-import { makeThemedStyles, radius, useResolvedScheme, useThemeColors } from "@/lib/theme";
+import { makeThemedStyles, radius, shadow, useResolvedScheme, useThemeColors } from "@/lib/theme";
 
 export default function CoursesScreen() {
   const colors = useThemeColors();
@@ -21,14 +21,15 @@ export default function CoursesScreen() {
       <View style={styles.topBar}>
         <CloseButton />
         <Text style={styles.title} maxFontSizeMultiplier={1.2}>
-          Khóa học
+          🛂 Hộ chiếu ngôn ngữ
         </Text>
         <View style={{ width: 44 }} />
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
         <Text style={styles.subtitle} maxFontSizeMultiplier={1.3}>
-          Đổi ngôn ngữ bất cứ lúc nào. XP và chuỗi ngày dùng chung cho cả ba ngôn ngữ.
+          Mỗi hộ chiếu mở ra một thế giới vùng đất mới. Đổi ngôn ngữ bất cứ
+          lúc nào — XP và chuỗi ngày dùng chung cho cả ba ngôn ngữ.
         </Text>
         {orderedCourses.map((course) => {
           const prog = courses[course.id];
@@ -59,7 +60,7 @@ export default function CoursesScreen() {
                   {course.targetLanguage}
                 </Text>
                 <Text style={styles.meta} maxFontSizeMultiplier={1.3}>
-                  {Math.min(lessonsDone, course.lessonCount)}/{course.lessonCount} bài · {course.unitCount} chủ đề
+                  {Math.min(lessonsDone, course.lessonCount)}/{course.lessonCount} bài · {course.unitCount} vùng đất
                 </Text>
               </View>
               {active ? (
@@ -97,9 +98,12 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     alignItems: "center",
     gap: 14,
     borderWidth: 2,
+    borderBottomWidth: 5,
     borderColor: colors.neutral200,
     borderRadius: radius.xl,
     padding: 16,
+    backgroundColor: colors.surface,
+    ...shadow.card,
   },
   cardActive: { borderColor: colors.green, backgroundColor: colors.greenLight + "18" },
   langName: { fontSize: 18, fontWeight: "800", color: colors.neutral700 },

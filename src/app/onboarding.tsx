@@ -37,15 +37,23 @@ export default function OnboardingScreen() {
     <SafeAreaView style={styles.screen}>
       <ScrollView contentContainerStyle={styles.body}>
         <Image
+          source={require("@/assets/images/world-hero.png")}
+          style={styles.hero}
+          contentFit="cover"
+          accessibilityLabel="Thế giới phiêu lưu Little Explorers"
+        />
+        <Image
           source={require("@/assets/images/mascot.svg")}
           style={styles.mascot}
           contentFit="contain"
         />
         <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-          Chào mừng đến Piglingo Kids! 🐷
+          Little Explorers 🧭
         </Text>
         <Text style={styles.subtitle} maxFontSizeMultiplier={1.3}>
-          Chọn một ngôn ngữ và học qua các bài ngắn, có âm thanh và ôn tập thông minh.
+          Chào mừng nhà thám hiểm nhí đến với Piglingo Kids! Chọn một ngôn ngữ
+          và lên đường khám phá các vùng đất qua những bài học ngắn, có âm
+          thanh và ôn tập thông minh.
         </Text>
 
         <Text style={styles.sectionLabel} maxFontSizeMultiplier={1.3}>
@@ -152,7 +160,15 @@ export default function OnboardingScreen() {
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
-  body: { padding: 24, gap: 16, paddingBottom: 40 },
+  body: {
+    padding: 24,
+    gap: 16,
+    paddingBottom: 40,
+    width: "100%",
+    maxWidth: 720,
+    alignSelf: "center",
+  },
+  hero: { height: 150, borderRadius: radius.xl, width: "100%" },
   mascot: { width: 100, height: 100, alignSelf: "center" },
   title: {
     fontSize: 28,
@@ -174,6 +190,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     flexBasis: "47%",
     flexGrow: 1,
     borderWidth: 2,
+    borderBottomWidth: 4,
     borderColor: colors.neutral200,
     borderRadius: radius.lg,
     padding: 14,
@@ -189,6 +206,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     alignItems: "center",
     gap: 10,
     borderWidth: 2,
+    borderBottomWidth: 4,
     borderColor: colors.neutral200,
     borderRadius: radius.lg,
     padding: 14,
@@ -208,6 +226,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     flexBasis: "47%",
     flexGrow: 1,
     borderWidth: 2,
+    borderBottomWidth: 4,
     borderColor: colors.neutral200,
     borderRadius: radius.lg,
     padding: 14,
