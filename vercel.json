@@ -1,1 +1,12 @@
-{"$schema":"https://openapi.vercel.sh/vercel.json","cleanUrls":true,"redirects":[{"destination":"/Piglingo-Kids/","permanent":false,"source":"/"}],"rewrites":[{"destination":"/:path*","source":"/Piglingo-Kids/:path*"},{"destination":"/","source":"/Piglingo-Kids"}]}
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/", "destination": "/Piglingo-Kids", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/Piglingo-Kids/:path*", "destination": "/:path*" },
+    { "source": "/Piglingo-Kids", "destination": "/" },
+    { "source": "/Piglingo-Kids/", "destination": "/" }
+  ]
+}
