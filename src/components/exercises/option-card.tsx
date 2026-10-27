@@ -58,7 +58,7 @@ export function OptionCard({
         {
           borderColor: c.border,
           backgroundColor: c.bg,
-          borderBottomWidth: pressed ? 2 : 4,
+          borderBottomWidth: pressed ? 2 : 5,
         },
       ]}
     >
@@ -78,22 +78,27 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
   },
   full: {
     flexDirection: "row",
     gap: 12,
-    paddingVertical: 14,
+    paddingVertical: 16,
     paddingHorizontal: 16,
     width: "100%",
   },
   compact: {
     flexBasis: "47%",
     flexGrow: 1,
-    paddingVertical: 18,
+    paddingVertical: 20,
     paddingHorizontal: 10,
     gap: 8,
   },
-  emoji: { fontSize: 34 },
+  emoji: { fontSize: 40 },
   textWrap: { flexShrink: 1 },
   text: { fontSize: 17, fontWeight: "700", textAlign: "center" },
 });

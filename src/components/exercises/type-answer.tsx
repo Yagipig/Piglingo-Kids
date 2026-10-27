@@ -35,11 +35,13 @@ export function TypeAnswer({
   return (
     <View style={styles.container}>
       <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-        {isListen ? `Gõ từ em nghe được (${targetLanguage})` : "Viết từ này bằng tiếng Anh"}
+        ✏️ {isListen ? `Gõ từ em nghe được (${targetLanguage})` : "Viết từ này bằng tiếng Anh"}
       </Text>
 
       <View style={styles.promptRow}>
-        {exercise.audioTarget ? <SpeakerButton text={exercise.audioTarget} /> : null}
+        {exercise.audioTarget ? (
+          <SpeakerButton text={exercise.audioTarget} size={56} />
+        ) : null}
         {!isListen ? (
           <Text style={styles.prompt} maxFontSizeMultiplier={1.3}>
             {exercise.prompt}
@@ -71,17 +73,17 @@ export function TypeAnswer({
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
     container: { gap: 20 },
-    title: { fontSize: 22, fontWeight: "800", color: colors.neutral700 },
+    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
     promptRow: { flexDirection: "row", alignItems: "center", gap: 12 },
     prompt: { fontSize: 20, fontWeight: "700", color: colors.text, flexShrink: 1 },
     input: {
       minHeight: 110,
       borderWidth: 2,
       borderColor: colors.neutral200,
-      borderRadius: radius.lg,
+      borderRadius: radius.xl,
       backgroundColor: colors.neutral100,
-      padding: 14,
-      fontSize: 17,
+      padding: 16,
+      fontSize: 18,
       color: colors.text,
       textAlignVertical: "top",
     },

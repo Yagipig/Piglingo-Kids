@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { makeThemedStyles } from "@/lib/theme";
+import { makeThemedStyles, radius } from "@/lib/theme";
 import type { FillBlankExercise } from "@/lib/types";
 
 import { OptionCard, type OptionState } from "./option-card";
@@ -53,13 +53,16 @@ export function FillBlank({ exercise, answer, onAnswer, status }: FillBlankProps
       <Text style={styles.title} maxFontSizeMultiplier={1.3}>
         Điền vào chỗ trống
       </Text>
-      <Text
-        style={styles.sentence}
-        accessibilityLabel={filled.replace("___", "blank")}
-        maxFontSizeMultiplier={1.3}
-      >
-        {filled}
-      </Text>
+      <View style={styles.bubble}>
+        <Text
+          style={styles.sentence}
+          accessibilityLabel={filled.replace("___", "blank")}
+          maxFontSizeMultiplier={1.3}
+        >
+          {filled}
+        </Text>
+        <View style={styles.bubbleTail} />
+      </View>
       <Text style={styles.translation} maxFontSizeMultiplier={1.3}>
         {exercise.translation}
       </Text>
@@ -82,7 +85,24 @@ export function FillBlank({ exercise, answer, onAnswer, status }: FillBlankProps
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
     container: { gap: 16 },
-    title: { fontSize: 22, fontWeight: "800", color: colors.neutral700 },
+    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
+    bubble: {
+      backgroundColor: colors.selectedBg,
+      borderRadius: radius.xl,
+      padding: 16,
+      alignSelf: "flex-start",
+      maxWidth: "100%",
+    },
+    bubbleTail: {
+      position: "absolute",
+      bottom: -8,
+      left: 28,
+      width: 18,
+      height: 18,
+      backgroundColor: colors.selectedBg,
+      transform: [{ rotate: "45deg" }],
+      borderBottomRightRadius: 4,
+    },
     sentence: { fontSize: 22, fontWeight: "700", color: colors.text },
     translation: { fontSize: 15, color: colors.textMuted },
     options: { gap: 10, marginTop: 8 },

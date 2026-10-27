@@ -54,7 +54,9 @@ export function Select({
       </Text>
 
       <View style={styles.promptRow}>
-        {exercise.audioTarget ? <SpeakerButton text={exercise.audioTarget} /> : null}
+        {exercise.audioTarget ? (
+          <SpeakerButton text={exercise.audioTarget} size={56} />
+        ) : null}
         {!isListen ? (
           <Text style={styles.prompt} maxFontSizeMultiplier={1.3}>
             {exercise.prompt}
@@ -82,9 +84,9 @@ export function Select({
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
     container: { gap: 20 },
-    title: { fontSize: 22, fontWeight: "800", color: colors.neutral700 },
+    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
     promptRow: { flexDirection: "row", alignItems: "center", gap: 12 },
-    prompt: { fontSize: 22, fontWeight: "700", color: colors.text, flexShrink: 1 },
+    prompt: { fontSize: 24, fontWeight: "700", color: colors.text, flexShrink: 1 },
     options: { gap: 10 },
     grid: { flexDirection: "row", flexWrap: "wrap" },
   })

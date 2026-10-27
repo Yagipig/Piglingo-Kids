@@ -36,7 +36,9 @@ export function WordBank({ exercise, answer, onAnswer, status }: WordBankProps) 
       </Text>
 
       <View style={styles.promptRow}>
-        {exercise.audioTarget ? <SpeakerButton text={exercise.audioTarget} /> : null}
+        {exercise.audioTarget ? (
+          <SpeakerButton text={exercise.audioTarget} size={56} />
+        ) : null}
         <Text style={styles.prompt} maxFontSizeMultiplier={1.3}>
           {exercise.prompt}
         </Text>
@@ -111,18 +113,21 @@ function Chip({
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
     container: { gap: 20 },
-    title: { fontSize: 22, fontWeight: "800", color: colors.neutral700 },
+    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
     promptRow: { flexDirection: "row", alignItems: "center", gap: 12 },
     prompt: { fontSize: 20, fontWeight: "700", color: colors.text, flexShrink: 1 },
     answerArea: {
-      minHeight: 56,
-      borderTopWidth: 2,
-      borderBottomWidth: 2,
-      borderColor: colors.neutral200,
+      minHeight: 64,
+      borderWidth: 2,
+      borderStyle: "dashed",
+      borderColor: colors.neutral300,
+      backgroundColor: colors.neutral100,
+      borderRadius: radius.lg,
       flexDirection: "row",
       flexWrap: "wrap",
       gap: 8,
-      paddingVertical: 8,
+      paddingVertical: 10,
+      paddingHorizontal: 10,
       alignItems: "center",
     },
     pool: {
@@ -135,9 +140,9 @@ const useStyles = makeThemedStyles((colors) =>
       backgroundColor: colors.surface,
       borderWidth: 2,
       borderColor: colors.neutral200,
-      borderRadius: radius.md,
-      paddingHorizontal: 14,
-      paddingVertical: 10,
+      borderRadius: radius.lg,
+      paddingHorizontal: 16,
+      paddingVertical: 12,
     },
     chipGhost: { backgroundColor: colors.neutral200, borderColor: colors.neutral200 },
     chipText: { fontSize: 17, fontWeight: "600", color: colors.text },

@@ -149,8 +149,8 @@ export function Match({ exercise, onComplete, onWordResult }: MatchProps) {
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
     container: { gap: 20 },
-    title: { fontSize: 22, fontWeight: "800", color: colors.neutral700 },
-    columns: { flexDirection: "row", gap: 10 },
-    column: { flex: 1, gap: 10 },
+    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
+    columns: { flexDirection: "row", gap: 12 },
+    column: { flex: 1, gap: 12 },
   })
 );
