@@ -76,6 +76,11 @@ type ProgressState = {
   musicOn: boolean;
   /** Kỷ lục game "Đố nhanh 60 giây": số câu đúng cao nhất trong một ván. */
   speedBest: number;
+  /**
+   * Ảnh nền tự chọn (data URL jpeg) áp dụng cho các màn tab chính.
+   * null = dùng nền mặc định theo theme.
+   */
+  backgroundImage: string | null;
   /** "system" follows the device's light/dark setting. */
   themePreference: ThemePreference;
   courses: Record<string, CourseProgress>;
@@ -99,6 +104,8 @@ type ProgressState = {
   setMusicOn: (on: boolean) => void;
   /** Ghi nhận điểm game Đố nhanh; chỉ giữ lại kỷ lục cao nhất. */
   recordSpeedScore: (score: number) => void;
+  /** Đặt ảnh nền tự chọn (data URL) hoặc xóa về nền mặc định với null. */
+  setBackgroundImage: (uri: string | null) => void;
 };
 
 function bumpDailyXp(state: ProgressState, amount: number) {
@@ -139,6 +146,7 @@ export const useProgress = create<ProgressState>()(
       learnerLevel: "moi",
       musicOn: false,
       speedBest: 0,
+      backgroundImage: null,
       themePreference: "system",
       courses: {},
       activeDays: {},
@@ -248,6 +256,8 @@ export const useProgress = create<ProgressState>()(
       recordSpeedScore: (score) =>
         set((state) => ({ speedBest: Math.max(state.speedBest ?? 0, score) })),
 
+      setBackgroundImage: (uri) => set({ backgroundImage: uri }),
+
       setLearnerLevel: (level) => set({ learnerLevel: level }),
 
       addBonusXp: (amount) =>
@@ -300,6 +310,7 @@ export const useProgress = create<ProgressState>()(
           learnerLevel: (old.learnerLevel as LearnerLevel) ?? "moi",
           musicOn: (old.musicOn as boolean) ?? false,
           speedBest: (old.speedBest as number) ?? 0,
+          backgroundImage: (old.backgroundImage as string | null) ?? null,
           themePreference: (old.themePreference as ThemePreference) ?? "system",
           activeDays: (old.activeDays as Record<string, DayActivity>) ?? {},
           courses: {
