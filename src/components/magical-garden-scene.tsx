@@ -130,7 +130,7 @@ export function MagicalGardenScene({
   return (
     <View
       style={styles.scene}
-      accessibilityLabel="Khu vườn ngôn ngữ thần tiên với ba cổng vương quốc: Storybook, Sakura và Lantern"
+      accessibilityLabel="Khu vườn ngôn ngữ thần tiên với ba cổng vương quốc: Cổ Tích, Hoa Anh Đào và Đèn Lồng"
     >
       <Image
         source={gardenSceneImage()}
