@@ -26,6 +26,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
+import { CelebrationBurst, StarRow } from "@/components/celebration";
 import { CloseButton } from "@/components/close-button";
 import { DuoButton } from "@/components/duo-button";
 import { FillBlank, ensureBlank } from "@/components/exercises/fill-blank";
@@ -36,14 +37,22 @@ import { WordBank } from "@/components/exercises/word-bank";
 import { speakTarget, useSfx } from "@/lib/audio";
 import { useCourseContent } from "@/lib/content";
 import { haptics } from "@/lib/haptics";
+import { landForUnit } from "@/lib/lands";
 import {
+  currentLessonIndex,
   currentStreak,
   dueSrsWords,
   useProgress,
   XP_PER_LESSON,
   XP_PERFECT_BONUS,
 } from "@/lib/store";
-import { makeThemedStyles, radius, useThemeColors } from "@/lib/theme";
+import {
+  landPalette,
+  makeThemedStyles,
+  radius,
+  useResolvedScheme,
+  useThemeColors,
+} from "@/lib/theme";
 import type { Exercise } from "@/lib/types";
 
 type Status = "none" | "correct" | "wrong";
@@ -119,12 +128,14 @@ function answerIsReady(exercise: Exercise, answer: Answer): boolean {
 
 export default function LessonScreen() {
   const colors = useThemeColors();
+  const scheme = useResolvedScheme();
   const styles = useStyles();
   const { id } = useLocalSearchParams<{ id: string }>();
   const insets = useSafeAreaInsets();
   const progress = useProgress();
   const { activeCourseId } = progress;
-  const { pack, getLesson, allWords, getWord } = useCourseContent(activeCourseId);
+  const { pack, getLesson, allLessons, allWords, getWord } =
+    useCourseContent(activeCourseId);
   const sfx = useSfx();
 
   const isMistakes = id === "mistakes";
@@ -271,15 +282,29 @@ export default function LessonScreen() {
 
   if (finished) {
     const perfect = wrongIds.current.size === 0;
+    // Sao + độ chính xác: chỉ là cách trình bày của dữ kiện sẵn có
+    // (perfect / correctCount / total) — không lưu thêm hệ thưởng nào.
+    const stars = perfect ? 3 : 2;
+    const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+    // Điểm đến tiếp theo theo đúng currentLessonIndex sau khi hoàn thành.
+    const nextIndex = currentLessonIndex(
+      progress.course().completedLessons,
+      allLessons.map((l) => l.lesson.id)
+    );
+    const nextRef = !isPractice ? allLessons[nextIndex] : undefined;
     return (
       <SafeAreaView style={styles.screen}>
         <View style={styles.center}>
+          <CelebrationBurst active={finished} />
           <Animated.View entering={ZoomIn.springify().damping(12)}>
             <Image
-              source={require("@/assets/images/mascot.svg")}
+              source={require("@/assets/images/mascot-celebrate.png")}
               style={styles.finishMascot}
               contentFit="contain"
             />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.delay(120)}>
+            <StarRow stars={stars} />
           </Animated.View>
           <Animated.Text entering={FadeInUp.delay(150)} style={styles.finishTitle}>
             {isMistakes
@@ -303,10 +328,24 @@ export default function LessonScreen() {
               }
               color={colors.orange}
             />
+            <ResultCard
+              label="Độ chính xác"
+              value={`${accuracy}%`}
+              icon={
+                <MaterialCommunityIcons name="target" size={22} color={colors.skyDark} />
+              }
+              color={colors.skyDark}
+            />
           </Animated.View>
           {perfect ? (
             <Animated.Text entering={FadeInUp.delay(450)} style={styles.perfect}>
               Không sai câu nào! +{XP_PERFECT_BONUS} XP
+            </Animated.Text>
+          ) : null}
+          {nextRef ? (
+            <Animated.Text entering={FadeInUp.delay(450)} style={styles.nextUnlock}>
+              🔓 Điểm đến tiếp theo đã mở: {nextRef.unit.title} —{" "}
+              {nextRef.lesson.title}
             </Animated.Text>
           ) : null}
           <Animated.View
@@ -358,6 +397,16 @@ export default function LessonScreen() {
     setIndex((i) => i + 1);
   };
 
+  // Dải trang trí "vùng đất" của unit hiện tại (chỉ trình bày, suy từ
+  // dữ liệu bài học đã có — không đổi luồng câu hỏi/chấm điểm).
+  const currentRef = !isMistakes && !isSrs ? getLesson(id ?? "") : undefined;
+  const currentLand = currentRef ? landForUnit(currentRef.unit) : null;
+  const landStripColor = currentLand
+    ? scheme === "dark"
+      ? landPalette[currentLand.kind].dark
+      : landPalette[currentLand.kind].bottom
+    : null;
+
   return (
     <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
       <KeyboardAvoidingView
@@ -376,6 +425,7 @@ export default function LessonScreen() {
               <View style={styles.progressShine} />
             </Animated.View>
           </View>
+          <Text style={styles.finishFlag}>🏁</Text>
           {isPractice ? (
             <View style={styles.practicePill}>
               <Ionicons name="infinite" size={24} color={colors.skyDark} />
@@ -388,6 +438,14 @@ export default function LessonScreen() {
           contentContainerStyle={styles.body}
           keyboardShouldPersistTaps="handled"
         >
+          {currentLand && currentRef ? (
+            <View style={[styles.landStrip, { backgroundColor: landStripColor ?? undefined }]}>
+              <Text style={styles.landStripText} maxFontSizeMultiplier={1.2}>
+                {currentLand.emoji} {currentLand.name} · {currentRef.unit.title}
+              </Text>
+            </View>
+          ) : null}
+          <View style={styles.stage}>
           {index >= exercises.length && !isMistakes ? (
             <View style={[styles.badge, { backgroundColor: colors.orange + "22" }]}>
               <Ionicons name="refresh" size={14} color={colors.orange} />
@@ -457,6 +515,7 @@ export default function LessonScreen() {
               status={status}
             />
           )}
+          </View>
         </ScrollView>
 
         <View
@@ -469,7 +528,7 @@ export default function LessonScreen() {
         >
           {status === "correct" && (
             <Animated.View entering={FadeInDown.duration(200)} style={styles.feedbackRow}>
-              <Ionicons name="checkmark-circle" size={26} color={colors.correctText} />
+              <Ionicons name="checkmark-circle" size={34} color={colors.correctText} />
               <Text style={[styles.feedback, { color: colors.correctText }]}>
                 Giỏi lắm!
               </Text>
@@ -478,7 +537,7 @@ export default function LessonScreen() {
           {status === "wrong" && (
             <Animated.View entering={FadeInDown.duration(200)}>
               <View style={styles.feedbackRow}>
-                <Ionicons name="close-circle" size={26} color={colors.wrongText} />
+                <Ionicons name="close-circle" size={34} color={colors.wrongText} />
                 <Text style={[styles.feedback, { color: colors.wrongText }]}>
                   Đáp án đúng:
                 </Text>
@@ -550,10 +609,27 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   },
   progressTrack: {
     flex: 1,
-    height: 14,
+    height: 16,
     borderRadius: radius.full,
     backgroundColor: colors.neutral200,
     overflow: "hidden",
+  },
+  finishFlag: { fontSize: 20 },
+  landStrip: {
+    borderRadius: radius.full,
+    alignSelf: "flex-start",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    marginBottom: 12,
+  },
+  landStripText: { fontSize: 13, fontWeight: "800", color: colors.white },
+  stage: {
+    backgroundColor: colors.surface,
+    borderWidth: 2,
+    borderBottomWidth: 6,
+    borderColor: colors.neutral200,
+    borderRadius: radius.xl,
+    padding: 18,
   },
   progressFill: {
     height: "100%",
@@ -574,7 +650,13 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     height: 44,
     justifyContent: "center",
   },
-  body: { padding: 20, paddingBottom: 40 },
+  body: {
+    padding: 20,
+    paddingBottom: 40,
+    width: "100%",
+    maxWidth: 760,
+    alignSelf: "center",
+  },
   footer: {
     padding: 16,
     gap: 12,
@@ -601,8 +683,9 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     justifyContent: "center",
     padding: 24,
     gap: 18,
+    position: "relative",
   },
-  finishMascot: { width: 130, height: 130 },
+  finishMascot: { width: 150, height: 150 },
   finishTitle: {
     fontSize: 26,
     fontWeight: "800",
@@ -611,12 +694,19 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   },
   mutedCenter: { fontSize: 15, color: colors.textMuted, textAlign: "center" },
   perfect: { fontSize: 15, fontWeight: "700", color: colors.amber },
-  resultRow: { flexDirection: "row", gap: 14 },
+  nextUnlock: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: colors.correctText,
+    textAlign: "center",
+  },
+  resultRow: { flexDirection: "row", gap: 14, flexWrap: "wrap", justifyContent: "center" },
   resultCard: {
     borderWidth: 2,
+    borderBottomWidth: 5,
     borderRadius: radius.lg,
     overflow: "hidden",
-    minWidth: 130,
+    minWidth: 118,
   },
   resultCardHeader: { paddingVertical: 6, alignItems: "center" },
   resultCardLabel: {
