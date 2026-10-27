@@ -43,7 +43,7 @@ export default function OnboardingScreen() {
           accessibilityLabel="Thế giới phiêu lưu Nhà Thám Hiểm Nhí"
         />
         <Image
-          source={require("@/assets/images/mascot.svg")}
+          source={require("@/assets/images/mascot-avatar.png")}
           style={styles.mascot}
           contentFit="contain"
         />
@@ -169,7 +169,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     alignSelf: "center",
   },
   hero: { height: 150, borderRadius: radius.xl, width: "100%" },
-  mascot: { width: 100, height: 100, alignSelf: "center" },
+  mascot: { width: 100, height: 100, alignSelf: "center", borderRadius: 999 },
   title: {
     fontSize: 28,
     fontWeight: "800",
