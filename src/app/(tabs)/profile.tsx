@@ -136,7 +136,7 @@ export default function ProfileScreen() {
         <View style={styles.header}>
           <View style={styles.avatarRing}>
             <Image
-              source={require("@/assets/images/mascot.svg")}
+              source={require("@/assets/images/mascot-avatar.png")}
               style={styles.mascot}
               contentFit="contain"
             />
@@ -466,7 +466,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     overflow: "hidden",
     ...shadow.chunky,
   },
-  mascot: { width: 110, height: 110 },
+  mascot: { width: 110, height: 110, borderRadius: 999 },
   headerSub: { fontSize: 13, color: colors.textMuted, textAlign: "center" },
   name: { fontSize: 26, fontWeight: "800", color: colors.neutral700 },
   courseRow: { flexDirection: "row", alignItems: "center", gap: 6 },
