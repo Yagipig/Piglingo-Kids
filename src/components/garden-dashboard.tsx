@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -9,6 +10,7 @@ import type {
   WeeklyChallenge,
 } from "@/lib/garden";
 import type { Kingdom } from "@/lib/kingdoms";
+import { rankForXp } from "@/lib/ranks";
 import type { Quest } from "@/lib/store";
 import { makeThemedStyles, radius, shadow } from "@/lib/theme";
 
@@ -66,6 +68,7 @@ export function GardenDashboard({
     : 100;
   const { globalTop, latestGivenFamily } = highlights;
   const hasHighlights = globalTop.length > 0 || latestGivenFamily != null;
+  const rank = rankForXp(totalXp);
 
   return (
     <View style={styles.wrap}>
@@ -215,6 +218,32 @@ export function GardenDashboard({
         )}
       </View>
 
+      {/* Thành tích & xếp hạng */}
+      <Pressable
+        onPress={() => router.push("/achievements")}
+        accessibilityRole="button"
+        accessibilityLabel={`Xem thành tích và xếp hạng. Cấp bậc hiện tại: ${rank.title}, ${totalXp} XP`}
+        style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}
+      >
+        <View style={styles.rankRow}>
+          <Text style={styles.rankEmoji}>{rank.emoji}</Text>
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text style={styles.cardTitle} maxFontSizeMultiplier={1.3}>
+              🏆 Thành tích & xếp hạng
+            </Text>
+            <Text style={styles.cardHint} maxFontSizeMultiplier={1.3}>
+              Cấp bậc hiện tại: {rank.title} · {totalXp} XP
+              {rank.isMax
+                ? " · Đã đạt cấp cao nhất 👑"
+                : ` · Còn ${rank.xpToNext} XP lên ${rank.nextTitle}`}
+            </Text>
+          </View>
+          <Text style={styles.seeAll} maxFontSizeMultiplier={1.2}>
+            Xem ›
+          </Text>
+        </View>
+      </Pressable>
+
       {/* Thú đồng hành */}
       <View style={styles.card}>
         <Text style={styles.cardTitle} maxFontSizeMultiplier={1.3}>
@@ -321,6 +350,8 @@ const useStyles = makeThemedStyles((colors) =>
     progressLabel: { fontSize: 13, fontWeight: "700", color: colors.neutral700 },
     progressValue: { fontSize: 12.5, fontWeight: "800", color: colors.textMuted },
     rewardHeader: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+    rankRow: { flexDirection: "row", alignItems: "center", gap: 10 },
+    rankEmoji: { fontSize: 34 },
     seeAll: { fontSize: 13, fontWeight: "800", color: colors.skyDark },
     rewardLine: { fontSize: 13.5, fontWeight: "700", color: colors.neutral700 },
     rewardKind: { fontSize: 12, fontWeight: "600", color: colors.textMuted },
