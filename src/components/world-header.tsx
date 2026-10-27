@@ -9,63 +9,61 @@ import { makeThemedStyles, radius, useThemeColors } from "@/lib/theme";
 type WorldHeaderProps = {
   courseId: string;
   targetLanguage: string;
+  /** Lời chào do màn cha chọn (lần đầu / trở lại) — không có tên trẻ vì app không lưu tên trẻ. */
+  greeting: string;
   streak: number;
   streakLit: boolean;
-  xp: number;
+  /** Tổng XP của cả ba khóa — khớp khái niệm Cấp vườn. */
+  totalXp: number;
+  gardenLevel: number;
   unlockedAll: boolean;
   musicOn: boolean;
   onToggleMusic: () => void;
   onOpenCourses: () => void;
-  /** Tiến độ khám phá toàn khóa (số liệu cũ bloomed/total của trang chủ). */
-  explored: number;
-  totalLessons: number;
-  exploredPct: number;
+  /** Nút ⚙ dẫn tới tab Hồ sơ, nơi các cài đặt thật đang nằm. */
+  onOpenProfile: () => void;
 };
 
 /**
- * "Bầu trời thế giới" ở đầu bản đồ: ảnh hero phiêu lưu, avatar mascot,
- * lời chào nhà thám hiểm, hàng chỉ số (streak/XP/mở khóa) và thanh tiến
- * độ khám phá. Lớp nền dùng selectedBg bán đặc để ảnh nền tự chọn của
+ * Header gọn của trang chủ Magical Garden: logo + mascot Piglingo, lời
+ * chào nhà thám hiểm, hàng chỉ số (streak / tổng XP / cấp vườn) và các
+ * nút nhạc, chọn khóa, cài đặt (Hồ sơ). Ảnh hero cũ đã bỏ vì cảnh vườn
+ * bên dưới là hero chính. Nền bán trong suốt để ảnh nền tự chọn của
  * người dùng (ScreenBackground) vẫn thoáng hiện phía sau.
  */
 export function WorldHeader({
   courseId,
   targetLanguage,
+  greeting,
   streak,
   streakLit,
-  xp,
+  totalXp,
+  gardenLevel,
   unlockedAll,
   musicOn,
   onToggleMusic,
   onOpenCourses,
-  explored,
-  totalLessons,
-  exploredPct,
+  onOpenProfile,
 }: WorldHeaderProps) {
   const colors = useThemeColors();
   const styles = useStyles();
   return (
     <View style={styles.skyBand}>
-      <Image
-        source={require("@/assets/images/world-hero.png")}
-        style={styles.hero}
-        contentFit="cover"
-        accessibilityLabel="Bản đồ thế giới phiêu lưu Little Explorers"
-      />
       <View style={styles.headerRow}>
         <View style={styles.avatarRing}>
           <Image
             source={require("@/assets/images/mascot.svg")}
             style={styles.mascot}
             contentFit="contain"
+            accessibilityLabel="Mascot Piglingo"
           />
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={styles.greeting} maxFontSizeMultiplier={1.3}>
-            Chào nhà thám hiểm! 🧭
+          <Text style={styles.brand} maxFontSizeMultiplier={1.2}>
+            Piglingo
           </Text>
-          <Text style={styles.greetingSub} maxFontSizeMultiplier={1.3}>
-            Little Explorers — khám phá thế giới ngôn ngữ
+          <Text style={styles.brandSub} maxFontSizeMultiplier={1.2}>
+            Khu vườn ngôn ngữ thần tiên 🌸
           </Text>
         </View>
         <Pressable
@@ -73,7 +71,7 @@ export function WorldHeader({
           accessibilityRole="button"
           accessibilityLabel={musicOn ? "Tắt nhạc nền" : "Bật nhạc nền"}
           accessibilityState={{ selected: musicOn }}
-          style={({ pressed }) => [styles.musicButton, pressed && { opacity: 0.8 }]}
+          style={({ pressed }) => [styles.iconButton, pressed && { opacity: 0.8 }]}
         >
           <Text style={styles.musicIcon}>{musicOn ? "🔊" : "🔇"}</Text>
         </Pressable>
@@ -86,7 +84,19 @@ export function WorldHeader({
           <Flag courseId={courseId} size={30} />
           <Ionicons name="chevron-down" size={14} color={colors.textMuted} />
         </Pressable>
+        <Pressable
+          onPress={onOpenProfile}
+          accessibilityRole="button"
+          accessibilityLabel="Mở Hồ sơ và cài đặt"
+          style={({ pressed }) => [styles.iconButton, pressed && { opacity: 0.8 }]}
+        >
+          <Ionicons name="settings-outline" size={21} color={colors.neutral700} />
+        </Pressable>
       </View>
+
+      <Text style={styles.greeting} maxFontSizeMultiplier={1.3}>
+        {greeting}
+      </Text>
 
       <View style={styles.statsRow}>
         <Stat
@@ -103,10 +113,19 @@ export function WorldHeader({
         />
         <Stat
           icon={<Ionicons name="flash" size={19} color={colors.skyDark} />}
-          value={xp}
+          value={totalXp}
           label="XP"
           color={colors.skyDark}
         />
+        <View style={styles.stat}>
+          <Text style={styles.statEmoji}>🌳</Text>
+          <Text style={[styles.statValue, { color: colors.greenDark }]} maxFontSizeMultiplier={1.2}>
+            {gardenLevel}
+          </Text>
+          <Text style={styles.statLabel} maxFontSizeMultiplier={1.2}>
+            Cấp vườn
+          </Text>
+        </View>
         {unlockedAll ? (
           <View style={styles.unlockBadge}>
             <Text style={styles.unlockBadgeText} maxFontSizeMultiplier={1.2}>
@@ -114,15 +133,6 @@ export function WorldHeader({
             </Text>
           </View>
         ) : null}
-      </View>
-
-      <View style={styles.exploreProgress}>
-        <Text style={styles.exploreProgressText} maxFontSizeMultiplier={1.3}>
-          🗺️ Đã khám phá {explored}/{totalLessons} điểm đến
-        </Text>
-        <View style={styles.exploreTrack}>
-          <View style={[styles.exploreFill, { width: `${exploredPct}%` }]} />
-        </View>
       </View>
     </View>
   );
@@ -166,15 +176,10 @@ const useStyles = makeThemedStyles((colors) =>
       gap: 8,
       overflow: "hidden",
     },
-    hero: {
-      height: 92,
-      borderRadius: radius.lg,
-      marginBottom: 2,
-    },
     headerRow: { flexDirection: "row", alignItems: "center", gap: 8 },
     avatarRing: {
-      width: 58,
-      height: 58,
+      width: 52,
+      height: 52,
       borderRadius: radius.full,
       borderWidth: 3,
       borderColor: colors.amber,
@@ -183,10 +188,11 @@ const useStyles = makeThemedStyles((colors) =>
       justifyContent: "center",
       overflow: "hidden",
     },
-    mascot: { width: 50, height: 50 },
-    greeting: { fontSize: 21, fontWeight: "800", color: colors.neutral700 },
-    greetingSub: { fontSize: 13, color: colors.textMuted },
-    musicButton: {
+    mascot: { width: 44, height: 44 },
+    brand: { fontSize: 20, fontWeight: "900", color: colors.neutral700 },
+    brandSub: { fontSize: 12, color: colors.textMuted, fontWeight: "700" },
+    greeting: { fontSize: 16, fontWeight: "800", color: colors.neutral700 },
+    iconButton: {
       width: 42,
       height: 42,
       borderRadius: radius.full,
@@ -198,8 +204,9 @@ const useStyles = makeThemedStyles((colors) =>
     },
     musicIcon: { fontSize: 19 },
     coursePicker: { flexDirection: "row", alignItems: "center", gap: 3, paddingVertical: 4 },
-    statsRow: { flexDirection: "row", alignItems: "center", gap: 20 },
+    statsRow: { flexDirection: "row", alignItems: "center", gap: 18 },
     stat: { flexDirection: "row", alignItems: "center", gap: 5 },
+    statEmoji: { fontSize: 17 },
     statValue: { fontSize: 16, fontWeight: "800" },
     statLabel: { fontSize: 12, color: colors.textMuted, fontWeight: "700" },
     unlockBadge: {
@@ -210,14 +217,5 @@ const useStyles = makeThemedStyles((colors) =>
       paddingVertical: 4,
     },
     unlockBadgeText: { fontSize: 12, fontWeight: "800", color: colors.correctText },
-    exploreProgress: { gap: 5 },
-    exploreProgressText: { fontSize: 14, fontWeight: "800", color: colors.correctText },
-    exploreTrack: {
-      height: 12,
-      borderRadius: radius.full,
-      backgroundColor: colors.surface,
-      overflow: "hidden",
-    },
-    exploreFill: { height: "100%", borderRadius: radius.full, backgroundColor: colors.green },
   })
 );

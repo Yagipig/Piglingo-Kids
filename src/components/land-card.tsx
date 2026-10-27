@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { AdventureNode } from "@/components/adventure-node";
 import { difficultyLabel, type LessonRef } from "@/lib/content";
+import type { KingdomPalette } from "@/lib/kingdoms";
 import type { Land } from "@/lib/lands";
 import {
   landPalette,
@@ -26,6 +27,18 @@ type LandCardProps = {
   currentIndex: number;
   unlockedAll: boolean;
   totalLessons: number;
+  /**
+   * Màu nhấn của vương quốc đang học (Magical Garden): nhuộm viền thẻ,
+   * fill tiến độ và nút sổ tay. Thiếu thì dùng màu unitPalette như cũ.
+   * Banner cảnh vùng vẫn theo landPalette của từng unit.
+   */
+  accent?: KingdomPalette | null;
+  /**
+   * Nếu được truyền, chạm node (mở lẫn khóa) sẽ gọi callback này với đúng
+   * ref + trạng thái khóa để màn cha mở MissionPanel; không truyền thì
+   * giữ hành vi onLessonPress/onLockedPress cũ.
+   */
+  onMissionPress?: (ref_: LessonRef, locked: boolean) => void;
   onLessonPress: (ref_: LessonRef) => void;
   onLockedPress: () => void;
   onGuidebookPress: () => void;
@@ -47,6 +60,8 @@ export function LandCard({
   currentIndex,
   unlockedAll,
   totalLessons,
+  accent,
+  onMissionPress,
   onLessonPress,
   onLockedPress,
   onGuidebookPress,
@@ -65,10 +80,13 @@ export function LandCard({
   // Dark mode: dùng tông accent tối của vùng để banner dịu lại.
   const sceneTop = scheme === "dark" ? palette.dark : palette.top;
   const sceneBottom = scheme === "dark" ? palette.accent : palette.bottom;
+  // Điểm nhấn vương quốc (nếu có) thay màu unit ở viền/fill/nút sổ tay.
+  const accentMain = accent?.primary ?? color.main;
+  const accentDark = accent?.deep ?? color.dark;
 
   return (
     <View
-      style={[styles.card, { borderColor: color.main }]}
+      style={[styles.card, { borderColor: accentMain }]}
       onLayout={
         onLayout ? (e) => onLayout(e.nativeEvent.layout.y) : undefined
       }
@@ -105,7 +123,7 @@ export function LandCard({
           <Pressable
             style={({ pressed }) => [
               styles.guidebookButton,
-              { backgroundColor: color.main, borderBottomColor: color.dark },
+              { backgroundColor: accentMain, borderBottomColor: accentDark },
               pressed && { opacity: 0.8 },
             ]}
             onPress={onGuidebookPress}
@@ -121,7 +139,7 @@ export function LandCard({
             <View
               style={[
                 styles.progressFill,
-                { width: `${landPct}%`, backgroundColor: color.main },
+                { width: `${landPct}%`, backgroundColor: accentMain },
               ]}
             />
           </View>
@@ -139,20 +157,26 @@ export function LandCard({
         ) : null}
 
         <View style={styles.trail}>
-          {lessons.map((ref, i) => (
-            <AdventureNode
-              key={ref.lesson.id}
-              ref_={ref}
-              indexInUnit={i}
-              completed={!!completedLessons[ref.lesson.id]}
-              current={ref.globalIndex === currentIndex}
-              locked={!unlockedAll && ref.globalIndex > currentIndex}
-              color={color}
-              totalLessons={totalLessons}
-              onPress={() => onLessonPress(ref)}
-              onLockedPress={onLockedPress}
-            />
-          ))}
+          {lessons.map((ref, i) => {
+            const nodeLocked = !unlockedAll && ref.globalIndex > currentIndex;
+            return (
+              <AdventureNode
+                key={ref.lesson.id}
+                ref_={ref}
+                indexInUnit={i}
+                completed={!!completedLessons[ref.lesson.id]}
+                current={ref.globalIndex === currentIndex}
+                locked={nodeLocked}
+                color={color}
+                totalLessons={totalLessons}
+                onPress={() => onLessonPress(ref)}
+                onLockedPress={onLockedPress}
+                onMissionPress={
+                  onMissionPress ? () => onMissionPress(ref, nodeLocked) : undefined
+                }
+              />
+            );
+          })}
         </View>
       </View>
     </View>

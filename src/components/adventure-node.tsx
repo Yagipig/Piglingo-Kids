@@ -28,6 +28,12 @@ type AdventureNodeProps = {
   totalLessons: number;
   onPress: () => void;
   onLockedPress: () => void;
+  /**
+   * Nếu được truyền, MỌI lần chạm node (mở lẫn khóa) đều gọi callback này
+   * thay cho onPress/onLockedPress — trang chủ dùng để mở MissionPanel.
+   * Không truyền thì giữ nguyên hành vi cũ.
+   */
+  onMissionPress?: () => void;
 };
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -48,6 +54,7 @@ export function AdventureNode({
   totalLessons,
   onPress,
   onLockedPress,
+  onMissionPress,
 }: AdventureNodeProps) {
   const styles = useStyles();
   const reducedMotion = useReducedMotion();
@@ -87,7 +94,9 @@ export function AdventureNode({
           />
         ) : null}
         <AnimatedPressable
-          onPress={() => (locked ? onLockedPress() : onPress())}
+          onPress={() =>
+            onMissionPress ? onMissionPress() : locked ? onLockedPress() : onPress()
+          }
           accessibilityRole="button"
           accessibilityLabel={`${ref_.unit.title}, bài ${indexInUnit + 1}, độ khó ${difficultyLabel(ref_.globalIndex, totalLessons)}`}
           accessibilityState={{ disabled: locked, selected: current }}
