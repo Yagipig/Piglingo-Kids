@@ -145,7 +145,7 @@ export default function ProfileScreen() {
             Tiến độ của em
           </Text>
           <Text style={styles.headerSub} maxFontSizeMultiplier={1.3}>
-            🧭 Hành trình Little Explorers của nhà thám hiểm nhí
+            🧭 Hành trình Nhà Thám Hiểm Nhí của em
           </Text>
           <Pressable
             onPress={() => router.push("/courses")}
