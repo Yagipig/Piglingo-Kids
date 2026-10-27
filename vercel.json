@@ -1,0 +1,1 @@
+{"$schema":"https://openapi.vercel.sh/vercel.json","cleanUrls":true,"redirects":[{"destination":"/Piglingo-Kids/","permanent":false,"source":"/"}],"rewrites":[{"destination":"/:path*","source":"/Piglingo-Kids/:path*"},{"destination":"/","source":"/Piglingo-Kids"}]}
