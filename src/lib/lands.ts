@@ -2,14 +2,18 @@ import type { LandKind } from "./theme";
 import type { UnitPack } from "./types";
 
 /**
- * "Little Explorers" — ánh xạ thuần hiển thị từ unit học sang "vùng đất
+ * "Nhà Thám Hiểm Nhí" — ánh xạ thuần hiển thị từ unit học sang "vùng đất
  * phiêu lưu". File này KHÔNG chứa dữ liệu học: title/description/words của
  * unit vẫn lấy nguyên từ pack; ở đây chỉ quyết định vùng đất trông thế nào
- * (loại vùng, tên trang trí, emoji cảnh, nhãn cổng khi khóa).
+ * (tên đảo, emoji cảnh, câu giới thiệu, tông màu banner).
  *
- * Tra cứu theo (courseId, unitId) trước theo bảng cụ thể trong plan, sau đó
- * theo tiêu đề chủ đề chuẩn hoá (cùng chủ đề → cùng loại vùng trên cả 3
- * khóa), cuối cùng fallback an toàn cho unit lạ.
+ * Tên vùng đất là tên các ĐẢO THẬT của Việt Nam, gán theo thứ tự unit
+ * trong từng khóa (Anh → Nhật → Trung). `kind` chỉ còn vai trò khóa chọn
+ * tông màu banner trong `landPalette` (luân phiên để bản đồ nhiều màu
+ * sắc) — mọi unit đều là đảo.
+ *
+ * Tra cứu theo (courseId, unitId) trước theo bảng cụ thể, sau đó theo
+ * tiêu đề chủ đề chuẩn hoá, cuối cùng fallback an toàn cho unit lạ.
  */
 export type Land = {
   kind: LandKind;
@@ -34,66 +38,79 @@ const LAND_INFO: Record<LandKind, { emoji: string; tagline: string }> = {
   meadow: { emoji: "🌼", tagline: "Đồng cỏ hoa nở, nơi hành trình bắt đầu" },
 };
 
-function makeLand(kind: LandKind, name: string, variant: 1 | 2 = 1): Land {
-  return { kind, name, emoji: LAND_INFO[kind].emoji, tagline: LAND_INFO[kind].tagline, variant };
+function makeLand(
+  kind: LandKind,
+  name: string,
+  emoji?: string,
+  tagline?: string,
+  variant: 1 | 2 = 1,
+): Land {
+  return {
+    kind,
+    name,
+    emoji: emoji ?? LAND_INFO[kind].emoji,
+    tagline: tagline ?? LAND_INFO[kind].tagline,
+    variant,
+  };
 }
 
-/** Ánh xạ chính xác theo từng unit id (bảng mục 2.2 của REDESIGN-PLAN). */
+/**
+ * Ánh xạ chính xác theo từng unit id — mỗi unit là một đảo thật của
+ * Việt Nam, theo thứ tự unit trong khóa. Tông màu (kind) luân phiên
+ * giữa các đảo kề nhau để bản đồ vẫn rực rỡ nhiều màu.
+ */
 const BY_UNIT_ID: Record<string, Land> = {
-  // en-vi
-  "en-vi:unit-1": makeLand("forest", "Rừng Bạn Thú"),
-  "en-vi:unit-2": makeLand("valley", "Thung Lũng Cầu Vồng"),
-  "en-vi:unit-3": makeLand("village", "Làng Gia Đình"),
-  "en-vi:unit-4": makeLand("island", "Đảo Ẩm Thực"),
-  "en-vi:unit-5": makeLand("mountain", "Núi Số Đếm"),
-  "en-vi:unit-6": makeLand("castle", "Lâu Đài Tri Thức"),
-  "en-vi:unit-7": makeLand("village", "Làng Gia Đình 2", 2),
-  "en-vi:unit-8": makeLand("mountain", "Núi Số Đếm 2", 2),
-  "en-vi:unit-9": makeLand("valley", "Thung Lũng Cầu Vồng 2", 2),
-  "en-vi:unit-10": makeLand("island", "Đảo Ẩm Thực 2", 2),
-  "en-vi:unit-11": makeLand("castle", "Lâu Đài Tri Thức 2", 2),
-  // ja-vi
-  "ja-vi:unit-1": makeLand("island", "Đảo Hiragana"),
-  "ja-vi:unit-2": makeLand("forest", "Rừng Hiragana"),
-  "ja-vi:unit-3": { ...makeLand("mountain", "Núi Hiragana"), emoji: "🗻" },
-  "ja-vi:unit-4": makeLand("ocean", "Đại Dương Katakana"),
-  "ja-vi:unit-5": makeLand("meadow", "Đồng Cỏ Đầu Tiên"),
-  "ja-vi:unit-6": { ...makeLand("village", "Cổng Làng Chào Hỏi"), emoji: "🚪" },
-  "ja-vi:unit-7": makeLand("village", "Làng Gia Đình"),
-  "ja-vi:unit-8": makeLand("mountain", "Núi Số Đếm"),
-  "ja-vi:unit-9": makeLand("valley", "Thung Lũng Cầu Vồng"),
-  "ja-vi:unit-10": makeLand("island", "Đảo Ẩm Thực"),
-  "ja-vi:unit-11": makeLand("castle", "Lâu Đài Tri Thức"),
-  // zh-vi
-  "zh-vi:unit-1": makeLand("mountain", "Núi Con Số"),
-  "zh-vi:unit-2": { ...makeLand("village", "Cổng Làng Chào Hỏi"), emoji: "🚪" },
-  "zh-vi:unit-3": makeLand("village", "Làng Gia Đình"),
-  "zh-vi:unit-4": makeLand("forest", "Rừng Bạn Thú"),
-  "zh-vi:unit-5": makeLand("valley", "Thung Lũng Cầu Vồng"),
-  "zh-vi:unit-6": makeLand("village", "Làng Gia Đình 2", 2),
-  "zh-vi:unit-7": makeLand("mountain", "Núi Số Đếm 2", 2),
-  "zh-vi:unit-8": makeLand("valley", "Thung Lũng Cầu Vồng 2", 2),
-  "zh-vi:unit-9": makeLand("island", "Đảo Ẩm Thực 2", 2),
-  "zh-vi:unit-10": makeLand("castle", "Lâu Đài Tri Thức 2", 2),
+  // en-vi — Tiếng Anh
+  "en-vi:unit-1": makeLand("island", "Đảo Phú Quốc", "🏝️", "Đảo ngọc nắng vàng, biển xanh cát trắng"),
+  "en-vi:unit-2": makeLand("forest", "Đảo Cát Bà", "🌴", "Đảo xanh rừng biển, kề bên vịnh Lan Hạ"),
+  "en-vi:unit-3": makeLand("ocean", "Côn Đảo", "🐢", "Nơi rùa biển ghé về đẻ trứng mỗi mùa"),
+  "en-vi:unit-4": makeLand("mountain", "Đảo Lý Sơn", "🌋", "Đảo tỏi thơm lừng trên miệng núi lửa xưa"),
+  "en-vi:unit-5": makeLand("valley", "Đảo Cô Tô", "🐚", "Bãi biển trong veo, hải âu bay lượn"),
+  "en-vi:unit-6": makeLand("meadow", "Đảo Phú Quý", "🦐", "Đảo xa gió lành, hải sản tươi ngon"),
+  "en-vi:unit-7": makeLand("village", "Quần đảo Nam Du", "⛵", "Chùm đảo nhỏ xinh giữa biển khơi"),
+  "en-vi:unit-8": makeLand("castle", "Cù Lao Chàm", "🪸", "Rạn san hô rực rỡ dưới làn nước xanh"),
+  "en-vi:unit-9": makeLand("island", "Hòn Tre", "🎋", "Hòn đảo xanh mát cạnh phố biển Nha Trang"),
+  "en-vi:unit-10": makeLand("ocean", "Đảo Bạch Long Vĩ", "🐉", "Hòn đảo xa nhất của vịnh Bắc Bộ"),
+  "en-vi:unit-11": makeLand("forest", "Đảo Thổ Chu", "🌅", "Đảo tiền tiêu nơi cực Tây Nam Tổ quốc"),
+  // ja-vi — Tiếng Nhật
+  "ja-vi:unit-1": makeLand("meadow", "Đảo Quan Lạn", "🏖️", "Bãi cát trắng dài, nước biển trong xanh"),
+  "ja-vi:unit-2": makeLand("island", "Đảo Ngọc Vừng", "🦪", "Đảo ngọc trai lấp lánh trong vịnh Bái Tử Long"),
+  "ja-vi:unit-3": makeLand("ocean", "Đảo Vĩnh Thực", "🌊", "Đảo hoang sơ nơi địa đầu Tổ quốc"),
+  "ja-vi:unit-4": makeLand("forest", "Đảo Thanh Lân", "🦀", "Hòn đảo hiền hòa giữa quần đảo Cô Tô"),
+  "ja-vi:unit-5": makeLand("village", "Đảo Cái Bầu", "🛶", "Đảo lễ hội, thuyền bè về rộn ràng"),
+  "ja-vi:unit-6": makeLand("mountain", "Hòn Dấu", "⚓", "Hải đăng trăm tuổi soi đường tàu biển"),
+  "ja-vi:unit-7": makeLand("valley", "Hòn Chuối", "🍌", "Hòn đảo nhỏ mang tên trái chuối quê nhà"),
+  "ja-vi:unit-8": makeLand("meadow", "Hòn Khoai", "🥔", "Hòn đảo xanh mang tên củ khoai thân thương"),
+  "ja-vi:unit-9": makeLand("island", "Hòn Sơn", "🥥", "Đảo dừa xanh mát giữa biển Kiên Giang"),
+  "ja-vi:unit-10": makeLand("castle", "Đảo Bình Ba", "🦞", "Đảo tôm hùm nổi tiếng gần vịnh Cam Ranh"),
+  "ja-vi:unit-11": makeLand("ocean", "Đảo Bình Hưng", "🪸", "Đảo nhỏ nước trong, san hô ngay dưới chân"),
+  // zh-vi — Tiếng Trung
+  "zh-vi:unit-1": makeLand("ocean", "Hòn Mun", "🐠", "Khu bảo tồn biển, cá bơi từng đàn"),
+  "zh-vi:unit-2": makeLand("valley", "Hòn Tằm", "🦋", "Hòn đảo xanh mềm mại như dải lụa"),
+  "zh-vi:unit-3": makeLand("meadow", "Cù Lao Xanh", "🌱", "Hòn đảo xanh non giữa biển Bình Định"),
+  "zh-vi:unit-4": makeLand("forest", "Đảo Khỉ", "🐒", "Vương quốc của những chú khỉ tinh nghịch"),
+  "zh-vi:unit-5": makeLand("mountain", "Đảo Yến", "🪺", "Nơi chim yến làm tổ trên vách đá"),
+  "zh-vi:unit-6": makeLand("island", "Đảo Diệp Sơn", "🚶", "Con đường cát giữa biển hiện ra khi nước rút"),
+  "zh-vi:unit-7": makeLand("village", "Hòn Nghệ", "🎨", "Hòn đảo nhỏ mang tên nghề khéo tay"),
+  "zh-vi:unit-8": makeLand("meadow", "Hòn Heo", "🐷", "Hòn đảo mang tên chú heo dễ thương"),
+  "zh-vi:unit-9": makeLand("castle", "Quần đảo Trường Sa", "🇻🇳", "Quần đảo thiêng liêng nơi đầu sóng ngọn gió"),
+  "zh-vi:unit-10": makeLand("island", "Quần đảo Hoàng Sa", "🇻🇳", "Quần đảo quê hương giữa Biển Đông"),
 };
 
 /** Tra theo chủ đề (tiêu đề chuẩn hoá, bỏ hậu tố số) — dự phòng cho unit mới. */
 const BY_TOPIC: { match: string; land: Land }[] = [
-  { match: "con vật", land: makeLand("forest", "Rừng Bạn Thú") },
-  { match: "màu sắc", land: makeLand("valley", "Thung Lũng Cầu Vồng") },
-  { match: "gia đình", land: makeLand("village", "Làng Gia Đình") },
-  { match: "đồ ăn", land: makeLand("island", "Đảo Ẩm Thực") },
-  { match: "thức ăn", land: makeLand("island", "Đảo Ẩm Thực") },
-  { match: "con số", land: makeLand("mountain", "Núi Số Đếm") },
-  { match: "số đếm", land: makeLand("mountain", "Núi Số Đếm") },
-  { match: "trường học", land: makeLand("castle", "Lâu Đài Tri Thức") },
-  {
-    match: "chào hỏi",
-    land: { ...makeLand("village", "Cổng Làng Chào Hỏi"), emoji: "🚪" },
-  },
-  { match: "hiragana", land: makeLand("island", "Đảo Hiragana") },
-  { match: "katakana", land: makeLand("ocean", "Đại Dương Katakana") },
-  { match: "từ đầu tiên", land: makeLand("meadow", "Đồng Cỏ Đầu Tiên") },
+  { match: "con vật", land: makeLand("island", "Đảo Bạn Thú", "🐢", "Nơi muôn thú rủ nhau học nói") },
+  { match: "màu sắc", land: makeLand("valley", "Đảo Cầu Vồng", "🌈", "Sắc màu rực rỡ khắp hòn đảo") },
+  { match: "gia đình", land: makeLand("village", "Đảo Sum Vầy", "🛖", "Hòn đảo ấm áp của cả gia đình") },
+  { match: "đồ ăn", land: makeLand("island", "Đảo Ẩm Thực", "🍍", "Hòn đảo thơm ngon của bao món quà biển") },
+  { match: "thức ăn", land: makeLand("island", "Đảo Ẩm Thực", "🍍", "Hòn đảo thơm ngon của bao món quà biển") },
+  { match: "con số", land: makeLand("mountain", "Đảo Con Số", "🐚", "Đếm sao biển và vỏ sò thật vui") },
+  { match: "số đếm", land: makeLand("mountain", "Đảo Con Số", "🐚", "Đếm sao biển và vỏ sò thật vui") },
+  { match: "trường học", land: makeLand("castle", "Đảo Tri Thức", "🌴", "Hòn đảo của những bạn nhỏ ham học") },
+  { match: "chào hỏi", land: makeLand("village", "Đảo Chào Hỏi", "🌅", "Bình minh mới, lời chào mới") },
+  { match: "hiragana", land: makeLand("island", "Đảo Chữ Cái", "🏝️", "Những chữ cái đầu tiên bé làm quen") },
+  { match: "katakana", land: makeLand("island", "Đảo Chữ Mới", "🏝️", "Thêm những chữ cái mới thật thú vị") },
+  { match: "từ đầu tiên", land: makeLand("meadow", "Đảo Đầu Tiên", "🌼", "Nơi những từ đầu tiên nảy mầm") },
 ];
 
 function normalizeTitle(title: string): string {
@@ -114,7 +131,7 @@ export function landForUnit(unit: Pick<UnitPack, "id" | "title">): Land {
   for (const entry of BY_TOPIC) {
     if (baseTitle === entry.match || baseTitle.startsWith(entry.match)) {
       if (isV2 && entry.land.variant === 1) {
-        return { ...entry.land, name: `${entry.land.name} 2`, variant: 2 };
+        return { ...entry.land, variant: 2 };
       }
       return entry.land;
     }

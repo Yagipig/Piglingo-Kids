@@ -289,11 +289,11 @@ export function gardenCompanions(progress: GardenProgressState): Companion[] {
   );
 
   const defs: (Omit<Companion, "unlocked"> & { unlocked: boolean })[] = [
-    { id: "piggy", emoji: "🐷", name: "Piggy", conditionLabel: "Bạn đồng hành đầu tiên của vườn", unlocked: true },
+    { id: "piggy", emoji: "🐷", name: "Bé Heo", conditionLabel: "Bạn đồng hành đầu tiên của vườn", unlocked: true },
     { id: "rabbit", emoji: "🐰", name: "Thỏ Bông", conditionLabel: "Hoàn thành bài học đầu tiên", unlocked: totalLessons >= 1 },
     { id: "cat", emoji: "🐱", name: "Mèo Miu", conditionLabel: "Hoàn thành trọn 1 vùng đất bất kỳ", unlocked: totalUnits >= 1 },
-    { id: "owl", emoji: "🦉", name: "Cú Story", conditionLabel: "Hoàn thành trọn 1 vùng đất Tiếng Anh", unlocked: (unitsByCourse["en-vi"] ?? 0) >= 1 },
-    { id: "fox", emoji: "🦊", name: "Cáo Sakura", conditionLabel: "Hoàn thành trọn 1 vùng đất Tiếng Nhật", unlocked: (unitsByCourse["ja-vi"] ?? 0) >= 1 },
+    { id: "owl", emoji: "🦉", name: "Cú Sách", conditionLabel: "Hoàn thành trọn 1 vùng đất Tiếng Anh", unlocked: (unitsByCourse["en-vi"] ?? 0) >= 1 },
+    { id: "fox", emoji: "🦊", name: "Cáo Hoa Đào", conditionLabel: "Hoàn thành trọn 1 vùng đất Tiếng Nhật", unlocked: (unitsByCourse["ja-vi"] ?? 0) >= 1 },
     { id: "panda", emoji: "🐼", name: "Gấu Trúc", conditionLabel: "Hoàn thành trọn 1 vùng đất Tiếng Trung", unlocked: (unitsByCourse["zh-vi"] ?? 0) >= 1 },
     { id: "bird", emoji: "🐦", name: "Chim Sẻ", conditionLabel: "Có một ngày hoàn thành ít nhất 3 bài", unlocked: maxLessonsInDay >= 3 },
     { id: "lion", emoji: "🦁", name: "Sư Tử Dũng Cảm", conditionLabel: "Hoàn thành trọn 1 khóa ngôn ngữ", unlocked: anyCourseComplete },

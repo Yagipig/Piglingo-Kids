@@ -77,7 +77,7 @@ export const DEFAULT_GLOBAL_REWARDS: GlobalReward[] = [
     id: "default-five-units",
     kind: "badge",
     name: "Huy hiệu Nhà khám phá bền bỉ",
-    description: "Hoàn thành 5 vùng đất/chủ đề trong thế giới Little Explorers.",
+    description: "Hoàn thành 5 vùng đất/chủ đề trong thế giới Nhà Thám Hiểm Nhí.",
     emoji: "🧭",
     condition: { type: "units-completed", count: 5 },
     congratsMessage: "Con đã khám phá xong 5 vùng đất! Sự bền bỉ của con thật đáng nể.",
