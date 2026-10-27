@@ -7,8 +7,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CloseButton } from "@/components/close-button";
 import { SpeakerButton } from "@/components/speaker-button";
 import { useCourseContent } from "@/lib/content";
+import { landForUnit } from "@/lib/lands";
 import { useProgress } from "@/lib/store";
-import { makeThemedStyles, radius } from "@/lib/theme";
+import { landPalette, makeThemedStyles, radius, useResolvedScheme } from "@/lib/theme";
 
 function GuidebookText({ markdown }: { markdown: string }) {
   const styles = useStyles();
@@ -39,10 +40,17 @@ function GuidebookText({ markdown }: { markdown: string }) {
 
 export default function GuidebookScreen() {
   const styles = useStyles();
+  const scheme = useResolvedScheme();
   const { unitId } = useLocalSearchParams<{ unitId: string }>();
   const activeCourseId = useProgress((s) => s.activeCourseId);
   const { getUnit } = useCourseContent(activeCourseId);
   const unit = getUnit(unitId ?? "");
+  const land = unit ? landForUnit(unit) : null;
+  const landColor = land
+    ? scheme === "dark"
+      ? landPalette[land.kind].dark
+      : landPalette[land.kind].bottom
+    : null;
 
   if (!unit) {
     return (
@@ -77,6 +85,16 @@ export default function GuidebookScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
+        {land ? (
+          <View style={[styles.landBanner, { backgroundColor: landColor ?? undefined }]}>
+            <Text style={styles.landBannerText} maxFontSizeMultiplier={1.2}>
+              {land.emoji} {land.name}
+            </Text>
+            <Text style={styles.landBannerSub} maxFontSizeMultiplier={1.2}>
+              {land.tagline}
+            </Text>
+          </View>
+        ) : null}
         <Text style={styles.description} maxFontSizeMultiplier={1.3}>
           {unit.description}
         </Text>
@@ -112,7 +130,17 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     borderBottomColor: colors.neutral200,
   },
   title: { fontSize: 17, fontWeight: "800", color: colors.neutral700 },
-  body: { padding: 20, gap: 14, paddingBottom: 60 },
+  body: {
+    padding: 20,
+    gap: 14,
+    paddingBottom: 60,
+    width: "100%",
+    maxWidth: 720,
+    alignSelf: "center",
+  },
+  landBanner: { borderRadius: radius.lg, padding: 14, gap: 2 },
+  landBannerText: { fontSize: 18, fontWeight: "800", color: colors.white },
+  landBannerSub: { fontSize: 13, fontWeight: "700", color: colors.white, opacity: 0.9 },
   description: {
     fontSize: 15,
     color: colors.textMuted,
@@ -123,7 +151,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   heading: { fontSize: 19, fontWeight: "800", color: colors.neutral700, marginTop: 8 },
   paragraph: { fontSize: 15, color: colors.text, lineHeight: 22 },
   wordRow: { flexDirection: "row", alignItems: "center", gap: 12 },
-  wordText: { fontSize: 16, color: colors.text, fontWeight: "600", flexShrink: 1 },
+  wordText: { fontSize: 17, color: colors.text, fontWeight: "600", flexShrink: 1 },
   emptyContainer: {
     flex: 1,
     alignItems: "center",
