@@ -62,6 +62,8 @@ export type Exercise =
 
 export type LessonPack = { id: string; title: string; exercises: Exercise[] };
 
+export type SchoolBand = "tieu-hoc" | "thcs" | "thpt";
+
 export type UnitPack = {
   id: string;
   title: string;
@@ -69,6 +71,7 @@ export type UnitPack = {
   guidebook: string;
   words: Word[];
   lessons: LessonPack[];
+  band: SchoolBand;
 };
 
 export type SectionPack = { id: string; title: string; units: UnitPack[] };

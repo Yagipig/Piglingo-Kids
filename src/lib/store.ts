@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { isDue, reviewWord, type SrsEntry } from "./srs";
+import type { SchoolBand } from "./types";
 
 export const XP_PER_LESSON = 15;
 export const XP_PERFECT_BONUS = 5;
@@ -25,6 +26,16 @@ export const LEARNER_LEVELS: { value: LearnerLevel; label: string; hint: string 
 
 export function learnerLevelLabel(level: LearnerLevel): string {
   return LEARNER_LEVELS.find((l) => l.value === level)?.label ?? "Mới bắt đầu";
+}
+
+export const SCHOOL_BANDS: { value: SchoolBand; label: string; hint: string }[] = [
+  { value: "tieu-hoc", label: "Tiểu học · Lớp 1–5", hint: "Khối Tiểu học, lớp 1–5 📚" },
+  { value: "thcs", label: "THCS · Lớp 6–9", hint: "Khối THCS, lớp 6–9 🚀" },
+  { value: "thpt", label: "THPT · Lớp 10–12", hint: "Khối THPT, lớp 10–12 🎓" },
+];
+
+export function schoolBandLabel(band: SchoolBand): string {
+  return SCHOOL_BANDS.find((b) => b.value === band)?.label ?? "Tiểu học · Lớp 1–5";
 }
 export type WordStat = { correct: number; wrong: number; lastSeen: number };
 export type MistakeRef = { lessonId: string; exerciseId: string };
@@ -72,6 +83,8 @@ type ProgressState = {
   allUnlocked: boolean;
   /** Cấp độ người học tự chọn: "moi" | "da-biet" | "chuyen-nghiep". */
   learnerLevel: LearnerLevel;
+  /** Khối lớp người học tự chọn: "tieu-hoc" | "thcs" | "thpt". */
+  schoolBand: SchoolBand;
   /** Nhạc nền khu vườn đang bật hay tắt (mặc định tắt). */
   musicOn: boolean;
   /** Kỷ lục game "Đố nhanh 60 giây": số câu đúng cao nhất trong một ván. */
@@ -99,6 +112,7 @@ type ProgressState = {
   /** Mở khóa toàn bộ bài học (sau khi nhập đúng mã mở khóa). */
   unlockAll: () => void;
   setLearnerLevel: (level: LearnerLevel) => void;
+  setSchoolBand: (band: SchoolBand) => void;
   /** Cộng XP thưởng (game, hoạt động phụ) vào khóa hiện tại + XP ngày. */
   addBonusXp: (amount: number) => void;
   setMusicOn: (on: boolean) => void;
@@ -144,6 +158,7 @@ export const useProgress = create<ProgressState>()(
       onboardingDone: false,
       allUnlocked: false,
       learnerLevel: "moi",
+      schoolBand: "tieu-hoc",
       musicOn: false,
       speedBest: 0,
       backgroundImage: null,
@@ -260,6 +275,8 @@ export const useProgress = create<ProgressState>()(
 
       setLearnerLevel: (level) => set({ learnerLevel: level }),
 
+      setSchoolBand: (band) => set({ schoolBand: band }),
+
       addBonusXp: (amount) =>
         set((state) => {
           if (!amount) return state;
@@ -288,6 +305,7 @@ export const useProgress = create<ProgressState>()(
             activeDays: {},
             themePreference: "system" as ThemePreference,
             ...old,
+            schoolBand: (old.schoolBand as SchoolBand) ?? "tieu-hoc",
           } as ProgressState;
         }
         // Migrate v1 flat progress → per-course.
@@ -308,6 +326,7 @@ export const useProgress = create<ProgressState>()(
           onboardingDone: old.onboardingDone ?? false,
           allUnlocked: (old.allUnlocked as boolean) ?? false,
           learnerLevel: (old.learnerLevel as LearnerLevel) ?? "moi",
+          schoolBand: (old.schoolBand as SchoolBand) ?? "tieu-hoc",
           musicOn: (old.musicOn as boolean) ?? false,
           speedBest: (old.speedBest as number) ?? 0,
           backgroundImage: (old.backgroundImage as string | null) ?? null,
