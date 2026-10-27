@@ -20,6 +20,7 @@ Tiến độ (XP, chuỗi ngày, bài đã học, ôn tập SRS) **dùng chung**
 | Lưu tiến độ local | Có (zustand + AsyncStorage) |
 | Ghi âm / chấm phát âm | **Đã tích hợp (Bước 2):** route `/speaking` lấy câu mẫu từ khóa đang học, ghi âm bằng `expo-audio`, nghe mẫu bằng `expo-speech`, chấm phát âm **mô phỏng** (offline) qua `MockPronunciationProvider` — thay provider thật về sau, xem `docs/STEP2-INTEGRATION.md` |
 | Khu vực phụ huynh | **Đã tích hợp (Bước 2):** route `/parents`, cổng phép tính cho người lớn, dashboard đọc tiến độ thật từ store (adapter `src/lib/parentProgress.ts`), giới hạn thời gian dùng app — chỉ áp dụng sau khi phụ huynh đã tự đặt giới hạn |
+| Hệ thống phần thưởng | **Đã tích hợp:** thưởng chung do Admin quản lý (`/admin-rewards`), màn xem thưởng của trẻ (`/rewards`), mục **Phần thưởng của con** trong khu phụ huynh, màn chúc mừng khi lần đầu hoàn thành 100% một khóa/cả 3 khóa (`/celebration`) — xem mục "Hệ thống phần thưởng" bên dưới |
 | Tài khoản Supabase | **Đã tích hợp, tùy chọn (Bước 2):** route `/account`, đăng nhập email; khi đã đăng nhập, app tự đẩy snapshot tiến độ lên Supabase một lần mỗi phiên đăng nhập (`src/lib/useProgressSync.ts`). Project thật đã tạo (xem mục Supabase bên dưới); chỉ bật khi có file `.env` với `EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` (mẫu ở `src/features/supabase/.env.example`, schema ở `src/features/supabase/schema.sql`). Không có `.env` thì app chạy local như cũ |
 
 `package-lock.json` đã được cập nhật sau khi cài thêm 2 dependency của Bước 2 (`@supabase/supabase-js`, `react-native-url-polyfill`) bằng `npm install --legacy-peer-deps`.
@@ -57,6 +58,14 @@ Build APK Android **tạm hoãn** tới khi bản web ổn định (workflow APK
 - **Tài khoản admin:** danh sách `ADMIN_EMAILS` trong `src/lib/unlock.ts` đang có sẵn `tuyenjp23@gmail.com` — đăng nhập Supabase bằng email này là tự mở khóa toàn bộ, không cần nhập mã. Thêm admin khác bằng cách thêm email vào danh sách rồi build lại.
 - **Cấp độ người học:** chọn khi onboarding hoặc đổi bất cứ lúc nào ở tab Hồ sơ, gồm 3 mức: **Mới bắt đầu** (🌱), **Đã biết cơ bản** (🚀), **Chuyên nghiệp** (🏆). Bài học được phân tầng độ khó theo vị trí trong khóa (Cơ bản / Nâng cao / Chuyên sâu) và màn hình học hiển thị mục "Gợi ý theo cấp độ của bé" để nhảy nhanh tới bài phù hợp.
 - **Nhạc nền khu vườn:** bản nhạc du dương tự tổng hợp (`assets/sfx/ambient-garden.mp3`, sinh bởi `scripts/make-ambient-music.py`, vòng lặp 48 giây, nghe lặp liền mạch). Bật/tắt bằng nút 🔊/🔇 ở đầu màn hình học; mặc định tắt và chỉ phát sau khi người dùng bật — đúng chính sách autoplay của trình duyệt web.
+
+## Hệ thống phần thưởng
+
+- **Phần thưởng chung:** app có sẵn bộ mẫu trong `src/lib/rewards-defaults.ts` (huy hiệu theo mốc 25/50/75%, rương khi xong một khóa, danh hiệu **Nhà thám hiểm ngôn ngữ** khi xong 100% cả 3 khóa và gợi ý dành cho phụ huynh). Admin có thể thêm/sửa/ẩn/sắp xếp/xem trước rồi công bố từ route `/admin-rewards`.
+- **Cách cấp quyền Admin an toàn:** Admin chính là tài khoản Supabase có email nằm trong `ADMIN_EMAILS` ở `src/lib/unlock.ts` (hiện là `tuyenjp23@gmail.com`). **Không có tài khoản admin hoặc mật khẩu mặc định nào được tạo thêm.** Muốn đổi Admin phải sửa đồng thời email trong `ADMIN_EMAILS` và trong policy của bảng `app_config` ở `src/features/supabase/rewards-schema.sql`, rồi build lại app/chạy lại phần policy.
+- **Phần thưởng riêng của gia đình:** phụ huynh vào `/parents`, qua cổng người lớn, rồi dùng mục **Phần thưởng của con** để nhập tên con, tên thưởng, lời nhắn, ngân sách dạng text tùy chọn, điều kiện theo khóa/mốc % hoặc cả 3 khóa, và chế độ giữ bí mật tới khi đạt. Chỉ phụ huynh mới bấm được **Xác nhận đã trao**; app không tự đánh dấu đã trao và không tích hợp thanh toán.
+- **Dữ liệu & đồng bộ:** trạng thái đạt thưởng luôn suy ra từ tiến độ học hiện có, không lưu bản sao. Phần thưởng gia đình lưu local trước; khi phụ huynh đăng nhập, app đồng bộ bảng `family_rewards` theo tài khoản. Chưa đăng nhập thì dữ liệu chỉ nằm trên thiết bị đó. Cấu hình chung của Admin nằm ở bảng `app_config`, mọi máy đọc được nhưng chỉ email Admin mới ghi được nhờ RLS.
+- **Chạy SQL phần thưởng:** mở Supabase Dashboard → SQL Editor của project `piglingo-kids`, chạy toàn bộ file `src/features/supabase/rewards-schema.sql` một lần (file idempotent, không sửa `schema.sql` cũ). Nếu chưa chạy SQL này, app vẫn dùng bộ thưởng mặc định/cache và phần thưởng gia đình local, nhưng chưa đồng bộ/công bố được lên server.
 
 ## Supabase (đã tạo project thật)
 
