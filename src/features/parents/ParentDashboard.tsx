@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { SpeakingLanguage } from '../speaking/types';
 import type { ParentSettings, ProgressSnapshot } from './types';
+import { FamilyRewardsSection } from './FamilyRewardsSection';
 
 const LANGUAGE_LABEL: Record<SpeakingLanguage, string> = {
   en: '🇬🇧 Tiếng Anh',
@@ -123,6 +124,8 @@ export function ParentDashboard({
         Khi hết giờ, app hiện màn hình nghỉ. Ba/mẹ có thể gia hạn thêm cho riêng hôm đó sau khi
         qua cổng xác thực.
       </Text>
+
+      <FamilyRewardsSection />
 
       {onOpenAccount ? (
         <Pressable
