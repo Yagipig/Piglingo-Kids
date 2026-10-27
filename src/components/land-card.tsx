@@ -1,8 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { AdventureNode } from "@/components/adventure-node";
+import { IslandPin } from "@/components/island-pin";
 import { difficultyLabel, type LessonRef } from "@/lib/content";
 import type { KingdomPalette } from "@/lib/kingdoms";
 import type { Land } from "@/lib/lands";
@@ -46,10 +47,66 @@ type LandCardProps = {
   onLayout?: (y: number) => void;
 };
 
+/** 4 tranh đảo luân phiên theo chỉ số unit trong khóa (giữ thứ tự lands). */
+const ISLAND_IMAGES = [
+  require("@/assets/images/island-map-a.jpg"),
+  require("@/assets/images/island-map-b.jpg"),
+  require("@/assets/images/island-map-c.jpg"),
+  require("@/assets/images/island-map-d.jpg"),
+];
+
+/**
+ * Đường đi của ghim trên đảo, theo % (x = % bề rộng, y = % chiều cao
+ * khung 4:3): bắt đầu ở bãi biển phía dưới, qua làng ở giữa, lên đồi
+ * phía trên — nằm trong vùng đất thoáng chung của cả 4 tranh đảo.
+ */
+const PIN_PATHS: Record<number, { x: number; y: number }[]> = {
+  1: [{ x: 50, y: 52 }],
+  2: [
+    { x: 36, y: 66 },
+    { x: 63, y: 38 },
+  ],
+  3: [
+    { x: 30, y: 68 },
+    { x: 54, y: 50 },
+    { x: 68, y: 30 },
+  ],
+  4: [
+    { x: 32, y: 70 },
+    { x: 56, y: 58 },
+    { x: 44, y: 42 },
+    { x: 64, y: 30 },
+  ],
+  5: [
+    { x: 26, y: 74 },
+    { x: 46, y: 62 },
+    { x: 64, y: 50 },
+    { x: 48, y: 38 },
+    { x: 66, y: 26 },
+  ],
+};
+
+/** Tọa độ ghim thứ `i` trong unit có `count` bài (dự phòng cho count lạ). */
+function pinPosition(count: number, i: number): { x: number; y: number } {
+  const path = PIN_PATHS[count];
+  if (path) return path[Math.min(i, path.length - 1)];
+  if (count <= 1) return PIN_PATHS[1][0];
+  const t = i / (count - 1);
+  const xs = [30, 56, 68, 44];
+  return { x: xs[i % xs.length], y: 74 - 48 * t };
+}
+
+/** Chỉ số unit trong khóa suy từ id ("<course>:unit-N") — khớp thứ tự pack. */
+function unitIndexInCourse(unitId: string): number {
+  const m = /unit-(\d+)$/.exec(unitId);
+  return m ? Math.max(0, parseInt(m[1], 10) - 1) : 0;
+}
+
 /**
  * Thẻ "vùng đất phiêu lưu" cho một unit: banner cảnh vùng (2 lớp màu giả
  * gradient + emoji phong cảnh), tên vùng + tiêu đề gốc của unit, tiến độ
- * khám phá và lưới các điểm bài học. Mọi trạng thái bài do màn cha tính.
+ * khám phá và bản đồ đảo với các ghim bài học đánh số (IslandPin). Mọi
+ * trạng thái bài do màn cha tính.
  */
 export function LandCard({
   unit,
@@ -156,11 +213,18 @@ export function LandCard({
           </Text>
         ) : null}
 
-        <View style={styles.trail}>
+        <View style={styles.islandScene}>
+          <Image
+            source={ISLAND_IMAGES[unitIndexInCourse(unit.id) % ISLAND_IMAGES.length]}
+            style={styles.islandImage}
+            contentFit="cover"
+            accessibilityLabel={`Bản đồ đảo ${land.name}`}
+          />
           {lessons.map((ref, i) => {
             const nodeLocked = !unlockedAll && ref.globalIndex > currentIndex;
+            const pos = pinPosition(lessons.length, i);
             return (
-              <AdventureNode
+              <IslandPin
                 key={ref.lesson.id}
                 ref_={ref}
                 indexInUnit={i}
@@ -169,6 +233,8 @@ export function LandCard({
                 locked={nodeLocked}
                 color={color}
                 totalLessons={totalLessons}
+                x={pos.x}
+                y={pos.y}
                 onPress={() => onLessonPress(ref)}
                 onLockedPress={onLockedPress}
                 onMissionPress={
@@ -237,13 +303,14 @@ const useStyles = makeThemedStyles((colors) =>
       paddingVertical: 4,
       overflow: "hidden",
     },
-    trail: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      gap: 12,
-      backgroundColor: colors.amber + "14",
+    islandScene: {
+      position: "relative",
+      width: "100%",
+      aspectRatio: 4 / 3,
       borderRadius: radius.lg,
-      padding: 12,
+      overflow: "hidden",
+      backgroundColor: colors.neutral100,
     },
+    islandImage: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 },
   })
 );
