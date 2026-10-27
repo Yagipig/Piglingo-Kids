@@ -20,7 +20,7 @@ import {
 } from "@/lib/store";
 import { pickBackgroundImage } from "@/lib/pickBackgroundImage";
 import { isAllUnlocked, isValidUnlockCode } from "@/lib/unlock";
-import { makeThemedStyles, radius, useResolvedScheme, useThemeColors } from "@/lib/theme";
+import { makeThemedStyles, radius, shadow, useResolvedScheme, useThemeColors } from "@/lib/theme";
 
 const THEME_OPTIONS: { value: ThemePreference; label: string; icon: string }[] = [
   { value: "system", label: "Theo máy", icon: "phone-portrait-outline" },
@@ -134,13 +134,18 @@ export default function ProfileScreen() {
       <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
       <ScrollView contentContainerStyle={styles.body}>
         <View style={styles.header}>
-          <Image
-            source={require("@/assets/images/mascot.svg")}
-            style={styles.mascot}
-            contentFit="contain"
-          />
+          <View style={styles.avatarRing}>
+            <Image
+              source={require("@/assets/images/mascot.svg")}
+              style={styles.mascot}
+              contentFit="contain"
+            />
+          </View>
           <Text style={styles.name} maxFontSizeMultiplier={1.3}>
             Tiến độ của em
+          </Text>
+          <Text style={styles.headerSub} maxFontSizeMultiplier={1.3}>
+            🧭 Hành trình Little Explorers của nhà thám hiểm nhí
           </Text>
           <Pressable
             onPress={() => router.push("/courses")}
@@ -423,7 +428,20 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   bgPreview: { width: "100%", height: 150, borderRadius: radius.lg },
   body: { padding: 20, gap: 20, paddingBottom: 60 },
   header: { alignItems: "center", gap: 8, paddingTop: 12 },
+  avatarRing: {
+    width: 124,
+    height: 124,
+    borderRadius: radius.full,
+    borderWidth: 3,
+    borderColor: colors.amber,
+    backgroundColor: colors.surface,
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    ...shadow.chunky,
+  },
   mascot: { width: 110, height: 110 },
+  headerSub: { fontSize: 13, color: colors.textMuted, textAlign: "center" },
   name: { fontSize: 26, fontWeight: "800", color: colors.neutral700 },
   courseRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   subtitle: { fontSize: 14, color: colors.textMuted },
@@ -440,6 +458,8 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     borderRadius: radius.xl,
     padding: 16,
     gap: 14,
+    backgroundColor: colors.surface,
+    ...shadow.card,
   },
   weekHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   weekTitle: { fontSize: 16, fontWeight: "800", color: colors.neutral700 },
@@ -466,6 +486,8 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     padding: 14,
     alignItems: "center",
     gap: 4,
+    backgroundColor: colors.surface,
+    ...shadow.card,
   },
   statValue: { fontSize: 20, fontWeight: "800", color: colors.neutral700 },
   statLabel: { fontSize: 12, color: colors.textMuted },
@@ -475,6 +497,8 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     borderRadius: radius.xl,
     padding: 16,
     gap: 12,
+    backgroundColor: colors.surface,
+    ...shadow.card,
   },
   settingsHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
   settingsTitle: { fontSize: 16, fontWeight: "800", color: colors.neutral700 },

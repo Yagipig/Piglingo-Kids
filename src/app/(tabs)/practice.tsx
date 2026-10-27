@@ -11,7 +11,7 @@ import { SpeakerButton } from "@/components/speaker-button";
 import { useCourseContent } from "@/lib/content";
 import { dueInDays } from "@/lib/srs";
 import { dailyQuests, dueSrsWords, useProgress, type Quest } from "@/lib/store";
-import { makeThemedStyles, radius, useThemeColors } from "@/lib/theme";
+import { makeThemedStyles, radius, shadow, useThemeColors } from "@/lib/theme";
 
 export default function PracticeScreen() {
   const colors = useThemeColors();
@@ -39,7 +39,10 @@ export default function PracticeScreen() {
       <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
       <ScrollView contentContainerStyle={styles.body}>
         <Text style={styles.heading} maxFontSizeMultiplier={1.3}>
-          Ôn tập
+          🎒 Ba lô &amp; Ôn tập
+        </Text>
+        <Text style={styles.subheading} maxFontSizeMultiplier={1.3}>
+          Mở ba lô thám hiểm: chơi game, làm nhiệm vụ và ôn lại những gì đã học.
         </Text>
         <View style={styles.courseRow}>
           <Flag courseId={activeCourseId} size={20} />
@@ -58,6 +61,7 @@ export default function PracticeScreen() {
             title: "Ghép thẻ trí nhớ",
             desc: "Lật thẻ và ghép chữ với nghĩa của chúng",
             bg: colors.indigo,
+            dark: colors.indigoDark,
           },
           {
             route: "/game-listen" as const,
@@ -65,6 +69,7 @@ export default function PracticeScreen() {
             title: "Nghe và chọn",
             desc: "Nghe phát âm rồi chọn nghĩa đúng, 10 câu mỗi ván",
             bg: colors.rose,
+            dark: colors.roseDark,
           },
           {
             route: "/game-scramble" as const,
@@ -72,6 +77,7 @@ export default function PracticeScreen() {
             title: "Xếp câu cho đúng",
             desc: "Bấm các từ theo đúng thứ tự để ghép thành câu",
             bg: colors.skyDark,
+            dark: "#0369a1",
           },
           {
             route: "/game-speed" as const,
@@ -79,6 +85,7 @@ export default function PracticeScreen() {
             title: "Đố nhanh 60 giây",
             desc: "Trả lời đúng càng nhiều càng tốt trong 60 giây",
             bg: colors.amber,
+            dark: "#d97706",
           },
           {
             route: "/game-letters" as const,
@@ -86,6 +93,7 @@ export default function PracticeScreen() {
             title: "Đoán chữ bí mật",
             desc: "Nhìn hình và nghĩa, đoán từng chữ cái của từ",
             bg: colors.green,
+            dark: colors.greenDark,
           },
         ].map((game) => (
           <Pressable
@@ -95,8 +103,8 @@ export default function PracticeScreen() {
             accessibilityLabel={`Chơi game ${game.title}`}
             style={({ pressed }) => [
               styles.gameCard,
-              { backgroundColor: game.bg },
-              pressed && { opacity: 0.85 },
+              { backgroundColor: game.bg, borderBottomColor: game.dark },
+              pressed && { opacity: 0.85, borderBottomWidth: 2 },
             ]}
           >
             <Text style={styles.gameEmoji}>{game.emoji}</Text>
@@ -280,6 +288,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1 },
   body: { padding: 20, gap: 16, paddingBottom: 60 },
   heading: { fontSize: 26, fontWeight: "800", color: colors.neutral700 },
+  subheading: { fontSize: 14, color: colors.textMuted, marginTop: -8 },
   gamesHeading: { fontSize: 20, fontWeight: "800", color: colors.neutral700, marginTop: 2 },
   gameCard: {
     flexDirection: "row",
@@ -287,6 +296,8 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     gap: 12,
     borderRadius: radius.xl,
     padding: 18,
+    borderBottomWidth: 6,
+    ...shadow.chunky,
   },
   gameCardIndigo: { backgroundColor: colors.indigo },
   gameCardRose: { backgroundColor: colors.rose },
@@ -302,6 +313,8 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     borderRadius: radius.xl,
     padding: 18,
     gap: 12,
+    backgroundColor: colors.surface,
+    ...shadow.card,
   },
   cardTitle: { fontSize: 19, fontWeight: "800", color: colors.neutral700 },
   cardSubtitle: { fontSize: 14, color: colors.textMuted },

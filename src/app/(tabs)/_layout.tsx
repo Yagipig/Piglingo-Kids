@@ -16,11 +16,16 @@ export default function TabsLayout() {
         tabBarAllowFontScaling: false,
         tabBarLabelStyle: { fontWeight: "800", fontSize: 11 },
         tabBarStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: colors.surface,
           borderTopWidth: 2,
           borderTopColor: colors.neutral200,
           height: 84,
           paddingTop: 6,
+          shadowColor: "#000000",
+          shadowOffset: { width: 0, height: -3 },
+          shadowOpacity: 0.08,
+          shadowRadius: 8,
+          elevation: 10,
         },
       }}
     >
@@ -29,7 +34,7 @@ export default function TabsLayout() {
         options={{
           title: "Học",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? "home" : "home-outline"} size={26} color={color} />
+            <Ionicons name={focused ? "map" : "map-outline"} size={26} color={color} />
           ),
         }}
       />
@@ -39,7 +44,7 @@ export default function TabsLayout() {
           title: "Ôn tập",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name={focused ? "barbell" : "barbell-outline"}
+              name={focused ? "game-controller" : "game-controller-outline"}
               size={26}
               color={color}
             />
@@ -52,7 +57,7 @@ export default function TabsLayout() {
           title: "Hồ sơ",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name={focused ? "person" : "person-outline"}
+              name={focused ? "compass" : "compass-outline"}
               size={26}
               color={color}
             />
