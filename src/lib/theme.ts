@@ -89,8 +89,66 @@ export const radius = {
   md: 12,
   lg: 16,
   xl: 24,
+  xxl: 32,
   full: 999,
 } as const;
+
+/**
+ * "Little Explorers" world tokens (redesign 27/10/2026 — additive only).
+ * Fake-3D depth comes from chunky bottom borders + these soft shadows;
+ * no gradient library is used anywhere.
+ */
+export const shadow = {
+  card: {
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  chunky: {
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+} as const;
+
+/** Adventure highlight used for the current lesson / continue CTA. */
+export const adventureColors = {
+  glow: "#fbbf24",
+  glowSoft: "#fde68a",
+} as const;
+
+/**
+ * Palette per land kind for the world map. `top`/`bottom` are two layered
+ * View colors that fake a gradient "scene" on the land banner; `dark` is
+ * the land accent in dark mode (banners pair it with a dimmed `bottom`).
+ */
+export type LandKind =
+  | "forest"
+  | "island"
+  | "village"
+  | "ocean"
+  | "castle"
+  | "mountain"
+  | "valley"
+  | "meadow";
+
+export const landPalette: Record<
+  LandKind,
+  { top: string; bottom: string; accent: string; dark: string }
+> = {
+  forest: { top: "#86efac", bottom: "#22c55e", accent: "#16a34a", dark: "#15803d" },
+  island: { top: "#fde68a", bottom: "#38bdf8", accent: "#0ea5e9", dark: "#0369a1" },
+  village: { top: "#fed7aa", bottom: "#fb923c", accent: "#ea580c", dark: "#9a3412" },
+  ocean: { top: "#7dd3fc", bottom: "#0284c7", accent: "#0369a1", dark: "#075985" },
+  castle: { top: "#c7d2fe", bottom: "#6366f1", accent: "#4f46e5", dark: "#3730a3" },
+  mountain: { top: "#e2e8f0", bottom: "#38bdf8", accent: "#0284c7", dark: "#475569" },
+  valley: { top: "#fbcfe8", bottom: "#f59e0b", accent: "#d97706", dark: "#b45309" },
+  meadow: { top: "#fef08a", bottom: "#4ade80", accent: "#16a34a", dark: "#15803d" },
+};
 
 /** Units cycle through these (Duolingo-style section colors). */
 export const unitPalette: { main: string; dark: string }[] = [
