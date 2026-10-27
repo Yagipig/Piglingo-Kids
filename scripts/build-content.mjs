@@ -219,6 +219,66 @@ const COURSES = [
           { t: ["We", "use", "a", "computer"], n: ["Chúng", "ta", "dùng", "máy", "tính"], blank: "computer", dT: ["notebook", "an"], dN: ["vở", "kéo"] },
         ],
       },
+      {
+        title: "Cơ thể",
+        description: "Học tên các bộ phận trên cơ thể của em.",
+        guidebook:
+          "Cơ thể của em 🧑\n\n**Các bộ phận**\n- head = đầu, eye = mắt, nose = mũi, mouth = miệng.\n- ear = tai, hand = tay, leg = chân, hair = tóc.\n\n**Mẫu câu**\n*This is my nose.* = Đây là mũi của tôi.",
+        words: [
+          W("head", "đầu", "🧑"), W("eye", "mắt", "👁️"), W("nose", "mũi", "👃"), W("mouth", "miệng", "👄"),
+          W("ear", "tai", "👂"), W("hand", "tay", "✋"), W("leg", "chân", "🦵"), W("hair", "tóc", "💇"),
+        ],
+        sentences: [
+          { t: ["This", "is", "my", "head"], n: ["Đây", "là", "đầu", "của", "tôi"], blank: "head", dT: ["hand", "a"], dN: ["tay", "mắt"] },
+          { t: ["This", "is", "my", "nose"], n: ["Đây", "là", "mũi", "của", "tôi"], blank: "nose", dT: ["ear", "the"], dN: ["tai", "miệng"] },
+          { t: ["I", "have", "a", "mouth"], n: ["Tôi", "có", "một", "cái", "miệng"], blank: "mouth", dT: ["eye", "two"], dN: ["mắt", "tóc"] },
+        ],
+      },
+      {
+        title: "Quần áo",
+        description: "Gọi tên quần áo em mặc mỗi ngày.",
+        guidebook:
+          "Mặc đẹp nào! 👕\n\n**Quần áo**\n- shirt = áo sơ mi, pants = quần dài, dress = váy, hat = mũ.\n- shoes = giày, socks = tất, coat = áo khoác, scarf = khăn quàng.\n\n**Mẹo nhỏ**\n*wear* = mặc, đội: I wear a hat. = Tôi đội một cái mũ.",
+        words: [
+          W("shirt", "áo sơ mi", "👕"), W("pants", "quần dài", "👖"), W("dress", "váy", "👗"), W("hat", "mũ", "🧢"),
+          W("shoes", "giày", "👟"), W("socks", "tất", "🧦"), W("coat", "áo khoác", "🧥"), W("scarf", "khăn quàng", "🧣"),
+        ],
+        sentences: [
+          { t: ["I", "wear", "a", "hat"], n: ["Tôi", "đội", "một", "cái", "mũ"], blank: "hat", dT: ["dress", "the"], dN: ["váy", "áo"] },
+          { t: ["My", "shirt", "is", "blue"], n: ["Áo", "sơ", "mi", "của", "tôi", "màu", "xanh", "dương"], blank: "shirt", dT: ["coat", "red"], dN: ["áo khoác", "quần"] },
+          { t: ["She", "wears", "a", "dress"], n: ["Cô", "ấy", "mặc", "một", "cái", "váy"], blank: "dress", dT: ["scarf", "shoes"], dN: ["khăn", "tất"] },
+        ],
+      },
+      {
+        title: "Giao thông",
+        description: "Các phương tiện đi lại quanh em.",
+        guidebook:
+          "Đi lại an toàn! 🚗\n\n**Phương tiện**\n- car = ô tô, bus = xe buýt, bicycle = xe đạp, train = tàu hỏa.\n- airplane = máy bay, boat = thuyền, motorbike = xe máy, truck = xe tải.\n\n**Mẹo nhỏ**\n*by* + phương tiện = đi bằng: I go by bus. = Tôi đi bằng xe buýt.",
+        words: [
+          W("car", "ô tô", "🚗"), W("bus", "xe buýt", "🚌"), W("bicycle", "xe đạp", "🚲"), W("train", "tàu hỏa", "🚆"),
+          W("airplane", "máy bay", "✈️"), W("boat", "thuyền", "⛵"), W("motorbike", "xe máy", "🏍️"), W("truck", "xe tải", "🚚"),
+        ],
+        sentences: [
+          { t: ["I", "go", "by", "bus"], n: ["Tôi", "đi", "bằng", "xe", "buýt"], blank: "bus", dT: ["car", "train"], dN: ["ô tô", "tàu"] },
+          { t: ["The", "train", "is", "fast"], n: ["Tàu", "hỏa", "chạy", "nhanh"], blank: "train", dT: ["boat", "slow"], dN: ["thuyền", "xe đạp"] },
+          { t: ["I", "ride", "a", "bicycle"], n: ["Tôi", "đi", "xe", "đạp"], blank: "bicycle", dT: ["truck", "an"], dN: ["xe tải", "máy bay"] },
+        ],
+      },
+      {
+        title: "Thời tiết",
+        description: "Nói về thời tiết: nắng, mưa, gió và tuyết.",
+        guidebook:
+          "Thời tiết hôm nay ☀️\n\n**Thời tiết**\n- sun = mặt trời, rain = mưa, cloud = mây, snow = tuyết.\n- wind = gió, hot = nóng, cold = lạnh, lightning = tia chớp.\n\n**Mẫu câu**\n*It is cold today.* = Hôm nay trời lạnh.",
+        words: [
+          W("sun", "mặt trời", "☀️"), W("rain", "mưa", "🌧️"), W("cloud", "mây", "☁️"), W("snow", "tuyết", "❄️"),
+          W("wind", "gió", "💨"), W("hot", "nóng", "🥵"), W("cold", "lạnh", "🥶"), W("lightning", "tia chớp", "⚡"),
+        ],
+        sentences: [
+          { t: ["The", "sun", "is", "hot"], n: ["Mặt", "trời", "nóng"], blank: "sun", dT: ["rain", "cold"], dN: ["mưa", "mây"] },
+          { t: ["It", "is", "cold", "today"], n: ["Hôm", "nay", "trời", "lạnh"], blank: "cold", dT: ["hot", "snow"], dN: ["nóng", "gió"] },
+          { t: ["I", "see", "a", "big", "cloud"], n: ["Tôi", "thấy", "một", "đám", "mây", "to"], blank: "cloud", dT: ["wind", "the"], dN: ["gió", "tuyết"] },
+        ],
+      },
     ],
   },
   {
@@ -381,6 +441,66 @@ const COURSES = [
           { t: ["これ", "は", "とけい", "です"], n: ["Đây", "là", "đồng", "hồ"], r: "kore wa tokei desu", blank: "とけい", dT: ["けしゴム", "ねこ"], dN: ["tẩy", "mèo"] },
         ],
       },
+      {
+        title: "Cơ thể",
+        description: "Học tên các bộ phận trên cơ thể bằng tiếng Nhật.",
+        guidebook:
+          "Cơ thể của em 🧑\n\n- あたま (atama) = đầu, め (me) = mắt, はな (hana) = mũi, くち (kuchi) = miệng\n- みみ (mimi) = tai, て (te) = tay, あし (ashi) = chân, かみ (kami) = tóc\n\n**Mẫu câu**\nこれ は わたし の て です。= Đây là tay của tôi.",
+        words: [
+          W("あたま", "đầu", "🧑", "atama"), W("め", "mắt", "👁️", "me"), W("はな", "mũi", "👃", "hana"), W("くち", "miệng", "👄", "kuchi"),
+          W("みみ", "tai", "👂", "mimi"), W("て", "tay", "✋", "te"), W("あし", "chân", "🦵", "ashi"), W("かみ", "tóc", "💇", "kami"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "わたし", "の", "あたま", "です"], n: ["Đây", "là", "đầu", "của", "tôi"], r: "kore wa watashi no atama desu", blank: "あたま", dT: ["め", "みず"], dN: ["mắt", "nước"] },
+          { t: ["これ", "は", "わたし", "の", "て", "です"], n: ["Đây", "là", "tay", "của", "tôi"], r: "kore wa watashi no te desu", blank: "て", dT: ["あし", "ほん"], dN: ["chân", "sách"] },
+          { t: ["これ", "は", "わたし", "の", "みみ", "です"], n: ["Đây", "là", "tai", "của", "tôi"], r: "kore wa watashi no mimi desu", blank: "みみ", dT: ["くち", "ねこ"], dN: ["miệng", "mèo"] },
+        ],
+      },
+      {
+        title: "Quần áo",
+        description: "Gọi tên quần áo bằng tiếng Nhật.",
+        guidebook:
+          "Mặc đẹp nào! 👕\n\n- シャツ (shatsu) = áo sơ mi, ズボン (zubon) = quần dài, ドレス (doresu) = váy, ぼうし (boushi) = mũ\n- くつ (kutsu) = giày, くつした (kutsushita) = tất, コート (kooto) = áo khoác, マフラー (mafuraa) = khăn quàng\n\n**Mẫu câu**\nこれ は シャツ です。= Đây là áo sơ mi.",
+        words: [
+          W("シャツ", "áo sơ mi", "👕", "shatsu"), W("ズボン", "quần dài", "👖", "zubon"), W("ドレス", "váy", "👗", "doresu"), W("ぼうし", "mũ", "🧢", "boushi"),
+          W("くつ", "giày", "👟", "kutsu"), W("くつした", "tất", "🧦", "kutsushita"), W("コート", "áo khoác", "🧥", "kooto"), W("マフラー", "khăn quàng", "🧣", "mafuraa"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "シャツ", "です"], n: ["Đây", "là", "áo", "sơ", "mi"], r: "kore wa shatsu desu", blank: "シャツ", dT: ["ズボン", "みず"], dN: ["quần", "nước"] },
+          { t: ["これ", "は", "ぼうし", "です"], n: ["Đây", "là", "cái", "mũ"], r: "kore wa boushi desu", blank: "ぼうし", dT: ["くつ", "ほん"], dN: ["giày", "sách"] },
+          { t: ["これ", "は", "コート", "です"], n: ["Đây", "là", "áo", "khoác"], r: "kore wa kooto desu", blank: "コート", dT: ["ドレス", "ねこ"], dN: ["váy", "mèo"] },
+        ],
+      },
+      {
+        title: "Giao thông",
+        description: "Các phương tiện đi lại bằng tiếng Nhật.",
+        guidebook:
+          "Đi lại an toàn! 🚗\n\n- しんかんせん (shinkansen) = tàu siêu tốc, バス (basu) = xe buýt, じてんしゃ (jitensha) = xe đạp, でんしゃ (densha) = tàu điện\n- ひこうき (hikouki) = máy bay, ふね (fune) = thuyền, バイク (baiku) = xe máy, トラック (torakku) = xe tải\n\n**Mẫu câu**\nこれ は でんしゃ です。= Đây là tàu điện.",
+        words: [
+          W("しんかんせん", "tàu siêu tốc", "🚅", "shinkansen"), W("バス", "xe buýt", "🚌", "basu"), W("じてんしゃ", "xe đạp", "🚲", "jitensha"), W("でんしゃ", "tàu điện", "🚆", "densha"),
+          W("ひこうき", "máy bay", "✈️", "hikouki"), W("ふね", "thuyền", "🚢", "fune"), W("バイク", "xe máy", "🏍️", "baiku"), W("トラック", "xe tải", "🚚", "torakku"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "でんしゃ", "です"], n: ["Đây", "là", "tàu", "điện"], r: "kore wa densha desu", blank: "でんしゃ", dT: ["バス", "みず"], dN: ["xe buýt", "nước"] },
+          { t: ["これ", "は", "ひこうき", "です"], n: ["Đây", "là", "máy", "bay"], r: "kore wa hikouki desu", blank: "ひこうき", dT: ["ふね", "ほん"], dN: ["thuyền", "sách"] },
+          { t: ["これ", "は", "しんかんせん", "です"], n: ["Đây", "là", "tàu", "siêu", "tốc"], r: "kore wa shinkansen desu", blank: "しんかんせん", dT: ["トラック", "ねこ"], dN: ["xe tải", "mèo"] },
+        ],
+      },
+      {
+        title: "Thời tiết",
+        description: "Nói về thời tiết bằng tiếng Nhật.",
+        guidebook:
+          "Thời tiết hôm nay ☀️\n\n- たいよう (taiyou) = mặt trời, あめ (ame) = mưa, くも (kumo) = mây, ゆき (yuki) = tuyết\n- かぜ (kaze) = gió, あつい (atsui) = nóng, さむい (samui) = lạnh, にじ (niji) = cầu vồng\n\n**Mẫu câu**\nきょう は あつい です。= Hôm nay trời nóng.",
+        words: [
+          W("たいよう", "mặt trời", "☀️", "taiyou"), W("あめ", "mưa", "🌧️", "ame"), W("くも", "mây", "☁️", "kumo"), W("ゆき", "tuyết", "❄️", "yuki"),
+          W("かぜ", "gió", "💨", "kaze"), W("あつい", "nóng", "🥵", "atsui"), W("さむい", "lạnh", "🥶", "samui"), W("にじ", "cầu vồng", "🌈", "niji"),
+        ],
+        sentences: [
+          { t: ["これ", "は", "たいよう", "です"], n: ["Đây", "là", "mặt", "trời"], r: "kore wa taiyou desu", blank: "たいよう", dT: ["くも", "みず"], dN: ["mây", "nước"] },
+          { t: ["これ", "は", "にじ", "です"], n: ["Đây", "là", "cầu", "vồng"], r: "kore wa niji desu", blank: "にじ", dT: ["ゆき", "ほん"], dN: ["tuyết", "sách"] },
+          { t: ["きょう", "は", "あつい", "です"], n: ["Hôm", "nay", "trời", "nóng"], r: "kyou wa atsui desu", blank: "あつい", dT: ["さむい", "かぜ"], dN: ["lạnh", "gió"] },
+        ],
+      },
     ],
   },
   {
@@ -539,6 +659,66 @@ const COURSES = [
           { t: ["我", "有", "一", "本", "本子"], n: ["Tôi", "có", "một", "quyển", "vở"], r: "wǒ yǒu yì běn běnzi", blank: "本子", dT: ["纸", "狗"], dN: ["giấy", "chó"] },
           { t: ["这", "是", "地图"], n: ["Đây", "là", "bản", "đồ"], r: "zhè shì dìtú", blank: "地图", dT: ["地球", "我"], dN: ["địa cầu", "tôi"] },
           { t: ["哥哥", "用", "电脑"], n: ["Anh", "trai", "dùng", "máy", "tính"], r: "gēge yòng diànnǎo", blank: "电脑", dT: ["剪刀", "是"], dN: ["kéo", "là"] },
+        ],
+      },
+      {
+        title: "Cơ thể",
+        description: "Học tên các bộ phận trên cơ thể bằng tiếng Trung.",
+        guidebook:
+          "Cơ thể của em 🧑\n\n- 头 (tóu) = đầu, 眼睛 (yǎnjing) = mắt, 鼻子 (bízi) = mũi, 嘴 (zuǐ) = miệng\n- 耳朵 (ěrduo) = tai, 手 (shǒu) = tay, 脚 (jiǎo) = chân, 头发 (tóufa) = tóc\n\n**Mẫu câu**\n这 是 我 的 手。= Đây là tay của tôi.",
+        words: [
+          W("头", "đầu", "🧑", "tóu"), W("眼睛", "mắt", "👁️", "yǎnjing"), W("鼻子", "mũi", "👃", "bízi"), W("嘴", "miệng", "👄", "zuǐ"),
+          W("耳朵", "tai", "👂", "ěrduo"), W("手", "tay", "✋", "shǒu"), W("脚", "chân", "🦶", "jiǎo"), W("头发", "tóc", "💇", "tóufa"),
+        ],
+        sentences: [
+          { t: ["这", "是", "我", "的", "头"], n: ["Đây", "là", "đầu", "của", "tôi"], r: "zhè shì wǒ de tóu", blank: "头", dT: ["手", "不"], dN: ["tay", "không"] },
+          { t: ["这", "是", "我", "的", "手"], n: ["Đây", "là", "tay", "của", "tôi"], r: "zhè shì wǒ de shǒu", blank: "手", dT: ["脚", "狗"], dN: ["chân", "chó"] },
+          { t: ["这", "是", "我", "的", "鼻子"], n: ["Đây", "là", "mũi", "của", "tôi"], r: "zhè shì wǒ de bízi", blank: "鼻子", dT: ["嘴", "你"], dN: ["miệng", "bạn"] },
+        ],
+      },
+      {
+        title: "Quần áo",
+        description: "Gọi tên quần áo bằng tiếng Trung.",
+        guidebook:
+          "Mặc đẹp nào! 👕\n\n- 衬衫 (chènshān) = áo sơ mi, 裤子 (kùzi) = quần dài, 连衣裙 (liányīqún) = váy liền, 帽子 (màozi) = mũ\n- 鞋子 (xiézi) = giày, 袜子 (wàzi) = tất, 外套 (wàitào) = áo khoác, 围巾 (wéijīn) = khăn quàng\n\n**Mẫu câu**\n这 是 我 的 帽子。= Đây là mũ của tôi.",
+        words: [
+          W("衬衫", "áo sơ mi", "👕", "chènshān"), W("裤子", "quần dài", "👖", "kùzi"), W("连衣裙", "váy liền", "👗", "liányīqún"), W("帽子", "mũ", "🧢", "màozi"),
+          W("鞋子", "giày", "👟", "xiézi"), W("袜子", "tất", "🧦", "wàzi"), W("外套", "áo khoác", "🧥", "wàitào"), W("围巾", "khăn quàng", "🧣", "wéijīn"),
+        ],
+        sentences: [
+          { t: ["这", "是", "我", "的", "衬衫"], n: ["Đây", "là", "áo", "sơ", "mi", "của", "tôi"], r: "zhè shì wǒ de chènshān", blank: "衬衫", dT: ["裤子", "不"], dN: ["quần", "không"] },
+          { t: ["这", "是", "我", "的", "帽子"], n: ["Đây", "là", "mũ", "của", "tôi"], r: "zhè shì wǒ de màozi", blank: "帽子", dT: ["鞋子", "狗"], dN: ["giày", "chó"] },
+          { t: ["妹妹", "穿", "连衣裙"], n: ["Em", "gái", "mặc", "váy", "liền"], r: "mèimei chuān liányīqún", blank: "连衣裙", dT: ["外套", "是"], dN: ["áo khoác", "là"] },
+        ],
+      },
+      {
+        title: "Giao thông",
+        description: "Các phương tiện đi lại bằng tiếng Trung.",
+        guidebook:
+          "Đi lại an toàn! 🚗\n\n- 汽车 (qìchē) = ô tô, 公共汽车 (gōnggòng qìchē) = xe buýt, 自行车 (zìxíngchē) = xe đạp, 火车 (huǒchē) = tàu hỏa\n- 飞机 (fēijī) = máy bay, 船 (chuán) = thuyền, 摩托车 (mótuōchē) = xe máy, 卡车 (kǎchē) = xe tải\n\n**Mẫu câu**\n这 是 汽车。= Đây là ô tô.",
+        words: [
+          W("汽车", "ô tô", "🚗", "qìchē"), W("公共汽车", "xe buýt", "🚌", "gōnggòng qìchē"), W("自行车", "xe đạp", "🚲", "zìxíngchē"), W("火车", "tàu hỏa", "🚆", "huǒchē"),
+          W("飞机", "máy bay", "✈️", "fēijī"), W("船", "thuyền", "🚢", "chuán"), W("摩托车", "xe máy", "🏍️", "mótuōchē"), W("卡车", "xe tải", "🚚", "kǎchē"),
+        ],
+        sentences: [
+          { t: ["这", "是", "汽车"], n: ["Đây", "là", "ô", "tô"], r: "zhè shì qìchē", blank: "汽车", dT: ["火车", "不"], dN: ["tàu hỏa", "không"] },
+          { t: ["我", "坐", "公共汽车"], n: ["Tôi", "đi", "xe", "buýt"], r: "wǒ zuò gōnggòng qìchē", blank: "公共汽车", dT: ["飞机", "狗"], dN: ["máy bay", "chó"] },
+          { t: ["哥哥", "骑", "自行车"], n: ["Anh", "trai", "đi", "xe", "đạp"], r: "gēge qí zìxíngchē", blank: "自行车", dT: ["摩托车", "是"], dN: ["xe máy", "là"] },
+        ],
+      },
+      {
+        title: "Thời tiết",
+        description: "Nói về thời tiết bằng tiếng Trung.",
+        guidebook:
+          "Thời tiết hôm nay ☀️\n\n- 晴天 (qíngtiān) = trời nắng, 雨 (yǔ) = mưa, 云 (yún) = mây, 雪 (xuě) = tuyết\n- 风 (fēng) = gió, 热 (rè) = nóng, 冷 (lěng) = lạnh, 闪电 (shǎndiàn) = tia chớp\n\n**Mẫu câu**\n今天 很 冷。= Hôm nay trời rất lạnh.",
+        words: [
+          W("晴天", "trời nắng", "☀️", "qíngtiān"), W("雨", "mưa", "🌧️", "yǔ"), W("云", "mây", "☁️", "yún"), W("雪", "tuyết", "❄️", "xuě"),
+          W("风", "gió", "💨", "fēng"), W("热", "nóng", "🥵", "rè"), W("冷", "lạnh", "🥶", "lěng"), W("闪电", "tia chớp", "⚡", "shǎndiàn"),
+        ],
+        sentences: [
+          { t: ["今天", "是", "晴天"], n: ["Hôm", "nay", "trời", "nắng"], r: "jīntiān shì qíngtiān", blank: "晴天", dT: ["雪", "不"], dN: ["tuyết", "không"] },
+          { t: ["今天", "很", "冷"], n: ["Hôm", "nay", "trời", "rất", "lạnh"], r: "jīntiān hěn lěng", blank: "冷", dT: ["热", "我"], dN: ["nóng", "tôi"] },
+          { t: ["天上", "有", "云"], n: ["Trên", "trời", "có", "mây"], r: "tiānshàng yǒu yún", blank: "云", dT: ["风", "是"], dN: ["gió", "là"] },
         ],
       },
     ],

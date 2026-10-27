@@ -91,7 +91,7 @@ function check(name, fn) {
   console.log(`PASS ${name}`);
 }
 
-check('course-percent: 0% chưa đạt; 11/44 bài đạt mốc 25% nhưng chưa đạt 50%', () => {
+check('course-percent: 0% chưa đạt; 15/60 bài đạt mốc 25% nhưng chưa đạt 50%', () => {
   const emptyEval = evaluateCondition(
     { type: 'course-percent', courseId: 'en-vi', percent: 25 },
     emptyProgress(),
@@ -99,15 +99,15 @@ check('course-percent: 0% chưa đạt; 11/44 bài đạt mốc 25% nhưng chưa
   assert.equal(emptyEval.done, false);
   assert.equal(emptyEval.percent, 0);
 
-  const progress = progressWith('en-vi', lessonIds('en-vi', 11));
+  const progress = progressWith('en-vi', lessonIds('en-vi', 15));
   const at25 = evaluateCondition(
     { type: 'course-percent', courseId: 'en-vi', percent: 25 },
     progress,
   );
   assert.equal(at25.done, true);
   assert.equal(at25.percent, 100);
-  assert.equal(at25.completed, 11);
-  assert.equal(at25.total, 44);
+  assert.equal(at25.completed, 15);
+  assert.equal(at25.total, 60);
 
   const at50 = evaluateCondition(
     { type: 'course-percent', courseId: 'en-vi', percent: 50 },
@@ -126,7 +126,7 @@ check('course-complete: chỉ đạt khi mọi bài thật của khóa đều ho
   const missingOne = progressWith('ja-vi', lessonIds('ja-vi').slice(0, -1));
   const notDone = evaluateCondition({ type: 'course-complete', courseId: 'ja-vi' }, missingOne);
   assert.equal(notDone.done, false);
-  assert.equal(notDone.percent, 97);
+  assert.equal(notDone.percent, 98);
 });
 
 check('units-completed: unit chỉ được tính khi mọi lesson trong unit đã xong', () => {
@@ -149,15 +149,15 @@ check('all-courses-complete: đạt khi cả 3 khóa 100%, thiếu 1 bài thì c
   const complete = evaluateCondition({ type: 'all-courses-complete' }, allProgress());
   assert.equal(complete.done, true);
   assert.equal(complete.percent, 100);
-  assert.equal(complete.completed, 122);
-  assert.equal(complete.total, 122);
+  assert.equal(complete.completed, 170);
+  assert.equal(complete.total, 170);
 
   const incomplete = evaluateCondition(
     { type: 'all-courses-complete' },
     allProgress('zh-vi'),
   );
   assert.equal(incomplete.done, false);
-  assert.equal(incomplete.completed, 121);
+  assert.equal(incomplete.completed, 169);
 });
 
 check('familyRewardStatus: pending → achieved → given, givenAt luôn thắng', () => {
@@ -263,7 +263,7 @@ check('DEFAULT_GLOBAL_REWARDS: hợp lệ, id không trùng, đủ mốc 3 khóa
   assert.ok(DEFAULT_GLOBAL_REWARDS.filter((reward) => reward.kind === 'parent-tip').length >= 3);
 });
 
-check('baseline nội dung packs: 32 unit / 122 bài / 956 exercise', () => {
+check('baseline nội dung packs: 44 unit / 170 bài / 1312 exercise', () => {
   let units = 0;
   let lessons = 0;
   let exercises = 0;
@@ -279,7 +279,7 @@ check('baseline nội dung packs: 32 unit / 122 bài / 956 exercise', () => {
       }
     }
   }
-  assert.deepEqual({ units, lessons, exercises }, { units: 32, lessons: 122, exercises: 956 });
+  assert.deepEqual({ units, lessons, exercises }, { units: 44, lessons: 170, exercises: 1312 });
 });
 
 console.log(`\nTất cả ${passed} nhóm test phần thưởng PASS.`);
