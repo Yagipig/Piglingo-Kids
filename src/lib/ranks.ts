@@ -3,12 +3,18 @@
  * lưu thêm trạng thái nào (nơi gọi truyền tổng XP hiện có của store).
  *
  * Thang bậc được cân theo quy tắc XP thật của app (src/lib/store.ts):
- * mỗi bài hoàn thành cho 15 XP, thêm 5 XP nếu không sai câu nào, nên
- * 170 bài cho tối đa 170 × 20 = 3.400 XP chỉ từ bài học — chưa kể XP
- * thưởng từ các trò chơi (addBonusXp). Bậc cao nhất 2.800 XP vì thế
- * "với tới được" khi bé học gần hết chương trình (học hết 170 bài
- * không hoàn hảo đã có 2.550 XP, cộng thêm bài hoàn hảo/game là đủ),
- * nhưng vẫn là đích đáng tự hào chứ không tự động đạt.
+ * mỗi bài hoàn thành cho 15 XP, thêm 5 XP nếu không sai câu nào.
+ *
+ * Hiệu chuẩn đợt 2 (lộ trình 1–12 hoàn thiện, 314 bài):
+ *   XP tối đa từ bài học  = 314 × 20 = 6.280 XP (chưa kể XP game).
+ *   XP khi học hết, không hoàn hảo = 314 × 15 = 4.710 XP.
+ *   Bậc cuối 4.650 XP ≈ 74% XP tối đa từ bài học (mốc thiết kế 70–75%):
+ *   bé phải học gần như trọn lộ trình mới chạm được, và học hết 314 bài
+ *   là chắc chắn đủ — đích cao nhưng không "treo" ngoài tầm với.
+ *   Các bậc giữa được giãn theo đường cong tăng dần như đợt đầu (hiệu
+ *   chuẩn cũ trên 170 bài, hệ số giãn ≈ 6.280 / 3.400 ≈ 1,85, làm tròn
+ *   số đẹp): khoảng cách giữa hai bậc liên tiếp tăng dần
+ *   200 → 250 → 450 → 750 → 900 → 1.000 → 1.100 XP.
  */
 
 export interface RankTier {
@@ -22,13 +28,13 @@ export interface RankTier {
 
 export const RANK_TIERS: RankTier[] = [
   { level: 1, title: "Người Bạn Ra Khơi", emoji: "🛶", minXp: 0 },
-  { level: 2, title: "Thủy Thủ Nhí", emoji: "⛵", minXp: 100 },
-  { level: 3, title: "Hoa Tiêu Nhí", emoji: "🧭", minXp: 250 },
-  { level: 4, title: "Thuyền Phó Tương Lai", emoji: "⚓", minXp: 500 },
-  { level: 5, title: "Thuyền Trưởng Nhí", emoji: "🚢", minXp: 900 },
-  { level: 6, title: "Chúa Đảo Nhí", emoji: "🏝️", minXp: 1400 },
-  { level: 7, title: "Huyền Thoại Biển Khơi", emoji: "🌟", minXp: 2000 },
-  { level: 8, title: "Vua Biển Cả", emoji: "👑", minXp: 2800 },
+  { level: 2, title: "Thủy Thủ Nhí", emoji: "⛵", minXp: 200 },
+  { level: 3, title: "Hoa Tiêu Nhí", emoji: "🧭", minXp: 450 },
+  { level: 4, title: "Thuyền Phó Tương Lai", emoji: "⚓", minXp: 900 },
+  { level: 5, title: "Thuyền Trưởng Nhí", emoji: "🚢", minXp: 1650 },
+  { level: 6, title: "Chúa Đảo Nhí", emoji: "🏝️", minXp: 2550 },
+  { level: 7, title: "Huyền Thoại Biển Khơi", emoji: "🌟", minXp: 3550 },
+  { level: 8, title: "Vua Biển Cả", emoji: "👑", minXp: 4650 },
 ];
 
 export interface RankState {

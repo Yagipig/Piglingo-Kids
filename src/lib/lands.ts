@@ -82,6 +82,12 @@ const BY_UNIT_ID: Record<string, Land> = {
   "en-vi:unit-19": makeLand("valley", "Hòn Mê", "🌊", "Cụm đảo xanh ngoài khơi Thanh Hóa"),
   "en-vi:unit-20": makeLand("meadow", "Đảo Sơn Chà", "⛰️", "Hòn đảo nhỏ dưới chân đèo Hải Vân"),
   "en-vi:unit-21": makeLand("village", "Hòn Khô", "🪸", "Hòn đảo hoang sơ gần Quy Nhơn, biển trong veo"),
+  "en-vi:unit-22": makeLand("island", "Hòn Móng Tay", "🏝️", "Hòn đảo nhỏ hoang sơ phía nam đảo ngọc Phú Quốc"),
+  "en-vi:unit-23": makeLand("forest", "Hòn Thơm", "🚡", "Hòn đảo xanh có cáp treo vượt biển ngắm san hô"),
+  "en-vi:unit-24": makeLand("ocean", "Hòn May Rút", "🐚", "Đảo nhỏ nước trong veo trong quần đảo An Thới"),
+  "en-vi:unit-25": makeLand("mountain", "Đảo Long Châu", "⚓", "Quần đảo đá vôi với hải đăng cổ ngoài khơi Hải Phòng"),
+  "en-vi:unit-26": makeLand("valley", "Hòn Miễu", "🐠", "Hòn đảo gần Nha Trang, có hồ cá biển xinh xắn"),
+  "en-vi:unit-27": makeLand("meadow", "Cù Lao Mái Nhà", "🌴", "Hòn đảo nhỏ được gọi là đảo Robinson của Phú Yên"),
   // ja-vi — Tiếng Nhật
   "ja-vi:unit-1": makeLand("meadow", "Đảo Quan Lạn", "🏖️", "Bãi cát trắng dài, nước biển trong xanh"),
   "ja-vi:unit-2": makeLand("island", "Đảo Ngọc Vừng", "🦪", "Đảo ngọc trai lấp lánh trong vịnh Bái Tử Long"),
@@ -104,6 +110,12 @@ const BY_UNIT_ID: Record<string, Land> = {
   "ja-vi:unit-19": makeLand("mountain", "Hòn Tranh", "🏖️", "Bãi biển đẹp của đảo Phú Quý"),
   "ja-vi:unit-20": makeLand("valley", "Đảo Trần", "🌅", "Hòn đảo tiền tiêu vùng biển Quảng Ninh"),
   "ja-vi:unit-21": makeLand("meadow", "Hòn La", "🐚", "Hòn đảo nhỏ hiền hòa ngoài khơi Quảng Bình"),
+  "ja-vi:unit-22": makeLand("island", "Đảo Bé", "🏖️", "Hòn đảo nhỏ xinh kề bên đảo Lý Sơn"),
+  "ja-vi:unit-23": makeLand("valley", "Hòn Mù Cu", "🌋", "Hòn đảo nhỏ hoang sơ cạnh đảo lớn Lý Sơn"),
+  "ja-vi:unit-24": makeLand("ocean", "Hòn Ngư", "🐟", "Hai hòn đảo song ngư ngoài khơi Cửa Lò"),
+  "ja-vi:unit-25": makeLand("forest", "Hòn Mắt", "🌊", "Hòn đảo xanh giữa biển khơi Nghệ An"),
+  "ja-vi:unit-26": makeLand("mountain", "Đảo Lan Châu", "🪨", "Hòn đảo đá gần bờ Cửa Lò, dáng như nghiên mực"),
+  "ja-vi:unit-27": makeLand("village", "Hòn Biện Sơn", "🌅", "Hòn đảo chắn sóng cho vùng biển Nghi Sơn"),
   // zh-vi — Tiếng Trung
   "zh-vi:unit-1": makeLand("ocean", "Hòn Mun", "🐠", "Khu bảo tồn biển, cá bơi từng đàn"),
   "zh-vi:unit-2": makeLand("valley", "Hòn Tằm", "🦋", "Hòn đảo xanh mềm mại như dải lụa"),
@@ -125,6 +137,12 @@ const BY_UNIT_ID: Record<string, Land> = {
   "zh-vi:unit-18": makeLand("mountain", "Hòn Giang", "🌊", "Hòn đảo nhỏ trong vịnh Nha Phu"),
   "zh-vi:unit-19": makeLand("valley", "Hòn Cau", "🪸", "Hòn đảo nhỏ xinh thuộc vùng biển Bình Thuận"),
   "zh-vi:unit-20": makeLand("castle", "Hòn Sẹo", "🏝️", "Hòn đảo hoang sơ với bãi biển hình vòng cung"),
+  "zh-vi:unit-21": makeLand("island", "Hòn Trác", "🌴", "Hòn đảo hoang sơ trong quần đảo Côn Đảo"),
+  "zh-vi:unit-22": makeLand("forest", "Hòn Tài", "🐿️", "Hòn đảo xanh nơi khỉ và sóc sinh sống ở Côn Đảo"),
+  "zh-vi:unit-23": makeLand("valley", "Hòn Trứng", "🥚", "Hòn đảo nhỏ tròn xinh giữa biển Côn Đảo"),
+  "zh-vi:unit-24": makeLand("ocean", "Hòn Bông Lan", "🌸", "Hòn đảo nhỏ mang tên loài lan rừng Côn Đảo"),
+  "zh-vi:unit-25": makeLand("meadow", "Hòn Nồm", "⛵", "Hòn đảo nhỏ trong vùng biển Kiên Giang"),
+  "zh-vi:unit-26": makeLand("mountain", "Quần Đảo Bà Lụa", "🪸", "Chùm đảo biển lặng được ví như vịnh nhỏ phía Tây"),
 };
 
 /** Tra theo chủ đề (tiêu đề chuẩn hoá, bỏ hậu tố số) — dự phòng cho unit mới. */
