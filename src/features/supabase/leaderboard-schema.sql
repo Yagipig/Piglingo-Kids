@@ -79,6 +79,11 @@ $$;
 revoke all on function public.leaderboard_anon_code(uuid) from public;
 revoke all on function public.get_leaderboard(integer) from public;
 revoke all on function public.get_my_rank() from public;
+-- Supabase cap mac dinh quyen EXECUTE thang cho role anon qua default
+-- privileges, nen phai thu hoi ca tu anon (revoke PUBLIC chua du).
+revoke all on function public.leaderboard_anon_code(uuid) from anon;
+revoke all on function public.get_leaderboard(integer) from anon;
+revoke all on function public.get_my_rank() from anon;
 
 grant execute on function public.leaderboard_anon_code(uuid) to authenticated;
 grant execute on function public.get_leaderboard(integer) to authenticated;
