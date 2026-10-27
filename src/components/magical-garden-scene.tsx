@@ -358,7 +358,7 @@ function Portal({
         ]}
       >
         <Flag courseId={kingdom.courseId} size={15} />
-        <Text style={styles.portalName} maxFontSizeMultiplier={1.1} numberOfLines={1}>
+        <Text style={styles.portalName} maxFontSizeMultiplier={1.1} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>
           {kingdom.shortName}
         </Text>
         {complete ? (
@@ -494,16 +494,16 @@ const useStyles = makeThemedStyles((colors) =>
     portalLabel: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 4,
+      gap: 3,
       backgroundColor: colors.surface + "F2",
       borderWidth: 2,
       borderColor: colors.neutral200,
       borderRadius: radius.full,
-      paddingHorizontal: 8,
+      paddingHorizontal: 6,
       paddingVertical: 3,
       maxWidth: "100%",
     },
-    portalName: { fontSize: 12, fontWeight: "900", color: colors.neutral700 },
+    portalName: { fontSize: 11.5, fontWeight: "900", color: colors.neutral700 },
     portalTrophy: { fontSize: 11 },
     portalProgress: {
       fontSize: 10.5,
