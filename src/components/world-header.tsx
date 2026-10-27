@@ -52,7 +52,7 @@ export function WorldHeader({
       <View style={styles.headerRow}>
         <View style={styles.avatarRing}>
           <Image
-            source={require("@/assets/images/mascot.svg")}
+            source={require("@/assets/images/mascot-avatar.png")}
             style={styles.mascot}
             contentFit="contain"
             accessibilityLabel="Mascot Piglingo"
@@ -188,7 +188,7 @@ const useStyles = makeThemedStyles((colors) =>
       justifyContent: "center",
       overflow: "hidden",
     },
-    mascot: { width: 44, height: 44 },
+    mascot: { width: 44, height: 44, borderRadius: 999 },
     brand: { fontSize: 20, fontWeight: "900", color: colors.neutral700 },
     brandSub: { fontSize: 12, color: colors.textMuted, fontWeight: "700" },
     greeting: { fontSize: 16, fontWeight: "800", color: colors.neutral700 },
