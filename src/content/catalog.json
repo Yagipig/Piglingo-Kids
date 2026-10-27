@@ -7,8 +7,8 @@
       "targetCode": "en",
       "nativeLanguage": "Tiếng Việt",
       "flag": "🇺🇸",
-      "unitCount": 15,
-      "lessonCount": 60
+      "unitCount": 21,
+      "lessonCount": 84
     },
     {
       "id": "ja-vi",
@@ -16,8 +16,8 @@
       "targetCode": "ja",
       "nativeLanguage": "Tiếng Việt",
       "flag": "🇯🇵",
-      "unitCount": 15,
-      "lessonCount": 55
+      "unitCount": 21,
+      "lessonCount": 79
     },
     {
       "id": "zh-vi",
@@ -25,8 +25,8 @@
       "targetCode": "zh",
       "nativeLanguage": "Tiếng Việt",
       "flag": "🇨🇳",
-      "unitCount": 14,
-      "lessonCount": 55
+      "unitCount": 20,
+      "lessonCount": 79
     }
   ]
 }
