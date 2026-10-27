@@ -30,6 +30,8 @@ type DuoButtonProps = {
   variant?: Variant;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
+  /** "lg" = nút phiêu lưu cỡ lớn (Tiếp tục học). Mặc định giữ nguyên như cũ. */
+  size?: "md" | "lg";
 };
 
 /** The web app's 3D button: darker bottom border that collapses on press. */
@@ -39,8 +41,10 @@ export function DuoButton({
   variant = "secondary",
   disabled,
   style,
+  size = "md",
 }: DuoButtonProps) {
   const c = palette(useThemeColors())[disabled ? "locked" : variant];
+  const large = size === "lg";
   return (
     <Pressable
       onPress={onPress}
@@ -50,17 +54,21 @@ export function DuoButton({
       accessibilityState={{ disabled: !!disabled }}
       style={({ pressed }) => [
         styles.base,
+        large && styles.baseLg,
         {
           backgroundColor: c.bg,
           borderColor: c.border,
-          borderBottomWidth: pressed ? 0 : 4,
-          marginTop: pressed ? 4 : 0,
+          borderBottomWidth: pressed ? 0 : large ? 6 : 4,
+          marginTop: pressed ? (large ? 6 : 4) : 0,
         },
         variant === "white" && { borderWidth: 2, borderBottomWidth: pressed ? 2 : 4 },
         style,
       ]}
     >
-      <Text style={[styles.label, { color: c.text }]} maxFontSizeMultiplier={1.3}>
+      <Text
+        style={[styles.label, large && styles.labelLg, { color: c.text }]}
+        maxFontSizeMultiplier={1.3}
+      >
         {label}
       </Text>
     </Pressable>
@@ -75,10 +83,16 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
+  baseLg: {
+    borderRadius: radius.xl,
+    paddingVertical: 18,
+    paddingHorizontal: 22,
+  },
   label: {
     fontWeight: "800",
     fontSize: 15,
     textTransform: "uppercase",
     letterSpacing: 0.8,
   },
+  labelLg: { fontSize: 18 },
 });
