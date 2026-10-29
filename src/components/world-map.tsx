@@ -2,6 +2,7 @@ import { Image } from "expo-image";
 import React, {
   forwardRef,
   memo,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -18,8 +19,15 @@ import {
   View,
   type GestureResponderEvent,
 } from "react-native";
+import Svg, {
+  Ellipse,
+  G,
+  Path,
+  Text as SvgText,
+} from "react-native-svg";
 
 import type { LessonRef } from "@/lib/content";
+import { MAP_VIEWBOX, PROVINCE_SHAPES } from "@/lib/province-shapes";
 import {
   PROVINCES,
   REGION_LABELS,
@@ -38,26 +46,84 @@ import { useReducedMotion } from "@/lib/use-reduced-motion";
 /* Hằng số thế giới                                                    */
 /* ------------------------------------------------------------------ */
 
-/** Kích thước "thế giới" — đúng tỉ lệ ảnh nền bản đồ Việt Nam 1800×1047. */
-export const WORLD_WIDTH = 2200;
-export const WORLD_HEIGHT = 1279;
+/**
+ * Kích thước "thế giới" — đúng tỉ lệ MAP_VIEWBOX (1000×1977) của dữ
+ * liệu ranh giới tỉnh: rộng 1250 → cao ≈ 2471. Tọa độ viewBox được
+ * nhân tỉ lệ SX/SY sang tọa độ thế giới.
+ */
+export const WORLD_WIDTH = 1250;
+export const WORLD_HEIGHT = 2471;
+
+const SX = WORLD_WIDTH / MAP_VIEWBOX.width;
+const SY = WORLD_HEIGHT / MAP_VIEWBOX.height;
 
 const MIN_SCALE = 0.35;
 const MAX_SCALE = 1.8;
 
-/** Tên tỉnh chỉ hiện khi zoom đủ gần (tránh rối khi xem toàn cảnh). */
-const LABEL_MIN_SCALE = 0.75;
+/** Tên tỉnh hiện khi zoom ≥ 0,5; riêng các tỉnh nhỏ cần ≥ 0,85. */
+const LABEL_MIN_SCALE = 0.5;
+const SMALL_LABEL_MIN_SCALE = 0.85;
+const SMALL_LABEL_IDS = new Set(["ha-noi", "bac-ninh", "hung-yen", "hai-phong"]);
 
-const PIN_SIZE = 42;
-const PIN_SIZE_SMALL = 30;
-const PIN_WRAP_W = 132;
+/** Bảng màu kẹo pastel tô tỉnh, luân phiên tất định theo thứ tự hành trình. */
+const PROVINCE_COLORS = [
+  "#ffadad",
+  "#ffd6a5",
+  "#fdffb6",
+  "#caffbf",
+  "#9bf6ff",
+  "#a0c4ff",
+  "#ffc6ff",
+  "#bdb2ff",
+];
+
+/** Màu biển nền của thế giới. */
+const SEA_COLOR = "#a8dffd";
+
+/** Điểm neo (tọa độ viewBox) khi bay tới từng miền. */
+const REGION_ANCHOR_VB: Record<ProvinceRegion, { x: number; y: number }> = {
+  bac: { x: 500, y: 300 },
+  trung: { x: 540, y: 1080 },
+  nam: { x: 430, y: 1730 },
+};
 
 /** Mức zoom gợi ý khi bay tới từng miền. */
 const REGION_SCALE: Record<ProvinceRegion, number> = {
-  bac: 0.48,
+  bac: 0.5,
   trung: 0.55,
-  nam: 0.62,
+  nam: 0.65,
 };
+
+/**
+ * Vị trí cụm đảo Hoàng Sa / Trường Sa (tọa độ viewBox) — đặt gọn trong
+ * vùng Biển Đông, không đè đất liền (bỏ qua x/y cũ trong provinces.ts).
+ */
+const SEA_CLUSTER_VB: Record<string, { x: number; y: number }> = {
+  "hoang-sa": { x: 835, y: 985 },
+  "truong-sa": { x: 938, y: 1545 },
+};
+
+/** Huy hiệu số thứ tự unit tại tâm tỉnh (kích thước theo tọa độ thế giới). */
+const BADGE_SIZE = 54;
+const BADGE_SIZE_CURRENT = 68;
+const BADGE_SIZE_INFO = 40;
+const BADGE_WRAP_W = 120;
+const SEA_BADGE_SIZE = 46;
+
+/** Trang trí vui trong vùng biển (tọa độ viewBox, phóng to thu nhỏ cùng bản đồ). */
+const SEA_DECORATIONS: { emoji: string; vx: number; vy: number; size: number }[] = [
+  { emoji: "☀️", vx: 105, vy: 85, size: 66 },
+  { emoji: "☁️", vx: 300, vy: 48, size: 44 },
+  { emoji: "☁️", vx: 898, vy: 95, size: 40 },
+  { emoji: "🐙", vx: 878, vy: 430, size: 42 },
+  { emoji: "⛵", vx: 872, vy: 700, size: 48 },
+  { emoji: "🌊", vx: 92, vy: 700, size: 40 },
+  { emoji: "🐳", vx: 922, vy: 1175, size: 52 },
+  { emoji: "🌊", vx: 950, vy: 1305, size: 42 },
+  { emoji: "🦀", vx: 122, vy: 1565, size: 40 },
+  { emoji: "🐠", vx: 168, vy: 1872, size: 42 },
+  { emoji: "⛵", vx: 705, vy: 1905, size: 46 },
+];
 
 /* ------------------------------------------------------------------ */
 /* Kiểu dữ liệu trao đổi với màn cha                                   */
@@ -107,15 +173,28 @@ type ProvinceVisualState = "done" | "current" | "locked" | "available" | "info";
 type ProvinceModel = {
   province: Province;
   index: number;
-  /** Tâm ghim theo tọa độ thế giới. */
+  /** Tâm tỉnh theo tọa độ viewBox (từ PROVINCE_SHAPES). */
+  vbX: number;
+  vbY: number;
+  /** Tâm tỉnh theo tọa độ thế giới. */
   cx: number;
   cy: number;
+  /** Màu tô pastel của tỉnh (luân phiên theo thứ tự hành trình). */
+  color: string;
   state: ProvinceVisualState;
   /** Unit của khóa đang chọn đặt tại tỉnh này (null nếu không có). */
   unit: UnitPack | null;
   unitIndex: number | null;
   doneCount: number;
   totalCount: number;
+};
+
+type SeaModel = {
+  point: SeaPoint;
+  vbX: number;
+  vbY: number;
+  cx: number;
+  cy: number;
 };
 
 type Selection =
@@ -153,25 +232,247 @@ function touchPoints(e: GestureResponderEvent): { x: number; y: number }[] {
 }
 
 /* ------------------------------------------------------------------ */
-/* Một ghim tỉnh trên bản đồ                                           */
+/* Trang trí biển (emoji đặt trong thế giới, zoom cùng bản đồ)         */
 /* ------------------------------------------------------------------ */
 
-const ProvincePin = memo(function ProvincePin({
+const SeaDecorations = memo(function SeaDecorations() {
+  const styles = useStyles();
+  return (
+    <>
+      {SEA_DECORATIONS.map((d, i) => {
+        const fontSize = d.size * SX;
+        return (
+          <Text
+            key={i}
+            pointerEvents="none"
+            style={[
+              styles.decoration,
+              {
+                left: d.vx * SX - fontSize / 2,
+                top: d.vy * SY - fontSize / 2,
+                fontSize,
+              },
+            ]}
+          >
+            {d.emoji}
+          </Text>
+        );
+      })}
+    </>
+  );
+});
+
+/* ------------------------------------------------------------------ */
+/* Lớp SVG: hình tỉnh tô màu + đường hành trình + cụm đảo + tên tỉnh   */
+/* ------------------------------------------------------------------ */
+
+const MapSvgLayer = memo(function MapSvgLayer({
+  models,
+  seaModels,
+  selectedIndex,
+  selectedSeaId,
+  labelLevel,
+  onProvincePress,
+  onSeaPress,
+}: {
+  models: ProvinceModel[];
+  seaModels: SeaModel[];
+  selectedIndex: number | null;
+  selectedSeaId: string | null;
+  /** 0: chỉ tỉnh đang học/đang chọn · 1: ≥0,5 · 2: ≥0,85 (cả tỉnh nhỏ). */
+  labelLevel: 0 | 1 | 2;
+  onProvincePress: (index: number) => void;
+  onSeaPress: (id: string) => void;
+}) {
+  // Đường hành trình: nối tâm các tỉnh CÓ unit của khóa đang chọn,
+  // theo đúng thứ tự unit (điểm dừng 1 → 2 → … → cuối).
+  const journeyD = useMemo(() => {
+    const stops = models
+      .filter((m) => m.unitIndex !== null)
+      .sort((a, b) => (a.unitIndex as number) - (b.unitIndex as number));
+    if (stops.length < 2) return null;
+    return stops
+      .map((m, i) => `${i === 0 ? "M" : "L"}${m.vbX.toFixed(1)} ${m.vbY.toFixed(1)}`)
+      .join(" ");
+  }, [models]);
+
+  const labelVisible = (m: ProvinceModel): boolean => {
+    if (m.state === "current" || m.index === selectedIndex) return true;
+    const need = SMALL_LABEL_IDS.has(m.province.id) ? 2 : 1;
+    return labelLevel >= need;
+  };
+
+  return (
+    <Svg
+      width={WORLD_WIDTH}
+      height={WORLD_HEIGHT}
+      viewBox={`0 0 ${MAP_VIEWBOX.width} ${MAP_VIEWBOX.height}`}
+      preserveAspectRatio="none"
+      pointerEvents="box-none"
+      style={stylesSvg}
+    >
+      {/* Hình các tỉnh: chạm vào chính vùng tỉnh để chọn */}
+      {models.map((m) => {
+        const shape = PROVINCE_SHAPES[m.province.id];
+        if (!shape) return null;
+        const selected = m.index === selectedIndex;
+        return (
+          <React.Fragment key={m.province.id}>
+            <Path
+              d={shape.d}
+              fill={m.color}
+              stroke="#ffffff"
+              strokeWidth={3}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              onPress={() => onProvincePress(m.index)}
+            />
+            {selected ? (
+              <Path
+                d={shape.d}
+                fill="rgba(255,255,255,0.30)"
+                stroke="#ff8c1a"
+                strokeWidth={5}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                pointerEvents="none"
+              />
+            ) : null}
+          </React.Fragment>
+        );
+      })}
+
+      {/* Đường hành trình Bắc → Nam: lớp trắng dưới + chấm tròn hồng cam trên */}
+      {journeyD ? (
+        <>
+          <Path
+            d={journeyD}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={11}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity={0.85}
+            pointerEvents="none"
+          />
+          <Path
+            d={journeyD}
+            fill="none"
+            stroke="#ff7b54"
+            strokeWidth={6}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="0.1 15"
+            pointerEvents="none"
+          />
+        </>
+      ) : null}
+
+      {/* Cụm đảo Hoàng Sa / Trường Sa vẽ ngay trong SVG */}
+      {seaModels.map((s) => {
+        const selected = s.point.id === selectedSeaId;
+        return (
+          <G key={s.point.id} onPress={() => onSeaPress(s.point.id)}>
+            {selected ? (
+              <Ellipse
+                cx={s.vbX}
+                cy={s.vbY}
+                rx={56}
+                ry={38}
+                fill="none"
+                stroke="#ff8c1a"
+                strokeWidth={3.5}
+                pointerEvents="none"
+              />
+            ) : null}
+            <Ellipse cx={s.vbX} cy={s.vbY} rx={30} ry={12} fill="#ffe9a8" stroke="#e8c86a" strokeWidth={2} />
+            <Ellipse cx={s.vbX - 26} cy={s.vbY + 11} rx={16} ry={7} fill="#ffe9a8" stroke="#e8c86a" strokeWidth={2} />
+            <Ellipse cx={s.vbX + 27} cy={s.vbY + 12} rx={14} ry={6} fill="#ffe9a8" stroke="#e8c86a" strokeWidth={2} />
+            <Ellipse cx={s.vbX + 5} cy={s.vbY - 7} rx={13} ry={6} fill="#7ec850" pointerEvents="none" />
+            <SvgText
+              x={s.vbX}
+              y={s.vbY + 54}
+              fontSize={24}
+              fontWeight="800"
+              textAnchor="middle"
+              fill="#ffffff"
+              stroke="#ffffff"
+              strokeWidth={6}
+              pointerEvents="none"
+            >
+              {s.point.name.replace("Quần đảo ", "")}
+            </SvgText>
+            <SvgText
+              x={s.vbX}
+              y={s.vbY + 54}
+              fontSize={24}
+              fontWeight="800"
+              textAnchor="middle"
+              fill="#0c4a6e"
+              pointerEvents="none"
+            >
+              {s.point.name.replace("Quần đảo ", "")}
+            </SvgText>
+          </G>
+        );
+      })}
+
+      {/* Tên tỉnh tại tâm tỉnh (vẽ 2 lớp: viền sáng dưới + chữ đậm trên) */}
+      {models.map((m) =>
+        labelVisible(m) ? (
+          <React.Fragment key={`label-${m.province.id}`}>
+            <SvgText
+              x={m.vbX}
+              y={m.vbY + 47}
+              fontSize={25}
+              fontWeight="800"
+              textAnchor="middle"
+              fill="#ffffff"
+              stroke="#ffffff"
+              strokeWidth={6}
+              pointerEvents="none"
+            >
+              {m.province.name}
+            </SvgText>
+            <SvgText
+              x={m.vbX}
+              y={m.vbY + 47}
+              fontSize={25}
+              fontWeight="800"
+              textAnchor="middle"
+              fill="#0c4a6e"
+              pointerEvents="none"
+            >
+              {m.province.name}
+            </SvgText>
+          </React.Fragment>
+        ) : null
+      )}
+    </Svg>
+  );
+});
+
+const stylesSvg = { position: "absolute" as const, left: 0, top: 0 };
+
+/* ------------------------------------------------------------------ */
+/* Huy hiệu tại tâm tỉnh: số thứ tự unit / 📖 cho tỉnh chỉ xem tin     */
+/* ------------------------------------------------------------------ */
+
+const UnitBadge = memo(function UnitBadge({
   model,
   selected,
-  showLabel,
   reducedMotion,
   onPress,
 }: {
   model: ProvinceModel;
   selected: boolean;
-  showLabel: boolean;
   reducedMotion: boolean;
   onPress: (index: number) => void;
 }) {
   const styles = useStyles();
   const pulse = useRef(new Animated.Value(0)).current;
   const isCurrent = model.state === "current";
+  const isInfo = model.state === "info";
 
   useEffect(() => {
     if (!isCurrent || reducedMotion) {
@@ -191,66 +492,57 @@ const ProvincePin = memo(function ProvincePin({
   const ringScale = pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.22] });
   const ringOpacity = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.85, 0.3] });
 
-  const size = model.state === "info" ? PIN_SIZE_SMALL : PIN_SIZE;
-  const pinEmoji =
-    model.state === "done"
-      ? "⭐"
-      : model.state === "current"
-        ? "📍"
-        : model.state === "locked"
-          ? "🔒"
-          : model.state === "available"
-            ? "🚩"
-            : "📖";
+  const size = isInfo
+    ? BADGE_SIZE_INFO
+    : isCurrent
+      ? BADGE_SIZE_CURRENT
+      : BADGE_SIZE;
 
-  const stateText =
-    model.state === "done"
-      ? `đã học xong ${model.totalCount} bài`
+  const stateText = isInfo
+    ? "chỉ xem thông tin tỉnh"
+    : model.state === "done"
+      ? `điểm dừng số ${(model.unitIndex as number) + 1}, đã học xong ${model.totalCount} bài`
       : model.state === "current"
-        ? "đang học ở đây"
+        ? `điểm dừng số ${(model.unitIndex as number) + 1}, đang học ở đây`
         : model.state === "locked"
-          ? "chưa mở khóa"
-          : model.state === "available"
-            ? `có bài học đang chờ, đã xong ${model.doneCount}/${model.totalCount} bài`
-            : "chỉ xem thông tin tỉnh";
+          ? `điểm dừng số ${(model.unitIndex as number) + 1}, chưa mở khóa`
+          : `điểm dừng số ${(model.unitIndex as number) + 1}, có bài học đang chờ, đã xong ${model.doneCount}/${model.totalCount} bài`;
 
   return (
     <View
       style={[
-        styles.pinWrap,
-        { left: model.cx - PIN_WRAP_W / 2, top: model.cy - size / 2 },
+        styles.badgeWrap,
+        { left: model.cx - BADGE_WRAP_W / 2, top: model.cy - size / 2 },
       ]}
       pointerEvents="box-none"
     >
-      {isCurrent ? (
-        <Animated.View
-          pointerEvents="none"
-          style={[
-            styles.pulseRing,
-            {
-              width: size + 22,
-              height: size + 22,
-              left: (PIN_WRAP_W - (size + 22)) / 2,
-              borderRadius: (size + 22) / 2,
-              transform: [{ scale: ringScale }],
-              opacity: ringOpacity,
-            },
-          ]}
-        />
-      ) : null}
       <Pressable
         onPress={() => onPress(model.index)}
         accessibilityRole="button"
         accessibilityLabel={`Tỉnh ${model.province.name} — ${stateText}`}
         accessibilityState={{ selected }}
-        style={({ pressed }) => [styles.pinPress, pressed && { opacity: 0.85 }]}
+        style={({ pressed }) => [styles.badgePress, pressed && { opacity: 0.85 }]}
       >
-        <View style={styles.pinCenter}>
+        <View style={{ width: size, height: size }}>
           {isCurrent ? (
-            <View
+            <Animated.View
               pointerEvents="none"
-              style={[styles.mascotWrap, { left: (size - 40) / 2 }]}
-            >
+              style={[
+                styles.pulseRing,
+                {
+                  width: size + 22,
+                  height: size + 22,
+                  left: -11,
+                  top: -11,
+                  borderRadius: (size + 22) / 2,
+                  transform: [{ scale: ringScale }],
+                  opacity: ringOpacity,
+                },
+              ]}
+            />
+          ) : null}
+          {isCurrent ? (
+            <View pointerEvents="none" style={[styles.mascotWrap, { left: (size - 44) / 2 }]}>
               <Image
                 source={require("@/assets/images/mascot-avatar.png")}
                 style={styles.mascot}
@@ -261,86 +553,89 @@ const ProvincePin = memo(function ProvincePin({
           ) : null}
           <View
             style={[
-              styles.pin,
+              styles.badge,
               { width: size, height: size, borderRadius: size / 2 },
-              model.state === "done" && styles.pinDone,
-              model.state === "current" && styles.pinCurrent,
-              model.state === "locked" && styles.pinLocked,
-              model.state === "available" && styles.pinAvailable,
-              model.state === "info" && styles.pinInfo,
-              selected && styles.pinSelected,
+              model.state === "done" && styles.badgeDone,
+              model.state === "current" && styles.badgeCurrent,
+              model.state === "locked" && styles.badgeLocked,
+              model.state === "available" && styles.badgeAvailable,
+              isInfo && styles.badgeInfo,
+              selected && styles.badgeSelected,
             ]}
           >
-            <Text style={{ fontSize: size * 0.48 }}>{pinEmoji}</Text>
+            {isInfo ? (
+              <Text style={{ fontSize: size * 0.5 }}>📖</Text>
+            ) : (
+              <Text
+                style={[
+                  styles.badgeNumber,
+                  { fontSize: size * 0.42 },
+                  model.state === "locked" && styles.badgeNumberLocked,
+                ]}
+                maxFontSizeMultiplier={1.1}
+              >
+                {(model.unitIndex as number) + 1}
+              </Text>
+            )}
           </View>
+          {model.state === "done" ? (
+            <View style={styles.cornerBadge} pointerEvents="none">
+              <Text style={styles.cornerBadgeText}>⭐</Text>
+            </View>
+          ) : model.state === "locked" ? (
+            <View style={styles.cornerBadge} pointerEvents="none">
+              <Text style={styles.cornerBadgeText}>🔒</Text>
+            </View>
+          ) : null}
         </View>
-        {showLabel ? (
-          <View style={[styles.labelPill, selected && styles.labelPillSelected]}>
-            <Text style={styles.provinceName} numberOfLines={1} maxFontSizeMultiplier={1.2}>
-              {model.province.name}
-            </Text>
-          </View>
-        ) : null}
       </Pressable>
     </View>
   );
 });
 
 /* ------------------------------------------------------------------ */
-/* Ghim điểm biển (Hoàng Sa / Trường Sa)                               */
+/* Huy hiệu cờ tại cụm đảo Hoàng Sa / Trường Sa                        */
 /* ------------------------------------------------------------------ */
 
-const SeaPin = memo(function SeaPin({
-  point,
-  cx,
-  cy,
+const SeaBadge = memo(function SeaBadge({
+  model,
   selected,
-  showLabel,
   onPress,
 }: {
-  point: SeaPoint;
-  cx: number;
-  cy: number;
+  model: SeaModel;
   selected: boolean;
-  showLabel: boolean;
   onPress: (id: string) => void;
 }) {
   const styles = useStyles();
-  const size = 36;
   return (
     <View
       style={[
-        styles.pinWrap,
-        { left: cx - PIN_WRAP_W / 2, top: cy - size / 2 },
+        styles.badgeWrap,
+        { left: model.cx - BADGE_WRAP_W / 2, top: model.cy - SEA_BADGE_SIZE / 2 },
       ]}
       pointerEvents="box-none"
     >
       <Pressable
-        onPress={() => onPress(point.id)}
+        onPress={() => onPress(model.point.id)}
         accessibilityRole="button"
-        accessibilityLabel={`${point.name} — điểm biển đảo quê hương, chạm để xem thông tin`}
+        accessibilityLabel={`${model.point.name} — điểm biển đảo quê hương, chạm để xem thông tin`}
         accessibilityState={{ selected }}
-        style={({ pressed }) => [styles.pinPress, pressed && { opacity: 0.85 }]}
+        style={({ pressed }) => [styles.badgePress, pressed && { opacity: 0.85 }]}
       >
-        <View style={styles.pinCenter}>
-          <View
-            style={[
-              styles.pin,
-              styles.pinSea,
-              { width: size, height: size, borderRadius: size / 2 },
-              selected && styles.pinSelected,
-            ]}
-          >
-            <Text style={{ fontSize: size * 0.5 }}>🇻🇳</Text>
-          </View>
+        <View
+          style={[
+            styles.badge,
+            styles.badgeSea,
+            {
+              width: SEA_BADGE_SIZE,
+              height: SEA_BADGE_SIZE,
+              borderRadius: SEA_BADGE_SIZE / 2,
+            },
+            selected && styles.badgeSelected,
+          ]}
+        >
+          <Text style={{ fontSize: SEA_BADGE_SIZE * 0.48 }}>🇻🇳</Text>
         </View>
-        {showLabel ? (
-          <View style={[styles.labelPill, selected && styles.labelPillSelected]}>
-            <Text style={styles.provinceName} numberOfLines={1} maxFontSizeMultiplier={1.2}>
-              {point.name.replace("Quần đảo ", "")}
-            </Text>
-          </View>
-        ) : null}
       </Pressable>
     </View>
   );
@@ -638,7 +933,7 @@ function SeaDetailPanel({
 }
 
 /* ------------------------------------------------------------------ */
-/* Bản đồ Việt Nam                                                     */
+/* Bản đồ Việt Nam thật theo ranh giới tỉnh                            */
 /* ------------------------------------------------------------------ */
 
 export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function WorldMap(
@@ -664,7 +959,7 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     [courses, activeCourseId]
   );
 
-  /* ----- Mô hình ghim tỉnh theo khóa đang chọn ----- */
+  /* ----- Mô hình tỉnh theo khóa đang chọn (vị trí từ PROVINCE_SHAPES) ----- */
   const models = useMemo<ProvinceModel[]>(() => {
     if (!activeCourse) return [];
     const unitCount = activeCourse.units.length;
@@ -689,11 +984,17 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
             : locked
               ? "locked"
               : "available";
+      const shape = PROVINCE_SHAPES[province.id];
+      const vbX = shape ? shape.cx : province.x * MAP_VIEWBOX.width;
+      const vbY = shape ? shape.cy : province.y * MAP_VIEWBOX.height;
       return {
         province,
         index,
-        cx: province.x * WORLD_WIDTH,
-        cy: province.y * WORLD_HEIGHT,
+        vbX,
+        vbY,
+        cx: vbX * SX,
+        cy: vbY * SY,
+        color: PROVINCE_COLORS[index % PROVINCE_COLORS.length],
         state,
         unit,
         unitIndex,
@@ -702,6 +1003,19 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
       };
     });
   }, [activeCourse, unlockedAll]);
+
+  const modelsRef = useRef(models);
+  modelsRef.current = models;
+
+  /* ----- Mô hình 2 cụm đảo biển (vị trí cố định trong SVG) ----- */
+  const seaModels = useMemo<SeaModel[]>(
+    () =>
+      SEA_POINTS.map((point) => {
+        const vb = SEA_CLUSTER_VB[point.id] ?? { x: 835, y: 985 };
+        return { point, vbX: vb.x, vbY: vb.y, cx: vb.x * SX, cy: vb.y * SY };
+      }),
+    []
+  );
 
   const currentModel = models.find((m) => m.state === "current") ?? null;
 
@@ -751,15 +1065,11 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
   };
 
   const flyToProvince = (journeyIndex: number, select: boolean) => {
-    const province = PROVINCES[journeyIndex];
-    if (!province) return;
+    const model = modelsRef.current[journeyIndex];
+    if (!model) return;
     if (select) setSelection({ kind: "province", index: journeyIndex });
     const targetScale = Math.max(cameraRef.current.scale, 0.95);
-    centerOnWorldPoint(
-      province.x * WORLD_WIDTH,
-      province.y * WORLD_HEIGHT,
-      targetScale
-    );
+    centerOnWorldPoint(model.cx, model.cy, targetScale);
   };
 
   const zoomBy = (factor: number) => {
@@ -781,13 +1091,8 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
       flyToProvince(journeyIndex, true);
     },
     centerOnRegion: (region: ProvinceRegion) => {
-      const inRegion = PROVINCES.filter((p) => p.region === region);
-      if (inRegion.length === 0) return;
-      const cx =
-        (inRegion.reduce((a, p) => a + p.x, 0) / inRegion.length) * WORLD_WIDTH;
-      const cy =
-        (inRegion.reduce((a, p) => a + p.y, 0) / inRegion.length) * WORLD_HEIGHT;
-      centerOnWorldPoint(cx, cy, REGION_SCALE[region]);
+      const anchor = REGION_ANCHOR_VB[region];
+      centerOnWorldPoint(anchor.x * SX, anchor.y * SY, REGION_SCALE[region]);
     },
     zoomIn: () => zoomBy(1.3),
     zoomOut: () => zoomBy(1 / 1.3),
@@ -796,12 +1101,14 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     },
   }));
 
-  /* Mở app lần đầu: đặt camera ngay (không hoạt họa) vào tỉnh đang học. */
+  /* Mở app lần đầu: đặt camera ngay (không hoạt họa) vào tỉnh đang học,
+     với scale vừa ít nhất bằng mức vừa chiều ngang khung nhìn. */
   useEffect(() => {
     if (initializedRef.current || viewport.w <= 0 || viewport.h <= 0) return;
     initializedRef.current = true;
+    const fitScale = viewport.w / WORLD_WIDTH;
+    const scale = clampScale(Math.max(0.55, fitScale));
     if (currentModel) {
-      const scale = 0.9;
       setCamera(
         clampCamera(
           {
@@ -814,7 +1121,7 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
         )
       );
     } else {
-      setCamera((c) => clampCamera(c, viewport.w, viewport.h));
+      setCamera((c) => clampCamera({ ...c, scale }, viewport.w, viewport.h));
     }
     // Chỉ khởi tạo một lần khi khung nhìn đã đo xong.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -846,7 +1153,7 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
   const panResponder = useMemo(
     () =>
       PanResponder.create({
-        // Không nhận ngay khi chạm xuống → cú CHẠM vẫn tới được ghim bên dưới.
+        // Không nhận ngay khi chạm xuống → cú CHẠM vẫn tới được tỉnh/huy hiệu bên dưới.
         onStartShouldSetPanResponder: () => false,
         onMoveShouldSetPanResponder: (e, g) => {
           const pts = touchPoints(e);
@@ -904,7 +1211,19 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     []
   );
 
-  const showLabels = camera.scale >= LABEL_MIN_SCALE;
+  const handleProvincePress = useCallback((index: number) => {
+    setSelection({ kind: "province", index });
+  }, []);
+  const handleSeaPress = useCallback((id: string) => {
+    setSelection({ kind: "sea", id });
+  }, []);
+
+  const labelLevel: 0 | 1 | 2 =
+    camera.scale >= SMALL_LABEL_MIN_SCALE
+      ? 2
+      : camera.scale >= LABEL_MIN_SCALE
+        ? 1
+        : 0;
 
   return (
     <View style={styles.root}>
@@ -930,47 +1249,44 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
             },
           ]}
         >
-          {/* Ảnh nền bản đồ Việt Nam phủ kín thế giới */}
-          <Image
-            source={require("@/assets/images/vietnam-map-bg.jpg")}
-            style={styles.bgImage}
-            contentFit="fill"
-            accessibilityLabel="Bản đồ Việt Nam"
-          />
-          {/* Chạm vào vùng trống → đóng bảng chi tiết */}
+          {/* Nền biển xanh nhạt phủ toàn thế giới */}
+          <View style={styles.seaBg} pointerEvents="none" />
+          <SeaDecorations />
+          {/* Chạm vào vùng biển trống → đóng bảng chi tiết */}
           <Pressable
             style={styles.seaTouch}
             onPress={() => setSelection(null)}
             accessibilityRole="button"
-            accessibilityLabel="Vùng trống trên bản đồ — chạm để đóng bảng chi tiết"
+            accessibilityLabel="Vùng biển trống trên bản đồ — chạm để đóng bảng chi tiết"
           />
+          {/* Lớp SVG: hình tỉnh + đường hành trình + cụm đảo + tên tỉnh */}
+          <MapSvgLayer
+            models={models}
+            seaModels={seaModels}
+            selectedIndex={selection?.kind === "province" ? selection.index : null}
+            selectedSeaId={selection?.kind === "sea" ? selection.id : null}
+            labelLevel={labelLevel}
+            onProvincePress={handleProvincePress}
+            onSeaPress={handleSeaPress}
+          />
+          {/* Huy hiệu số thứ tự / thông tin tại tâm tỉnh */}
           {models.map((model) => (
-            <ProvincePin
+            <UnitBadge
               key={model.province.id}
               model={model}
               selected={
                 selection?.kind === "province" && selection.index === model.index
               }
-              showLabel={
-                showLabels ||
-                model.state === "current" ||
-                (selection?.kind === "province" && selection.index === model.index)
-              }
               reducedMotion={reducedMotion}
-              onPress={(index) => setSelection({ kind: "province", index })}
+              onPress={handleProvincePress}
             />
           ))}
-          {SEA_POINTS.map((point) => (
-            <SeaPin
-              key={point.id}
-              point={point}
-              cx={point.x * WORLD_WIDTH}
-              cy={point.y * WORLD_HEIGHT}
-              selected={selection?.kind === "sea" && selection.id === point.id}
-              showLabel={
-                showLabels || (selection?.kind === "sea" && selection.id === point.id)
-              }
-              onPress={(id) => setSelection({ kind: "sea", id })}
+          {seaModels.map((s) => (
+            <SeaBadge
+              key={s.point.id}
+              model={s}
+              selected={selection?.kind === "sea" && selection.id === s.point.id}
+              onPress={handleSeaPress}
             />
           ))}
         </View>
@@ -997,7 +1313,7 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
     root: { flex: 1 },
-    viewport: { flex: 1, overflow: "hidden", backgroundColor: "#1d6f9f" },
+    viewport: { flex: 1, overflow: "hidden", backgroundColor: SEA_COLOR },
     world: {
       position: "absolute",
       left: 0,
@@ -1006,37 +1322,60 @@ const useStyles = makeThemedStyles((colors) =>
       height: WORLD_HEIGHT,
       transformOrigin: "0 0",
     },
-    bgImage: { position: "absolute", left: 0, top: 0, right: 0, bottom: 0 },
+    seaBg: {
+      position: "absolute",
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: SEA_COLOR,
+    },
+    decoration: { position: "absolute", opacity: 0.9 },
     seaTouch: { position: "absolute", left: 0, top: 0, right: 0, bottom: 0 },
-    pinWrap: { position: "absolute", width: PIN_WRAP_W },
-    pinPress: { alignItems: "center" },
-    pinCenter: { alignItems: "center", justifyContent: "center" },
+    badgeWrap: { position: "absolute", width: BADGE_WRAP_W },
+    badgePress: { alignItems: "center", padding: 6 },
     pulseRing: {
       position: "absolute",
-      top: -11,
       borderWidth: 5,
       borderColor: "#fbbf24",
       backgroundColor: "rgba(251, 191, 36, 0.18)",
     },
-    pin: {
+    badge: {
       alignItems: "center",
       justifyContent: "center",
-      borderWidth: 3,
-      borderColor: "rgba(255,255,255,0.92)",
+      borderWidth: 3.5,
+      borderColor: "rgba(255,255,255,0.95)",
       ...shadow.chunky,
     },
-    pinDone: { backgroundColor: "#58a700" },
-    pinCurrent: { backgroundColor: "#f59e0b" },
-    pinLocked: { backgroundColor: "#b8c4cc", opacity: 0.9 },
-    pinAvailable: { backgroundColor: "#38bdf8" },
-    pinInfo: { backgroundColor: "rgba(255,255,255,0.82)" },
-    pinSea: { backgroundColor: "#0ea5e9" },
-    pinSelected: { borderColor: "#fbbf24", borderWidth: 4 },
+    badgeDone: { backgroundColor: "#58a700" },
+    badgeCurrent: { backgroundColor: "#f59e0b" },
+    badgeLocked: { backgroundColor: "#c3ced4" },
+    badgeAvailable: { backgroundColor: "#38bdf8" },
+    badgeInfo: { backgroundColor: "rgba(255,255,255,0.9)" },
+    badgeSea: { backgroundColor: "#0ea5e9" },
+    badgeSelected: { borderColor: "#ff8c1a", borderWidth: 4.5 },
+    badgeNumber: { fontWeight: "900", color: colors.white },
+    badgeNumberLocked: { color: "#64748b" },
+    cornerBadge: {
+      position: "absolute",
+      top: -7,
+      right: -9,
+      width: 24,
+      height: 24,
+      borderRadius: radius.full,
+      backgroundColor: colors.white,
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: 1.5,
+      borderColor: colors.neutral200,
+      zIndex: 4,
+    },
+    cornerBadgeText: { fontSize: 12 },
     mascotWrap: {
       position: "absolute",
-      top: -30,
-      width: 40,
-      height: 40,
+      top: -36,
+      width: 44,
+      height: 44,
       borderRadius: radius.full,
       borderWidth: 2.5,
       borderColor: colors.white,
@@ -1046,18 +1385,6 @@ const useStyles = makeThemedStyles((colors) =>
       ...shadow.chunky,
     },
     mascot: { width: "100%", height: "100%" },
-    labelPill: {
-      marginTop: 4,
-      backgroundColor: "rgba(255,255,255,0.92)",
-      borderWidth: 1.5,
-      borderColor: "rgba(13, 71, 110, 0.35)",
-      borderRadius: radius.md,
-      paddingHorizontal: 7,
-      paddingVertical: 2,
-      alignItems: "center",
-    },
-    labelPillSelected: { borderColor: "#fbbf24", backgroundColor: "#fffbeb" },
-    provinceName: { fontSize: 15, fontWeight: "900", color: colors.neutral700 },
     detailPanel: {
       position: "absolute",
       left: 0,
