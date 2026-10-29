@@ -3,15 +3,24 @@
  *  - src/components/world-map.tsx: vẽ bằng react-native-svg từ
  *    src/lib/province-shapes.ts (PROVINCE_SHAPES — 34 tỉnh có đường
  *    SVG + điểm đại diện cx/cy trong MAP_VIEWBOX 1000×1977), thế giới
- *    1250×2471 đúng tỉ lệ viewBox, tỉnh tô màu kẹo pastel luân phiên,
+ *    1600×3163 đúng tỉ lệ viewBox, tỉnh tô màu kẹo pastel luân phiên,
  *    chạm vào chính Path của tỉnh để chọn; đường hành trình chấm tròn
  *    nối các tỉnh có unit theo thứ tự unit; huy hiệu tròn đánh số
  *    1..N tại tâm tỉnh; Hoàng Sa / Trường Sa là cụm đảo vẽ trong SVG;
  *    KHÔNG còn nền ảnh vietnam-map-bg / ghim theo x/y cũ. Giữ nguyên:
- *    PanResponder kéo + chụm, kẹp scale 0.35–1.8, ref centerOnUnit /
- *    centerOnProvince / centerOnRegion / zoomIn / zoomOut /
- *    centerOnCurrent, bảng chi tiết tỉnh (Giới thiệu / Lịch sử / Đặc
- *    sản + chip bài học nối MissionPanel) theo provinces.ts.
+ *    PanResponder kéo + chụm, ref centerOnUnit / centerOnProvince /
+ *    centerOnRegion / zoomIn / zoomOut / centerOnCurrent, bảng chi
+ *    tiết tỉnh (Giới thiệu / Lịch sử / Đặc sản + chip bài học nối
+ *    MissionPanel) theo provinces.ts.
+ *  - Thang zoom ĐỘNG theo khung nhìn (scaleLimits): fitScale thấy
+ *    toàn quốc, coverScale phủ kín khung, min = fitScale × 0,95,
+ *    max = max(1,8, coverScale × 2,2); mở app: khung ngang ở
+ *    coverScale × 1,15, khung dọc vừa theo bề ngang.
+ *  - WEB: viewport khóa touchAction/userSelect "none"; listener wheel
+ *    (passive: false, luôn preventDefault, zoom quanh con trỏ, hỗ
+ *    trợ ctrlKey) + kéo bằng chuột (mousedown/mousemove/mouseup);
+ *    cơ chế "vết kéo" (lastDragEndAt/lastDragDist, ≤300ms) để cú
+ *    chạm sau khi kéo không chọn nhầm tỉnh.
  *  - Dữ liệu hình tỉnh (runtime): đủ 34 mục, mọi id tỉnh trong
  *    provinces.ts đều có hình, cx/cy nằm trong viewBox, d bắt đầu "M".
  *  - src/app/(tabs)/index.tsx: dùng WorldMap, 2 thanh nút hai bên
@@ -50,9 +59,18 @@ const map = read(mapPath);
 check("dùng PanResponder cho cử chỉ kéo/chụm", map.includes("PanResponder.create"));
 check("có ngưỡng ~8px để cú chạm vẫn tới được tỉnh/huy hiệu", map.includes("> 8"));
 check("có logic chụm 2 ngón (touches/pinches)", map.includes("touchPoints") && map.includes("pinchDist"));
-check("kẹp scale tối thiểu 0.35", map.includes("MIN_SCALE = 0.35"));
-check("kẹp scale tối đa 1.8", map.includes("MAX_SCALE = 1.8"));
-check("thế giới 1250×2471 đúng tỉ lệ MAP_VIEWBOX", map.includes("WORLD_WIDTH = 1250") && map.includes("WORLD_HEIGHT = 2471"));
+check("thang zoom động scaleLimits theo khung nhìn", map.includes("scaleLimits") && map.includes("fitScale") && map.includes("coverScale"));
+check("zoom tối thiểu = fitScale × 0,95 (thu về thấy toàn quốc)", map.includes("fitScale * 0.95"));
+check("zoom tối đa = max(1,8, coverScale × 2,2)", map.includes("MAX_SCALE = 1.8") && map.includes("coverScale * 2.2"));
+check("mở app khung ngang ở coverScale × 1,15, căn tỉnh đang học", map.includes("coverScale * 1.15"));
+check("thế giới 1600×3163 đúng tỉ lệ MAP_VIEWBOX", map.includes("WORLD_WIDTH = 1600") && map.includes("WORLD_HEIGHT = 3163"));
+check("viewport khóa touchAction none (web)", map.includes('touchAction: "none"') && map.includes("WEB_VIEWPORT_LOCK"));
+check("viewport khóa userSelect none (web)", map.includes('userSelect: "none"'));
+check("có wheel handler chặn zoom trang (preventDefault + passive false)", map.includes('"wheel"') && map.includes("preventDefault") && map.includes("passive: false"));
+check("wheel hỗ trợ ctrlKey (chụm trackpad)", map.includes("ctrlKey"));
+check("có kéo bằng chuột (mousedown/mousemove/mouseup)", map.includes('"mousedown"') && map.includes('"mousemove"') && map.includes('"mouseup"'));
+check("cơ chế bỏ qua chạm sau kéo (lastDragEndAt/lastDragDist)", map.includes("lastDragEndAt") && map.includes("lastDragDist") && map.includes("wasRecentDrag"));
+check("handler chạm tỉnh kiểm tra vết kéo trước khi chọn", map.includes("if (wasRecentDrag()) return"));
 check("dùng react-native-svg (Svg + Path)", map.includes('from "react-native-svg"') && map.includes("<Svg") && map.includes("<Path"));
 check("package.json đã cài react-native-svg", read("package.json").includes('"react-native-svg"'));
 check("hình tỉnh lấy từ lib/province-shapes (PROVINCE_SHAPES + MAP_VIEWBOX)", map.includes("PROVINCE_SHAPES") && map.includes("MAP_VIEWBOX") && map.includes('from "@/lib/province-shapes"'));
