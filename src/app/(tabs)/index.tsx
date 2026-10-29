@@ -364,6 +364,7 @@ export default function LearnScreen() {
               companions={companions}
               onKingdomPress={handleKingdomPress}
               onOpenRewards={() => router.push("/rewards")}
+              onOpenCompetitions={() => router.push("/competitions")}
             />
 
             {suggestedRef ? (
