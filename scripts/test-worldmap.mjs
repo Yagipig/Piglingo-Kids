@@ -1,21 +1,29 @@
 /**
- * Test tĩnh cho BẢN ĐỒ VIỆT NAM 34 TỈNH/THÀNH ở trang chủ:
- *  - src/components/world-map.tsx: nền ảnh vietnam-map-bg phủ kín thế
- *    giới 2200×1279, ghim tỉnh từ src/lib/provinces.ts (KHÔNG còn
- *    lands.ts / tranh đảo island-map), PanResponder kéo + chụm, kẹp
- *    scale 0.35–1.8, ref centerOnUnit / centerOnProvince /
- *    centerOnRegion / zoomIn / zoomOut / centerOnCurrent, bảng chi
- *    tiết tỉnh có Giới thiệu / Lịch sử / Đặc sản + chip bài học nối
- *    MissionPanel, điểm biển Hoàng Sa / Trường Sa chỉ xem thông tin.
- *  - src/app/(tabs)/index.tsx: dùng WorldMap, KHÔNG còn hàng chip
- *    vương quốc trên đầu / nút khối lớp cũ; có 2 THANH NÚT HAI BÊN —
- *    trái: 3 ngôn ngữ (KINGDOMS) + 3 miền (centerOnRegion); phải:
- *    zoomIn / zoomOut / centerOnCurrent + Nhiệm vụ (panel chứa
- *    GardenDashboard) / Thành tích / Phần thưởng / Cuộc thi — và vẫn
- *    giữ MissionPanel + nút Tiếp tục học bay camera (centerOnUnit).
+ * Test tĩnh cho BẢN ĐỒ VIỆT NAM THẬT (ranh giới tỉnh) ở trang chủ:
+ *  - src/components/world-map.tsx: vẽ bằng react-native-svg từ
+ *    src/lib/province-shapes.ts (PROVINCE_SHAPES — 34 tỉnh có đường
+ *    SVG + điểm đại diện cx/cy trong MAP_VIEWBOX 1000×1977), thế giới
+ *    1250×2471 đúng tỉ lệ viewBox, tỉnh tô màu kẹo pastel luân phiên,
+ *    chạm vào chính Path của tỉnh để chọn; đường hành trình chấm tròn
+ *    nối các tỉnh có unit theo thứ tự unit; huy hiệu tròn đánh số
+ *    1..N tại tâm tỉnh; Hoàng Sa / Trường Sa là cụm đảo vẽ trong SVG;
+ *    KHÔNG còn nền ảnh vietnam-map-bg / ghim theo x/y cũ. Giữ nguyên:
+ *    PanResponder kéo + chụm, kẹp scale 0.35–1.8, ref centerOnUnit /
+ *    centerOnProvince / centerOnRegion / zoomIn / zoomOut /
+ *    centerOnCurrent, bảng chi tiết tỉnh (Giới thiệu / Lịch sử / Đặc
+ *    sản + chip bài học nối MissionPanel) theo provinces.ts.
+ *  - Dữ liệu hình tỉnh (runtime): đủ 34 mục, mọi id tỉnh trong
+ *    provinces.ts đều có hình, cx/cy nằm trong viewBox, d bắt đầu "M".
+ *  - src/app/(tabs)/index.tsx: dùng WorldMap, 2 thanh nút hai bên
+ *    (trái: ngôn ngữ KINGDOMS + miền centerOnRegion; phải: zoomIn /
+ *    zoomOut / centerOnCurrent + Nhiệm vụ / Thành tích / Phần thưởng /
+ *    Cuộc thi), giữ MissionPanel + nút Tiếp tục học (centerOnUnit).
  * Chạy: node scripts/test-worldmap.mjs
  */
-import { readFileSync, existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { readFileSync, existsSync, mkdtempSync } from "node:fs";
+import { createRequire } from "node:module";
+import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -40,25 +48,38 @@ check("world-map.tsx tồn tại", existsSync(join(root, mapPath)));
 const map = read(mapPath);
 
 check("dùng PanResponder cho cử chỉ kéo/chụm", map.includes("PanResponder.create"));
-check("có ngưỡng ~8px để cú chạm vẫn tới được ghim", map.includes("> 8"));
+check("có ngưỡng ~8px để cú chạm vẫn tới được tỉnh/huy hiệu", map.includes("> 8"));
 check("có logic chụm 2 ngón (touches/pinches)", map.includes("touchPoints") && map.includes("pinchDist"));
 check("kẹp scale tối thiểu 0.35", map.includes("MIN_SCALE = 0.35"));
 check("kẹp scale tối đa 1.8", map.includes("MAX_SCALE = 1.8"));
-check("thế giới đúng tỉ lệ ảnh nền 2200×1279", map.includes("WORLD_WIDTH = 2200") && map.includes("WORLD_HEIGHT = 1279"));
-check("nền là ảnh vietnam-map-bg phủ kín", map.includes("vietnam-map-bg.jpg") && map.includes('contentFit="fill"'));
-check("ghim tỉnh lấy từ lib/provinces (PROVINCES + SEA_POINTS)", map.includes("PROVINCES") && map.includes("SEA_POINTS") && map.includes('from "@/lib/provinces"'));
+check("thế giới 1250×2471 đúng tỉ lệ MAP_VIEWBOX", map.includes("WORLD_WIDTH = 1250") && map.includes("WORLD_HEIGHT = 2471"));
+check("dùng react-native-svg (Svg + Path)", map.includes('from "react-native-svg"') && map.includes("<Svg") && map.includes("<Path"));
+check("package.json đã cài react-native-svg", read("package.json").includes('"react-native-svg"'));
+check("hình tỉnh lấy từ lib/province-shapes (PROVINCE_SHAPES + MAP_VIEWBOX)", map.includes("PROVINCE_SHAPES") && map.includes("MAP_VIEWBOX") && map.includes('from "@/lib/province-shapes"'));
+check("vị trí tỉnh lấy từ PROVINCE_SHAPES[cx/cy], không dùng x/y cũ", map.includes("PROVINCE_SHAPES[province.id]") && map.includes("shape.cx"));
+check("KHÔNG còn nền ảnh vietnam-map-bg trong world-map", !map.includes("vietnam-map-bg"));
 check("KHÔNG còn dùng lands.ts / landForUnit", !map.includes("landForUnit") && !map.includes("lib/lands"));
 check("KHÔNG còn tranh đảo island-map-a..d", !map.includes("island-map-"));
 check("KHÔNG còn vùng/tint/nhãn chặng theo khối lớp", !map.includes("ZONE_DEFS") && !map.includes("centerOnBand"));
+check("tỉnh tô màu pastel luân phiên (PROVINCE_COLORS)", map.includes("PROVINCE_COLORS") && map.includes("#ffadad") && map.includes("#caffbf") && map.includes("#ffc6ff") && map.includes("index % PROVINCE_COLORS.length"));
+check("tỉnh đang chọn có stroke cam đậm + lớp sáng phủ", map.includes('stroke="#ff8c1a"') && map.includes("strokeWidth={5}"));
+check("đường hành trình chấm tròn (strokeDasharray + linecap round)", map.includes("strokeDasharray") && map.includes('strokeLinecap="round"') && map.includes("journeyD"));
+check("đường hành trình có lớp trắng lót dưới", map.includes('stroke="#ffffff"') && map.includes("strokeWidth={11}"));
+check("đường hành trình nối theo thứ tự unitIndex tăng dần", map.includes("unitIndex as number) - (b.unitIndex as number)") || (map.includes("sort(") && map.includes("unitIndex")));
+check("huy hiệu tròn đánh số thứ tự unit tại tâm tỉnh", map.includes("(model.unitIndex as number) + 1") && map.includes("UnitBadge"));
+check("huy hiệu xong = xanh lá + ⭐, khóa có 🔒", map.includes("badgeDone") && map.includes("⭐") && map.includes("🔒"));
+check("tỉnh không có unit ở khóa này có huy hiệu 📖", map.includes("📖") && map.includes("BADGE_SIZE_INFO"));
+check("Hoàng Sa / Trường Sa là cụm đảo Ellipse trong SVG", map.includes("SEA_CLUSTER_VB") && map.includes("<Ellipse") && map.includes('"hoang-sa"') && map.includes('"truong-sa"'));
+check("nền biển xanh nhạt + trang trí vui trong vùng biển", map.includes('SEA_COLOR = "#a8dffd"') && map.includes("SEA_DECORATIONS") && map.includes("🐳") && map.includes("⛵"));
+check("tên tỉnh hiện khi zoom ≥ 0,5; tỉnh nhỏ ≥ 0,85", map.includes("LABEL_MIN_SCALE = 0.5") && map.includes("SMALL_LABEL_MIN_SCALE = 0.85") && map.includes("SMALL_LABEL_IDS") && map.includes('"ha-noi"') && map.includes('"bac-ninh"') && map.includes('"hung-yen"') && map.includes('"hai-phong"'));
 check("expose centerOnUnit qua useImperativeHandle", map.includes("useImperativeHandle") && map.includes("centerOnUnit"));
 check("expose centerOnProvince qua ref", map.includes("centerOnProvince"));
-check("expose centerOnRegion qua ref", map.includes("centerOnRegion"));
+check("expose centerOnRegion qua ref (điểm neo viewBox)", map.includes("centerOnRegion") && map.includes("REGION_ANCHOR_VB"));
 check("expose zoomIn / zoomOut qua ref", map.includes("zoomIn") && map.includes("zoomOut"));
 check("expose centerOnCurrent qua ref", map.includes("centerOnCurrent"));
 check("bay camera bằng requestAnimationFrame", map.includes("requestAnimationFrame(step)"));
 check("tôn trọng use-reduced-motion khi bay camera", map.includes("useReducedMotion") && map.includes("reducedMotion"));
 check("mascot heo đứng trên tỉnh đang học", map.includes("mascot-avatar"));
-check("tên tỉnh chỉ hiện khi zoom ≥ 0.75 (LABEL_MIN_SCALE)", map.includes("LABEL_MIN_SCALE = 0.75"));
 check("bảng tỉnh có mục Giới thiệu", map.includes("Giới thiệu"));
 check("bảng tỉnh có mục Lịch sử", map.includes("Lịch sử"));
 check("bảng tỉnh có mục Đặc sản dạng chip", map.includes("Đặc sản") && map.includes("specialtyChip"));
@@ -66,9 +87,53 @@ check("bảng tỉnh có dòng hợp nhất mergedFrom", map.includes("mergedFro
 check("bảng tỉnh có chip bài học nối onMissionPress", map.includes("onMissionPress(ref, course.courseId)"));
 check("chip gợi ý ngôn ngữ khác gọi onSelectCourse", map.includes("onSelectCourse(c.courseId)"));
 check("điểm biển Hoàng Sa / Trường Sa có bảng thông tin riêng", map.includes("SeaDetailPanel") && map.includes("Biển đảo quê hương"));
+check("thông tin tỉnh vẫn lấy từ lib/provinces (PROVINCES + SEA_POINTS)", map.includes("PROVINCES") && map.includes("SEA_POINTS") && map.includes('from "@/lib/provinces"'));
 check("ánh xạ unit ↔ tỉnh qua provinces helpers", map.includes("provinceIndexForUnit") && map.includes("unitIndexForProvince"));
-check("vị trí ghim tất định theo tọa độ tỉnh (không gọi Math.random)", !map.includes("Math.random("));
-check("không import thư viện ngoài React Native core/expo-image", !/from "(?!react|react-native|expo-image|@\/)/.test(map));
+check("vị trí tỉnh tất định (không gọi Math.random)", !map.includes("Math.random("));
+check("không import thư viện ngoài RN core/expo-image/react-native-svg", !/from "(?!react|react-native|react-native-svg|expo-image|@\/)/.test(map));
+
+// --- province-shapes.ts (runtime): biên dịch rồi nạp như test-provinces ---
+const outDir = mkdtempSync(join(tmpdir(), "piglingo-shapes-test-"));
+const tscBin = join(root, "node_modules", ".bin", "tsc");
+execFileSync(
+  tscBin,
+  [
+    "--ignoreConfig",
+    "src/lib/province-shapes.ts",
+    "src/lib/provinces.ts",
+    "--module",
+    "commonjs",
+    "--target",
+    "ES2022",
+    "--moduleResolution",
+    "node",
+    "--ignoreDeprecations",
+    "6.0",
+    "--esModuleInterop",
+    "--skipLibCheck",
+    "--outDir",
+    outDir,
+  ],
+  { cwd: root, stdio: "inherit" },
+);
+const require = createRequire(import.meta.url);
+const { MAP_VIEWBOX, PROVINCE_SHAPES } = require(join(outDir, "province-shapes.js"));
+const { PROVINCES } = require(join(outDir, "provinces.js"));
+
+check("MAP_VIEWBOX = 1000×1977", MAP_VIEWBOX.width === 1000 && MAP_VIEWBOX.height === 1977);
+check("PROVINCE_SHAPES đủ 34 tỉnh", Object.keys(PROVINCE_SHAPES).length === 34,
+  `count=${Object.keys(PROVINCE_SHAPES).length}`);
+check("mọi tỉnh trong provinces.ts đều có hình",
+  PROVINCES.every((p) => PROVINCE_SHAPES[p.id] !== undefined),
+  PROVINCES.filter((p) => !PROVINCE_SHAPES[p.id]).map((p) => p.id).join(","));
+check("mọi hình có d bắt đầu bằng M và đủ dài",
+  Object.values(PROVINCE_SHAPES).every(
+    (s) => typeof s.d === "string" && s.d.startsWith("M") && s.d.length > 50,
+  ));
+check("mọi cx/cy nằm trong viewBox",
+  Object.values(PROVINCE_SHAPES).every(
+    (s) => s.cx > 0 && s.cx < MAP_VIEWBOX.width && s.cy > 0 && s.cy < MAP_VIEWBOX.height,
+  ));
 
 // --- index.tsx ---
 const index = read("src/app/(tabs)/index.tsx");
@@ -98,7 +163,7 @@ check("nút 2 thanh có nhãn chữ nhỏ (railLabel)", index.includes("railLabe
 check("land-card.tsx vẫn còn (giữ file)", existsSync(join(root, "src/components/land-card.tsx")));
 check("magical-garden-scene.tsx vẫn còn (giữ file)", existsSync(join(root, "src/components/magical-garden-scene.tsx")));
 check("lands.ts vẫn còn (guidebook/lesson/mission-panel còn dùng)", existsSync(join(root, "src/lib/lands.ts")));
-check("ảnh nền vietnam-map-bg.jpg tồn tại trong assets", existsSync(join(root, "assets/images/vietnam-map-bg.jpg")));
+check("ảnh nền vietnam-map-bg.jpg vẫn còn trong assets (chỉ bỏ khỏi world-map)", existsSync(join(root, "assets/images/vietnam-map-bg.jpg")));
 
 console.log(
   failures.length === 0
