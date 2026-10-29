@@ -31,27 +31,30 @@ import {
   learnerLevelLabel,
   useProgress,
 } from "@/lib/store";
+import { REGION_LABELS, type ProvinceRegion } from "@/lib/provinces";
 import { makeThemedStyles, radius } from "@/lib/theme";
-import type { SchoolBand } from "@/lib/types";
 import { isAllUnlocked } from "@/lib/unlock";
 import { useAmbientMusic } from "@/lib/useAmbientMusic";
 
 /** Thứ tự 3 khóa trên bản đồ biển — khớp thứ tự KINGDOMS (Anh → Nhật → Trung). */
 const COURSE_IDS = KINGDOMS.map((k) => k.courseId);
 
-const BAND_BUTTONS: { band: SchoolBand; label: string }[] = [
-  { band: "tieu-hoc", label: "Tiểu học" },
-  { band: "thcs", label: "THCS" },
-  { band: "thpt", label: "THPT" },
+/** 3 nút miền ở thanh trái: bay camera tới vùng của miền đó. */
+const REGION_BUTTONS: { region: ProvinceRegion; label: string; emoji: string }[] = [
+  { region: "bac", label: "Bắc", emoji: "⛰️" },
+  { region: "trung", label: "Trung", emoji: "🌊" },
+  { region: "nam", label: "Nam", emoji: "🌴" },
 ];
 
 /**
- * Trang chủ Piglingo Kids — BẢN ĐỒ BIỂN kiểu game map: một mặt biển lớn
- * chứa toàn bộ 80 đảo của 3 khóa, kéo để di chuyển, chụm 2 ngón hoặc
- * bấm +/− để phóng to/thu nhỏ, chạm đảo để xem bài học. Trang KHÔNG còn
- * cuộn dọc: header + chip vương quốc ở trên, bản đồ chiếm phần còn lại,
- * và toàn bộ GardenDashboard (nhiệm vụ, cây thần, bạn đồng hành, các thẻ
- * Thành tích/Phần thưởng/Cuộc thi) nằm trong panel "Nhiệm vụ & thành
+ * Trang chủ Piglingo Kids — BẢN ĐỒ VIỆT NAM 34 TỈNH/THÀNH kiểu game map:
+ * một bản đồ chung cho cả 3 ngôn ngữ (đổi ngôn ngữ chỉ đổi bài học trong
+ * tỉnh, bản đồ không đổi), kéo để di chuyển, chụm 2 ngón hoặc bấm +/− để
+ * phóng to/thu nhỏ, chạm tỉnh để xem thông tin tỉnh + bài học đặt tại đó.
+ * Trang KHÔNG cuộn dọc: header ở trên, bản đồ chiếm phần còn lại, các
+ * tùy chọn nằm ở 2 THANH NÚT HAI BÊN kiểu game (trái: ngôn ngữ + miền;
+ * phải: zoom, về tỉnh đang học, Nhiệm vụ, Thành tích, Phần thưởng,
+ * Cuộc thi). Toàn bộ GardenDashboard nằm trong panel "Nhiệm vụ & thành
  * tích" trượt lên. Công thức khóa bài và MissionPanel giữ nguyên 100%.
  */
 export default function LearnScreen() {
@@ -183,8 +186,8 @@ export default function LearnScreen() {
     mapRef.current?.centerOnUnit(courseId, currentUnitIndexOf(courseId));
   };
 
-  // Sau khi đổi khóa (qua chip vương quốc hoặc chạm đảo của khóa khác),
-  // đợi render xong rồi bay camera tới đảo đang học của khóa mới.
+  // Sau khi đổi khóa (qua thanh ngôn ngữ bên trái hoặc chip gợi ý trong
+  // bảng tỉnh), đợi render xong rồi bay camera tới tỉnh đang học của khóa mới.
   useEffect(() => {
     const pending = pendingFlyCourseRef.current;
     if (!pending || pending !== activeCourseId) return;
@@ -282,40 +285,6 @@ export default function LearnScreen() {
           </Text>
         </View>
 
-        {/* Hàng chip 3 vương quốc: đổi khóa + bay tới đảo đang học của khóa đó */}
-        <View style={styles.kingdomRow}>
-          {KINGDOMS.map((item) => {
-            const active = item.courseId === activeCourseId;
-            return (
-              <Pressable
-                key={item.courseId}
-                onPress={() => handleKingdomPress(item.courseId)}
-                accessibilityRole="button"
-                accessibilityLabel={`${item.kingdomName} — ${item.targetLanguage}`}
-                accessibilityState={{ selected: active }}
-                style={[
-                  styles.kingdomChip,
-                  { borderColor: item.palette.primary },
-                  active && { backgroundColor: item.palette.primary },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.kingdomChipText,
-                    { color: active ? item.palette.onPrimary : item.palette.deep },
-                  ]}
-                  numberOfLines={2}
-                  adjustsFontSizeToFit
-                  minimumFontScale={0.75}
-                  maxFontSizeMultiplier={1.2}
-                >
-                  {item.motif[0]} {item.kingdomName}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-
         {continueTarget ? (
           <View style={styles.continueWrap}>
             <ContinueButton
@@ -326,7 +295,7 @@ export default function LearnScreen() {
           </View>
         ) : null}
 
-        {/* Bản đồ biển + các nút phủ */}
+        {/* Bản đồ Việt Nam + 2 thanh nút hai bên kiểu game */}
         <View style={styles.mapWrap}>
           <WorldMap
             ref={mapRef}
@@ -338,34 +307,137 @@ export default function LearnScreen() {
             onGuidebookPress={(unit) => router.push(`/guidebook/${unit.id}`)}
           />
 
-          {/* 3 nút khối lớp phủ trên bản đồ: bay camera tới vùng của khối */}
-          <View style={styles.bandRow} pointerEvents="box-none">
-            {BAND_BUTTONS.map((b) => (
+          {/* THANH TRÁI: chọn ngôn ngữ (bản đồ dùng chung, chỉ đổi bài học)
+              + bay tới 3 miền Bắc / Trung / Nam */}
+          <View style={styles.railLeft} pointerEvents="box-none">
+            {KINGDOMS.map((item) => {
+              const active = item.courseId === activeCourseId;
+              return (
+                <Pressable
+                  key={item.courseId}
+                  onPress={() => handleKingdomPress(item.courseId)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Học ${item.targetLanguage} — ${item.kingdomName}`}
+                  accessibilityState={{ selected: active }}
+                  style={({ pressed }) => [
+                    styles.railButton,
+                    { borderColor: item.palette.primary },
+                    active && { backgroundColor: item.palette.primary },
+                    pressed && { opacity: 0.85 },
+                  ]}
+                >
+                  <Text style={styles.railIcon}>{item.motif[0]}</Text>
+                  <Text
+                    style={[
+                      styles.railLabel,
+                      { color: active ? item.palette.onPrimary : item.palette.deep },
+                    ]}
+                    numberOfLines={2}
+                    maxFontSizeMultiplier={1.1}
+                  >
+                    {item.targetLanguage}
+                  </Text>
+                </Pressable>
+              );
+            })}
+            <View style={styles.railDivider} />
+            {REGION_BUTTONS.map((b) => (
               <Pressable
-                key={b.band}
-                onPress={() => mapRef.current?.centerOnBand(b.band)}
+                key={b.region}
+                onPress={() => mapRef.current?.centerOnRegion(b.region)}
                 accessibilityRole="button"
-                accessibilityLabel={`Bay tới vùng ${b.label}`}
-                style={({ pressed }) => [styles.bandButton, pressed && { opacity: 0.85 }]}
+                accessibilityLabel={`Bay tới ${REGION_LABELS[b.region]}`}
+                style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
               >
-                <Text style={styles.bandButtonText} maxFontSizeMultiplier={1.2}>
+                <Text style={styles.railIcon}>{b.emoji}</Text>
+                <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
                   {b.label}
                 </Text>
               </Pressable>
             ))}
           </View>
 
-          {/* Nút mở panel nhiệm vụ & thành tích */}
-          <Pressable
-            onPress={() => setDashboardOpen(true)}
-            accessibilityRole="button"
-            accessibilityLabel="Mở nhiệm vụ và thành tích"
-            style={({ pressed }) => [styles.dashboardFab, pressed && { opacity: 0.88 }]}
-          >
-            <Text style={styles.dashboardFabText} maxFontSizeMultiplier={1.2}>
-              🎯 Nhiệm vụ & thành tích
-            </Text>
-          </Pressable>
+          {/* THANH PHẢI: zoom, về tỉnh đang học và các mục chính */}
+          <View style={styles.railRight} pointerEvents="box-none">
+            <Pressable
+              onPress={() => mapRef.current?.zoomIn()}
+              accessibilityRole="button"
+              accessibilityLabel="Phóng to bản đồ"
+              style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.railZoomIcon}>+</Text>
+              <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
+                To
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => mapRef.current?.zoomOut()}
+              accessibilityRole="button"
+              accessibilityLabel="Thu nhỏ bản đồ"
+              style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.railZoomIcon}>−</Text>
+              <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
+                Nhỏ
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => mapRef.current?.centerOnCurrent()}
+              accessibilityRole="button"
+              accessibilityLabel="Về tỉnh đang học"
+              style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.railIcon}>🎯</Text>
+              <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
+                Đang học
+              </Text>
+            </Pressable>
+            <View style={styles.railDivider} />
+            <Pressable
+              onPress={() => setDashboardOpen(true)}
+              accessibilityRole="button"
+              accessibilityLabel="Mở nhiệm vụ và thành tích"
+              style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.railIcon}>📋</Text>
+              <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
+                Nhiệm vụ
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push("/achievements")}
+              accessibilityRole="button"
+              accessibilityLabel="Mở thành tích và xếp hạng"
+              style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.railIcon}>⭐</Text>
+              <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
+                Thành tích
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push("/rewards")}
+              accessibilityRole="button"
+              accessibilityLabel="Mở phần thưởng của em"
+              style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.railIcon}>🎁</Text>
+              <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
+                Phần thưởng
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push("/competitions")}
+              accessibilityRole="button"
+              accessibilityLabel="Mở cuộc thi và chứng chỉ tiếng Anh"
+              style={({ pressed }) => [styles.railButton, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.railIcon}>🏅</Text>
+              <Text style={styles.railLabel} maxFontSizeMultiplier={1.1}>
+                Cuộc thi
+              </Text>
+            </Pressable>
+          </View>
         </View>
 
         {/* Panel trượt lên chứa toàn bộ GardenDashboard như cũ */}
@@ -502,57 +574,59 @@ const useStyles = makeThemedStyles((colors) =>
     },
     goalFill: { height: "100%", borderRadius: radius.full, backgroundColor: colors.amber },
     goalLabel: { fontSize: 12, fontWeight: "700", color: colors.textMuted, minWidth: 88 },
-    kingdomRow: {
-      flexDirection: "row",
-      gap: 8,
-      paddingHorizontal: 16,
-      paddingTop: 2,
-      paddingBottom: 8,
-    },
-    kingdomChip: {
-      flex: 1,
-      borderWidth: 2,
-      borderBottomWidth: 3,
-      borderRadius: radius.full,
-      paddingHorizontal: 8,
-      paddingVertical: 8,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: colors.surface,
-    },
-    kingdomChipText: { fontSize: 12.5, fontWeight: "800", textAlign: "center" },
     continueWrap: { paddingHorizontal: 16, paddingBottom: 6 },
     mapWrap: { flex: 1, position: "relative" },
-    bandRow: {
+    railLeft: {
       position: "absolute",
-      top: 10,
-      left: 10,
-      flexDirection: "row",
-      gap: 6,
+      left: 6,
+      top: 0,
+      bottom: 0,
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 7,
     },
-    bandButton: {
-      backgroundColor: "rgba(255,255,255,0.92)",
-      borderRadius: radius.full,
-      paddingHorizontal: 12,
-      paddingVertical: 7,
-      borderWidth: 1.5,
-      borderColor: colors.neutral200,
-      ...shadowStyle,
-    },
-    bandButtonText: { fontSize: 12, fontWeight: "800", color: colors.neutral700 },
-    dashboardFab: {
+    railRight: {
       position: "absolute",
-      left: 12,
-      bottom: 14,
-      backgroundColor: colors.amber,
-      borderRadius: radius.full,
-      paddingHorizontal: 16,
-      paddingVertical: 11,
+      right: 6,
+      top: 0,
+      bottom: 0,
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 7,
+    },
+    railButton: {
+      width: 60,
+      borderWidth: 2,
       borderBottomWidth: 3,
-      borderBottomColor: colors.neutral700,
+      borderColor: colors.neutral200,
+      borderRadius: radius.lg,
+      backgroundColor: "rgba(255,255,255,0.88)",
+      paddingVertical: 6,
+      paddingHorizontal: 2,
+      alignItems: "center",
+      justifyContent: "center",
       ...shadowStyle,
     },
-    dashboardFabText: { fontSize: 13.5, fontWeight: "900", color: colors.white },
+    railIcon: { fontSize: 17, lineHeight: 21 },
+    railZoomIcon: {
+      fontSize: 21,
+      lineHeight: 23,
+      fontWeight: "900",
+      color: colors.neutral700,
+    },
+    railLabel: {
+      fontSize: 10,
+      fontWeight: "800",
+      textAlign: "center",
+      color: colors.neutral700,
+    },
+    railDivider: {
+      width: 34,
+      height: 2,
+      borderRadius: radius.full,
+      backgroundColor: "rgba(255,255,255,0.75)",
+      marginVertical: 2,
+    },
     overlay: {
       position: "absolute",
       top: 0,
