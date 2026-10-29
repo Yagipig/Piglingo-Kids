@@ -122,6 +122,7 @@ export default function RootLayout() {
           <Stack.Screen name="parents" options={{ presentation: "modal" }} />
           <Stack.Screen name="rewards" options={{ presentation: "modal" }} />
           <Stack.Screen name="achievements" options={{ presentation: "modal" }} />
+          <Stack.Screen name="competitions" options={{ presentation: "modal" }} />
           <Stack.Screen name="admin-rewards" options={{ presentation: "modal" }} />
           <Stack.Screen name="celebration" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="account" options={{ presentation: "modal" }} />
