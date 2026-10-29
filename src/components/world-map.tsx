@@ -12,12 +12,14 @@ import React, {
 import {
   Animated,
   PanResponder,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
   type GestureResponderEvent,
+  type ViewStyle,
 } from "react-native";
 import Svg, {
   Ellipse,
@@ -48,17 +50,50 @@ import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * Kích thước "thế giới" — đúng tỉ lệ MAP_VIEWBOX (1000×1977) của dữ
- * liệu ranh giới tỉnh: rộng 1250 → cao ≈ 2471. Tọa độ viewBox được
- * nhân tỉ lệ SX/SY sang tọa độ thế giới.
+ * liệu ranh giới tỉnh: rộng 1600 → cao ≈ 3163. Tọa độ viewBox được
+ * nhân tỉ lệ SX/SY sang tọa độ thế giới. Bề rộng 1600 (thay cho 1250
+ * trước đây) giúp tỉnh to hơn và luôn có khoảng kéo NGANG trên màn
+ * hình máy tính rộng.
  */
-export const WORLD_WIDTH = 1250;
-export const WORLD_HEIGHT = 2471;
+export const WORLD_WIDTH = 1600;
+export const WORLD_HEIGHT = 3163;
 
 const SX = WORLD_WIDTH / MAP_VIEWBOX.width;
 const SY = WORLD_HEIGHT / MAP_VIEWBOX.height;
 
-const MIN_SCALE = 0.35;
+/** Trần zoom tuyệt đối (giới hạn dưới của thang zoom tối đa động). */
 const MAX_SCALE = 1.8;
+
+/** Mức zoom khi bay tới một tỉnh trên khung nhìn dọc (điện thoại). */
+const PROVINCE_FOCUS_SCALE = 0.8;
+
+/**
+ * Thang zoom ĐỘNG theo kích thước khung nhìn thật:
+ * - fitScale: mức zoom thấy TRỌN cả nước trong khung.
+ * - coverScale: mức zoom bản đồ PHỦ KÍN khung (không hở biển ở 2 bên).
+ * - Zoom nhỏ nhất = fitScale × 0,95 (nút − luôn thu về thấy toàn quốc).
+ * - Zoom lớn nhất = max(1,8, coverScale × 2,2).
+ */
+type ScaleLimits = {
+  fitScale: number;
+  coverScale: number;
+  minScale: number;
+  maxScale: number;
+};
+
+function scaleLimits(vw: number, vh: number): ScaleLimits {
+  if (vw <= 0 || vh <= 0) {
+    return { fitScale: 0, coverScale: 0, minScale: 0.1, maxScale: MAX_SCALE };
+  }
+  const fitScale = Math.min(vw / WORLD_WIDTH, vh / WORLD_HEIGHT);
+  const coverScale = Math.max(vw / WORLD_WIDTH, vh / WORLD_HEIGHT);
+  return {
+    fitScale,
+    coverScale,
+    minScale: fitScale * 0.95,
+    maxScale: Math.max(MAX_SCALE, coverScale * 2.2),
+  };
+}
 
 /** Tên tỉnh hiện khi zoom ≥ 0,5; riêng các tỉnh nhỏ cần ≥ 0,85. */
 const LABEL_MIN_SCALE = 0.5;
@@ -87,11 +122,11 @@ const REGION_ANCHOR_VB: Record<ProvinceRegion, { x: number; y: number }> = {
   nam: { x: 430, y: 1730 },
 };
 
-/** Mức zoom gợi ý khi bay tới từng miền. */
+/** Mức zoom gợi ý khi bay tới từng miền (theo thang thế giới 1600). */
 const REGION_SCALE: Record<ProvinceRegion, number> = {
-  bac: 0.5,
-  trung: 0.55,
-  nam: 0.65,
+  bac: 0.42,
+  trung: 0.46,
+  nam: 0.55,
 };
 
 /**
@@ -204,12 +239,12 @@ type Selection =
 
 type Camera = { x: number; y: number; scale: number };
 
-function clampScale(scale: number): number {
-  return Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale));
+function clampScale(scale: number, limits: ScaleLimits): number {
+  return Math.min(limits.maxScale, Math.max(limits.minScale, scale));
 }
 
 function clampCamera(cam: Camera, vw: number, vh: number): Camera {
-  const scale = clampScale(cam.scale);
+  const scale = clampScale(cam.scale, scaleLimits(vw, vh));
   if (vw <= 0 || vh <= 0) return { x: cam.x, y: cam.y, scale };
   const w = WORLD_WIDTH * scale;
   const h = WORLD_HEIGHT * scale;
@@ -453,6 +488,16 @@ const MapSvgLayer = memo(function MapSvgLayer({
 });
 
 const stylesSvg = { position: "absolute" as const, left: 0, top: 0 };
+
+/**
+ * Trên WEB: khóa cử chỉ của trình duyệt trên vùng bản đồ — `touchAction:
+ * "none"` để chụm/cuộn không bị trình duyệt giành làm zoom CẢ TRANG,
+ * `userSelect: "none"` để kéo chuột không bôi chọn chữ. Ngoài web: null.
+ */
+const WEB_VIEWPORT_LOCK: ViewStyle | null =
+  Platform.OS === "web"
+    ? ({ touchAction: "none", userSelect: "none" } as unknown as ViewStyle)
+    : null;
 
 /* ------------------------------------------------------------------ */
 /* Huy hiệu tại tâm tỉnh: số thứ tự unit / 📖 cho tỉnh chỉ xem tin     */
@@ -954,6 +999,35 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
   const animRef = useRef<number | null>(null);
   const initializedRef = useRef(false);
 
+  /* ----- Tương tác chuột trên WEB (kéo bằng chuột + cuộn để zoom) ----- */
+  /** Node DOM của khung nhìn bản đồ (chỉ có nghĩa khi Platform.OS === "web"). */
+  const viewportNodeRef = useRef<View | null>(null);
+  /**
+   * "Vết" của cú kéo vừa kết thúc: nếu người dùng vừa KÉO bản đồ xong
+   * (dist > 6px, chưa quá 300ms) thì cú chạm sinh ra ngay khi thả chuột
+   * phải bị BỎ QUA — tránh kéo xong lại chọn nhầm tỉnh.
+   */
+  const dragGuardRef = useRef({ lastDragEndAt: 0, lastDragDist: 0 });
+  /** Trạng thái cú nhấn–kéo chuột đang diễn ra trên web. */
+  const mouseRef = useRef({
+    active: false,
+    startX: 0,
+    startY: 0,
+    lastX: 0,
+    lastY: 0,
+    totalDist: 0,
+  });
+
+  const markDragEnd = (dist: number) => {
+    if (dist > 6) {
+      dragGuardRef.current = { lastDragEndAt: Date.now(), lastDragDist: dist };
+    }
+  };
+
+  const wasRecentDrag = (): boolean =>
+    dragGuardRef.current.lastDragDist > 6 &&
+    Date.now() - dragGuardRef.current.lastDragEndAt <= 300;
+
   const activeCourse = useMemo(
     () => courses.find((c) => c.courseId === activeCourseId) ?? courses[0],
     [courses, activeCourseId]
@@ -1060,7 +1134,10 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
 
   const centerOnWorldPoint = (cx: number, cy: number, targetScale?: number) => {
     const { w, h } = viewportRef.current;
-    const scale = clampScale(targetScale ?? cameraRef.current.scale);
+    const scale = clampScale(
+      targetScale ?? cameraRef.current.scale,
+      scaleLimits(w, h)
+    );
     flyTo({ x: w / 2 - cx * scale, y: h / 2 - cy * scale, scale });
   };
 
@@ -1068,14 +1145,21 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     const model = modelsRef.current[journeyIndex];
     if (!model) return;
     if (select) setSelection({ kind: "province", index: journeyIndex });
-    const targetScale = Math.max(cameraRef.current.scale, 0.95);
+    const { w, h } = viewportRef.current;
+    const limits = scaleLimits(w, h);
+    // Khung NGANG (máy tính): không zoom nhỏ hơn coverScale × 1,15 để
+    // bản đồ luôn phủ kín và kéo được cả 2 chiều; khung dọc: mức nét
+    // cố định PROVINCE_FOCUS_SCALE.
+    const focus =
+      w > h ? limits.coverScale * 1.15 : PROVINCE_FOCUS_SCALE;
+    const targetScale = Math.max(cameraRef.current.scale, focus);
     centerOnWorldPoint(model.cx, model.cy, targetScale);
   };
 
   const zoomBy = (factor: number) => {
     const { w, h } = viewportRef.current;
     const cam = cameraRef.current;
-    const scale = clampScale(cam.scale * factor);
+    const scale = clampScale(cam.scale * factor, scaleLimits(w, h));
     const wx = (w / 2 - cam.x) / cam.scale;
     const wy = (h / 2 - cam.y) / cam.scale;
     flyTo({ x: w / 2 - wx * scale, y: h / 2 - wy * scale, scale });
@@ -1101,13 +1185,19 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     },
   }));
 
-  /* Mở app lần đầu: đặt camera ngay (không hoạt họa) vào tỉnh đang học,
-     với scale vừa ít nhất bằng mức vừa chiều ngang khung nhìn. */
+  /* Mở app lần đầu: đặt camera ngay (không hoạt họa) vào tỉnh đang học.
+     - Khung NGANG (máy tính): mở ở coverScale × 1,15 — bản đồ phủ kín
+       khung và kéo được cả 2 chiều ngay từ đầu.
+     - Khung DỌC (điện thoại): mở ở mức vừa theo bề ngang (vw / WORLD_WIDTH). */
   useEffect(() => {
     if (initializedRef.current || viewport.w <= 0 || viewport.h <= 0) return;
     initializedRef.current = true;
-    const fitScale = viewport.w / WORLD_WIDTH;
-    const scale = clampScale(Math.max(0.55, fitScale));
+    const { w, h } = viewport;
+    const limits = scaleLimits(w, h);
+    const scale =
+      w > h
+        ? clampScale(limits.coverScale * 1.15, limits)
+        : clampScale(w / WORLD_WIDTH, limits);
     if (currentModel) {
       setCamera(
         clampCamera(
@@ -1135,13 +1225,15 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     pinchDist: number | null;
     pinchMid: { x: number; y: number } | null;
     touchCount: number;
-  }>({ last: null, pinchDist: null, pinchMid: null, touchCount: 0 });
+    hadPinch: boolean;
+  }>({ last: null, pinchDist: null, pinchMid: null, touchCount: 0, hadPinch: false });
 
   const baselinePinch = (pts: { x: number; y: number }[]) => {
     const g = gestureRef.current;
     if (pts.length >= 2) {
       g.pinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       g.pinchMid = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 };
+      g.hadPinch = true;
     } else {
       g.pinchDist = null;
       g.pinchMid = null;
@@ -1150,12 +1242,25 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     g.touchCount = pts.length;
   };
 
+  const resetGesture = () => {
+    gestureRef.current = {
+      last: null,
+      pinchDist: null,
+      pinchMid: null,
+      touchCount: 0,
+      hadPinch: false,
+    };
+  };
+
   const panResponder = useMemo(
     () =>
       PanResponder.create({
         // Không nhận ngay khi chạm xuống → cú CHẠM vẫn tới được tỉnh/huy hiệu bên dưới.
         onStartShouldSetPanResponder: () => false,
         onMoveShouldSetPanResponder: (e, g) => {
+          // Trên web, cú kéo bằng CHUỘT do listener DOM riêng đảm nhiệm —
+          // PanResponder không giành nữa để tránh kéo 2 lần cùng lúc.
+          if (mouseRef.current.active) return false;
           const pts = touchPoints(e);
           if (pts.length >= 2) return true;
           return Math.abs(g.dx) > 8 || Math.abs(g.dy) > 8;
@@ -1179,7 +1284,7 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
             if (dist > 0 && g.pinchDist > 0) {
               // Zoom quanh điểm giữa 2 ngón: điểm thế giới dưới điểm giữa
               // trước khi zoom vẫn nằm dưới điểm giữa sau khi zoom.
-              const scale = clampScale(cam.scale * (dist / g.pinchDist));
+              const scale = clampScale(cam.scale * (dist / g.pinchDist), scaleLimits(w, h));
               const wx = (g.pinchMid.x - cam.x) / cam.scale;
               const wy = (g.pinchMid.y - cam.y) / cam.scale;
               setCamera(clampCamera({ x: mid.x - wx * scale, y: mid.y - wy * scale, scale }, w, h));
@@ -1198,11 +1303,17 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
             g.last = pts[0];
           }
         },
-        onPanResponderRelease: () => {
-          gestureRef.current = { last: null, pinchDist: null, pinchMid: null, touchCount: 0 };
+        onPanResponderRelease: (_e, gState) => {
+          // Kéo/chụm cảm ứng vừa xong mà hệ thống vẫn sinh thêm một cú
+          // "chạm" khi nhả tay → ghi vết kéo để handler chạm tỉnh bỏ qua.
+          const dist = Math.hypot(gState.dx, gState.dy);
+          if (gestureRef.current.hadPinch || dist > 6) {
+            markDragEnd(Math.max(dist, 7));
+          }
+          resetGesture();
         },
         onPanResponderTerminate: () => {
-          gestureRef.current = { last: null, pinchDist: null, pinchMid: null, touchCount: 0 };
+          resetGesture();
         },
         onPanResponderTerminationRequest: () => false,
       }),
@@ -1211,10 +1322,114 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
     []
   );
 
+  /* ----- WEB: cuộn chuột/trackpad để zoom + kéo bằng chuột -----
+     PanResponder trên web không xử lý được wheel và kéo chuột không
+     tin cậy, nên gắn listener DOM trực tiếp (chỉ Platform.OS "web"):
+     - wheel (passive: false): LUÔN preventDefault để trình duyệt
+       không phóng to/cuộn CẢ TRANG — chỉ bản đồ zoom quanh con trỏ.
+       ctrlKey = chụm trên trackpad → hệ số nhạy hơn.
+     - mousedown trong khung bản đồ → mousemove/mouseup ở window
+       (phase capture cho mouseup để ghi "vết kéo" TRƯỚC khi onPress
+       của tỉnh/huy hiệu kịp chạy khi thả chuột). */
+  useEffect(() => {
+    if (Platform.OS !== "web") return;
+    const node = viewportNodeRef.current as unknown as {
+      addEventListener?: unknown;
+      getBoundingClientRect?: () => { left: number; top: number };
+      contains?: (other: unknown) => boolean;
+    } | null;
+    if (!node || typeof node.addEventListener !== "function") return;
+    const domNode = node as unknown as HTMLElement;
+    const win = globalThis as unknown as Window;
+
+    const onWheel = (e: WheelEvent) => {
+      // Chặn zoom trang + cuộn trang khi con trỏ nằm trên bản đồ.
+      e.preventDefault();
+      const { w, h } = viewportRef.current;
+      if (w <= 0 || h <= 0) return;
+      cancelAnim();
+      const rect = domNode.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      // Chuẩn hóa deltaY: 1 = theo dòng, 2 = theo trang.
+      let delta = e.deltaY;
+      if (e.deltaMode === 1) delta *= 16;
+      else if (e.deltaMode === 2) delta *= rect.height;
+      const intensity = e.ctrlKey ? 0.01 : 0.002;
+      const factor = Math.min(2, Math.max(0.5, Math.exp(-delta * intensity)));
+      const cam = cameraRef.current;
+      const scale = clampScale(cam.scale * factor, scaleLimits(w, h));
+      if (scale === cam.scale) return;
+      // Giữ điểm thế giới dưới con trỏ đứng yên khi zoom.
+      const wx = (px - cam.x) / cam.scale;
+      const wy = (py - cam.y) / cam.scale;
+      setCamera(clampCamera({ x: px - wx * scale, y: py - wy * scale, scale }, w, h));
+    };
+
+    const onMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return;
+      if (!domNode.contains(e.target as Node)) return;
+      cancelAnim();
+      mouseRef.current = {
+        active: true,
+        startX: e.clientX,
+        startY: e.clientY,
+        lastX: e.clientX,
+        lastY: e.clientY,
+        totalDist: 0,
+      };
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      const m = mouseRef.current;
+      if (!m.active) return;
+      const dx = e.clientX - m.lastX;
+      const dy = e.clientY - m.lastY;
+      m.lastX = e.clientX;
+      m.lastY = e.clientY;
+      m.totalDist = Math.max(
+        m.totalDist,
+        Math.hypot(e.clientX - m.startX, e.clientY - m.startY)
+      );
+      if (m.totalDist <= 6 || (dx === 0 && dy === 0)) return;
+      const cam = cameraRef.current;
+      const { w, h } = viewportRef.current;
+      setCamera(
+        clampCamera({ x: cam.x + dx, y: cam.y + dy, scale: cam.scale }, w, h)
+      );
+    };
+
+    const onMouseUp = () => {
+      const m = mouseRef.current;
+      if (!m.active) return;
+      m.active = false;
+      // Ghi vết kéo (nếu có) — handler này chạy ở phase capture của
+      // window, TRƯỚC khi onPress của tỉnh/huy hiệu xử lý cú thả chuột.
+      markDragEnd(m.totalDist);
+      m.totalDist = 0;
+    };
+
+    domNode.addEventListener("wheel", onWheel, { passive: false });
+    win.addEventListener("mousedown", onMouseDown, true);
+    win.addEventListener("mousemove", onMouseMove, true);
+    win.addEventListener("mouseup", onMouseUp, true);
+    return () => {
+      domNode.removeEventListener("wheel", onWheel);
+      win.removeEventListener("mousedown", onMouseDown, true);
+      win.removeEventListener("mousemove", onMouseMove, true);
+      win.removeEventListener("mouseup", onMouseUp, true);
+    };
+    // Chỉ gắn một lần; trạng thái luôn đọc qua ref + hàm module thuần.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleProvincePress = useCallback((index: number) => {
+    // Vừa kéo bản đồ xong (chuột hoặc cảm ứng) → bỏ qua cú chạm này.
+    if (wasRecentDrag()) return;
     setSelection({ kind: "province", index });
   }, []);
   const handleSeaPress = useCallback((id: string) => {
+    if (wasRecentDrag()) return;
     setSelection({ kind: "sea", id });
   }, []);
 
@@ -1228,7 +1443,8 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
   return (
     <View style={styles.root}>
       <View
-        style={styles.viewport}
+        ref={viewportNodeRef}
+        style={[styles.viewport, WEB_VIEWPORT_LOCK]}
         onLayout={(e) => {
           const { width, height } = e.nativeEvent.layout;
           setViewport((prev) =>
@@ -1255,7 +1471,10 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
           {/* Chạm vào vùng biển trống → đóng bảng chi tiết */}
           <Pressable
             style={styles.seaTouch}
-            onPress={() => setSelection(null)}
+            onPress={() => {
+              if (wasRecentDrag()) return;
+              setSelection(null);
+            }}
             accessibilityRole="button"
             accessibilityLabel="Vùng biển trống trên bản đồ — chạm để đóng bảng chi tiết"
           />
