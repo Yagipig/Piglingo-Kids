@@ -32,6 +32,7 @@ type GardenDashboardProps = {
   companions: Companion[];
   onKingdomPress: (courseId: string) => void;
   onOpenRewards: () => void;
+  onOpenCompetitions: () => void;
 };
 
 function formatDate(ts: number): string {
@@ -55,6 +56,7 @@ export function GardenDashboard({
   companions,
   onKingdomPress,
   onOpenRewards,
+  onOpenCompetitions,
 }: GardenDashboardProps) {
   const styles = useStyles();
   const allQuestsDone = quests.length > 0 && quests.every((q) => q.done);
@@ -236,6 +238,29 @@ export function GardenDashboard({
               {rank.isMax
                 ? " · Đã đạt cấp cao nhất 👑"
                 : ` · Còn ${rank.xpToNext} XP lên ${rank.nextTitle}`}
+            </Text>
+          </View>
+          <Text style={styles.seeAll} maxFontSizeMultiplier={1.2}>
+            Xem ›
+          </Text>
+        </View>
+      </Pressable>
+
+      {/* Cuộc thi & chứng chỉ tiếng Anh */}
+      <Pressable
+        onPress={onOpenCompetitions}
+        accessibilityRole="button"
+        accessibilityLabel="Xem các cuộc thi và chứng chỉ tiếng Anh theo khối lớp"
+        style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}
+      >
+        <View style={styles.rankRow}>
+          <Text style={styles.rankEmoji}>🌏</Text>
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text style={styles.cardTitle} maxFontSizeMultiplier={1.3}>
+              🏆 Cuộc thi & chứng chỉ tiếng Anh
+            </Text>
+            <Text style={styles.cardHint} maxFontSizeMultiplier={1.3}>
+              IOE · Cambridge · TOEFL · IELTS theo khối lớp
             </Text>
           </View>
           <Text style={styles.seeAll} maxFontSizeMultiplier={1.2}>
