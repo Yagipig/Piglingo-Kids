@@ -29,15 +29,25 @@ import {
 import { CelebrationBurst, StarRow } from "@/components/celebration";
 import { CloseButton } from "@/components/close-button";
 import { DuoButton } from "@/components/duo-button";
+import { LessonPet, type PetFeedback } from "@/components/lesson-pet";
 import { FillBlank, ensureBlank } from "@/components/exercises/fill-blank";
 import { Match } from "@/components/exercises/match";
 import { Select } from "@/components/exercises/select";
 import { TypeAnswer } from "@/components/exercises/type-answer";
 import { WordBank } from "@/components/exercises/word-bank";
 import { speakTarget, useSfx } from "@/lib/audio";
-import { effectiveFrontierIndex, useCourseContent } from "@/lib/content";
+import {
+  catalog,
+  effectiveFrontierIndex,
+  useCourseContent,
+} from "@/lib/content";
 import { haptics } from "@/lib/haptics";
 import { landForUnit } from "@/lib/lands";
+import {
+  PERFECT_LINES,
+  companionPetFor,
+  legendaryUnlocked,
+} from "@/lib/pets";
 import {
   currentStreak,
   dueSrsWords,
@@ -232,6 +242,13 @@ export default function LessonScreen() {
   const wrongIds = useRef(new Set<string>());
   const [finished, setFinished] = useState(false);
   const finishedRef = useRef(false);
+  /* Kết quả chấm gần nhất để pet đồng hành phản ứng (động viên/khen). */
+  const [petFeedback, setPetFeedback] = useState<PetFeedback | null>(null);
+  const petNonceRef = useRef(0);
+  const sendPetFeedback = (kind: "correct" | "wrong") => {
+    petNonceRef.current += 1;
+    setPetFeedback({ kind, nonce: petNonceRef.current });
+  };
 
   useEffect(() => {
     setQueue(exercises);
@@ -242,6 +259,7 @@ export default function LessonScreen() {
     wrongIds.current = new Set();
     setFinished(false);
     finishedRef.current = false;
+    setPetFeedback(null);
   }, [exercises]);
 
   const exercise = queue[index];
@@ -295,6 +313,23 @@ export default function LessonScreen() {
       progress.learnerLevel
     );
     const nextRef = !isPractice ? allLessons[nextIndex] : undefined;
+    // Pet đồng hành chúc mừng khi bài hoàn hảo (chọn câu tất định theo
+    // bài để không nhấp nháy giữa các lần render).
+    const finishPet = companionPetFor({
+      activeCompanion: progress.activeCompanion ?? "world",
+      courseId: activeCourseId,
+      legendary: legendaryUnlocked(
+        progress.courses ?? {},
+        Object.fromEntries(catalog.courses.map((c) => [c.id, c.lessonCount]))
+      ),
+    });
+    const perfectLine = perfect
+      ? PERFECT_LINES[
+          Math.abs(
+            lessonId.split("").reduce((sum, ch) => sum + ch.charCodeAt(0), 0)
+          ) % PERFECT_LINES.length
+        ]
+      : null;
     return (
       <SafeAreaView style={styles.screen}>
         <View style={styles.center}>
@@ -345,6 +380,11 @@ export default function LessonScreen() {
               Không sai câu nào! +{XP_PERFECT_BONUS} XP
             </Animated.Text>
           ) : null}
+          {perfect && finishPet && perfectLine ? (
+            <Animated.Text entering={FadeInUp.delay(520)} style={styles.petCheer}>
+              {finishPet.emoji} {finishPet.name}: “{perfectLine}”
+            </Animated.Text>
+          ) : null}
           {nextRef ? (
             <Animated.Text entering={FadeInUp.delay(450)} style={styles.nextUnlock}>
               🔓 Điểm đến tiếp theo đã mở: {nextRef.unit.title} —{" "}
@@ -366,6 +406,7 @@ export default function LessonScreen() {
 
   const onCheck = () => {
     const isCorrect = checkAnswer(exercise, answer);
+    sendPetFeedback(isCorrect ? "correct" : "wrong");
     if (isCorrect) {
       sfx.playCorrect();
       haptics.success();
@@ -448,6 +489,12 @@ export default function LessonScreen() {
               </Text>
             </View>
           ) : null}
+          <LessonPet
+            courseId={activeCourseId}
+            exercise={exercise}
+            exerciseKey={`${exercise.id}-${index}`}
+            feedback={petFeedback}
+          />
           <View style={styles.stage}>
           {index >= exercises.length && !isMistakes ? (
             <View style={[styles.badge, { backgroundColor: colors.orange + "22" }]}>
@@ -482,6 +529,7 @@ export default function LessonScreen() {
               key={`${exercise.id}-${index}`}
               exercise={exercise}
               onComplete={(wrongAttempts) => {
+                sendPetFeedback(wrongAttempts > 0 ? "wrong" : "correct");
                 if (wrongAttempts > 0) {
                   sfx.playIncorrect();
                   wrongIds.current.add(exercise.id);
@@ -697,6 +745,12 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   },
   mutedCenter: { fontSize: 15, color: colors.textMuted, textAlign: "center" },
   perfect: { fontSize: 15, fontWeight: "700", color: colors.amber },
+  petCheer: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: colors.correctText,
+    textAlign: "center",
+  },
   nextUnlock: {
     fontSize: 15,
     fontWeight: "700",
