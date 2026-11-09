@@ -11,10 +11,9 @@ import { WorldHeader } from "@/components/world-header";
 import { WorldMap, type WorldMapCourseData, type WorldMapHandle } from "@/components/world-map";
 import { useAuth } from "@/features/supabase/AuthContext";
 import {
-  difficultyForIndex,
   difficultyLabel,
+  effectiveFrontierIndex,
   getPack,
-  tierForLearnerLevel,
   useCourseContent,
   type LessonRef,
 } from "@/lib/content";
@@ -24,7 +23,6 @@ import { allCourseRewardProgress } from "@/lib/rewards";
 import { effectiveGlobalRewards, useRewardsStore } from "@/lib/rewardsStore";
 import {
   activeToday,
-  currentLessonIndex,
   currentStreak,
   dailyQuests,
   dailyXpToday,
@@ -55,7 +53,8 @@ const REGION_BUTTONS: { region: ProvinceRegion; label: string; emoji: string }[]
  * tùy chọn nằm ở 2 THANH NÚT HAI BÊN kiểu game (trái: ngôn ngữ + miền;
  * phải: zoom, về tỉnh đang học, Nhiệm vụ, Thành tích, Phần thưởng,
  * Cuộc thi). Toàn bộ GardenDashboard nằm trong panel "Nhiệm vụ & thành
- * tích" trượt lên. Công thức khóa bài và MissionPanel giữ nguyên 100%.
+ * tích" trượt lên. MissionPanel giữ nguyên; khóa bài dùng BIÊN HIỆU LỰC
+ * (tiến độ thật + sàn cấp độ theo Hướng 1, xem `effectiveFrontierIndex`).
  */
 export default function LearnScreen() {
   const styles = useStyles();
@@ -88,7 +87,14 @@ export default function LearnScreen() {
   const goalPct =
     dailyGoal > 0 ? Math.min(100, Math.max(0, (todayXp / dailyGoal) * 100)) : 0;
   const lessonIds = allLessons.map((l) => l.lesson.id);
-  const currentIndex = currentLessonIndex(courseProgress.completedLessons, lessonIds);
+  // Biên hiệu lực: tiến độ thật + sàn cấp độ (Hướng 1) — MỌI quyết định
+  // khóa/hiện tại ở trang chủ đều suy từ biên này, không dùng lại
+  // currentLessonIndex thuần nữa.
+  const frontierIndex = effectiveFrontierIndex(
+    courseProgress.completedLessons,
+    lessonIds,
+    learnerLevel
+  );
   const streak = currentStreak(progress);
   const streakLit = activeToday(progress);
 
@@ -96,8 +102,8 @@ export default function LearnScreen() {
   const explored = allLessons.filter(
     (l) => courseProgress.completedLessons[l.lesson.id]
   ).length;
-  const allDone = total > 0 && currentIndex >= total;
-  const continueTarget = allLessons[Math.min(currentIndex, total - 1)];
+  const allDone = total > 0 && frontierIndex >= total;
+  const continueTarget = allLessons[Math.min(frontierIndex, total - 1)];
 
   // Dữ kiện vườn/dashboard suy từ tiến độ thật (không lưu thêm trạng thái nào).
   const totalXp = totalGardenXp(progress);
@@ -152,14 +158,17 @@ export default function LearnScreen() {
           units: content.pack.sections.flatMap((s) => s.units),
           lessonsByUnit,
           completedLessons,
-          currentIndex: currentLessonIndex(
+          // Biên hiệu lực của khóa này (tiến độ thật + sàn cấp độ dùng
+          // chung) — bản đồ và MissionPanel dùng làm mốc khóa/hiện tại.
+          currentIndex: effectiveFrontierIndex(
             completedLessons,
-            content.allLessons.map((l) => l.lesson.id)
+            content.allLessons.map((l) => l.lesson.id),
+            learnerLevel
           ),
           totalLessons: content.allLessons.length,
         };
       }),
-    [contentByCourse, progress.courses]
+    [contentByCourse, progress.courses, learnerLevel]
   );
   const coursesDataById = useMemo(
     () => new Map(coursesData.map((c) => [c.courseId, c])),
@@ -234,11 +243,12 @@ export default function LearnScreen() {
   /* ----- Panel "Nhiệm vụ & thành tích" chứa GardenDashboard ----- */
   const [dashboardOpen, setDashboardOpen] = useState(false);
 
-  // Gợi ý theo cấp độ: bài đầu tiên của tầng độ khó tương ứng cấp độ đã chọn.
-  const targetTier = tierForLearnerLevel(learnerLevel);
+  // Gợi ý theo cấp độ: bài Ở BIÊN HIỆU LỰC — chính là bài bắt đầu theo
+  // cấp độ đã chọn (Hướng 1), và nay luôn là bài MỞ ĐƯỢC thật, không
+  // còn trỏ tới bài đang khóa như trước.
   const suggestedRef = useMemo(
-    () => allLessons.find((l) => difficultyForIndex(l.globalIndex, total) === targetTier),
-    [allLessons, targetTier, total]
+    () => (frontierIndex < total ? allLessons[frontierIndex] : undefined),
+    [allLessons, frontierIndex, total]
   );
 
   const jumpToSuggestion = () => {
