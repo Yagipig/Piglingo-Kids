@@ -226,7 +226,11 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   keyboard: { gap: 8 },
   keyRow: { flexDirection: "row", justifyContent: "center", gap: 6 },
   key: {
-    minWidth: 31,
+    // Phím co giãn theo bề rộng hàng (flex: 1) thay cho minWidth cố
+    // định: hàng 10 phím × 31px + gap từng tràn ngang trên điện thoại
+    // hẹp (360–390px), cắt phím ở hai đầu. Giữ minHeight 48 (chuẩn
+    // chạm Phase 4).
+    flex: 1,
     minHeight: 48,
     justifyContent: "center",
     paddingHorizontal: 6,
