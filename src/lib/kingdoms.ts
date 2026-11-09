@@ -58,8 +58,8 @@ export const KINGDOMS: Kingdom[] = [
     targetLanguage: "Tiếng Anh",
     shortName: "Cổ Tích",
     tagline: "Lâu đài sách cổ tích giữa đồng hoa",
-    motif: ["🏰", "📖", "🦉", "🐰", "🌷"],
-    companion: "🦉",
+    motif: ["🏰", "📖", "🦁", "🐰", "🌷"],
+    companion: "🦁",
     flowerEmoji: "🌷",
     palette: {
       primary: "#38BDF8",

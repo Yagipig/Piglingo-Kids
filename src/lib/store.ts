@@ -2,6 +2,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
+import { catalog, useCourseContent } from "./content";
+import {
+  accessoryById,
+  completedStageCount,
+  isAccessoryUnlocked,
+  legendaryUnlocked,
+  stageClaimCheck,
+} from "./pets";
 import { isDue, reviewWord, type SrsEntry } from "./srs";
 import type { SchoolBand } from "./types";
 
@@ -94,8 +102,33 @@ type ProgressState = {
    * null = dùng nền mặc định theo theme.
    */
   backgroundImage: string | null;
+  /**
+   * Ảnh cá nhân của bé (data URL jpeg) đặt ở tab Hồ sơ: hiện ở điểm
+   * dừng hiện tại trên bản đồ đường đi và cạnh heo mascot ở trang chủ.
+   * null = chưa đặt, dùng heo mascot mặc định. Dữ liệu cũ không có
+   * field này → migrate điền null; code đọc luôn dùng `?? null`.
+   */
+  avatarImage: string | null;
   /** "system" follows the device's light/dark setting. */
   themePreference: ThemePreference;
+  /* ----- Hệ thú cưng (Đợt B+C) — mọi field có mặc định an toàn và
+     migrate điền mặc định khi dữ liệu cũ thiếu. ----- */
+  /** Điểm phát triển của thú theo từng khóa (học bài + cho ăn mà có). */
+  petGrowth: Record<string, number>;
+  /** Thức ăn cho thú đang có (kiếm được từ rương chặng). */
+  petFood: number;
+  /** Sao tích lũy (bài hoàn hảo + rương chặng). */
+  stars: number;
+  /** Chìa khóa bí mật đang có (mở sớm một bài đang khóa). */
+  unlockKeys: number;
+  /** Bài đã mở sớm bằng chìa khóa, theo từng khóa. */
+  keyUnlockedLessons: Record<string, string[]>;
+  /** Số thứ tự chặng (từ 1) đã nhận quà rương, theo từng khóa. */
+  claimedStageRewards: Record<string, number[]>;
+  /** Phụ kiện thú đang mặc, theo từng khóa. */
+  equippedAccessories: Record<string, string[]>;
+  /** Thú đồng hành: thú của thế giới, hay Rồng Huyền Thoại khi đã mở. */
+  activeCompanion: "world" | "legendary";
   courses: Record<string, CourseProgress>;
   /** Per-day activity across courses, for the streak calendar and quests. */
   activeDays: Record<string, DayActivity>;
@@ -120,6 +153,23 @@ type ProgressState = {
   recordSpeedScore: (score: number) => void;
   /** Đặt ảnh nền tự chọn (data URL) hoặc xóa về nền mặc định với null. */
   setBackgroundImage: (uri: string | null) => void;
+  /** Đặt ảnh cá nhân của bé (data URL) hoặc xóa về heo mặc định với null. */
+  setAvatarImage: (uri: string | null) => void;
+  /**
+   * Nhận quà rương của một chặng (stageNumber từ 1): chỉ khi chặng đã
+   * hoàn thành thật và chưa nhận — cộng XP thưởng (cùng cơ chế
+   * addBonusXp, ghi vào khóa của rương) + thức ăn + sao + chìa khóa.
+   * Gọi lần thứ hai là no-op.
+   */
+  claimStageReward: (courseId: string, stageNumber: number) => void;
+  /** Cho thú của một khóa ăn: tốn 1 thức ăn, +8 điểm phát triển. */
+  feedPet: (courseId: string) => void;
+  /** Mặc/cởi một phụ kiện cho thú (chỉ khi đã mở khóa theo số chặng). */
+  toggleAccessory: (courseId: string, accessoryId: string) => void;
+  /** Dùng 1 chìa khóa bí mật để mở sớm một bài đang khóa của khóa. */
+  useUnlockKey: (courseId: string, lessonId: string) => void;
+  /** Chọn thú đồng hành: "legendary" chỉ nhận khi Rồng đã mở khóa. */
+  setActiveCompanion: (mode: "world" | "legendary") => void;
 };
 
 function bumpDailyXp(state: ProgressState, amount: number) {
@@ -162,7 +212,16 @@ export const useProgress = create<ProgressState>()(
       musicOn: false,
       speedBest: 0,
       backgroundImage: null,
+      avatarImage: null,
       themePreference: "system",
+      petGrowth: {},
+      petFood: 0,
+      stars: 0,
+      unlockKeys: 0,
+      keyUnlockedLessons: {},
+      claimedStageRewards: {},
+      equippedAccessories: {},
+      activeCompanion: "world",
       courses: {},
       activeDays: {},
 
@@ -198,7 +257,25 @@ export const useProgress = create<ProgressState>()(
                 ? c.completedLessons
                 : { ...c.completedLessons, [lessonId]: true },
           }));
-          return { streak, lastActiveDay: today, activeDays, ...daily, ...courseUpdate };
+          // Học là cách nuôi pet: mỗi bài học xong cho thú của khóa
+          // đang học +10 điểm phát triển (bài hoàn hảo +5 nữa), và bài
+          // hoàn hảo mang về thêm 1 sao.
+          const growthGain = 10 + (perfect ? 5 : 0);
+          const petGrowth = {
+            ...(state.petGrowth ?? {}),
+            [state.activeCourseId]:
+              (state.petGrowth?.[state.activeCourseId] ?? 0) + growthGain,
+          };
+          const stars = (state.stars ?? 0) + (perfect ? 1 : 0);
+          return {
+            streak,
+            lastActiveDay: today,
+            activeDays,
+            petGrowth,
+            stars,
+            ...daily,
+            ...courseUpdate,
+          };
         }),
 
       addMistake: (mistake) =>
@@ -273,6 +350,110 @@ export const useProgress = create<ProgressState>()(
 
       setBackgroundImage: (uri) => set({ backgroundImage: uri }),
 
+      setAvatarImage: (uri) => set({ avatarImage: uri }),
+
+      claimStageReward: (courseId, stageNumber) =>
+        set((state) => {
+          if (!catalog.courses.some((c) => c.id === courseId)) return state;
+          const course = (state.courses ?? {})[courseId];
+          const claimed = state.claimedStageRewards?.[courseId] ?? [];
+          const check = stageClaimCheck({
+            allLessons: useCourseContent(courseId).allLessons,
+            completedLessons: course?.completedLessons ?? {},
+            claimedStages: claimed,
+            stageNumber,
+          });
+          if (!check.ok) return state;
+          const reward = check.reward;
+          // XP thưởng: cùng cơ chế ghi sổ của addBonusXp (XP ngày +
+          // lịch sử ngày + XP của khóa) nhưng ghi vào khóa của rương.
+          const daily = bumpDailyXp(state, reward.xpBonus);
+          const today = dayString(new Date());
+          const days = state.activeDays ?? {};
+          const prevDay = days[today] ?? { xp: 0, lessons: 0, perfect: 0 };
+          const activeDays = pruneDays({
+            ...days,
+            [today]: { ...prevDay, xp: prevDay.xp + reward.xpBonus },
+          });
+          const courseUpdate = updateCourse(state, courseId, (c) => ({
+            ...c,
+            xp: c.xp + reward.xpBonus,
+          }));
+          return {
+            ...daily,
+            activeDays,
+            ...courseUpdate,
+            petFood: (state.petFood ?? 0) + reward.food,
+            stars: (state.stars ?? 0) + reward.stars,
+            unlockKeys: (state.unlockKeys ?? 0) + reward.key,
+            claimedStageRewards: {
+              ...(state.claimedStageRewards ?? {}),
+              [courseId]: [...claimed, stageNumber],
+            },
+          };
+        }),
+
+      feedPet: (courseId) =>
+        set((state) => {
+          if ((state.petFood ?? 0) <= 0) return state;
+          return {
+            petFood: (state.petFood ?? 0) - 1,
+            petGrowth: {
+              ...(state.petGrowth ?? {}),
+              [courseId]: (state.petGrowth?.[courseId] ?? 0) + 8,
+            },
+          };
+        }),
+
+      toggleAccessory: (courseId, accessoryId) =>
+        set((state) => {
+          const item = accessoryById(courseId, accessoryId);
+          if (!item) return state;
+          if (!catalog.courses.some((c) => c.id === courseId)) return state;
+          const completed =
+            (state.courses ?? {})[courseId]?.completedLessons ?? {};
+          const doneStages = completedStageCount(
+            useCourseContent(courseId).allLessons,
+            completed
+          );
+          if (!isAccessoryUnlocked(item, doneStages)) return state;
+          const equipped = state.equippedAccessories?.[courseId] ?? [];
+          const next = equipped.includes(accessoryId)
+            ? equipped.filter((id) => id !== accessoryId)
+            : [...equipped, accessoryId];
+          return {
+            equippedAccessories: {
+              ...(state.equippedAccessories ?? {}),
+              [courseId]: next,
+            },
+          };
+        }),
+
+      useUnlockKey: (courseId, lessonId) =>
+        set((state) => {
+          if ((state.unlockKeys ?? 0) <= 0) return state;
+          const list = state.keyUnlockedLessons?.[courseId] ?? [];
+          if (list.includes(lessonId)) return state;
+          return {
+            unlockKeys: (state.unlockKeys ?? 0) - 1,
+            keyUnlockedLessons: {
+              ...(state.keyUnlockedLessons ?? {}),
+              [courseId]: [...list, lessonId],
+            },
+          };
+        }),
+
+      setActiveCompanion: (mode) =>
+        set((state) => {
+          if (mode === "legendary") {
+            const totals = Object.fromEntries(
+              catalog.courses.map((c) => [c.id, c.lessonCount])
+            );
+            if (!legendaryUnlocked(state.courses ?? {}, totals)) return state;
+          }
+          return { activeCompanion: mode };
+        }),
+
       setLearnerLevel: (level) => set({ learnerLevel: level }),
 
       setSchoolBand: (band) => set({ schoolBand: band }),
@@ -306,6 +487,19 @@ export const useProgress = create<ProgressState>()(
             themePreference: "system" as ThemePreference,
             ...old,
             schoolBand: (old.schoolBand as SchoolBand) ?? "tieu-hoc",
+            avatarImage: (old.avatarImage as string | null) ?? null,
+            petGrowth: (old.petGrowth as Record<string, number>) ?? {},
+            petFood: (old.petFood as number) ?? 0,
+            stars: (old.stars as number) ?? 0,
+            unlockKeys: (old.unlockKeys as number) ?? 0,
+            keyUnlockedLessons:
+              (old.keyUnlockedLessons as Record<string, string[]>) ?? {},
+            claimedStageRewards:
+              (old.claimedStageRewards as Record<string, number[]>) ?? {},
+            equippedAccessories:
+              (old.equippedAccessories as Record<string, string[]>) ?? {},
+            activeCompanion:
+              (old.activeCompanion as "world" | "legendary") ?? "world",
           } as ProgressState;
         }
         // Migrate v1 flat progress → per-course.
@@ -330,6 +524,15 @@ export const useProgress = create<ProgressState>()(
           musicOn: (old.musicOn as boolean) ?? false,
           speedBest: (old.speedBest as number) ?? 0,
           backgroundImage: (old.backgroundImage as string | null) ?? null,
+          avatarImage: (old.avatarImage as string | null) ?? null,
+          petGrowth: {},
+          petFood: 0,
+          stars: 0,
+          unlockKeys: 0,
+          keyUnlockedLessons: {},
+          claimedStageRewards: {},
+          equippedAccessories: {},
+          activeCompanion: "world" as const,
           themePreference: (old.themePreference as ThemePreference) ?? "system",
           activeDays: (old.activeDays as Record<string, DayActivity>) ?? {},
           courses: {
