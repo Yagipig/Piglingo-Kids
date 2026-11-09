@@ -83,6 +83,14 @@ export default function AdventureMapScreen() {
         >
           <Text style={styles.petIcon}>🐾</Text>
         </Pressable>
+        <Pressable
+          onPress={() => router.push("/skills")}
+          accessibilityRole="button"
+          accessibilityLabel="Mở khu Luyện kỹ năng"
+          style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.8 }]}
+        >
+          <Text style={styles.petIcon}>🎯</Text>
+        </Pressable>
       </View>
 
       <View style={styles.switchRow}>
