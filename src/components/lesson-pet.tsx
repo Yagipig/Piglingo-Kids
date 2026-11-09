@@ -60,6 +60,7 @@ export function LessonPet({
     activeCompanion: progress.activeCompanion ?? "world",
     courseId,
     legendary,
+    rarePets: progress.rarePets ?? [],
   });
 
   const [message, setMessage] = useState<string | null>(null);
@@ -134,7 +135,9 @@ export function LessonPet({
 
   const bubbleText =
     message ??
-    `${pet.name} đồng hành cùng bé đây! Bí thì bấm nút “${pet.skillName}” của mình nhé.`;
+    (pet.rare
+      ? `${pet.name} đồng hành cùng bé đây! Mình không có phép thuật học bài — mình chỉ cổ vũ: bé giỏi lắm, cố lên nhé! 🦚✨`
+      : `${pet.name} đồng hành cùng bé đây! Bí thì bấm nút “${pet.skillName}” của mình nhé.`);
 
   return (
     <View style={styles.wrap}>
@@ -155,32 +158,36 @@ export function LessonPet({
         </View>
       </View>
 
-      <Pressable
-        onPress={onSkillPress}
-        disabled={!skillAvailable}
-        accessibilityRole="button"
-        accessibilityLabel={`Dùng kỹ năng ${pet.skillName} của ${pet.name}`}
-        accessibilityState={{ disabled: !skillAvailable }}
-        style={({ pressed }) => [
-          styles.skillButton,
-          {
-            backgroundColor: pet.legendary
-              ? "#b45309"
-              : tokens?.primary ?? "#f59e0b",
-          },
-          !skillAvailable && styles.skillButtonDisabled,
-          pressed && skillAvailable && { opacity: 0.85 },
-        ]}
-      >
-        <Text style={styles.skillButtonText} maxFontSizeMultiplier={1.2}>
-          {pet.emoji} {pet.skillName}
-          {pet.skillKind === "speak" ? " 🔊" : ""}
-        </Text>
-      </Pressable>
-      {!skillAvailable ? (
-        <Text style={styles.skillHint} maxFontSizeMultiplier={1.2}>
-          Bài tập này {pet.name} chưa giúp được — bé tự làm nhé, mình cổ vũ!
-        </Text>
+      {pet.skillKind !== "none" ? (
+        <>
+          <Pressable
+            onPress={onSkillPress}
+            disabled={!skillAvailable}
+            accessibilityRole="button"
+            accessibilityLabel={`Dùng kỹ năng ${pet.skillName} của ${pet.name}`}
+            accessibilityState={{ disabled: !skillAvailable }}
+            style={({ pressed }) => [
+              styles.skillButton,
+              {
+                backgroundColor: pet.legendary
+                  ? "#b45309"
+                  : tokens?.primary ?? "#f59e0b",
+              },
+              !skillAvailable && styles.skillButtonDisabled,
+              pressed && skillAvailable && { opacity: 0.85 },
+            ]}
+          >
+            <Text style={styles.skillButtonText} maxFontSizeMultiplier={1.2}>
+              {pet.emoji} {pet.skillName}
+              {pet.skillKind === "speak" ? " 🔊" : ""}
+            </Text>
+          </Pressable>
+          {!skillAvailable ? (
+            <Text style={styles.skillHint} maxFontSizeMultiplier={1.2}>
+              Bài tập này {pet.name} chưa giúp được — bé tự làm nhé, mình cổ vũ!
+            </Text>
+          ) : null}
+        </>
       ) : null}
 
       {skillOpen && skill ? (
@@ -282,7 +289,7 @@ const useStyles = makeThemedStyles((colors) =>
       backgroundColor: colors.surface,
       borderWidth: 2,
       borderColor: colors.neutral200,
-      borderRadius: radius.lg,
+      borderRadius: radius.xl,
       paddingHorizontal: 12,
       paddingVertical: 9,
       ...shadow.soft,
@@ -310,9 +317,10 @@ const useStyles = makeThemedStyles((colors) =>
       backgroundColor: colors.amber + "1A",
       borderWidth: 2,
       borderColor: colors.amber,
-      borderRadius: radius.lg,
+      borderRadius: radius.xl,
       padding: 12,
       gap: 5,
+      ...shadow.soft,
     },
     skillCardTitle: { fontSize: 13.5, fontWeight: "800", color: colors.neutral700 },
     skillDisplay: { fontSize: 21, fontWeight: "900", color: colors.neutral700 },
