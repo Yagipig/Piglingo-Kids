@@ -6,7 +6,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { CloseButton } from "@/components/close-button";
 import { SpeakerButton } from "@/components/speaker-button";
+import { RealVoiceButton } from "@/components/real-voice-button";
+import { TwemojiImage } from "@/components/twemoji-image";
+import { JLPT_NOTE, WordMeta } from "@/components/word-meta";
 import { useCourseContent } from "@/lib/content";
+import { courseHasJlpt } from "@/lib/lexicon";
 import { landForUnit } from "@/lib/lands";
 import { useProgress } from "@/lib/store";
 import { landPalette, makeThemedStyles, radius, useResolvedScheme } from "@/lib/theme";
@@ -107,12 +111,34 @@ export default function GuidebookScreen() {
           {unit.words.map((word, i) => (
             <View key={`${word.target}-${i}`} style={styles.wordRow}>
               <SpeakerButton text={word.target} size={36} />
-              <Text style={styles.wordText} maxFontSizeMultiplier={1.3}>
-                {word.emoji} {word.target} — {word.native}
-              </Text>
+              <View style={{ flex: 1 }}>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
+                >
+                  <TwemojiImage emoji={word.emoji} size={22} />
+                  <Text
+                    style={[styles.wordText, { flex: 1 }]}
+                    maxFontSizeMultiplier={1.3}
+                  >
+                    {word.target} — {word.native}
+                  </Text>
+                </View>
+                <WordMeta courseId={activeCourseId} word={word} showGloss />
+                <RealVoiceButton
+                  courseId={activeCourseId}
+                  text={word.target}
+                  compact
+                />
+              </View>
             </View>
           ))}
         </View>
+        {courseHasJlpt(activeCourseId, unit.words.map((w) => w.target)) ? (
+          <Text style={styles.footnote} maxFontSizeMultiplier={1.2}>
+            * {JLPT_NOTE} Xem thêm ở màn "Nguồn dữ liệu & Giấy phép" trong
+            tab Hồ sơ.
+          </Text>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -152,6 +178,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   paragraph: { fontSize: 15, color: colors.text, lineHeight: 22 },
   wordRow: { flexDirection: "row", alignItems: "center", gap: 12 },
   wordText: { fontSize: 17, color: colors.text, fontWeight: "600", flexShrink: 1 },
+  footnote: { fontSize: 12, color: colors.textMuted, marginTop: 4 },
   emptyContainer: {
     flex: 1,
     alignItems: "center",
