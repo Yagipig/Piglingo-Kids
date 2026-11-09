@@ -17,6 +17,7 @@ import {
 import { useSfx } from "@/lib/audio";
 import { catalog, useCourseContent } from "@/lib/content";
 import { kingdomForCourse } from "@/lib/kingdoms";
+import { stageReward } from "@/lib/pets";
 import {
   evaluateCondition,
   scopedFamilyRewards,
@@ -58,6 +59,7 @@ export default function CelebrationScreen() {
     course?: string;
     scope?: string;
     stage?: string;
+    justClaimed?: string;
   }>();
   const progress = useProgress();
   const { user } = useAuth();
@@ -100,12 +102,14 @@ export default function CelebrationScreen() {
     [courseId, familyRewards, progress, user?.id],
   );
 
-  /* ----- Nhánh RƯƠNG CHẶNG (Phase 3): /celebration?course=..&stage=N --
-     Chỉ HIỂN THỊ ăn mừng cho chặng đã hoàn thành trên bản đồ đường đi:
-     sao + XP của chặng suy từ tiến độ thật (mỗi bài đã xong đã cộng
-     đúng XP_PER_LESSON vào khóa khi học — màn này KHÔNG cộng thêm XP,
-     KHÔNG gắn phần thưởng gia đình). Không có param `stage` thì hành
-     vi cũ (mốc 100% khóa) giữ nguyên tuyệt đối. */
+  /* ----- Nhánh RƯƠNG CHẶNG: /celebration?course=..&stage=N ---------
+     Ăn mừng cho chặng đã hoàn thành trên bản đồ đường đi. Từ Đợt B+C,
+     bản đồ đã gọi `claimStageReward` TRƯỚC khi điều hướng tới đây khi
+     rương chưa nhận (param `justClaimed=1`) — màn này chỉ HIỂN THỊ quà
+     vừa nhận từ store, tự nó không cộng gì thêm; mở lại rương đã nhận
+     (không có param) thì chỉ hiện lại phần quà của chặng. Không gắn
+     phần thưởng gia đình. Không có param `stage` thì hành vi cũ (mốc
+     100% khóa) giữ nguyên tuyệt đối. */
   const stageContent = useCourseContent(courseId ?? "en-vi");
   const stageModel = useMemo(() => {
     if (params.stage == null || params.stage === "" || courseId == null) {
@@ -116,6 +120,7 @@ export default function CelebrationScreen() {
     const stage = buildStages(stageContent.allLessons)[stageIndex];
     if (!stage) return null;
     const completedMap = progress.courses?.[courseId]?.completedLessons ?? {};
+    const stageNumber = stage.index + 1;
     return {
       stage,
       done: stageCompletedCount(stage, completedMap),
@@ -123,11 +128,39 @@ export default function CelebrationScreen() {
       kingdom: kingdomForCourse(courseId),
       courseXp: progress.courses?.[courseId]?.xp ?? 0,
       courseName: course?.targetLanguage ?? "",
+      reward: stageReward(stageNumber),
+      claimed: (progress.claimedStageRewards?.[courseId] ?? []).includes(
+        stageNumber
+      ),
+      justClaimed: params.justClaimed === "1",
+      wallet: {
+        stars: progress.stars ?? 0,
+        food: progress.petFood ?? 0,
+        keys: progress.unlockKeys ?? 0,
+      },
     };
-  }, [params.stage, courseId, course, stageContent.allLessons, progress]);
+  }, [
+    params.stage,
+    params.justClaimed,
+    courseId,
+    course,
+    stageContent.allLessons,
+    progress,
+  ]);
 
   if (stageModel) {
-    const { stage, done, complete, kingdom, courseXp, courseName } = stageModel;
+    const {
+      stage,
+      done,
+      complete,
+      kingdom,
+      courseXp,
+      courseName,
+      reward,
+      claimed,
+      justClaimed,
+      wallet,
+    } = stageModel;
     const stageBaseXp = XP_PER_LESSON * stage.lessons.length;
     return (
       <SafeAreaView style={styles.screen}>
@@ -161,17 +194,50 @@ export default function CelebrationScreen() {
             <Animated.View entering={FadeInUp.delay(280)} style={styles.cardWrap}>
               <Text style={styles.stars}>⭐⭐⭐</Text>
               <View style={styles.infoCard}>
-                <Text style={styles.infoLine}>
-                  🎉 Chặng này mang về ít nhất {stageBaseXp} XP (mỗi bài{" "}
-                  {XP_PER_LESSON} XP, bài không sai câu nào còn +{XP_PERFECT_BONUS}{" "}
-                  XP nữa).
-                </Text>
+                {justClaimed ? (
+                  <>
+                    <Text style={styles.infoLine}>
+                      🎁 Quà trong rương vừa về túi của bé:
+                    </Text>
+                    <Text style={styles.infoLine}>
+                      ⚡ +{reward.xpBonus} XP thưởng · ⭐ +{reward.stars} sao
+                      (đang có {wallet.stars} sao)
+                    </Text>
+                    <Text style={styles.infoLine}>
+                      🍎 +{reward.food} thức ăn cho thú cưng (đang có{" "}
+                      {wallet.food})
+                      {reward.key > 0
+                        ? ` · 🔑 +${reward.key} chìa khóa bí mật (đang có ${wallet.keys})`
+                        : ""}
+                    </Text>
+                  </>
+                ) : claimed ? (
+                  <>
+                    <Text style={styles.infoLine}>
+                      Rương này bé đã nhận quà rồi nè! Quà của chặng là: ⚡ +
+                      {reward.xpBonus} XP thưởng, ⭐ +{reward.stars} sao, 🍎 +
+                      {reward.food} thức ăn cho thú
+                      {reward.key > 0 ? `, 🔑 +${reward.key} chìa khóa bí mật` : ""}.
+                    </Text>
+                    <Text style={styles.infoLine}>
+                      Ví của bé lúc này: ⭐ {wallet.stars} sao · 🍎 {wallet.food}{" "}
+                      thức ăn · 🔑 {wallet.keys} chìa khóa.
+                    </Text>
+                  </>
+                ) : (
+                  <Text style={styles.infoLine}>
+                    🎉 Chặng này mang về ít nhất {stageBaseXp} XP (mỗi bài{" "}
+                    {XP_PER_LESSON} XP, bài không sai câu nào còn +
+                    {XP_PERFECT_BONUS} XP nữa). Quay lại bản đồ và chạm vào
+                    rương để nhận quà cho thú cưng nhé!
+                  </Text>
+                )}
                 <Text style={styles.infoLine}>
                   ⭐ Tổng XP của vương quốc này: {courseXp} XP.
                 </Text>
                 <Text style={styles.infoLine}>
-                  Rương chỉ để ăn mừng thôi — phần thưởng thật từ ba/mẹ nằm ở
-                  mục Phần thưởng nhé!
+                  Vào trang Thú cưng 🐾 để cho thú ăn, mặc phụ kiện và dùng
+                  chìa khóa bí mật nhé!
                 </Text>
               </View>
             </Animated.View>
