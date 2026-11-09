@@ -13,9 +13,35 @@ const BASE_URL = "/Piglingo-Kids";
 
 const registerServiceWorker = `
 if ("serviceWorker" in navigator) {
+  // Nếu trang đang do một service worker CŨ điều khiển mà worker mới vừa
+  // giành quyền (controllerchange), tự nạp lại trang ĐÚNG MỘT LẦN để giao
+  // diện mới áp dụng ngay — máy kẹt bản cũ thoát ra mà không cần đóng tab.
+  var hadController = !!navigator.serviceWorker.controller;
+  var reloadedForSw = false;
+  navigator.serviceWorker.addEventListener("controllerchange", function () {
+    if (!hadController || reloadedForSw) return;
+    try {
+      if (sessionStorage.getItem("piglingo-sw-reloaded")) return;
+      sessionStorage.setItem("piglingo-sw-reloaded", "1");
+    } catch (e) {}
+    reloadedForSw = true;
+    window.location.reload();
+  });
   window.addEventListener("load", function () {
     navigator.serviceWorker
       .register("${BASE_URL}/sw.js", { scope: "${BASE_URL}/" })
+      .then(function (registration) {
+        // Chủ động kiểm tra bản sw.js mới ngay khi mở app và mỗi khi app
+        // quay lại foreground, thay vì chờ chu kỳ kiểm tra mặc định.
+        function checkForUpdate() {
+          registration.update().catch(function () {});
+        }
+        checkForUpdate();
+        document.addEventListener("visibilitychange", function () {
+          if (document.visibilityState === "visible") checkForUpdate();
+        });
+        window.addEventListener("focus", checkForUpdate);
+      })
       .catch(function () {});
   });
 }
