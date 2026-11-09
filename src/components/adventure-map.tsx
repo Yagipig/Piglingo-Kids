@@ -42,6 +42,7 @@ import {
 } from "@/lib/content";
 import { kingdomForCourse } from "@/lib/kingdoms";
 import {
+  RARE_PET,
   accessoryById,
   legendaryUnlocked,
   petForCourse,
@@ -108,14 +109,23 @@ export function AdventureMap({ courseId }: { courseId: string }) {
       progress.courses ?? {},
       Object.fromEntries(catalog.courses.map((c) => [c.id, c.lessonCount]))
     );
-  /** Thú đi theo: Rồng (khi được chọn + đã mở) hoặc thú của vương quốc. */
-  const travelerPetEmoji = dragonActive ? "🐉" : kingdom?.companion ?? "🐷";
-  /** Phụ kiện đang mặc của thú vương quốc này (Rồng không dùng phụ kiện). */
-  const travelerAccessoryEmojis = dragonActive
-    ? []
-    : equippedHere
-        .map((id) => accessoryById(courseId, id)?.emoji)
-        .filter((e): e is string => !!e);
+  /** Pet hiếm Phượng Hoàng Cầu Vồng (trúng ở vòng quay) đang được chọn đồng hành. */
+  const phoenixActive =
+    progress.activeCompanion === "phuong-hoang" &&
+    (progress.rarePets ?? []).includes(RARE_PET.id);
+  /** Thú đi theo: Phượng Hoàng hiếm / Rồng (khi được chọn + đã mở) / thú vương quốc. */
+  const travelerPetEmoji = phoenixActive
+    ? RARE_PET.emoji
+    : dragonActive
+      ? "🐉"
+      : (kingdom?.companion ?? "🐷");
+  /** Phụ kiện đang mặc của thú vương quốc này (Rồng/Phượng Hoàng không dùng phụ kiện). */
+  const travelerAccessoryEmojis =
+    dragonActive || phoenixActive
+      ? []
+      : equippedHere
+          .map((id) => accessoryById(courseId, id)?.emoji)
+          .filter((e): e is string => !!e);
   const worldPet = petForCourse(courseId);
   /** Checkpoint đang khóa mà bé vừa chạm — panel hỏi dùng chìa khóa. */
   const [keyPanelRef, setKeyPanelRef] = useState<LessonRef | null>(null);
