@@ -1,6 +1,6 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 import { exitScreen } from "@/lib/navigation";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -13,14 +13,7 @@ import {
   Text,
   View,
 } from "react-native";
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-  ZoomIn,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import Animated, { FadeInDown, FadeInUp, ZoomIn } from "react-native-reanimated";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -29,6 +22,7 @@ import {
 import { CelebrationBurst, StarRow } from "@/components/celebration";
 import { CloseButton } from "@/components/close-button";
 import { DuoButton } from "@/components/duo-button";
+import { Card, ProgressBar } from "@/components/ui";
 import { LessonPet, type PetFeedback } from "@/components/lesson-pet";
 import { FillBlank, ensureBlank } from "@/components/exercises/fill-blank";
 import { Match } from "@/components/exercises/match";
@@ -56,9 +50,12 @@ import {
   XP_PERFECT_BONUS,
 } from "@/lib/store";
 import {
+  kingdomColorTokens,
   landPalette,
   makeThemedStyles,
   radius,
+  spacing,
+  typography,
   useResolvedScheme,
   useThemeColors,
 } from "@/lib/theme";
@@ -265,14 +262,9 @@ export default function LessonScreen() {
   const exercise = queue[index];
   const total = exercises.length;
   const percentage = total === 0 ? 0 : Math.min(100, (correctCount / total) * 100);
-
-  const progressBar = useSharedValue(0);
-  useEffect(() => {
-    progressBar.set(withSpring(percentage, { damping: 20, stiffness: 160 }));
-  }, [percentage, progressBar]);
-  const progressBarStyle = useAnimatedStyle(() => ({
-    width: `${Math.max(0, Math.min(100, progressBar.get()))}%`,
-  }));
+  // Màu nhấn của vương quốc đang học — đồng bộ thẻ câu hỏi + thanh tiến
+  // độ với bản đồ/dashboard (chỉ trình bày, suy từ khóa đang học).
+  const kingdomTokens = kingdomColorTokens(activeCourseId);
 
   useEffect(() => {
     if (!exercise && total > 0 && !finishedRef.current) {
@@ -322,7 +314,14 @@ export default function LessonScreen() {
         progress.courses ?? {},
         Object.fromEntries(catalog.courses.map((c) => [c.id, c.lessonCount]))
       ),
+      rarePets: progress.rarePets ?? [],
     });
+    // Vé vòng quay đang có (completeLesson vừa cấp vé cho bài này nếu
+    // là lần hoàn thành mới) — hiện nút quay nổi bật ở màn kết quả.
+    const spinTicketTotal =
+      (progress.spinTickets?.easy ?? 0) +
+      (progress.spinTickets?.medium ?? 0) +
+      (progress.spinTickets?.hard ?? 0);
     const perfectLine = perfect
       ? PERFECT_LINES[
           Math.abs(
@@ -390,6 +389,22 @@ export default function LessonScreen() {
               🔓 Điểm đến tiếp theo đã mở: {nextRef.unit.title} —{" "}
               {nextRef.lesson.title}
             </Animated.Text>
+          ) : null}
+          {!isPractice && spinTicketTotal > 0 ? (
+            <Animated.View
+              entering={FadeInUp.delay(560)}
+              style={{ alignSelf: "stretch", gap: 8 }}
+            >
+              <Animated.Text style={styles.ticketNote}>
+                🎟️ Bé có {spinTicketTotal} vé quay may mắn — quay ngay để nhận
+                quà vào Kho báu nhé!
+              </Animated.Text>
+              <DuoButton
+                label="🎡 Quay vòng may mắn"
+                variant="super"
+                onPress={() => router.push("/spin")}
+              />
+            </Animated.View>
           ) : null}
           <Animated.View
             entering={FadeInUp.delay(450)}
@@ -459,15 +474,13 @@ export default function LessonScreen() {
       >
         <View style={styles.header}>
           <CloseButton />
-          <View
-            style={styles.progressTrack}
-            accessibilityRole="progressbar"
-            accessibilityValue={{ min: 0, max: 100, now: Math.round(percentage) }}
-            accessibilityLabel="Tiến độ bài học"
-          >
-            <Animated.View style={[styles.progressFill, progressBarStyle]}>
-              <View style={styles.progressShine} />
-            </Animated.View>
+          <View style={styles.progressWrap}>
+            <ProgressBar
+              value={percentage / 100}
+              color={kingdomTokens?.primary ?? colors.greenLight}
+              height={14}
+              accessibilityLabel="Tiến độ bài học"
+            />
           </View>
           <Text style={styles.finishFlag}>🏁</Text>
           {isPractice ? (
@@ -495,7 +508,7 @@ export default function LessonScreen() {
             exerciseKey={`${exercise.id}-${index}`}
             feedback={petFeedback}
           />
-          <View style={styles.stage}>
+          <Card accentColor={kingdomTokens?.primary} style={styles.stageCard}>
           {index >= exercises.length && !isMistakes ? (
             <View style={[styles.badge, { backgroundColor: colors.orange + "22" }]}>
               <Ionicons name="refresh" size={14} color={colors.orange} />
@@ -566,7 +579,7 @@ export default function LessonScreen() {
               status={status}
             />
           )}
-          </View>
+          </Card>
         </ScrollView>
 
         <View
@@ -630,7 +643,7 @@ function ResultCard({
 }) {
   const styles = useStyles();
   return (
-    <View style={[styles.resultCard, { borderColor: color }]}>
+    <Card padded={false} accentColor={color} style={styles.resultCard}>
       <View style={[styles.resultCardHeader, { backgroundColor: color }]}>
         <Text style={styles.resultCardLabel} maxFontSizeMultiplier={1.3}>
           {label}
@@ -645,7 +658,7 @@ function ResultCard({
           {value}
         </Text>
       </View>
-    </View>
+    </Card>
   );
 }
 
@@ -654,17 +667,11 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    gap: spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.sm,
   },
-  progressTrack: {
-    flex: 1,
-    height: 16,
-    borderRadius: radius.full,
-    backgroundColor: colors.neutral200,
-    overflow: "hidden",
-  },
+  progressWrap: { flex: 1 },
   finishFlag: { fontSize: 20 },
   landStrip: {
     borderRadius: radius.full,
@@ -674,26 +681,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     marginBottom: 12,
   },
   landStripText: { fontSize: 13, fontWeight: "800", color: colors.white },
-  stage: {
-    backgroundColor: colors.surface,
-    borderWidth: 2,
-    borderBottomWidth: 6,
-    borderColor: colors.neutral200,
-    borderRadius: radius.xl,
-    padding: 18,
-  },
-  progressFill: {
-    height: "100%",
-    borderRadius: radius.full,
-    backgroundColor: colors.greenLight,
-    justifyContent: "center",
-  },
-  progressShine: {
-    height: 4,
-    marginHorizontal: 8,
-    borderRadius: radius.full,
-    backgroundColor: "rgba(255,255,255,0.35)",
-  },
+  stageCard: { padding: spacing.xl },
   practicePill: {
     flexDirection: "row",
     alignItems: "center",
@@ -702,19 +690,19 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     justifyContent: "center",
   },
   body: {
-    padding: 20,
-    paddingBottom: 40,
+    padding: spacing.xl,
+    paddingBottom: spacing.huge,
     width: "100%",
     maxWidth: 760,
     alignSelf: "center",
   },
   footer: {
-    padding: 16,
-    gap: 12,
+    padding: spacing.lg,
+    gap: spacing.md,
     borderTopWidth: 2,
     borderTopColor: colors.neutral200,
   },
-  feedbackRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+  feedbackRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
   badge: {
     flexDirection: "row",
     alignItems: "center",
@@ -726,8 +714,12 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     marginBottom: 8,
   },
   badgeText: { fontSize: 12, fontWeight: "800", letterSpacing: 0.6 },
-  feedback: { fontSize: 20, fontWeight: "800" },
-  feedbackDetail: { fontSize: 16, fontWeight: "600", marginTop: 2, marginLeft: 34 },
+  feedback: {
+    fontSize: typography.h2.fontSize,
+    lineHeight: typography.h2.lineHeight,
+    fontWeight: "800",
+  },
+  feedbackDetail: { fontSize: 16, fontWeight: "600", marginTop: 2, marginLeft: 42 },
   center: {
     flex: 1,
     alignItems: "center",
@@ -739,7 +731,8 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   finishMascot: { width: 150, height: 150 },
   finishTitle: {
     fontSize: 26,
-    fontWeight: "800",
+    lineHeight: 32,
+    fontWeight: "900",
     color: colors.neutral700,
     textAlign: "center",
   },
@@ -751,6 +744,12 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     color: colors.correctText,
     textAlign: "center",
   },
+  ticketNote: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: colors.amber,
+    textAlign: "center",
+  },
   nextUnlock: {
     fontSize: 15,
     fontWeight: "700",
@@ -759,9 +758,6 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   },
   resultRow: { flexDirection: "row", gap: 14, flexWrap: "wrap", justifyContent: "center" },
   resultCard: {
-    borderWidth: 2,
-    borderBottomWidth: 5,
-    borderRadius: radius.lg,
     overflow: "hidden",
     minWidth: 118,
   },
