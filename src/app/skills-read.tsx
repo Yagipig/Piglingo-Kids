@@ -5,6 +5,8 @@ import { DuoButton } from "@/components/duo-button";
 import { OptionCard, type OptionState } from "@/components/exercises/option-card";
 import { SpeakerButton } from "@/components/speaker-button";
 import { Card } from "@/components/ui";
+import { RealVoiceButton } from "@/components/real-voice-button";
+import { WordMeta } from "@/components/word-meta";
 import {
   SkillFeedbackBar,
   SkillFrame,
@@ -221,9 +223,17 @@ export default function SkillsReadScreen() {
                 <SpeakerButton text={selected.word?.target ?? selected.token} size={48} />
               </View>
               {selected.word ? (
-                <Text style={styles.wordMeaning} maxFontSizeMultiplier={1.3}>
-                  {selected.word.emoji} Nghĩa: {selected.word.native}
-                </Text>
+                <>
+                  <Text style={styles.wordMeaning} maxFontSizeMultiplier={1.3}>
+                    {selected.word.emoji} Nghĩa: {selected.word.native}
+                  </Text>
+                  <WordMeta courseId={courseId} word={selected.word} />
+                  <RealVoiceButton
+                    courseId={courseId}
+                    text={selected.word.target}
+                    compact
+                  />
+                </>
               ) : (
                 <Text style={styles.wordMeaning} maxFontSizeMultiplier={1.3}>
                   Từ này chưa có trong từ điển của khóa — bé nghe và đọc theo

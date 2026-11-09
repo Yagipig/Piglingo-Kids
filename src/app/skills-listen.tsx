@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { DuoButton } from "@/components/duo-button";
 import { OptionCard, type OptionState } from "@/components/exercises/option-card";
+import { RealVoiceButton } from "@/components/real-voice-button";
 import { SpeakerButton } from "@/components/speaker-button";
 import { Card } from "@/components/ui";
 import {
@@ -168,6 +169,13 @@ export default function SkillsListenScreen() {
               <Text style={styles.blanked} maxFontSizeMultiplier={1.3}>
                 {activity.blanked}
               </Text>
+            ) : null}
+            {activity.kind === "listen-word" ? (
+              <RealVoiceButton
+                courseId={courseId}
+                text={activity.answer.word.target}
+                compact
+              />
             ) : null}
           </Card>
 
