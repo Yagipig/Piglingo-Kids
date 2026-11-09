@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { SpeakerButton } from "@/components/speaker-button";
 import { speakTarget } from "@/lib/audio";
 import { useProgress } from "@/lib/store";
-import { makeThemedStyles } from "@/lib/theme";
+import { makeThemedStyles, radius, spacing, typography } from "@/lib/theme";
 import type { SelectExercise } from "@/lib/types";
 
 import { OptionCard, type OptionState } from "./option-card";
@@ -83,11 +83,26 @@ export function Select({
 
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
-    container: { gap: 20 },
-    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
-    promptRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+    container: { gap: spacing.xl },
+    title: {
+      fontSize: typography.h1.fontSize,
+      lineHeight: typography.h1.lineHeight,
+      fontWeight: "900",
+      color: colors.neutral700,
+    },
+    promptRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.md,
+      alignSelf: "flex-start",
+      maxWidth: "100%",
+      backgroundColor: colors.neutral100,
+      borderRadius: radius.xl,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+    },
     prompt: { fontSize: 24, fontWeight: "700", color: colors.text, flexShrink: 1 },
-    options: { gap: 10 },
+    options: { gap: spacing.md },
     grid: { flexDirection: "row", flexWrap: "wrap" },
   })
 );
