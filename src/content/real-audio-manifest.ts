@@ -6,8 +6,10 @@
 // Key: `${courseId}:${target}` — cùng quy ước với audio.ts.
 
 export const realAudioManifest: Record<string, number> = {
+  "en-vi:bird": require("../../assets/audio/lingua/en/bird.mp3"),
   "en-vi:blue": require("../../assets/audio/lingua/en/blue.mp3"),
   "en-vi:cat": require("../../assets/audio/lingua/en/cat.mp3"),
   "en-vi:dog": require("../../assets/audio/lingua/en/dog.mp3"),
+  "en-vi:fish": require("../../assets/audio/lingua/en/fish.mp3"),
   "en-vi:horse": require("../../assets/audio/lingua/en/horse.mp3"),
 };
