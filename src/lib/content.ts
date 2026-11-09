@@ -36,6 +36,16 @@ function buildLessonIndex(pack: Pack): { list: LessonRef[]; byId: Map<string, Le
   return { list, byId };
 }
 
+/** Object công khai mà `useCourseContent` trả về cho một khóa. */
+export type CourseContent = {
+  pack: Pack;
+  allLessons: LessonRef[];
+  getLesson: (id: string) => LessonRef | undefined;
+  getUnit: (unitId: string) => UnitPack | undefined;
+  allWords: () => Word[];
+  getWord: (target: string) => Word | undefined;
+};
+
 type CourseCacheEntry = {
   pack: Pack;
   list: LessonRef[];
@@ -43,6 +53,15 @@ type CourseCacheEntry = {
   unitById: Map<string, UnitPack>;
   allWords: Word[];
   wordByTarget: Map<string, Word>;
+  /**
+   * Object trả về của `useCourseContent`, tạo MỘT lần rồi giữ nguyên
+   * trong cache: identity của nó (và của closure `allWords` bên trong)
+   * phải ổn định giữa các lần render/gọi cùng courseId, nếu không mọi
+   * `useMemo(..., [allWords])` ở phía gọi sẽ bị tính lại sau mỗi lần
+   * đổi state (gốc rễ lỗi game Lật thẻ / Đoán chữ / Nghe — xem
+   * GAME-BUG-ANALYSIS.md).
+   */
+  view: CourseContent | null;
 };
 
 const courseCache = new Map<string, CourseCacheEntry>();
@@ -65,7 +84,7 @@ function getCourseCache(courseId: string): CourseCacheEntry {
         wordByTarget.set(w.target, w);
       }
     }
-    cached = { pack, list, byId, unitById, allWords, wordByTarget };
+    cached = { pack, list, byId, unitById, allWords, wordByTarget, view: null };
     courseCache.set(courseId, cached);
   }
   return cached;
@@ -173,14 +192,21 @@ export function isLockedAtFrontier(opts: {
   return !opts.unlockedAll && !opts.completed && opts.globalIndex !== opts.frontierIndex;
 }
 
-export function useCourseContent(courseId: string) {
+export function useCourseContent(courseId: string): CourseContent {
   const cached = getCourseCache(courseId);
-  return {
-    pack: cached.pack,
-    allLessons: cached.list,
-    getLesson: (id: string) => cached.byId.get(id),
-    getUnit: (unitId: string) => cached.unitById.get(unitId),
-    allWords: () => cached.allWords,
-    getWord: (target: string) => cached.wordByTarget.get(target),
-  };
+  // Trả về CÙNG MỘT object cho mọi lần gọi cùng courseId (lưu trong
+  // CourseCacheEntry.view). Trước đây mỗi lần gọi tạo object + closure
+  // `allWords` mới → deps [allWords] của các useMemo phía gọi đổi liên
+  // tục → dữ liệu ngẫu nhiên của game bị dựng lại sau mỗi lần chạm.
+  if (!cached.view) {
+    cached.view = {
+      pack: cached.pack,
+      allLessons: cached.list,
+      getLesson: (id: string) => cached.byId.get(id),
+      getUnit: (unitId: string) => cached.unitById.get(unitId),
+      allWords: () => cached.allWords,
+      getWord: (target: string) => cached.wordByTarget.get(target),
+    };
+  }
+  return cached.view;
 }
