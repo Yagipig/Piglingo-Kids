@@ -35,11 +35,10 @@ import { Select } from "@/components/exercises/select";
 import { TypeAnswer } from "@/components/exercises/type-answer";
 import { WordBank } from "@/components/exercises/word-bank";
 import { speakTarget, useSfx } from "@/lib/audio";
-import { useCourseContent } from "@/lib/content";
+import { effectiveFrontierIndex, useCourseContent } from "@/lib/content";
 import { haptics } from "@/lib/haptics";
 import { landForUnit } from "@/lib/lands";
 import {
-  currentLessonIndex,
   currentStreak,
   dueSrsWords,
   useProgress,
@@ -286,10 +285,14 @@ export default function LessonScreen() {
     // (perfect / correctCount / total) — không lưu thêm hệ thưởng nào.
     const stars = perfect ? 3 : 2;
     const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
-    // Điểm đến tiếp theo theo đúng currentLessonIndex sau khi hoàn thành.
-    const nextIndex = currentLessonIndex(
+    // Điểm đến tiếp theo theo đúng BIÊN HIỆU LỰC sau khi hoàn thành
+    // (tiến độ thật + sàn cấp độ) — cùng mốc với trang chủ/bản đồ, nên
+    // học từ điểm bắt đầu theo cấp độ sẽ tiến tiếp đúng bài, không bị
+    // kéo ngược về bài cơ bản đầu tiên chưa học.
+    const nextIndex = effectiveFrontierIndex(
       progress.course().completedLessons,
-      allLessons.map((l) => l.lesson.id)
+      allLessons.map((l) => l.lesson.id),
+      progress.learnerLevel
     );
     const nextRef = !isPractice ? allLessons[nextIndex] : undefined;
     return (
