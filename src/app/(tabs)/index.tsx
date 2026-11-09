@@ -323,6 +323,18 @@ export default function LearnScreen() {
                 onPress={() => router.push("/pet")}
               />
             </View>
+            <View style={styles.shortcutRow}>
+              <ShortcutCard
+                emoji="🎡"
+                label="Vòng quay"
+                onPress={() => router.push("/spin")}
+              />
+              <ShortcutCard
+                emoji="🧰"
+                label="Kho báu"
+                onPress={() => router.push("/treasure")}
+              />
+            </View>
 
             <Text style={styles.footerNote} maxFontSizeMultiplier={1.25}>
               Muốn bắt đầu từ tầng cao hơn? Đổi cấp độ của em ở tab Hồ sơ —
