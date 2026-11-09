@@ -400,9 +400,14 @@ check('store: migrate điền mặc định thú cưng ở CẢ HAI nhánh', () 
     store.includes('(old.petGrowth as Record<string, number>) ?? {}'),
     'nhánh có courses phải điền petGrowth ?? {}',
   );
+  // Sửa khẳng định (chốt người dùng 09/11): khóa đồng hành của pet hiếm
+  // đổi "ky-lan" → "phuong-hoang", migrate nhánh có courses nay ÁNH XẠ
+  // khóa cũ sang khóa mới thay vì chỉ điền mặc định — chuỗi cũ không còn.
   assert.ok(
-    store.includes('(old.activeCompanion as "world" | "legendary") ?? "world"'),
-    'nhánh có courses phải điền activeCompanion ?? "world"',
+    store.includes('old.activeCompanion === "ky-lan"') &&
+      store.includes('? "phuong-hoang"') &&
+      store.includes('(old.activeCompanion as "world" | "legendary")'),
+    'nhánh có courses phải ánh xạ activeCompanion cũ (ky-lan) → phuong-hoang, còn lại giữ ?? "world"',
   );
   assert.ok(
     store.includes('activeCompanion: "world" as const'),

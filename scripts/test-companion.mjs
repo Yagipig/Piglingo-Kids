@@ -91,10 +91,17 @@ check('adventure-map: mốc nhảy bằng AsyncStorage theo courseId + planHop, 
 // Đợt A "thú = companion của vương quốc, không phụ kiện"): thú đi theo
 // nay là thú đang đồng hành — thú vương quốc (kingdoms.ts) hoặc Rồng
 // Huyền Thoại khi bé chọn Rồng — và HIỆN phụ kiện đang mặc.
-check('adventure-map: thú đi theo = thú đang đồng hành (vương quốc/Rồng) + phụ kiện đang mặc', () => {
+// Đợt Vòng quay thay đổi chủ đích tiếp: thêm pet hiếm (trúng ở vòng
+// quay tầng Khó) vào đầu chuỗi ưu tiên của travelerPetEmoji — khẳng
+// định chuỗi cũ được thay bằng hai mảnh của biểu thức mới. Chốt
+// 09/11/2026: pet hiếm đổi Kỳ Lân 🦄 → Phượng Hoàng Cầu Vồng 🦚
+// (khóa "phuong-hoang", biến phoenixActive).
+check('adventure-map: thú đi theo = thú đang đồng hành (Phượng Hoàng/Rồng/vương quốc) + phụ kiện đang mặc', () => {
   assert.ok(
-    map.includes('travelerPetEmoji = dragonActive ? "🐉" : kingdom?.companion'),
-    'thú đi theo phải suy từ activeCompanion: Rồng khi chọn Rồng, còn lại thú vương quốc',
+    map.includes('const travelerPetEmoji = phoenixActive') &&
+      map.includes('dragonActive') &&
+      map.includes('kingdom?.companion ?? "🐷"'),
+    'thú đi theo phải suy từ activeCompanion: Phượng Hoàng Cầu Vồng khi chọn Phượng Hoàng, Rồng khi chọn Rồng, còn lại thú vương quốc',
   );
   assert.ok(map.includes('companionEmoji={travelerPetEmoji}'), 'Traveler phải nhận thú đang đồng hành');
   assert.ok(map.includes('accessoryEmojis={travelerAccessoryEmojis}'), 'Traveler phải nhận phụ kiện đang mặc');
