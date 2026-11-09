@@ -9,8 +9,14 @@ import { CelebrationBurst } from "@/components/celebration";
 import { DuoButton } from "@/components/duo-button";
 import { FamilyRewardCard, GlobalRewardCard } from "@/components/reward-cards";
 import { useAuth } from "@/features/supabase/AuthContext";
+import {
+  buildStages,
+  isStageComplete,
+  stageCompletedCount,
+} from "@/lib/adventure";
 import { useSfx } from "@/lib/audio";
-import { catalog } from "@/lib/content";
+import { catalog, useCourseContent } from "@/lib/content";
+import { kingdomForCourse } from "@/lib/kingdoms";
 import {
   evaluateCondition,
   scopedFamilyRewards,
@@ -19,7 +25,7 @@ import {
   type RewardCondition,
 } from "@/lib/rewards";
 import { effectiveGlobalRewards, useRewardsStore } from "@/lib/rewardsStore";
-import { useProgress } from "@/lib/store";
+import { useProgress, XP_PER_LESSON, XP_PERFECT_BONUS } from "@/lib/store";
 import { makeThemedStyles, radius, shadow } from "@/lib/theme";
 
 function isCompletionRewardForCourse(reward: GlobalReward, courseId: string): boolean {
@@ -48,7 +54,11 @@ function conditionIsCompletion(condition: RewardCondition, courseId: string | nu
  */
 export default function CelebrationScreen() {
   const styles = useStyles();
-  const params = useLocalSearchParams<{ course?: string; scope?: string }>();
+  const params = useLocalSearchParams<{
+    course?: string;
+    scope?: string;
+    stage?: string;
+  }>();
   const progress = useProgress();
   const { user } = useAuth();
   const familyRewards = useRewardsStore((state) => state.familyRewards);
@@ -89,6 +99,109 @@ export default function CelebrationScreen() {
       ),
     [courseId, familyRewards, progress, user?.id],
   );
+
+  /* ----- Nhánh RƯƠNG CHẶNG (Phase 3): /celebration?course=..&stage=N --
+     Chỉ HIỂN THỊ ăn mừng cho chặng đã hoàn thành trên bản đồ đường đi:
+     sao + XP của chặng suy từ tiến độ thật (mỗi bài đã xong đã cộng
+     đúng XP_PER_LESSON vào khóa khi học — màn này KHÔNG cộng thêm XP,
+     KHÔNG gắn phần thưởng gia đình). Không có param `stage` thì hành
+     vi cũ (mốc 100% khóa) giữ nguyên tuyệt đối. */
+  const stageContent = useCourseContent(courseId ?? "en-vi");
+  const stageModel = useMemo(() => {
+    if (params.stage == null || params.stage === "" || courseId == null) {
+      return null;
+    }
+    const stageIndex = Number(params.stage);
+    if (!Number.isInteger(stageIndex) || stageIndex < 0) return null;
+    const stage = buildStages(stageContent.allLessons)[stageIndex];
+    if (!stage) return null;
+    const completedMap = progress.courses?.[courseId]?.completedLessons ?? {};
+    return {
+      stage,
+      done: stageCompletedCount(stage, completedMap),
+      complete: isStageComplete(stage, completedMap),
+      kingdom: kingdomForCourse(courseId),
+      courseXp: progress.courses?.[courseId]?.xp ?? 0,
+      courseName: course?.targetLanguage ?? "",
+    };
+  }, [params.stage, courseId, course, stageContent.allLessons, progress]);
+
+  if (stageModel) {
+    const { stage, done, complete, kingdom, courseXp, courseName } = stageModel;
+    const stageBaseXp = XP_PER_LESSON * stage.lessons.length;
+    return (
+      <SafeAreaView style={styles.screen}>
+        <CelebrationBurst active={complete} />
+        <ScrollView contentContainerStyle={styles.body}>
+          <Animated.View entering={ZoomIn.springify().damping(13)} style={styles.mascotWrap}>
+            <Image
+              source={require("@/assets/images/mascot-celebrate.png")}
+              style={styles.mascot}
+              contentFit="contain"
+              accessibilityLabel="Nhân vật Piglingo ăn mừng"
+            />
+          </Animated.View>
+
+          <Animated.Text entering={FadeInUp.delay(100)} style={styles.chest}>
+            {complete ? "🎁" : "🔒"}
+          </Animated.Text>
+          <Animated.Text entering={FadeInUp.delay(160)} style={styles.title}>
+            {complete
+              ? `Con đã mở rương Chặng ${stage.index + 1}!`
+              : `Rương Chặng ${stage.index + 1} chưa mở được`}
+          </Animated.Text>
+          <Animated.Text entering={FadeInUp.delay(220)} style={styles.subtitle}>
+            {kingdom ? `${kingdom.kingdomName} · ` : ""}
+            {courseName} — Chặng “{stage.title}”, Bài {stage.startGlobal + 1}–
+            {stage.endGlobal + 1} trong toàn khóa. Con đã học xong {done}/
+            {stage.lessons.length} bài của chặng này.
+          </Animated.Text>
+
+          {complete ? (
+            <Animated.View entering={FadeInUp.delay(280)} style={styles.cardWrap}>
+              <Text style={styles.stars}>⭐⭐⭐</Text>
+              <View style={styles.infoCard}>
+                <Text style={styles.infoLine}>
+                  🎉 Chặng này mang về ít nhất {stageBaseXp} XP (mỗi bài{" "}
+                  {XP_PER_LESSON} XP, bài không sai câu nào còn +{XP_PERFECT_BONUS}{" "}
+                  XP nữa).
+                </Text>
+                <Text style={styles.infoLine}>
+                  ⭐ Tổng XP của vương quốc này: {courseXp} XP.
+                </Text>
+                <Text style={styles.infoLine}>
+                  Rương chỉ để ăn mừng thôi — phần thưởng thật từ ba/mẹ nằm ở
+                  mục Phần thưởng nhé!
+                </Text>
+              </View>
+            </Animated.View>
+          ) : (
+            <Animated.Text entering={FadeInUp.delay(280)} style={styles.subtitle}>
+              Học xong mọi bài của Chặng {stage.index + 1} trên bản đồ đường
+              đi là rương tự mở. Cố lên, nhà thám hiểm nhí!
+            </Animated.Text>
+          )}
+
+          <View style={styles.actions}>
+            <DuoButton
+              label="🗺️ Quay lại bản đồ"
+              size="lg"
+              onPress={() =>
+                router.canGoBack()
+                  ? router.back()
+                  : router.replace("/(tabs)")
+              }
+            />
+            <DuoButton
+              label="Về trang chủ"
+              variant="white"
+              onPress={() => router.replace("/(tabs)")}
+            />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 
   const headline = isAllCourses
     ? "Chúc mừng! Con đã hoàn thành hành trình khám phá ngôn ngữ!"
@@ -206,6 +319,22 @@ const useStyles = makeThemedStyles((colors) =>
       maxWidth: 560,
     },
     cardWrap: { width: "100%", alignSelf: "stretch" },
+    stars: { fontSize: 40, textAlign: "center", marginBottom: 8 },
+    infoCard: {
+      backgroundColor: colors.surface,
+      borderWidth: 2,
+      borderColor: colors.amber,
+      borderRadius: radius.xl,
+      padding: 16,
+      gap: 8,
+      ...shadow.card,
+    },
+    infoLine: {
+      fontSize: 14.5,
+      lineHeight: 21,
+      fontWeight: "600",
+      color: colors.text,
+    },
     sectionTitle: {
       alignSelf: "flex-start",
       marginTop: 10,

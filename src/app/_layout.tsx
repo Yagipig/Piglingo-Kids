@@ -123,6 +123,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="courses" options={{ presentation: "modal" }} />
           <Stack.Screen name="lesson/[id]" options={{ presentation: "fullScreenModal" }} />
+          <Stack.Screen name="map/[courseId]" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="guidebook/[unitId]" options={{ presentation: "modal" }} />
           <Stack.Screen name="parents" options={{ presentation: "modal" }} />
           <Stack.Screen name="rewards" options={{ presentation: "modal" }} />
