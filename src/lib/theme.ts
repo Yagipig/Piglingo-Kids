@@ -1,5 +1,6 @@
 import { useColorScheme } from "react-native";
 
+import { kingdomForCourse } from "./kingdoms";
 import { useProgress } from "./store";
 
 /**
@@ -86,12 +87,118 @@ const darkColors: ThemeColors = {
 };
 
 export const radius = {
+  sm: 8,
   md: 12,
   lg: 16,
   xl: 24,
   xxl: 32,
   full: 999,
 } as const;
+
+/* ------------------------------------------------------------------ */
+/* REDESIGN PHASE 2 — design system dùng chung (additive, không phá   */
+/* token cũ). Mọi phase sau (Home/Bản đồ/Học/Game) lấy token từ đây.  */
+/* ------------------------------------------------------------------ */
+
+/** Thang khoảng cách chuẩn (px) — dùng cho padding/margin/gap. */
+export const spacing = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 24,
+  xxxl: 32,
+  huge: 40,
+} as const;
+
+/**
+ * Thang chữ chuẩn cho giao diện game: tiêu đề thật đậm và tròn trịa,
+ * nội dung vừa phải cho trẻ 7–9 tuổi đọc một mình.
+ */
+export const typography = {
+  display: { fontSize: 30, lineHeight: 36, fontWeight: "900" },
+  h1: { fontSize: 24, lineHeight: 30, fontWeight: "900" },
+  h2: { fontSize: 20, lineHeight: 26, fontWeight: "800" },
+  title: { fontSize: 17, lineHeight: 22, fontWeight: "800" },
+  body: { fontSize: 15, lineHeight: 21, fontWeight: "600" },
+  bodySmall: { fontSize: 14, lineHeight: 19, fontWeight: "600" },
+  caption: { fontSize: 13, lineHeight: 17, fontWeight: "700" },
+  tiny: { fontSize: 11, lineHeight: 14, fontWeight: "700" },
+} as const;
+
+/** Vùng chạm: mọi nút/chip bấm được phải đạt tối thiểu 48px (brief). */
+export const touchTargets = {
+  min: 48,
+  tabBarHeight: 88,
+  tabIcon: 28,
+} as const;
+
+/** Khung layout mobile-first portrait dùng chung toàn app. */
+export const layout = {
+  /** Bề rộng tối đa của cột nội dung kiểu điện thoại (căn giữa khi màn rộng). */
+  phoneMaxWidth: 480,
+  /** Bề rộng tối đa cho nội dung đọc rộng (panel, dashboard). */
+  contentMaxWidth: 720,
+  /** Lề ngang chuẩn của màn hình điện thoại. */
+  gutter: 16,
+} as const;
+
+/**
+ * Bảng màu "trời/biển" sáng kiểu game cho nền trang trí ngoài cột điện
+ * thoại (tablet/desktop) và các cảnh trời/biển về sau. `skyTop`/`skyBottom`
+ * là 2 lớp View chồng nhau giả gradient như tiền lệ palette vùng đất —
+ * app không dùng thư viện gradient.
+ */
+export const gamePalette = {
+  skyTop: "#7dd3fc",
+  skyBottom: "#e0f2fe",
+  sea: "#38bdf8",
+  seaDeep: "#0284c7",
+  sand: "#fde68a",
+  grass: "#86efac",
+  cloud: "#ffffff",
+} as const;
+
+export type GamePalette = { [K in keyof typeof gamePalette]: string };
+
+/** Bản tối của bảng màu trời/biển (đêm trong vườn). */
+export const gamePaletteDark: GamePalette = {
+  skyTop: "#0b2536",
+  skyBottom: "#131f24",
+  sea: "#0c4a6e",
+  seaDeep: "#082f49",
+  sand: "#b45309",
+  grass: "#14532d",
+  cloud: "#1e2c33",
+};
+
+/** Bảng màu trời/biển theo giao diện sáng/tối đang hiệu lực. */
+export function useGamePalette(): GamePalette {
+  return useResolvedScheme() === "dark" ? gamePaletteDark : gamePalette;
+}
+
+/**
+ * Token màu theo vương quốc của một khóa — NGUỒN DUY NHẤT là bảng màu
+ * trong `kingdoms.ts` (Vương quốc Cổ Tích / Hoa Anh Đào / Đèn Lồng),
+ * hàm này chỉ dẫn xuất dạng token phẳng cho design system dùng chung.
+ * Trả null nếu khóa không thuộc 3 vương quốc thật.
+ */
+export function kingdomColorTokens(courseId: string) {
+  const kingdom = kingdomForCourse(courseId);
+  if (!kingdom) return null;
+  const p = kingdom.palette;
+  return {
+    kingdomName: kingdom.kingdomName,
+    targetLanguage: kingdom.targetLanguage,
+    primary: p.primary,
+    deep: p.deep,
+    secondary: p.secondary,
+    accent: p.accent,
+    soft: p.soft,
+    onPrimary: p.onPrimary,
+  } as const;
+}
 
 /**
  * "Little Explorers" world tokens (redesign 27/10/2026 — additive only).
@@ -112,6 +219,22 @@ export const shadow = {
     shadowOpacity: 0.12,
     shadowRadius: 8,
     elevation: 4,
+  },
+  /** Bóng mềm rất nhẹ cho thẻ/chip trên nền trời sáng (Phase 2). */
+  soft: {
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  /** Bóng nổi cho phần tử bay trên nền (tab bar, nút nổi, panel). */
+  floating: {
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.14,
+    shadowRadius: 12,
+    elevation: 8,
   },
 } as const;
 
