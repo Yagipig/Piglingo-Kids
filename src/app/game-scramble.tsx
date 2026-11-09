@@ -1,10 +1,10 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
+import { GameBadge, GameHeader, WinCard } from "@/components/game-ui";
+import { Card } from "@/components/ui";
 import { useSfx } from "@/lib/audio";
 import { useCourseContent } from "@/lib/content";
 import { useProgress } from "@/lib/store";
@@ -115,24 +115,14 @@ export default function GameScrambleScreen() {
 
   return (
     <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
-      <View style={styles.topBar}>
-        <Pressable
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Quay lại"
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.neutral700} />
-        </Pressable>
-        <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-          🧩 Xếp câu cho đúng
-        </Text>
-        <View style={styles.badge}>
-          <Text style={styles.badgeText} maxFontSizeMultiplier={1.2}>
-            {finished ? `${ROUNDS}/${ROUNDS}` : `${index + 1}/${ROUNDS}`} · ⭐ {score}
-          </Text>
-        </View>
-      </View>
+      <GameHeader
+        title="🧩 Xếp câu cho đúng"
+        right={
+          <GameBadge
+            text={`${finished ? `${ROUNDS}/${ROUNDS}` : `${index + 1}/${ROUNDS}`} · ⭐ ${score}`}
+          />
+        }
+      />
 
       <ScrollView contentContainerStyle={styles.body}>
         {sentences.length === 0 ? (
@@ -140,7 +130,7 @@ export default function GameScrambleScreen() {
             Khóa học này chưa có câu mẫu để chơi. Hãy học vài bài trước nhé!
           </Text>
         ) : finished ? (
-          <View style={styles.winBox}>
+          <WinCard>
             <Text style={styles.winStars}>
               {"⭐".repeat(stars)}
               {"☆".repeat(3 - stars)}
@@ -150,17 +140,17 @@ export default function GameScrambleScreen() {
               {score * XP_PER_SENTENCE} XP 🎉
             </Text>
             <DuoButton label="Chơi lại" onPress={restart} />
-          </View>
+          </WinCard>
         ) : current ? (
           <>
             <Text style={styles.intro} maxFontSizeMultiplier={1.3}>
               Dịch câu này bằng cách bấm các từ theo đúng thứ tự:
             </Text>
-            <View style={styles.promptCard}>
+            <Card accentColor={colors.indigo} style={styles.promptCard}>
               <Text style={styles.promptText} maxFontSizeMultiplier={1.3}>
                 {current.prompt}
               </Text>
-            </View>
+            </Card>
 
             <View
               style={[
@@ -234,38 +224,18 @@ export default function GameScrambleScreen() {
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  backButton: { padding: 6 },
-  title: { flex: 1, fontSize: 20, fontWeight: "800", color: colors.neutral700 },
-  badge: {
-    backgroundColor: colors.neutral100,
-    borderRadius: radius.full,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  badgeText: { fontSize: 13, fontWeight: "800", color: colors.neutral700 },
   body: { padding: 20, gap: 16, paddingBottom: 60 },
   intro: { fontSize: 15, color: colors.textMuted, lineHeight: 21 },
   promptCard: {
-    borderWidth: 2,
-    borderColor: colors.indigo,
     backgroundColor: colors.indigo + "14",
-    borderRadius: radius.xl,
-    padding: 16,
   },
   promptText: { fontSize: 19, fontWeight: "800", color: colors.neutral700, lineHeight: 26 },
   answerBox: {
-    minHeight: 64,
+    minHeight: 68,
     borderWidth: 2,
     borderStyle: "dashed",
     borderColor: colors.neutral300,
-    borderRadius: radius.lg,
+    borderRadius: radius.xl,
     padding: 10,
     justifyContent: "center",
   },
@@ -279,27 +249,22 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.neutral300,
     borderBottomWidth: 4,
-    borderRadius: radius.md,
+    borderRadius: radius.lg,
+    minHeight: 48,
+    justifyContent: "center",
     paddingHorizontal: 14,
     paddingVertical: 10,
   },
   tokenText: { fontSize: 16, fontWeight: "800", color: colors.neutral700 },
   tokenPlaced: {
     backgroundColor: colors.sky,
-    borderRadius: radius.md,
+    borderRadius: radius.lg,
+    minHeight: 48,
+    justifyContent: "center",
     paddingHorizontal: 14,
     paddingVertical: 10,
   },
   tokenPlacedText: { fontSize: 16, fontWeight: "800", color: colors.white },
-  winBox: {
-    borderWidth: 2,
-    borderColor: colors.amber,
-    backgroundColor: colors.amber + "1A",
-    borderRadius: radius.xl,
-    padding: 22,
-    gap: 12,
-    alignItems: "center",
-  },
   winStars: { fontSize: 34 },
   winText: {
     fontSize: 16,

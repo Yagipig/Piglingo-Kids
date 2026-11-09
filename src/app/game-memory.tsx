@@ -1,14 +1,13 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
+import { GameBadge, GameHeader, WinCard } from "@/components/game-ui";
 import { speakTarget, useSfx } from "@/lib/audio";
 import { useCourseContent } from "@/lib/content";
 import { useProgress } from "@/lib/store";
-import { makeThemedStyles, radius, useThemeColors } from "@/lib/theme";
+import { makeThemedStyles, radius } from "@/lib/theme";
 import type { Word } from "@/lib/types";
 
 const PAIRS = 6;
@@ -41,7 +40,6 @@ function buildDeck(words: Word[]): Card[] {
 
 /** Game "Ghép thẻ trí nhớ": lật 2 thẻ, ghép chữ với nghĩa + emoji của nó. */
 export default function GameMemoryScreen() {
-  const colors = useThemeColors();
   const styles = useStyles();
   const activeCourseId = useProgress((s) => s.activeCourseId);
   const addBonusXp = useProgress((s) => s.addBonusXp);
@@ -110,24 +108,10 @@ export default function GameMemoryScreen() {
 
   return (
     <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
-      <View style={styles.topBar}>
-        <Pressable
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Quay lại"
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.neutral700} />
-        </Pressable>
-        <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-          🧠 Ghép thẻ trí nhớ
-        </Text>
-        <View style={styles.moveBadge}>
-          <Text style={styles.moveText} maxFontSizeMultiplier={1.2}>
-            Lượt: {moves}
-          </Text>
-        </View>
-      </View>
+      <GameHeader
+        title="🧠 Ghép thẻ trí nhớ"
+        right={<GameBadge text={`Lượt: ${moves}`} />}
+      />
 
       <ScrollView contentContainerStyle={styles.body}>
         <Text style={styles.intro} maxFontSizeMultiplier={1.3}>
@@ -187,7 +171,7 @@ export default function GameMemoryScreen() {
         </View>
 
         {won ? (
-          <View style={styles.winBox}>
+          <WinCard>
             <Text style={styles.winStars}>
               {"⭐".repeat(stars)}
               {"☆".repeat(3 - stars)}
@@ -197,7 +181,7 @@ export default function GameMemoryScreen() {
               thưởng {WIN_XP} XP 🎉
             </Text>
             <DuoButton label="Chơi lại" onPress={restart} />
-          </View>
+          </WinCard>
         ) : (
           <DuoButton label="Chơi lại từ đầu" variant="white" onPress={restart} />
         )}
@@ -208,22 +192,6 @@ export default function GameMemoryScreen() {
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  backButton: { padding: 6 },
-  title: { flex: 1, fontSize: 20, fontWeight: "800", color: colors.neutral700 },
-  moveBadge: {
-    backgroundColor: colors.neutral100,
-    borderRadius: radius.full,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  moveText: { fontSize: 13, fontWeight: "800", color: colors.neutral700 },
   body: { padding: 20, gap: 16, paddingBottom: 60 },
   intro: { fontSize: 15, color: colors.textMuted, lineHeight: 21 },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: 12, justifyContent: "center" },
@@ -231,7 +199,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     width: "30%",
     minWidth: 96,
     height: 108,
-    borderRadius: radius.lg,
+    borderRadius: radius.xl,
     borderBottomWidth: 5,
     alignItems: "center",
     justifyContent: "center",
@@ -246,15 +214,6 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   cardTarget: { fontSize: 17, fontWeight: "800", color: colors.neutral700, textAlign: "center" },
   cardRoman: { fontSize: 12, color: colors.textMuted, textAlign: "center" },
   cardNative: { fontSize: 14, fontWeight: "700", color: colors.neutral700, textAlign: "center" },
-  winBox: {
-    borderWidth: 2,
-    borderColor: colors.amber,
-    backgroundColor: colors.amber + "1A",
-    borderRadius: radius.xl,
-    padding: 18,
-    gap: 10,
-    alignItems: "center",
-  },
   winStars: { fontSize: 30 },
   winText: {
     fontSize: 15,

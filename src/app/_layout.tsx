@@ -8,6 +8,8 @@ import { TimeLimitGuard } from "@/features/parents/TimeLimitGuard";
 import { useParentSettings } from "@/features/parents/useParentSettings";
 import { AuthProvider } from "@/features/supabase/AuthContext";
 import { useGlobalRewardsSync } from "@/lib/globalRewardsSync";
+import { useSpinConfigSync } from "@/lib/spinConfigSync";
+import { useSpinHistorySync } from "@/lib/useSpinHistorySync";
 import { useProgress } from "@/lib/store";
 import { useFamilyRewardsSync } from "@/lib/useFamilyRewardsSync";
 import { useProgressSync } from "@/lib/useProgressSync";
@@ -33,6 +35,8 @@ function ProgressSyncRunner({ hydrated }: { hydrated: boolean }) {
 function RewardsRunner({ hydrated }: { hydrated: boolean }) {
   useGlobalRewardsSync();
   useFamilyRewardsSync(hydrated);
+  useSpinConfigSync();
+  useSpinHistorySync(hydrated);
   useRewardCelebration(hydrated);
   return null;
 }
@@ -54,7 +58,8 @@ function KidsTimeLimit({ children }: { children: React.ReactNode }) {
     segments[0] === "parents" ||
     segments[0] === "account" ||
     segments[0] === "onboarding" ||
-    segments[0] === "admin-rewards";
+    segments[0] === "admin-rewards" ||
+    segments[0] === "admin-spin";
   const parentConfigured = settings.updatedAt > 0;
   if (!isLoaded) return <>{children}</>;
   return (
@@ -131,6 +136,9 @@ export default function RootLayout() {
           <Stack.Screen name="achievements" options={{ presentation: "modal" }} />
           <Stack.Screen name="competitions" options={{ presentation: "modal" }} />
           <Stack.Screen name="admin-rewards" options={{ presentation: "modal" }} />
+          <Stack.Screen name="spin" options={{ presentation: "modal" }} />
+          <Stack.Screen name="treasure" options={{ presentation: "modal" }} />
+          <Stack.Screen name="admin-spin" options={{ presentation: "modal" }} />
           <Stack.Screen name="celebration" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="account" options={{ presentation: "modal" }} />
           <Stack.Screen name="speaking" options={{ presentation: "modal" }} />

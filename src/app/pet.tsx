@@ -9,7 +9,8 @@ import { catalog, useCourseContent } from "@/lib/content";
 import { KINGDOMS, kingdomForCourse } from "@/lib/kingdoms";
 import {
   LEGENDARY_PET,
-  accessoriesFor,
+  RARE_PET,
+  allAccessoriesFor,
   completedStageCount,
   isAccessoryUnlocked,
   legendaryUnlocked,
@@ -73,13 +74,17 @@ export default function PetScreen() {
     [content.allLessons.length]
   );
   const equipped = progress.equippedAccessories?.[courseId] ?? [];
-  const accessories = accessoriesFor(courseId);
+  // Tủ phụ kiện gồm cả 6 món theo chặng và các món CHỈ mở bằng vòng quay.
+  const accessories = allAccessoriesFor(courseId);
+  const spinUnlockedIds = progress.spinUnlockedAccessories?.[courseId] ?? [];
   const food = progress.petFood ?? 0;
   const learnedToday = activeToday(progress);
   const dayIndex =
     Math.floor(Date.now() / 86_400_000) % HAPPY_TODAY_LINES.length;
   const legendary = legendaryUnlocked(progress.courses ?? {}, CATALOG_TOTALS);
   const dragonFollowing = progress.activeCompanion === "legendary" && legendary;
+  const hasPhoenix = (progress.rarePets ?? []).includes(RARE_PET.id);
+  const phoenixFollowing = progress.activeCompanion === "phuong-hoang" && hasPhoenix;
 
   const goBack = () => {
     if (router.canGoBack()) router.back();
@@ -121,6 +126,11 @@ export default function PetScreen() {
             <StatChip emoji="🔑" value={String(progress.unlockKeys ?? 0)} label="Chìa khóa" style={{ flex: 1 }} />
             <StatChip emoji="🍎" value={String(food)} label="Thức ăn" style={{ flex: 1 }} />
           </View>
+          <DuoButton
+            label="🧰 Mở Kho báu của bé"
+            variant="white"
+            onPress={() => router.push("/treasure")}
+          />
 
           {/* Chọn thế giới */}
           <View style={styles.switchRow}>
@@ -165,6 +175,21 @@ export default function PetScreen() {
               <Text style={styles.noteText} maxFontSizeMultiplier={1.25}>
                 🐉 Hiện Rồng Huyền Thoại đang đồng hành cùng bé trong mọi bài
                 học. Các bạn thú thế giới vẫn ở đây chờ bé chăm sóc nhé!
+              </Text>
+              <DuoButton
+                label="Quay về thú thế giới đồng hành"
+                variant="white"
+                onPress={() => progress.setActiveCompanion("world")}
+              />
+            </Card>
+          ) : null}
+
+          {phoenixFollowing ? (
+            <Card accentColor="#db2777">
+              <Text style={styles.noteText} maxFontSizeMultiplier={1.25}>
+                {RARE_PET.emoji} Hiện {RARE_PET.name} đang đồng hành cùng bé
+                trong mọi bài học. Các bạn thú thế giới vẫn ở đây chờ bé
+                chăm sóc nhé!
               </Text>
               <DuoButton
                 label="Quay về thú thế giới đồng hành"
@@ -276,7 +301,9 @@ export default function PetScreen() {
             </Text>
             <View style={styles.accessoryGrid}>
               {accessories.map((item) => {
-                const unlocked = isAccessoryUnlocked(item, doneStages);
+                // Món vòng quay mở VĨNH VIỄN khi trúng — không theo chặng.
+                const fromSpin = spinUnlockedIds.includes(item.id);
+                const unlocked = isAccessoryUnlocked(item, doneStages) || fromSpin;
                 const isEquipped = equipped.includes(item.id);
                 return (
                   <Pressable
@@ -287,7 +314,9 @@ export default function PetScreen() {
                     accessibilityLabel={
                       unlocked
                         ? `${item.name} — ${isEquipped ? "đang mặc, chạm để cởi ra" : "chạm để mặc vào"}`
-                        : `${item.name} — chưa mở, cần xong ${item.unlockStage} chặng`
+                        : item.source === "spin"
+                          ? `${item.name} — chưa mở, trúng ở vòng quay may mắn để mở`
+                          : `${item.name} — chưa mở, cần xong ${item.unlockStage} chặng`
                     }
                     accessibilityState={{ disabled: !unlocked, selected: isEquipped }}
                     style={({ pressed }) => [
@@ -310,8 +339,12 @@ export default function PetScreen() {
                       {unlocked
                         ? isEquipped
                           ? "Đang mặc ✓"
-                          : "Chạm để mặc"
-                        : `Xong ${item.unlockStage} chặng để mở (${doneStages}/${item.unlockStage})`}
+                          : fromSpin
+                            ? "Đã mở ở vòng quay 🎡"
+                            : "Chạm để mặc"
+                        : item.source === "spin"
+                          ? "Trúng ở vòng quay 🎡 để mở"
+                          : `Xong ${item.unlockStage} chặng để mở (${doneStages}/${item.unlockStage})`}
                     </Text>
                   </Pressable>
                 );
@@ -366,6 +399,48 @@ export default function PetScreen() {
                     </Text>
                   );
                 })}
+              </>
+            )}
+          </Card>
+
+          {/* Pet hiếm Phượng Hoàng Cầu Vồng — chỉ có ở vòng quay may mắn tầng Khó */}
+          <Card accentColor="#db2777">
+            <View style={styles.dragonHead}>
+              <Text style={styles.dragonEmoji}>{RARE_PET.emoji}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.cardTitle} maxFontSizeMultiplier={1.25}>
+                  {RARE_PET.name} — Pet hiếm
+                </Text>
+                <Text style={styles.bodyText} maxFontSizeMultiplier={1.25}>
+                  {RARE_PET.skillBlurb}
+                </Text>
+              </View>
+            </View>
+            {hasPhoenix ? (
+              phoenixFollowing ? (
+                <DuoButton
+                  label={`${RARE_PET.emoji} Đang đồng hành — chạm để quay về thú thế giới`}
+                  variant="white"
+                  onPress={() => progress.setActiveCompanion("world")}
+                />
+              ) : (
+                <DuoButton
+                  label={`Chọn ${RARE_PET.name} làm bạn đồng hành`}
+                  onPress={() => progress.setActiveCompanion("phuong-hoang")}
+                />
+              )
+            ) : (
+              <>
+                <Text style={styles.hintText} maxFontSizeMultiplier={1.25}>
+                  Cách có {RARE_PET.name}: hoàn thành một chặng trên bản đồ
+                  để nhận vé Khó 🔴, rồi quay vòng quay may mắn và trúng ô
+                  Pet hiếm nhé!
+                </Text>
+                <DuoButton
+                  label="Đến vòng quay may mắn 🎡"
+                  variant="white"
+                  onPress={() => router.push("/spin")}
+                />
               </>
             )}
           </Card>

@@ -1,15 +1,16 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
+import { OptionCard, type OptionState } from "@/components/exercises/option-card";
+import { GameBadge, GameHeader, WinCard } from "@/components/game-ui";
 import { SpeakerButton } from "@/components/speaker-button";
+import { Card } from "@/components/ui";
 import { speakTarget, useSfx } from "@/lib/audio";
 import { useCourseContent } from "@/lib/content";
 import { useProgress } from "@/lib/store";
-import { makeThemedStyles, radius, useThemeColors } from "@/lib/theme";
+import { makeThemedStyles, useThemeColors } from "@/lib/theme";
 import type { Word } from "@/lib/types";
 
 const QUESTIONS = 10;
@@ -111,28 +112,18 @@ export default function GameListenScreen() {
 
   return (
     <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
-      <View style={styles.topBar}>
-        <Pressable
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Quay lại"
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.neutral700} />
-        </Pressable>
-        <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-          🎧 Nghe và chọn
-        </Text>
-        <View style={styles.progressBadge}>
-          <Text style={styles.progressText} maxFontSizeMultiplier={1.2}>
-            {finished ? `${QUESTIONS}/${QUESTIONS}` : `${index + 1}/${QUESTIONS}`} · ⭐ {score}
-          </Text>
-        </View>
-      </View>
+      <GameHeader
+        title="🎧 Nghe và chọn"
+        right={
+          <GameBadge
+            text={`${finished ? `${QUESTIONS}/${QUESTIONS}` : `${index + 1}/${QUESTIONS}`} · ⭐ ${score}`}
+          />
+        }
+      />
 
       <ScrollView contentContainerStyle={styles.body}>
         {finished ? (
-          <View style={styles.winBox}>
+          <WinCard>
             <Text style={styles.winStars}>
               {"⭐".repeat(stars)}
               {"☆".repeat(3 - stars)}
@@ -141,13 +132,13 @@ export default function GameListenScreen() {
               Em nghe đúng {score}/{QUESTIONS} câu và được thưởng {score} XP 🎉
             </Text>
             <DuoButton label="Chơi lại" onPress={restart} />
-          </View>
+          </WinCard>
         ) : question ? (
           <>
             <Text style={styles.intro} maxFontSizeMultiplier={1.3}>
               Nghe thật kỹ rồi chọn nghĩa đúng nhé!
             </Text>
-            <View style={styles.listenBox}>
+            <Card accentColor={colors.sky} style={styles.listenBox}>
               <SpeakerButton text={question.target.target} size={76} />
               <Text style={styles.listenHint} maxFontSizeMultiplier={1.3}>
                 Bấm loa để nghe lại 🔊
@@ -157,35 +148,27 @@ export default function GameListenScreen() {
                   {question.target.romanization}
                 </Text>
               ) : null}
-            </View>
+            </Card>
             <View style={styles.options}>
               {question.options.map((word) => {
                 const isCorrect = word.target === question.target.target;
                 const isPicked = picked === word.target;
+                const state: OptionState = !picked
+                  ? "idle"
+                  : isCorrect
+                    ? "correct"
+                    : isPicked
+                      ? "wrong"
+                      : "idle";
                 return (
-                  <Pressable
+                  <OptionCard
                     key={word.target}
+                    text={word.native}
+                    emoji={word.emoji}
+                    state={state}
+                    disabled={!!picked}
                     onPress={() => pick(word)}
-                    accessibilityRole="button"
-                    accessibilityLabel={`${word.emoji} ${word.native}`}
-                    accessibilityState={{ disabled: !!picked }}
-                    style={({ pressed }) => [
-                      styles.option,
-                      picked && isCorrect && styles.optionCorrect,
-                      picked && isPicked && !isCorrect && styles.optionWrong,
-                      pressed && !picked && { opacity: 0.85 },
-                    ]}
-                  >
-                    <Text style={styles.optionEmoji}>{word.emoji}</Text>
-                    <Text style={styles.optionText} maxFontSizeMultiplier={1.3}>
-                      {word.native}
-                    </Text>
-                    {picked && isCorrect ? (
-                      <Ionicons name="checkmark-circle" size={24} color={colors.correctText} />
-                    ) : picked && isPicked ? (
-                      <Ionicons name="close-circle" size={24} color={colors.wrongText} />
-                    ) : null}
-                  </Pressable>
+                  />
                 );
               })}
             </View>
@@ -198,59 +181,17 @@ export default function GameListenScreen() {
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  backButton: { padding: 6 },
-  title: { flex: 1, fontSize: 20, fontWeight: "800", color: colors.neutral700 },
-  progressBadge: {
-    backgroundColor: colors.neutral100,
-    borderRadius: radius.full,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  progressText: { fontSize: 13, fontWeight: "800", color: colors.neutral700 },
   body: { padding: 20, gap: 18, paddingBottom: 60 },
   intro: { fontSize: 15, color: colors.textMuted, lineHeight: 21 },
   listenBox: {
     alignItems: "center",
     gap: 10,
-    borderWidth: 2,
-    borderColor: colors.sky,
     backgroundColor: colors.selectedBg,
-    borderRadius: radius.xl,
     padding: 22,
   },
   listenHint: { fontSize: 14, fontWeight: "700", color: colors.selectedText },
   roman: { fontSize: 15, color: colors.textMuted, fontStyle: "italic" },
   options: { gap: 12 },
-  option: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    borderWidth: 2,
-    borderColor: colors.neutral200,
-    borderRadius: radius.lg,
-    padding: 16,
-    backgroundColor: colors.surface,
-  },
-  optionCorrect: { backgroundColor: colors.correctBg, borderColor: colors.correctText },
-  optionWrong: { backgroundColor: colors.wrongBg, borderColor: colors.wrongText },
-  optionEmoji: { fontSize: 30 },
-  optionText: { flex: 1, fontSize: 18, fontWeight: "800", color: colors.neutral700 },
-  winBox: {
-    borderWidth: 2,
-    borderColor: colors.amber,
-    backgroundColor: colors.amber + "1A",
-    borderRadius: radius.xl,
-    padding: 22,
-    gap: 12,
-    alignItems: "center",
-  },
   winStars: { fontSize: 34 },
   winText: {
     fontSize: 16,

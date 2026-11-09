@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { CelebrationBurst } from "@/components/celebration";
 import { DuoButton } from "@/components/duo-button";
+import { Card } from "@/components/ui";
 import { FamilyRewardCard, GlobalRewardCard } from "@/components/reward-cards";
 import { useAuth } from "@/features/supabase/AuthContext";
 import {
@@ -27,7 +28,7 @@ import {
 } from "@/lib/rewards";
 import { effectiveGlobalRewards, useRewardsStore } from "@/lib/rewardsStore";
 import { useProgress, XP_PER_LESSON, XP_PERFECT_BONUS } from "@/lib/store";
-import { makeThemedStyles, radius, shadow } from "@/lib/theme";
+import { makeThemedStyles, radius, shadow, typography } from "@/lib/theme";
 
 function isCompletionRewardForCourse(reward: GlobalReward, courseId: string): boolean {
   return (
@@ -193,7 +194,10 @@ export default function CelebrationScreen() {
           {complete ? (
             <Animated.View entering={FadeInUp.delay(280)} style={styles.cardWrap}>
               <Text style={styles.stars}>⭐⭐⭐</Text>
-              <View style={styles.infoCard}>
+              <Card
+                accentColor={kingdom?.palette.primary}
+                style={styles.infoCard}
+              >
                 {justClaimed ? (
                   <>
                     <Text style={styles.infoLine}>
@@ -239,7 +243,7 @@ export default function CelebrationScreen() {
                   Vào trang Thú cưng 🐾 để cho thú ăn, mặc phụ kiện và dùng
                   chìa khóa bí mật nhé!
                 </Text>
-              </View>
+              </Card>
             </Animated.View>
           ) : (
             <Animated.Text entering={FadeInUp.delay(280)} style={styles.subtitle}>
@@ -371,30 +375,22 @@ const useStyles = makeThemedStyles((colors) =>
     mascot: { width: 138, height: 138 },
     chest: { fontSize: 54, marginTop: -18 },
     title: {
-      fontSize: 27,
-      lineHeight: 35,
+      fontSize: typography.display.fontSize,
+      lineHeight: typography.display.lineHeight,
       fontWeight: "900",
       textAlign: "center",
       color: colors.neutral700,
     },
     subtitle: {
-      fontSize: 15,
-      lineHeight: 22,
+      fontSize: typography.body.fontSize,
+      lineHeight: typography.body.lineHeight,
       textAlign: "center",
       color: colors.textMuted,
       maxWidth: 560,
     },
     cardWrap: { width: "100%", alignSelf: "stretch" },
     stars: { fontSize: 40, textAlign: "center", marginBottom: 8 },
-    infoCard: {
-      backgroundColor: colors.surface,
-      borderWidth: 2,
-      borderColor: colors.amber,
-      borderRadius: radius.xl,
-      padding: 16,
-      gap: 8,
-      ...shadow.card,
-    },
+    infoCard: { gap: 8 },
     infoLine: {
       fontSize: 14.5,
       lineHeight: 21,
@@ -404,7 +400,8 @@ const useStyles = makeThemedStyles((colors) =>
     sectionTitle: {
       alignSelf: "flex-start",
       marginTop: 10,
-      fontSize: 19,
+      fontSize: typography.h2.fontSize,
+      lineHeight: typography.h2.lineHeight,
       fontWeight: "900",
       color: colors.neutral700,
     },

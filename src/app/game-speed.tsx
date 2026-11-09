@@ -1,10 +1,11 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
+import { OptionCard } from "@/components/exercises/option-card";
+import { GameBadge, GameHeader, WinCard } from "@/components/game-ui";
+import { Card, ProgressBar } from "@/components/ui";
 import { speakTarget, useSfx } from "@/lib/audio";
 import { useCourseContent } from "@/lib/content";
 import { useProgress } from "@/lib/store";
@@ -112,23 +113,11 @@ export default function GameSpeedScreen() {
 
   return (
     <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
-      <View style={styles.topBar}>
-        <Pressable
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Quay lại"
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.neutral700} />
-        </Pressable>
-        <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-          ⚡ Đố nhanh 60 giây
-        </Text>
-      </View>
+      <GameHeader title="⚡ Đố nhanh 60 giây" />
 
       <ScrollView contentContainerStyle={styles.body}>
         {phase === "idle" ? (
-          <View style={styles.centerBox}>
+          <Card style={styles.centerBox}>
             <Text style={styles.bigEmoji}>⚡</Text>
             <Text style={styles.intro} maxFontSizeMultiplier={1.3}>
               Trong 60 giây, chọn nghĩa đúng của từ càng nhanh càng tốt. Mỗi
@@ -138,9 +127,9 @@ export default function GameSpeedScreen() {
               🏆 Kỷ lục của em: {speedBest} câu đúng
             </Text>
             <DuoButton label="Bắt đầu" onPress={start} />
-          </View>
+          </Card>
         ) : phase === "done" ? (
-          <View style={styles.winBox}>
+          <WinCard>
             <Text style={styles.bigEmoji}>🏁</Text>
             <Text style={styles.winText} maxFontSizeMultiplier={1.3}>
               Hết giờ! Em trả lời đúng {correct}/{answered} câu và được thưởng{" "}
@@ -152,37 +141,22 @@ export default function GameSpeedScreen() {
                 : `🏆 Kỷ lục: ${speedBest} câu đúng`}
             </Text>
             <DuoButton label="Chơi lại" onPress={start} />
-          </View>
+          </WinCard>
         ) : (
           <>
             <View style={styles.hudRow}>
-              <View
-                style={[
-                  styles.timeBadge,
-                  timeLeft <= 10 && { backgroundColor: colors.wrongBg },
-                ]}
-              >
-                <Text style={styles.timeText} maxFontSizeMultiplier={1.2}>
-                  ⏱ {timeLeft}s
-                </Text>
-              </View>
-              <View style={styles.timeBadge}>
-                <Text style={styles.timeText} maxFontSizeMultiplier={1.2}>
-                  ⭐ Đúng: {correct}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.timeTrack}>
-              <View
-                style={[
-                  styles.timeFill,
-                  {
-                    width: `${(timeLeft / GAME_SECONDS) * 100}%`,
-                    backgroundColor: timeLeft <= 10 ? colors.rose : colors.green,
-                  },
-                ]}
+              <GameBadge
+                text={`⏱ ${timeLeft}s`}
+                style={timeLeft <= 10 ? { backgroundColor: colors.wrongBg } : undefined}
               />
+              <GameBadge text={`⭐ Đúng: ${correct}`} />
             </View>
+            <ProgressBar
+              value={timeLeft / GAME_SECONDS}
+              height={10}
+              color={timeLeft <= 10 ? colors.rose : colors.green}
+              accessibilityLabel={`Còn ${timeLeft} giây`}
+            />
 
             <Pressable
               onPress={() => speakTarget(activeCourseId, question.target.target)}
@@ -210,17 +184,13 @@ export default function GameSpeedScreen() {
 
             <View style={styles.options}>
               {question.options.map((word) => (
-                <Pressable
+                <OptionCard
                   key={word.target}
+                  text={word.native}
+                  compact
+                  state="idle"
                   onPress={() => answer(word)}
-                  accessibilityRole="button"
-                  accessibilityLabel={word.native}
-                  style={({ pressed }) => [styles.option, pressed && { opacity: 0.8 }]}
-                >
-                  <Text style={styles.optionText} maxFontSizeMultiplier={1.3}>
-                    {word.native}
-                  </Text>
-                </Pressable>
+                />
               ))}
             </View>
           </>
@@ -232,35 +202,12 @@ export default function GameSpeedScreen() {
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  backButton: { padding: 6 },
-  title: { flex: 1, fontSize: 20, fontWeight: "800", color: colors.neutral700 },
   body: { padding: 20, gap: 16, paddingBottom: 60 },
-  centerBox: { gap: 14, alignItems: "center", paddingTop: 30 },
+  centerBox: { gap: 14, alignItems: "center", paddingVertical: 28 },
   bigEmoji: { fontSize: 54, textAlign: "center" },
   intro: { fontSize: 15, color: colors.textMuted, lineHeight: 22, textAlign: "center" },
   bestText: { fontSize: 15, fontWeight: "800", color: colors.amber },
   hudRow: { flexDirection: "row", justifyContent: "space-between" },
-  timeBadge: {
-    backgroundColor: colors.neutral100,
-    borderRadius: radius.full,
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-  },
-  timeText: { fontSize: 15, fontWeight: "800", color: colors.neutral700 },
-  timeTrack: {
-    height: 10,
-    borderRadius: radius.full,
-    backgroundColor: colors.neutral200,
-    overflow: "hidden",
-  },
-  timeFill: { height: "100%", borderRadius: radius.full, backgroundColor: colors.green },
   wordCard: {
     alignItems: "center",
     gap: 4,
@@ -277,27 +224,6 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   wordRoman: { fontSize: 14, color: colors.textMuted, fontStyle: "italic" },
   wordHint: { fontSize: 12, color: colors.selectedText, fontWeight: "700" },
   options: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  option: {
-    flexBasis: "47%",
-    flexGrow: 1,
-    borderWidth: 2,
-    borderColor: colors.neutral200,
-    borderBottomWidth: 4,
-    borderRadius: radius.lg,
-    padding: 16,
-    alignItems: "center",
-    backgroundColor: colors.surface,
-  },
-  optionText: { fontSize: 17, fontWeight: "800", color: colors.neutral700, textAlign: "center" },
-  winBox: {
-    borderWidth: 2,
-    borderColor: colors.amber,
-    backgroundColor: colors.amber + "1A",
-    borderRadius: radius.xl,
-    padding: 22,
-    gap: 12,
-    alignItems: "center",
-  },
   winText: {
     fontSize: 16,
     fontWeight: "700",
