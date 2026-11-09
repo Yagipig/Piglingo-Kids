@@ -7,6 +7,7 @@ import {
 import * as Speech from "expo-speech";
 
 import { audioManifest } from "../content/audio-manifest";
+import { realAudioManifest } from "../content/real-audio-manifest";
 import { getPack } from "./content";
 
 setAudioModeAsync({ playsInSilentMode: true }).catch(() => {});
@@ -18,6 +19,28 @@ const TTS_LOCALES: Record<string, string> = {
 };
 
 let voicePlayer: AudioPlayer | null = null;
+let realVoicePlayer: AudioPlayer | null = null;
+
+/** Từ này có bản ghi giọng người thật (Lingua Libre) hay không. */
+export function hasRealVoice(courseId: string, text: string): boolean {
+  return realAudioManifest[`${courseId}:${text}`] != null;
+}
+
+/**
+ * Phát bản ghi giọng người thật của đúng một từ, tách riêng khỏi TTS:
+ * chỉ phát khi manifest giọng thật có key `${courseId}:${text}`; không
+ * có thì trả false để nơi gọi giữ nguyên luồng TTS như cũ.
+ */
+export function speakRealVoice(courseId: string, text: string): boolean {
+  const source = realAudioManifest[`${courseId}:${text}`];
+  if (source == null) return false;
+  Speech.stop();
+  if (!realVoicePlayer) realVoicePlayer = createAudioPlayer(source);
+  else realVoicePlayer.replace(source);
+  realVoicePlayer.seekTo(0).catch(() => {});
+  realVoicePlayer.play();
+  return true;
+}
 
 export function speakTarget(courseId: string, text: string) {
   Speech.stop();
