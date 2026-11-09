@@ -93,8 +93,12 @@ check("dashboard có thẻ Cuộc thi & chứng chỉ", dashboard.includes("Cu�
 
 const index = read("src/app/(tabs)/index.tsx");
 check(
-  "index.tsx nối onOpenCompetitions sang /competitions",
-  index.includes('onOpenCompetitions={() => router.push("/competitions")}'),
+  // Phase 3: trang chủ là dashboard — lối tắt Cuộc thi là thẻ bấm trực
+  // tiếp trên Home (trước Phase 3 đi qua prop onOpenCompetitions của
+  // GardenDashboard trong panel trượt). Ý định giữ nguyên: từ trang
+  // chủ vào được /competitions.
+  "index.tsx có lối tắt trực tiếp sang /competitions",
+  index.includes('router.push("/competitions")'),
 );
 
 console.log(
