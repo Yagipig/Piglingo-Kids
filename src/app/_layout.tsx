@@ -130,6 +130,7 @@ export default function RootLayout() {
           <Stack.Screen name="lesson/[id]" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="map/[courseId]" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="pet" options={{ presentation: "modal" }} />
+          <Stack.Screen name="guidebook/index" options={{ presentation: "modal" }} />
           <Stack.Screen name="guidebook/[unitId]" options={{ presentation: "modal" }} />
           <Stack.Screen name="parents" options={{ presentation: "modal" }} />
           <Stack.Screen name="rewards" options={{ presentation: "modal" }} />

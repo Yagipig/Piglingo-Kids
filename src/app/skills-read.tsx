@@ -6,6 +6,7 @@ import { OptionCard, type OptionState } from "@/components/exercises/option-card
 import { SpeakerButton } from "@/components/speaker-button";
 import { Card } from "@/components/ui";
 import { RealVoiceButton } from "@/components/real-voice-button";
+import { WordDetailBoundary } from "@/components/word-detail-boundary";
 import { WordMeta } from "@/components/word-meta";
 import {
   SkillFeedbackBar,
@@ -227,12 +228,14 @@ export default function SkillsReadScreen() {
                   <Text style={styles.wordMeaning} maxFontSizeMultiplier={1.3}>
                     {selected.word.emoji} Nghĩa: {selected.word.native}
                   </Text>
-                  <WordMeta courseId={courseId} word={selected.word} />
-                  <RealVoiceButton
-                    courseId={courseId}
-                    text={selected.word.target}
-                    compact
-                  />
+                  <WordDetailBoundary>
+                    <WordMeta courseId={courseId} word={selected.word} />
+                    <RealVoiceButton
+                      courseId={courseId}
+                      text={selected.word.target}
+                      compact
+                    />
+                  </WordDetailBoundary>
                 </>
               ) : (
                 <Text style={styles.wordMeaning} maxFontSizeMultiplier={1.3}>
