@@ -299,6 +299,7 @@ export default function LearnScreen() {
           <View style={styles.continueWrap}>
             <ContinueButton
               target={continueTarget}
+              totalLessons={total}
               allDone={allDone}
               onPress={handleContinue}
             />
@@ -498,7 +499,8 @@ export default function LearnScreen() {
                         <Text style={styles.suggestText} maxFontSizeMultiplier={1.3}>
                           Cấp độ: {learnerLevelLabel(learnerLevel)} · Bắt đầu từ{" "}
                           {difficultyLabel(suggestedRef.globalIndex, total)} —{" "}
-                          {suggestedRef.unit.title}
+                          {suggestedRef.unit.title} · Bài {suggestedRef.globalIndex + 1}
+                          /{total} toàn khóa
                         </Text>
                       </View>
                       <Pressable
