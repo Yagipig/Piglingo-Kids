@@ -82,6 +82,9 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     paddingVertical: 14,
     paddingHorizontal: 16,
+    // Design system Phase 2: mọi nút phải đạt vùng chạm tối thiểu 48px
+    // (kể cả khi nhãn ngắn/không có nhãn phụ).
+    minHeight: 52,
   },
   baseLg: {
     borderRadius: radius.xl,

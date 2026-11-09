@@ -28,7 +28,7 @@ import Svg, {
   Text as SvgText,
 } from "react-native-svg";
 
-import type { LessonRef } from "@/lib/content";
+import { isLockedAtFrontier, type LessonRef } from "@/lib/content";
 import { MAP_VIEWBOX, PROVINCE_SHAPES } from "@/lib/province-shapes";
 import {
   PROVINCES,
@@ -171,7 +171,12 @@ export type WorldMapCourseData = {
   units: UnitPack[];
   lessonsByUnit: Map<string, LessonRef[]>;
   completedLessons: Record<string, true>;
-  /** globalIndex của bài hiện tại trong khóa (currentLessonIndex). */
+  /**
+   * globalIndex của bài hiện tại trong khóa = BIÊN HIỆU LỰC (tiến độ
+   * thật + sàn cấp độ, tính ở màn cha bằng `effectiveFrontierIndex`).
+   * Mọi quyết định khóa/hiện tại trong bản đồ đều suy từ mốc này qua
+   * `isLockedAtFrontier` — cùng một helper với MissionPanel.
+   */
   currentIndex: number;
   totalLessons: number;
 };
@@ -836,7 +841,12 @@ function ProvinceDetailPanel({
             >
               {lessons.map((ref, i) => {
                 const done = !!course.completedLessons[ref.lesson.id];
-                const locked = !unlockedAll && ref.globalIndex > course.currentIndex;
+                const locked = isLockedAtFrontier({
+                  unlockedAll,
+                  completed: done,
+                  globalIndex: ref.globalIndex,
+                  frontierIndex: course.currentIndex,
+                });
                 const current = !done && ref.globalIndex === course.currentIndex;
                 return (
                   <Pressable
@@ -1044,11 +1054,21 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
       const doneCount = lessons.filter(
         (l) => activeCourse.completedLessons[l.lesson.id]
       ).length;
-      const first = lessons[0];
       const isCurrent = lessons.some((l) => l.globalIndex === activeCourse.currentIndex);
       const unitDone = lessons.length > 0 && doneCount === lessons.length;
-      const locked =
-        !unlockedAll && !!first && first.globalIndex > activeCourse.currentIndex;
+      // Tỉnh khóa khi MỌI bài trong unit đều khóa theo cùng helper dùng
+      // cho chip bài học (bài trước sàn cấp độ chưa học cũng tính khóa,
+      // bài đã hoàn thành luôn tính mở để ôn).
+      const anyOpen = lessons.some(
+        (l) =>
+          !isLockedAtFrontier({
+            unlockedAll,
+            completed: !!activeCourse.completedLessons[l.lesson.id],
+            globalIndex: l.globalIndex,
+            frontierIndex: activeCourse.currentIndex,
+          })
+      );
+      const locked = lessons.length > 0 && !anyOpen;
       const state: ProvinceVisualState = !unit
         ? "info"
         : unitDone
