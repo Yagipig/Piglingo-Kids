@@ -853,41 +853,53 @@ function ProvinceDetailPanel({
                     key={ref.lesson.id}
                     onPress={() => onMissionPress(ref, course.courseId)}
                     accessibilityRole="button"
-                    accessibilityLabel={`${model.unit?.title}, bài ${i + 1}${done ? ", đã hoàn thành" : locked ? ", đang khóa" : ""}`}
+                    accessibilityLabel={`${model.unit?.title}, bài ${i + 1}, là bài ${ref.globalIndex + 1} trên ${course.totalLessons} toàn khóa${done ? ", đã hoàn thành" : locked ? ", đang khóa" : ""}`}
                     accessibilityState={{ disabled: locked, selected: current }}
                     style={({ pressed }) => [
-                      styles.lessonChip,
-                      done && styles.lessonChipDone,
-                      locked && styles.lessonChipLocked,
-                      current && styles.lessonChipCurrent,
+                      styles.lessonChipWrap,
                       pressed && { opacity: 0.85 },
                     ]}
                   >
-                    <Text
+                    <View
                       style={[
-                        styles.lessonChipText,
-                        done && styles.lessonChipTextDone,
-                        locked && styles.lessonChipTextLocked,
+                        styles.lessonChip,
+                        done && styles.lessonChipDone,
+                        locked && styles.lessonChipLocked,
+                        current && styles.lessonChipCurrent,
                       ]}
-                      maxFontSizeMultiplier={1.1}
                     >
-                      {i + 1}
+                      <Text
+                        style={[
+                          styles.lessonChipText,
+                          done && styles.lessonChipTextDone,
+                          locked && styles.lessonChipTextLocked,
+                        ]}
+                        maxFontSizeMultiplier={1.1}
+                      >
+                        {i + 1}
+                      </Text>
+                      {done ? (
+                        <View style={styles.chipBadge}>
+                          <Text style={styles.chipBadgeText}>⭐</Text>
+                        </View>
+                      ) : locked ? (
+                        <View style={styles.chipBadge}>
+                          <Text style={styles.chipBadgeText}>🔒</Text>
+                        </View>
+                      ) : null}
+                    </View>
+                    {/* Số bài TOÀN CỤC dưới mỗi điểm: nhìn là biết bài khóa
+                        ngay trước điểm bắt đầu là 81, bài đang mở là 82. */}
+                    <Text style={styles.lessonChipGlobal} maxFontSizeMultiplier={1.1}>
+                      {ref.globalIndex + 1}/{course.totalLessons}
                     </Text>
-                    {done ? (
-                      <View style={styles.chipBadge}>
-                        <Text style={styles.chipBadgeText}>⭐</Text>
-                      </View>
-                    ) : locked ? (
-                      <View style={styles.chipBadge}>
-                        <Text style={styles.chipBadgeText}>🔒</Text>
-                      </View>
-                    ) : null}
                   </Pressable>
                 );
               })}
             </ScrollView>
             <Text style={styles.detailHint} maxFontSizeMultiplier={1.3}>
-              Chạm vào một điểm để xem nhiệm vụ của bài học nhé.
+              Chạm vào một điểm để xem nhiệm vụ của bài học nhé. Số nhỏ dưới mỗi
+              điểm là bài thứ mấy trong toàn khóa.
             </Text>
           </View>
         ) : course ? (
@@ -1689,6 +1701,8 @@ const useStyles = makeThemedStyles((colors) =>
     },
     guideButtonText: { fontSize: 12.5, fontWeight: "800", color: colors.neutral700 },
     chipRow: { gap: 10, paddingTop: 12, paddingBottom: 2, paddingRight: 6 },
+    lessonChipWrap: { alignItems: "center", gap: 3 },
+    lessonChipGlobal: { fontSize: 10, fontWeight: "800", color: colors.textMuted },
     lessonChip: {
       width: 46,
       height: 46,
