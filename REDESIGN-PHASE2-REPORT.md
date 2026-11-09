@@ -101,3 +101,34 @@ Dựa đúng logic đã cài (`effectiveFrontierIndex` + `isLockedAtFrontier`), 
 - **Hạ cấp độ** (chuyen-nghiep → moi): vị trí quay về Bài 52, KHÔNG bài đã xong nào bị khóa lại, số bài hoàn thành và XP trên trang chủ không thay đổi một chút nào — đổi cấp độ chỉ dời điểm bắt đầu, không đụng tiến độ.
 
 **Khi đang học dở theo cấp độ:** học xong bài ở điểm bắt đầu (ví dụ Bài 45 ở da-biet), màn hình kết quả bài học dẫn tiếp tới Bài 46 (không kéo ngược về Bài 1), và trang chủ cập nhật vị trí hiện tại theo đúng bài kế đó.
+
+## Bổ sung: hiển thị số bài toàn cục
+
+- Ngày: 09/11/2026. Phạm vi: CHỈ hiển thị — không đổi bất kỳ logic khóa/frontier/helper nào của Phase 2, không đổi route.
+- Lý do: kiểm chứng tận tay trên bản preview cho thấy cú nhảy cấp độ chạy đúng (Anh: moi → bài toàn cục 1, da-biet → 45, chuyen-nghiep → 82) nhưng giao diện chỉ ghi số bài TRONG unit ("Bài 1", "Bài 2") nên nhìn như không đổi.
+
+### File đã sửa
+
+| File | Thay đổi (chỉ chuỗi hiển thị) |
+|---|---|
+| `src/components/continue-button.tsx` | Thêm prop `totalLessons`; dòng gợi ý dưới nút Tiếp tục học đổi từ tên bài trong unit sang số bài TOÀN CỤC. Phần đuôi của tên bài trong unit (": Ôn tập", ": Câu") được giữ lại sau số toàn cục bằng cách cắt tiền tố "Bài N" khỏi `lesson.title` |
+| `src/app/(tabs)/index.tsx` | Truyền `totalLessons={total}` (tổng bài của khóa đang học, lấy từ `allLessons.length` — không hard-code) vào `ContinueButton`; thẻ "Gợi ý hành trình" thêm "· Bài {globalIndex + 1}/{total} toàn khóa" sau tên unit |
+| `src/components/world-map.tsx` | Thẻ tỉnh: mỗi chip bài học (vòng tròn số trong unit) nay có nhãn nhỏ ở dưới ghi số toàn cục/tổng (vd "82/108"); nhãn trợ năng của chip cũng đọc số toàn cục; dòng gợi ý dưới hàng chip thêm câu "Số nhỏ dưới mỗi điểm là bài thứ mấy trong toàn khóa". Cấu trúc chip đổi thành cột (vòng tròn + nhãn) bằng 2 style mới `lessonChipWrap`/`lessonChipGlobal`, style vòng tròn giữ nguyên |
+
+### Chuỗi hiển thị trước/sau (khóa Anh, 108 bài — đối chiếu dữ liệu pack thật)
+
+| Tình huống | Trước | Sau |
+|---|---|---|
+| Điểm đến tiếp theo, Chuyên nghiệp (bài đích = unit "Công nghệ và nghề nghiệp", bài 2 trong unit) | `Điểm đến tiếp theo: Công nghệ và nghề nghiệp — Bài 2` | `Điểm đến tiếp theo: Công nghệ và nghề nghiệp — Bài 82/108` |
+| Điểm đến tiếp theo, Đã biết cơ bản | `Điểm đến tiếp theo: Cơ thể — Bài 1` | `Điểm đến tiếp theo: Cơ thể — Bài 45/108` |
+| Điểm đến là bài ôn tập (toàn cục 83) | `… — Bài 3: Ôn tập` | `… — Bài 83/108: Ôn tập` |
+| Thẻ gợi ý hành trình | `Bắt đầu từ Chuyên sâu — Công nghệ và nghề nghiệp` | `Bắt đầu từ Chuyên sâu — Công nghệ và nghề nghiệp · Bài 82/108 toàn khóa` |
+| Chip bài học trong thẻ tỉnh | Chỉ số trong unit (1, 2, 3, 4) | Số trong unit trong vòng tròn + nhãn nhỏ toàn cục ở dưới (vd bài khóa ngay trước điểm bắt đầu hiện "81/108", bài đang mở hiện "82/108") |
+
+### Kiểm chứng
+
+- Toàn bộ test cũ PASS nguyên trạng, KHÔNG phải sửa khẳng định nào (không test nào khóa chuỗi hiển thị cũ): test-garden 14/14, test-rewards 9/9, test-ranks 12/12, test-competitions 20/20, test-provinces 30/30, test-worldmap 84/84, test-level-floor 11/11.
+- `npx tsc --noEmit`: 0 lỗi. `npx expo export --platform web`: PASS.
+- Baseline nội dung giữ nguyên: 80 unit / 314 bài / 2488 exercise (các test khẳng định baseline đều PASS; đợt này không đụng file nội dung).
+- Chuỗi sau sửa đã đối chiếu thủ công với pack `en-vi.json` thật cho 3 mốc cấp độ (1/108, 45/108, 82/108) — khớp đúng các vị trí đã kiểm chứng trên preview.
+- Chưa upload GitHub (đẩy lên nhánh preview ở bước ngoài).
