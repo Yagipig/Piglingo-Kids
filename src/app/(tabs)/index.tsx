@@ -13,6 +13,7 @@ import {
 } from "@/lib/content";
 import { totalGardenXp } from "@/lib/garden";
 import { KINGDOMS, kingdomForCourse, type Kingdom } from "@/lib/kingdoms";
+import { accessoryById } from "@/lib/pets";
 import { rankForXp } from "@/lib/ranks";
 import { allCourseRewardProgress } from "@/lib/rewards";
 import {
@@ -63,6 +64,8 @@ export default function LearnScreen() {
   } = progress;
   const courseProgress = progress.course();
   const { pack, allLessons } = useCourseContent(activeCourseId);
+  /** Ảnh cá nhân của bé đặt ở tab Hồ sơ (chưa đặt thì không hiện gì thêm). */
+  const avatarImage = progress.avatarImage ?? null;
   useAmbientMusic();
 
   const totalXp = totalGardenXp(progress);
@@ -119,6 +122,14 @@ export default function LearnScreen() {
                 contentFit="contain"
                 accessibilityLabel="Heo Piglingo"
               />
+              {avatarImage ? (
+                <Image
+                  source={{ uri: avatarImage }}
+                  style={styles.heroAvatar}
+                  contentFit="cover"
+                  accessibilityLabel="Ảnh của bé"
+                />
+              ) : null}
               <View style={{ flex: 1, gap: 3 }}>
                 <Text style={styles.heroGreeting} maxFontSizeMultiplier={1.25}>
                   {greeting}
@@ -266,6 +277,11 @@ export default function LearnScreen() {
               const pct = totalCount > 0 ? doneCount / totalCount : 0;
               const xp = progress.courses?.[kingdom.courseId]?.xp ?? 0;
               const active = kingdom.courseId === activeCourseId;
+              const petAccessories = (
+                progress.equippedAccessories?.[kingdom.courseId] ?? []
+              )
+                .map((id) => accessoryById(kingdom.courseId, id)?.emoji)
+                .filter((e): e is string => !!e);
               return (
                 <KingdomHomeCard
                   key={kingdom.courseId}
@@ -275,6 +291,7 @@ export default function LearnScreen() {
                   total={totalCount}
                   pct={pct}
                   active={active}
+                  accessoryEmojis={petAccessories}
                   onPress={() => openMap(kingdom.courseId)}
                 />
               );
@@ -300,6 +317,11 @@ export default function LearnScreen() {
                 label="Thành tích"
                 onPress={() => router.push("/achievements")}
               />
+              <ShortcutCard
+                emoji="🐾"
+                label="Thú cưng"
+                onPress={() => router.push("/pet")}
+              />
             </View>
 
             <Text style={styles.footerNote} maxFontSizeMultiplier={1.25}>
@@ -322,6 +344,7 @@ function KingdomHomeCard({
   total,
   pct,
   active,
+  accessoryEmojis,
   onPress,
 }: {
   kingdom: Kingdom;
@@ -330,6 +353,8 @@ function KingdomHomeCard({
   total: number;
   pct: number;
   active: boolean;
+  /** Emoji phụ kiện thú của vương quốc này đang mặc (Đợt B+C). */
+  accessoryEmojis: string[];
   onPress: () => void;
 }) {
   const styles = useStyles();
@@ -349,6 +374,11 @@ function KingdomHomeCard({
     >
       <View style={[styles.kingdomAvatar, { backgroundColor: p.soft }]}>
         <Text style={styles.kingdomAvatarEmoji}>{kingdom.companion}</Text>
+        {accessoryEmojis.length > 0 ? (
+          <Text style={styles.kingdomAccessory} numberOfLines={1}>
+            {accessoryEmojis.slice(0, 3).join("")}
+          </Text>
+        ) : null}
       </View>
       <View style={{ flex: 1, gap: 3 }}>
         <View style={styles.kingdomNameRow}>
@@ -425,6 +455,15 @@ const useStyles = makeThemedStyles((colors) =>
     },
     heroCard: { flexDirection: "row", alignItems: "center", gap: spacing.md },
     heroMascot: { width: 74, height: 74 },
+    heroAvatar: {
+      width: 48,
+      height: 48,
+      borderRadius: radius.full,
+      borderWidth: 2,
+      borderColor: colors.amber,
+      marginLeft: -spacing.sm,
+      backgroundColor: colors.surface,
+    },
     heroGreeting: {
       fontSize: typography.body.fontSize,
       fontWeight: "700",
@@ -504,6 +543,7 @@ const useStyles = makeThemedStyles((colors) =>
       justifyContent: "center",
     },
     kingdomAvatarEmoji: { fontSize: 32 },
+    kingdomAccessory: { fontSize: 11, lineHeight: 13, marginTop: -4 },
     kingdomNameRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
     kingdomName: {
       fontSize: typography.title.fontSize,
