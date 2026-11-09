@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CloseButton } from "@/components/close-button";
 import { SpeakerButton } from "@/components/speaker-button";
 import { RealVoiceButton } from "@/components/real-voice-button";
+import { WordDetailBoundary } from "@/components/word-detail-boundary";
 import { TwemojiImage } from "@/components/twemoji-image";
 import { JLPT_NOTE, WordMeta } from "@/components/word-meta";
 import { useCourseContent } from "@/lib/content";
@@ -123,12 +124,14 @@ export default function GuidebookScreen() {
                     {word.target} — {word.native}
                   </Text>
                 </View>
-                <WordMeta courseId={activeCourseId} word={word} showGloss />
-                <RealVoiceButton
-                  courseId={activeCourseId}
-                  text={word.target}
-                  compact
-                />
+                <WordDetailBoundary>
+                  <WordMeta courseId={activeCourseId} word={word} showGloss />
+                  <RealVoiceButton
+                    courseId={activeCourseId}
+                    text={word.target}
+                    compact
+                  />
+                </WordDetailBoundary>
               </View>
             </View>
           ))}
