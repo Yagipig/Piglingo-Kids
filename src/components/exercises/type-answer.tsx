@@ -4,7 +4,15 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { SpeakerButton } from "@/components/speaker-button";
 import { speakTarget } from "@/lib/audio";
 import { useProgress } from "@/lib/store";
-import { makeThemedStyles, radius, useResolvedScheme, useThemeColors } from "@/lib/theme";
+import {
+  makeThemedStyles,
+  radius,
+  shadow,
+  spacing,
+  typography,
+  useResolvedScheme,
+  useThemeColors,
+} from "@/lib/theme";
 import type { TypeAnswerExercise } from "@/lib/types";
 
 type TypeAnswerProps = {
@@ -72,20 +80,27 @@ export function TypeAnswer({
 
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
-    container: { gap: 20 },
-    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
-    promptRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+    container: { gap: spacing.xl },
+    title: {
+      fontSize: typography.h1.fontSize,
+      lineHeight: typography.h1.lineHeight,
+      fontWeight: "900",
+      color: colors.neutral700,
+    },
+    promptRow: { flexDirection: "row", alignItems: "center", gap: spacing.md },
     prompt: { fontSize: 20, fontWeight: "700", color: colors.text, flexShrink: 1 },
     input: {
       minHeight: 110,
       borderWidth: 2,
       borderColor: colors.neutral200,
       borderRadius: radius.xl,
-      backgroundColor: colors.neutral100,
-      padding: 16,
-      fontSize: 18,
+      backgroundColor: colors.surface,
+      padding: spacing.lg,
+      fontSize: 19,
+      fontWeight: "600",
       color: colors.text,
       textAlignVertical: "top",
+      ...shadow.soft,
     },
   })
 );

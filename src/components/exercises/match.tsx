@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+import { ProgressBar } from "@/components/ui/progress-bar";
 import { speakTarget } from "@/lib/audio";
 import { haptics } from "@/lib/haptics";
 import { useProgress } from "@/lib/store";
-import { makeThemedStyles } from "@/lib/theme";
+import { makeThemedStyles, spacing, typography, useThemeColors } from "@/lib/theme";
 import type { MatchExercise } from "@/lib/types";
 
 import { OptionCard, type OptionState } from "./option-card";
@@ -37,6 +38,7 @@ function shuffleBy<T>(items: T[], seedText: string): T[] {
 
 export function Match({ exercise, onComplete, onWordResult }: MatchProps) {
   const courseId = useProgress((s) => s.activeCourseId);
+  const colors = useThemeColors();
   const styles = useStyles();
   const left = useMemo(
     () => shuffleBy(exercise.pairs.map((p) => p.target), exercise.id + "L"),
@@ -103,6 +105,21 @@ export function Match({ exercise, onComplete, onWordResult }: MatchProps) {
       <Text style={styles.title} maxFontSizeMultiplier={1.3}>
         Chạm để ghép các cặp giống nhau
       </Text>
+      <View style={styles.progressWrap}>
+        <ProgressBar
+          value={
+            exercise.pairs.length === 0
+              ? 0
+              : matched.size / exercise.pairs.length
+          }
+          color={colors.green}
+          height={10}
+          accessibilityLabel={`Đã ghép ${matched.size} trên ${exercise.pairs.length} cặp`}
+        />
+        <Text style={styles.progressText} maxFontSizeMultiplier={1.2}>
+          Đã ghép {matched.size}/{exercise.pairs.length} cặp
+        </Text>
+      </View>
       <View style={styles.columns}>
         <View style={styles.column}>
           {left.map((target) => (
@@ -148,9 +165,20 @@ export function Match({ exercise, onComplete, onWordResult }: MatchProps) {
 
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
-    container: { gap: 20 },
-    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
-    columns: { flexDirection: "row", gap: 12 },
-    column: { flex: 1, gap: 12 },
+    container: { gap: spacing.xl },
+    title: {
+      fontSize: typography.h1.fontSize,
+      lineHeight: typography.h1.lineHeight,
+      fontWeight: "900",
+      color: colors.neutral700,
+    },
+    progressWrap: { gap: spacing.xs + 2 },
+    progressText: {
+      fontSize: typography.caption.fontSize,
+      fontWeight: "700",
+      color: colors.textMuted,
+    },
+    columns: { flexDirection: "row", gap: spacing.md },
+    column: { flex: 1, gap: spacing.md },
   })
 );
