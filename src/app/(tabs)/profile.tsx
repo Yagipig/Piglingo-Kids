@@ -541,6 +541,18 @@ export default function ProfileScreen() {
             </Text>
             <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
           </Pressable>
+          <Pressable
+            onPress={() => router.push("/data-sources")}
+            style={styles.linkRow}
+            accessibilityRole="button"
+            accessibilityLabel="Xem nguồn dữ liệu và giấy phép"
+          >
+            <Ionicons name="book-outline" size={22} color={colors.green} />
+            <Text style={styles.linkLabel} maxFontSizeMultiplier={1.3}>
+              Nguồn dữ liệu & Giấy phép
+            </Text>
+            <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+          </Pressable>
           {isAdminEmail(user?.email) ? (
             <Pressable
               onPress={() => router.push("/admin-rewards")}

@@ -9,7 +9,9 @@ import { Flag } from "@/components/flag";
 import { Card, ProgressBar } from "@/components/ui";
 import { ScreenBackground } from "@/components/screen-background";
 import { SpeakerButton } from "@/components/speaker-button";
+import { WordMeta } from "@/components/word-meta";
 import { useCourseContent } from "@/lib/content";
+import { freqScore } from "@/lib/lexicon";
 import { dueInDays } from "@/lib/srs";
 import { dailyQuests, dueSrsWords, useProgress, type Quest } from "@/lib/store";
 import { makeThemedStyles, radius, shadow, useThemeColors } from "@/lib/theme";
@@ -190,7 +192,20 @@ export default function PracticeScreen() {
             </Text>
           ) : (
             words
-              .sort((a, b) => (b.stat?.lastSeen ?? 0) - (a.stat?.lastSeen ?? 0))
+              // Ưu tiên hiển thị: từ ĐẾN HẠN ôn trước, rồi tới từ PHỔ BIẾN
+              // hơn (điểm tần suất từ dữ liệu mở — lexicon.freqScore), cuối
+              // cùng mới tới thứ tự học gần đây. Chỉ là thứ tự hiển thị.
+              .sort((a, b) => {
+                const now = Date.now();
+                const aDue = a.srs && a.srs.dueAt <= now ? 1 : 0;
+                const bDue = b.srs && b.srs.dueAt <= now ? 1 : 0;
+                if (aDue !== bDue) return bDue - aDue;
+                const byFreq =
+                  freqScore(activeCourseId, b.target) -
+                  freqScore(activeCourseId, a.target);
+                if (byFreq !== 0) return byFreq;
+                return (b.stat?.lastSeen ?? 0) - (a.stat?.lastSeen ?? 0);
+              })
               .map((word) => {
                 const total = (word.stat?.correct ?? 0) + (word.stat?.wrong ?? 0);
                 const strength =
@@ -206,6 +221,7 @@ export default function PracticeScreen() {
                       <Text style={styles.wordNative} maxFontSizeMultiplier={1.3}>
                         {word.native}
                       </Text>
+                      <WordMeta courseId={activeCourseId} word={word} />
                       {due !== null && due === 0 ? (
                         <Text style={styles.dueBadge} maxFontSizeMultiplier={1.2}>
                           Cần ôn ngay
