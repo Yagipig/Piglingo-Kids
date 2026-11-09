@@ -1,0 +1,1739 @@
+{
+  "source": "Tatoeba (https://tatoeba.org)",
+  "review": "Coordinator personally read and approved every sentence in this file on 2026-11-09 (157 of 240 machine-filtered candidate assignments kept, representing 155 unique Tatoeba sentences; two sentences each serve two targets).",
+  "approvedSentenceIds": [
+    80747,
+    122943,
+    150488,
+    155463,
+    178709,
+    183757,
+    185454,
+    188940,
+    189557,
+    192470,
+    214963,
+    229736,
+    250633,
+    332679,
+    333345,
+    333401,
+    333474,
+    333664,
+    333730,
+    334628,
+    335372,
+    335396,
+    336112,
+    336972,
+    337975,
+    343955,
+    343961,
+    344215,
+    344836,
+    345960,
+    347253,
+    349283,
+    352061,
+    352064,
+    353506,
+    384720,
+    389357,
+    400352,
+    406363,
+    421312,
+    429162,
+    436293,
+    441451,
+    441476,
+    450688,
+    461595,
+    464931,
+    472304,
+    477369,
+    509771,
+    509772,
+    640569,
+    710914,
+    726785,
+    782304,
+    787196,
+    829722,
+    957996,
+    993772,
+    1019997,
+    1291438,
+    1474639,
+    1532832,
+    1557702,
+    1570793,
+    1598216,
+    1606077,
+    1771673,
+    1788031,
+    1838411,
+    1936620,
+    1983735,
+    2254097,
+    2374996,
+    2387423,
+    2442200,
+    2511454,
+    2549725,
+    2595792,
+    2610583,
+    2778803,
+    3378296,
+    3538031,
+    3565442,
+    3636163,
+    3667748,
+    4651964,
+    4757592,
+    4787511,
+    4839619,
+    5595120,
+    5845550,
+    5852466,
+    5863257,
+    7070651,
+    8354670,
+    8501411,
+    8589548,
+    8722334,
+    8734128,
+    8766028,
+    8821921,
+    8895472,
+    8910274,
+    8988070,
+    9433365,
+    9496162,
+    9539155,
+    9546792,
+    9706281,
+    9867809,
+    9898672,
+    9952946,
+    9955853,
+    9957966,
+    9961491,
+    10051939,
+    10094899,
+    10100070,
+    10101827,
+    10110886,
+    10110890,
+    10112162,
+    10112492,
+    10115208,
+    10116610,
+    10116611,
+    10155093,
+    10159590,
+    10185797,
+    10212661,
+    10450871,
+    10635148,
+    10719767,
+    11029430,
+    11029449,
+    11266162,
+    11452633,
+    11505131,
+    11520819,
+    11521310,
+    11607365,
+    11685246,
+    11870988,
+    12136425,
+    12154384,
+    12248986,
+    12343073,
+    12390984,
+    12399108,
+    12453478,
+    12568699,
+    12768809,
+    12886232,
+    14007955
+  ],
+  "courses": {
+    "en-vi": {
+      "dog": [
+        {
+          "id": 11266162,
+          "text": "I hear a dog.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "cat": [
+        {
+          "id": 9433365,
+          "text": "My cat says hi.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "bird": [
+        {
+          "id": 10450871,
+          "text": "We need bird food.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "horse": [
+        {
+          "id": 11520819,
+          "text": "I heard a horse.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "cow": [
+        {
+          "id": 8722334,
+          "text": "The cow mooed.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "red": [
+        {
+          "id": 2610583,
+          "text": "My car is red.",
+          "author": "MethodGT",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "white": [
+        {
+          "id": 10112162,
+          "text": "The bowl is white.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "mom": [
+        {
+          "id": 9546792,
+          "text": "My mom says hi.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "dad": [
+        {
+          "id": 4787511,
+          "text": "My dad is busy.",
+          "author": "Joseph",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "friend": [
+        {
+          "id": 10116611,
+          "text": "My friend is talkative.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "milk": [
+        {
+          "id": 10101827,
+          "text": "I drink whole milk.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "rice": [
+        {
+          "id": 8895472,
+          "text": "I like basmati rice.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "five": [
+        {
+          "id": 9867809,
+          "text": "We have five cats.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "six": [
+        {
+          "id": 7070651,
+          "text": "I had six dogs.",
+          "author": "OsoHombre",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "book": [
+        {
+          "id": 10115208,
+          "text": "The book is heavy.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "pen": [
+        {
+          "id": 710914,
+          "text": "My pen is new.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "bag": [
+        {
+          "id": 2387423,
+          "text": "I need a bag.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "teacher": [
+        {
+          "id": 10116610,
+          "text": "My teacher is smart.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "desk": [
+        {
+          "id": 250633,
+          "text": "My desk is old.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "son": [
+        {
+          "id": 10112492,
+          "text": "My son is teething.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "pizza": [
+        {
+          "id": 8354670,
+          "text": "This pizza is terrible.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "soup": [
+        {
+          "id": 11521310,
+          "text": "The soup got cold.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "map": [
+        {
+          "id": 450688,
+          "text": "I need a map.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "computer": [
+        {
+          "id": 10110890,
+          "text": "The computer is malfunctioning.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "nose": [
+        {
+          "id": 8766028,
+          "text": "My nose is red.",
+          "author": "Adelpa",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "hair": [
+        {
+          "id": 12154384,
+          "text": "You have thick hair.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "shirt": [
+        {
+          "id": 10110886,
+          "text": "The shirt is stained.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "hat": [
+        {
+          "id": 3636163,
+          "text": "I need a hat.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "shoes": [
+        {
+          "id": 9957966,
+          "text": "I don't wear shoes.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "bus": [
+        {
+          "id": 12248986,
+          "text": "The bus is packed.",
+          "author": "Miktsoanit",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "boat": [
+        {
+          "id": 8910274,
+          "text": "I see a boat.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "sun": [
+        {
+          "id": 477369,
+          "text": "The sun is red.",
+          "author": "BlueLagoon",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "wind": [
+        {
+          "id": 12768809,
+          "text": "The wind speaks softly.",
+          "author": "Igider",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "cold": [
+        {
+          "id": 11521310,
+          "text": "The soup got cold.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "will": [
+        {
+          "id": 12390984,
+          "text": "It will save you.",
+          "author": "Miktsoanit",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "did": [
+        {
+          "id": 11685246,
+          "text": "I did the math.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "have": [
+        {
+          "id": 9867809,
+          "text": "We have five cats.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "has": [
+        {
+          "id": 9898672,
+          "text": "It has been sold.",
+          "author": "AmarMecheri",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "could": [
+        {
+          "id": 10719767,
+          "text": "They could be right.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "built": [
+        {
+          "id": 10159590,
+          "text": "I built a shed.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "painted": [
+        {
+          "id": 12399108,
+          "text": "I painted a windmill.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "would": [
+        {
+          "id": 1983735,
+          "text": "It would be fun.",
+          "author": "Spamster",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "might": [
+        {
+          "id": 8988070,
+          "text": "I might fall asleep.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "rains": [
+        {
+          "id": 9706281,
+          "text": "It rains a lot.",
+          "author": "DJ_Saidez",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "rich": [
+        {
+          "id": 10094899,
+          "text": "They were probably rich.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "who": [
+        {
+          "id": 8821921,
+          "text": "I know who won.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "said": [
+        {
+          "id": 11607365,
+          "text": "You said it.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "told": [
+        {
+          "id": 2549725,
+          "text": "I told a joke.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "protect": [
+        {
+          "id": 11452633,
+          "text": "We protect each other.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "robot": [
+        {
+          "id": 10051939,
+          "text": "I am a robot.",
+          "author": "espamatics",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "doctor": [
+        {
+          "id": 436293,
+          "text": "I am a doctor.",
+          "author": "lukaszpp",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "wish": [
+        {
+          "id": 8734128,
+          "text": "I wish we knew.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "wearing": [
+        {
+          "id": 12343073,
+          "text": "They were wearing clothes.",
+          "author": "ddnktr",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "sent": [
+        {
+          "id": 11505131,
+          "text": "They sent him home.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "cut": [
+        {
+          "id": 12136425,
+          "text": "I can cut it.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "agreed": [
+        {
+          "id": 5852466,
+          "text": "I agreed to go.",
+          "author": "CK",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "never": [
+        {
+          "id": 10155093,
+          "text": "The job never ends.",
+          "author": "shekitten",
+          "license": "CC0 1.0",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ]
+    },
+    "ja-vi": {
+      "あ": [
+        {
+          "id": 229736,
+          "text": "あれはテーブルです。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "え": [
+        {
+          "id": 10185797,
+          "text": "ええ。その通りです。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "お": [
+        {
+          "id": 335372,
+          "text": "おはようございます。",
+          "author": "Aurix",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "こ": [
+        {
+          "id": 178709,
+          "text": "このカメラあげるよ。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "す": [
+        {
+          "id": 214963,
+          "text": "すぐにうまくなるよ。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "ア": [
+        {
+          "id": 11870988,
+          "text": "アドレスはこれです。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "エ": [
+        {
+          "id": 9539155,
+          "text": "エンジンがかかった。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "オ": [
+        {
+          "id": 1771673,
+          "text": "オムライスを食べた。",
+          "author": "Scott",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "キ": [
+        {
+          "id": 10635148,
+          "text": "スキーシーズンです。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "ク": [
+        {
+          "id": 11029449,
+          "text": "クッキーを焼いたよ。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "りんご": [
+        {
+          "id": 192470,
+          "text": "りんごが熟している。",
+          "author": "mookeee",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "おはよう": [
+        {
+          "id": 1598216,
+          "text": "おはよう。",
+          "author": "Bah_Dure",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "ありがとう": [
+        {
+          "id": 1532832,
+          "text": "ありがとう。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "さようなら": [
+        {
+          "id": 640569,
+          "text": "さようなら。",
+          "author": "arihato",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "おやすみ": [
+        {
+          "id": 1474639,
+          "text": "おやすみ。",
+          "author": "Chrikaru",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "はい": [
+        {
+          "id": 509772,
+          "text": "はい。",
+          "author": "e4zh1nmcz",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "いいえ": [
+        {
+          "id": 509771,
+          "text": "いいえ。",
+          "author": "e4zh1nmcz",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "ご": [
+        {
+          "id": 10100070,
+          "text": "ごちそうさまでした。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "パン": [
+        {
+          "id": 4839619,
+          "text": "パンを食べています。",
+          "author": "Adou_Fr",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "バナナ": [
+        {
+          "id": 11029430,
+          "text": "バナナは好きですよ。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "かばん": [
+        {
+          "id": 3565442,
+          "text": "かばん開いてますよ。",
+          "author": "tommy_san",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "シャツ": [
+        {
+          "id": 384720,
+          "text": "シャツの替えがない。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "日": [
+        {
+          "id": 122943,
+          "text": "日が沈んでしまった。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "雨": [
+        {
+          "id": 189557,
+          "text": "雨はすぐやみますよ。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "見た": [
+        {
+          "id": 2374996,
+          "text": "見たことがあります。",
+          "author": "wakatyann630",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "読んだ": [
+        {
+          "id": 12886232,
+          "text": "読んだことあります。",
+          "author": "Josephlingo",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "話したい": [
+        {
+          "id": 1557702,
+          "text": "話したいことが多い。",
+          "author": "brymck",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "会": [
+        {
+          "id": 185454,
+          "text": "会えて嬉しかったよ。",
+          "author": "mookeee",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "年": [
+        {
+          "id": 12453478,
+          "text": "年によって違います。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "時": [
+        {
+          "id": 150488,
+          "text": "時計をなくしました。",
+          "author": "tommy_san",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "明": [
+        {
+          "id": 80747,
+          "text": "明かりがついている。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "友": [
+        {
+          "id": 14007955,
+          "text": "友達になりたいです。",
+          "author": "enclectm",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "母": [
+        {
+          "id": 1838411,
+          "text": "母がミシンをくれた。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "先": [
+        {
+          "id": 155463,
+          "text": "先生になりたいんだ。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "生": [
+        {
+          "id": 9952946,
+          "text": "生きてるっていいね。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "駅": [
+        {
+          "id": 188940,
+          "text": "駅にはバスで行ける。",
+          "author": "bunbuku",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "間": [
+        {
+          "id": 183757,
+          "text": "間違いありませんよ。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "おっしゃる": [
+        {
+          "id": 4651964,
+          "text": "おっしゃる通りです。",
+          "author": "tommy_san",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "遅れる": [
+        {
+          "id": 10212661,
+          "text": "遅れるのが嫌なんだ。",
+          "author": "small_snow",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ]
+    },
+    "zh-vi": {
+      "一": [
+        {
+          "id": 333474,
+          "text": "一年有十二个月。",
+          "author": "al",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "四": [
+        {
+          "id": 9496162,
+          "text": "四月之后是五月。",
+          "author": "jin1",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "六": [
+        {
+          "id": 787196,
+          "text": "六边形有六条边。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "七": [
+        {
+          "id": 726785,
+          "text": "我七点钟再回来。",
+          "author": "CLARET",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "对不起": [
+        {
+          "id": 472304,
+          "text": "对不起。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "没关系": [
+        {
+          "id": 333730,
+          "text": "没关系。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "请": [
+        {
+          "id": 333345,
+          "text": "请别在这里拍照。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "是": [
+        {
+          "id": 343961,
+          "text": "是时候洗个澡了。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "爸爸": [
+        {
+          "id": 352064,
+          "text": "爸爸不太吃水果。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "妈妈": [
+        {
+          "id": 421312,
+          "text": "妈妈现在打网球。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "哥哥": [
+        {
+          "id": 343955,
+          "text": "我哥哥喜欢音乐。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "姐姐": [
+        {
+          "id": 345960,
+          "text": "我姐姐游泳很快。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "弟弟": [
+        {
+          "id": 344215,
+          "text": "我弟弟还睡着呢。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "妹妹": [
+        {
+          "id": 441476,
+          "text": "我妹妹酷爱跳绳。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "猫": [
+        {
+          "id": 464931,
+          "text": "猫喜欢鱼多过肉。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "狗": [
+        {
+          "id": 829722,
+          "text": "狗在地毯上睡觉。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "鸟": [
+        {
+          "id": 2254097,
+          "text": "鸟儿在空中飞翔。",
+          "author": "KerenDeng",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "鱼": [
+        {
+          "id": 461595,
+          "text": "小鱼是会长大的。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "马": [
+        {
+          "id": 1019997,
+          "text": "马在路上小跑着。",
+          "author": "GlossaMatik",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "牛": [
+        {
+          "id": 2511454,
+          "text": "牛在牧地上吃草。",
+          "author": "tsayng",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "红色": [
+        {
+          "id": 8589548,
+          "text": "红色天竺葵很美。",
+          "author": "slo_oth",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "太阳": [
+        {
+          "id": 2595792,
+          "text": "太阳在西边下山。",
+          "author": "GlossaMatik",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "叔叔": [
+        {
+          "id": 334628,
+          "text": "我叔叔来看我了。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "儿子": [
+        {
+          "id": 389357,
+          "text": "她儿子是个天才。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "女儿": [
+        {
+          "id": 8501411,
+          "text": "我女儿喜欢蛋黄。",
+          "author": "maxine",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "孩子": [
+        {
+          "id": 349283,
+          "text": "孩子是宝中之宝。",
+          "author": "zhouj1955",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "彩虹": [
+        {
+          "id": 4757592,
+          "text": "彩虹有七种颜色。",
+          "author": "ryanwoo",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "汤": [
+        {
+          "id": 333664,
+          "text": "这汤里盐放多了。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "饼干": [
+        {
+          "id": 1788031,
+          "text": "饼干在桌子下面。",
+          "author": "sadhen",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "纸": [
+        {
+          "id": 406363,
+          "text": "纸是由木制成的。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "地球": [
+        {
+          "id": 993772,
+          "text": "地球绕着太阳转。",
+          "author": "leoyzy",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "手": [
+        {
+          "id": 344836,
+          "text": "他手里拿着铅笔。",
+          "author": "zhouj1955",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "外套": [
+        {
+          "id": 337975,
+          "text": "外套的纽扣掉了。",
+          "author": "krski",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "汽车": [
+        {
+          "id": 336112,
+          "text": "汽车发生故障了。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "自行车": [
+        {
+          "id": 5845550,
+          "text": "那自行车是我的。",
+          "author": "verdastelo9604",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "雨": [
+        {
+          "id": 1606077,
+          "text": "雨后气温下降了。",
+          "author": "trieuho",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "雪": [
+        {
+          "id": 429162,
+          "text": "雪持续下了十天。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "风": [
+        {
+          "id": 12568699,
+          "text": "微风吹荡着湖面。",
+          "author": "omerfarukckmk",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "热": [
+        {
+          "id": 2442200,
+          "text": "热得想吃冰淇淋。",
+          "author": "ydcok",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "闪电": [
+        {
+          "id": 9955853,
+          "text": "闪电照亮了天空。",
+          "author": "GlossaMatik",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "钱": [
+        {
+          "id": 335396,
+          "text": "我钱包里没钱了。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "买": [
+        {
+          "id": 957996,
+          "text": "买了两包开心果。",
+          "author": "U2FS",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "衣服": [
+        {
+          "id": 400352,
+          "text": "衣服被晾出去了。",
+          "author": "sysko",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "近": [
+        {
+          "id": 9961491,
+          "text": "附近有一家医院。",
+          "author": "GlossaMatik",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "车站": [
+        {
+          "id": 336972,
+          "text": "车站前有个银行。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "休息": [
+        {
+          "id": 352061,
+          "text": "他休息了一会儿。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "学生": [
+        {
+          "id": 2778803,
+          "text": "学生们在教室里。",
+          "author": "GlossaMatik",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "问题": [
+        {
+          "id": 5863257,
+          "text": "问题还没有解决。",
+          "author": "verdastelo9604",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "考试": [
+        {
+          "id": 3667748,
+          "text": "考试下周日开始。",
+          "author": "inkarl",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "公司": [
+        {
+          "id": 5595120,
+          "text": "公司取消了会议。",
+          "author": "verdastelo9604",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "游泳": [
+        {
+          "id": 332679,
+          "text": "游泳使腿部强健。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "唱歌": [
+        {
+          "id": 782304,
+          "text": "唱歌是她的强项。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "信息": [
+        {
+          "id": 441451,
+          "text": "把信息再看一遍。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "海洋": [
+        {
+          "id": 1291438,
+          "text": "海洋底部有沙子。",
+          "author": "Loene",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "节约": [
+        {
+          "id": 1570793,
+          "text": "节约是一种美德。",
+          "author": "sadhen",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "毕业": [
+        {
+          "id": 3378296,
+          "text": "我毕业快两年了。",
+          "author": "GlossaMatik",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "努力": [
+        {
+          "id": 3538031,
+          "text": "要努力完成计划。",
+          "author": "trieuho",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "把": [
+        {
+          "id": 333401,
+          "text": "把问题澄清一下。",
+          "author": "fucongcong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "比": [
+        {
+          "id": 353506,
+          "text": "我比他年纪还大。",
+          "author": "ruicong",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "完": [
+        {
+          "id": 347253,
+          "text": "上完厕所要洗手。",
+          "author": "zhouj1955",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ],
+      "到": [
+        {
+          "id": 1936620,
+          "text": "到了给我打电话。",
+          "author": "fercheung",
+          "license": "CC BY 2.0 FR",
+          "reviewStatus": "human-reviewed",
+          "reviewed": true
+        }
+      ]
+    }
+  }
+}
