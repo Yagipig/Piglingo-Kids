@@ -27,7 +27,7 @@ import type { Exercise, Word } from "./types";
 /* Roster thú cưng                                                     */
 /* ------------------------------------------------------------------ */
 
-export type PetSkillKind = "speak" | "reading" | "pinyin" | "reminder";
+export type PetSkillKind = "speak" | "reading" | "pinyin" | "reminder" | "none";
 
 export type WorldPet = {
   courseId: string;
@@ -79,12 +79,32 @@ export const LEGENDARY_PET = {
     "Rồng Huyền Thoại nhớ hết những từ bé hay trả lời sai và nhắc lại đúng lúc bé cần. Mở khóa khi bé hoàn thành trọn một thế giới.",
 };
 
+/**
+ * PET HIẾM từ vòng quay KHÓ (người dùng chốt 09/11/2026): Phượng Hoàng
+ * Cầu Vồng 🦚 — pet mới hẳn, hiếm nhất và đẹp nhất của app, chỉ có ở
+ * vòng quay KHÓ. Vào bộ sưu tập ở trang Thú cưng, chọn làm thú đi
+ * theo trên bản đồ được. Phượng Hoàng Cầu Vồng KHÔNG có skill riêng —
+ * trong bài học chỉ cổ vũ bé, không làm bài thay bé.
+ */
+export const RARE_PET = {
+  id: "phuong-hoang",
+  name: "Phượng Hoàng Cầu Vồng",
+  emoji: "🦚",
+  skillBlurb:
+    "Phượng Hoàng Cầu Vồng là pet hiếm nhất và đẹp nhất — chỉ xuất hiện ở vòng quay KHÓ. Phượng Hoàng Cầu Vồng không có kỹ năng riêng — chỉ đồng hành và cổ vũ bé học thật vui.",
+};
+
+export type RarePetId = typeof RARE_PET.id;
+
+/** Cách bé chọn thú đồng hành: thú thế giới / Rồng / pet hiếm Phượng Hoàng Cầu Vồng. */
+export type CompanionMode = "world" | "legendary" | "phuong-hoang";
+
 /** Thú của một thế giới; null nếu khóa không thuộc ba khóa thật. */
 export function petForCourse(courseId: string): WorldPet | null {
   return WORLD_PETS[courseId] ?? null;
 }
 
-/** Thú đang đồng hành đã hợp nhất để UI dùng chung (thế giới / huyền thoại). */
+/** Thú đang đồng hành đã hợp nhất để UI dùng chung (thế giới / huyền thoại / hiếm). */
 export type CompanionPet = {
   name: string;
   emoji: string;
@@ -92,20 +112,41 @@ export type CompanionPet = {
   skillKind: PetSkillKind;
   skillBlurb: string;
   legendary: boolean;
+  /** true khi đây là pet hiếm Phượng Hoàng Cầu Vồng (chỉ cổ vũ, không có skill). */
+  rare?: boolean;
 };
 
 /**
  * Thú đồng hành trong bài học / trên bản đồ: mặc định là thú của thế
  * giới của bài học; khi bé đã mở Rồng và chọn Rồng đồng hành
- * (`activeCompanion === "legendary"`) thì Rồng đi theo ở mọi thế giới.
+ * (`activeCompanion === "legendary"`) thì Rồng đi theo ở mọi thế giới;
+ * khi bé đã trúng Phượng Hoàng Cầu Vồng ở vòng quay và chọn Phượng
+ * Hoàng đồng hành (`activeCompanion === "phuong-hoang"`) thì Phượng
+ * Hoàng Cầu Vồng đi theo ở mọi thế giới.
  */
 export function companionPetFor(opts: {
-  activeCompanion: "world" | "legendary";
+  activeCompanion: CompanionMode;
   courseId: string;
   legendary: boolean;
+  /** Danh sách pet hiếm bé đang sở hữu (store `rarePets`). */
+  rarePets?: string[];
 }): CompanionPet | null {
   if (opts.activeCompanion === "legendary" && opts.legendary) {
     return { ...LEGENDARY_PET, legendary: true };
+  }
+  if (
+    opts.activeCompanion === "phuong-hoang" &&
+    (opts.rarePets ?? []).includes(RARE_PET.id)
+  ) {
+    return {
+      name: RARE_PET.name,
+      emoji: RARE_PET.emoji,
+      skillName: "Cổ vũ",
+      skillKind: "none",
+      skillBlurb: RARE_PET.skillBlurb,
+      legendary: false,
+      rare: true,
+    };
   }
   const pet = petForCourse(opts.courseId);
   return pet ? { ...pet, legendary: false } : null;
@@ -211,6 +252,11 @@ export type PetAccessory = {
   name: string;
   /** Số chặng đã xong của thế giới đó cần đạt để mở món này. */
   unlockStage: number;
+  /**
+   * Nguồn mở khóa: mặc định (undefined) = mở theo mốc chặng;
+   * "spin" = CHỈ mở khi trúng ở vòng quay may mắn (xem spin.ts).
+   */
+  source?: "spin";
 };
 
 /** Các mốc chặng mở phụ kiện, tăng dần theo thứ tự món trong tủ. */
@@ -248,11 +294,77 @@ export function accessoriesFor(courseId: string): PetAccessory[] {
   return PET_ACCESSORIES[courseId] ?? [];
 }
 
+/* ------------------------------------------------------------------ */
+/* Phụ kiện CHỈ có ở vòng quay may mắn (mở khóa vĩnh viễn khi trúng)   */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Phụ kiện vòng quay: mỗi NHÓM quà (mũ/kính, áo/váy, giày, bộ đồ) gồm
+ * một món riêng cho từng thú. Trúng một quà phụ kiện ở vòng quay là mở
+ * khóa VĨNH VIỄN món của nhóm đó cho CẢ BA thú (ghi nguồn "vòng quay"
+ * trong store `spinUnlockedAccessories`), ngoài mốc chặng thông thường.
+ * `unlockStage = Infinity`: không bao giờ mở bằng số chặng.
+ */
+export const SPIN_ACCESSORIES: Record<string, PetAccessory[]> = {
+  "en-vi": [
+    { id: "spin-en-mu", emoji: "🎩", name: "Mũ Ảo Thuật Sao", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-en-ao", emoji: "👕", name: "Áo Sao Vàng", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-en-giay", emoji: "👟", name: "Giày Chạy Sao", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-en-bo", emoji: "🦸", name: "Bộ Đồ Siêu Anh Hùng", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+  ],
+  "ja-vi": [
+    { id: "spin-ja-mu", emoji: "👒", name: "Mũ Hoa Anh Đào", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-ja-ao", emoji: "👘", name: "Áo Kimono Hoa Đào", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-ja-giay", emoji: "👟", name: "Giày Hoa Đào", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-ja-bo", emoji: "🥋", name: "Bộ Đồ Võ Sĩ Hoa", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+  ],
+  "zh-vi": [
+    { id: "spin-zh-mu", emoji: "🧢", name: "Mũ Tre Xanh", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-zh-ao", emoji: "🧥", name: "Áo Khoác Đỏ", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-zh-giay", emoji: "👟", name: "Giày Tre Xanh", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+    { id: "spin-zh-bo", emoji: "🐉", name: "Bộ Đồ Rồng Nhỏ", unlockStage: Number.POSITIVE_INFINITY, source: "spin" },
+  ],
+};
+
+/** Các nhóm quà phụ kiện của vòng quay (khớp `accessoryGroup` ở spin.ts). */
+export const SPIN_ACCESSORY_GROUPS = {
+  "mu-kinh": { label: "Mũ hoặc kính", ids: { "en-vi": "spin-en-mu", "ja-vi": "spin-ja-mu", "zh-vi": "spin-zh-mu" } },
+  "ao-vay": { label: "Váy hoặc áo", ids: { "en-vi": "spin-en-ao", "ja-vi": "spin-ja-ao", "zh-vi": "spin-zh-ao" } },
+  "giay": { label: "Đôi giày", ids: { "en-vi": "spin-en-giay", "ja-vi": "spin-ja-giay", "zh-vi": "spin-zh-giay" } },
+  "bo-do": { label: "Bộ quần áo", ids: { "en-vi": "spin-en-bo", "ja-vi": "spin-ja-bo", "zh-vi": "spin-zh-bo" } },
+} as const;
+
+export type SpinAccessoryGroup = keyof typeof SPIN_ACCESSORY_GROUPS;
+
+/** Mọi món đích của một nhóm quà phụ kiện vòng quay (một món mỗi thú). */
+export function spinGroupTargets(
+  group: SpinAccessoryGroup
+): { courseId: string; accessoryId: string }[] {
+  const def = SPIN_ACCESSORY_GROUPS[group];
+  if (!def) return [];
+  return Object.entries(def.ids).map(([courseId, accessoryId]) => ({
+    courseId,
+    accessoryId,
+  }));
+}
+
+/** Phụ kiện chỉ-mở-bằng-vòng-quay của một thú. */
+export function spinAccessoriesFor(courseId: string): PetAccessory[] {
+  return SPIN_ACCESSORIES[courseId] ?? [];
+}
+
+/** Toàn bộ tủ phụ kiện của một thú: 6 món theo chặng + món vòng quay. */
+export function allAccessoriesFor(courseId: string): PetAccessory[] {
+  return [...accessoriesFor(courseId), ...spinAccessoriesFor(courseId)];
+}
+
 export function accessoryById(
   courseId: string,
   accessoryId: string
 ): PetAccessory | null {
-  return accessoriesFor(courseId).find((item) => item.id === accessoryId) ?? null;
+  return (
+    allAccessoriesFor(courseId).find((item) => item.id === accessoryId) ?? null
+  );
 }
 
 /** Món mở khi số chặng ĐÃ XONG của thế giới đó đạt mốc của món. */
@@ -538,6 +650,7 @@ export function petSkillForExercise(opts: {
 }): PetSkillContent | null {
   const { exercise, courseId, skillKind, getWord } = opts;
   if (skillKind === "reminder") return null; // Rồng dùng mostMissedWord riêng
+  if (skillKind === "none") return null; // Phượng Hoàng Cầu Vồng không có skill — chỉ cổ vũ
   const answers = answerTextsForExercise(exercise).map(normalizeKey);
   const hitsAnswer = (text: string) =>
     text.length > 0 && answers.includes(normalizeKey(text));

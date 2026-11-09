@@ -4,12 +4,22 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 import { catalog, useCourseContent } from "./content";
 import {
+  RARE_PET,
   accessoryById,
   completedStageCount,
   isAccessoryUnlocked,
   legendaryUnlocked,
+  spinGroupTargets,
   stageClaimCheck,
 } from "./pets";
+import {
+  createSpinId,
+  nextUncollectedSticker,
+  ticketsForCompletion,
+  type SpinHistoryEntry,
+  type SpinPrize,
+  type SpinTier,
+} from "./spin";
 import { isDue, reviewWord, type SrsEntry } from "./srs";
 import type { SchoolBand } from "./types";
 
@@ -127,8 +137,25 @@ type ProgressState = {
   claimedStageRewards: Record<string, number[]>;
   /** Phụ kiện thú đang mặc, theo từng khóa. */
   equippedAccessories: Record<string, string[]>;
-  /** Thú đồng hành: thú của thế giới, hay Rồng Huyền Thoại khi đã mở. */
-  activeCompanion: "world" | "legendary";
+  /** Thú đồng hành: thú thế giới / Rồng Huyền Thoại / pet hiếm Phượng Hoàng Cầu Vồng. */
+  activeCompanion: "world" | "legendary" | "phuong-hoang";
+  /* ----- Vòng quay may mắn + Kho báu — mọi field có mặc định an toàn
+     và migrate điền mặc định khi dữ liệu cũ thiếu. Người dùng chốt
+     09/11: "xu" chính là SAO — vòng quay cộng thẳng vào field `stars`
+     ở trên, không còn ví xu riêng (field `coins` cũ đã gỡ, migrate
+     làm sạch khóa thừa trong dữ liệu đã lưu). ----- */
+  /** Vé quay đang có theo tầng (xong bài thường/perfect/chặng mà có). */
+  spinTickets: Record<SpinTier, number>;
+  /** Lịch sử quay, mới nhất trước; quà thật mang realStatus chờ trao/đã trao. */
+  spinHistory: SpinHistoryEntry[];
+  /** Tồn kho còn lại theo prizeId trên máy này (ghi đè cấu hình khi có). */
+  spinStock: Record<string, number>;
+  /** Sticker đã sưu tập trong Kho báu (id trong SPIN_STICKERS). */
+  stickers: string[];
+  /** Phụ kiện mở VĨNH VIỄN nhờ vòng quay, theo từng khóa. */
+  spinUnlockedAccessories: Record<string, string[]>;
+  /** Pet hiếm đang sở hữu (vd "phuong-hoang" — xem RARE_PET trong pets.ts). */
+  rarePets: string[];
   courses: Record<string, CourseProgress>;
   /** Per-day activity across courses, for the streak calendar and quests. */
   activeDays: Record<string, DayActivity>;
@@ -168,8 +195,21 @@ type ProgressState = {
   toggleAccessory: (courseId: string, accessoryId: string) => void;
   /** Dùng 1 chìa khóa bí mật để mở sớm một bài đang khóa của khóa. */
   useUnlockKey: (courseId: string, lessonId: string) => void;
-  /** Chọn thú đồng hành: "legendary" chỉ nhận khi Rồng đã mở khóa. */
-  setActiveCompanion: (mode: "world" | "legendary") => void;
+  /** Chọn thú đồng hành: "legendary" cần Rồng đã mở; "phuong-hoang" cần đã trúng Phượng Hoàng Cầu Vồng. */
+  setActiveCompanion: (mode: "world" | "legendary" | "phuong-hoang") => void;
+  /**
+   * Áp dụng kết quả MỘT lượt quay đã chọn sẵn: trừ 1 vé của tầng, áp
+   * quà ngay (XP/sao/thức ăn/phụ kiện/sticker/pet hiếm) hoặc — quà thật
+   * — trừ tồn kho và ghi lịch sử ở trạng thái "Chờ trao". Trả về id
+   * bản ghi lịch sử vừa tạo; hết vé thì trả null và không đổi gì.
+   */
+  applySpinWin: (tier: SpinTier, prize: SpinPrize) => string | null;
+  /** Phụ huynh xác nhận ĐÃ TRAO một quà thật (đặt givenAt như rewards). */
+  markSpinPrizeGiven: (historyId: string) => void;
+  /** Admin chỉnh tồn kho còn lại của một phần quà trên máy này. */
+  setSpinStockRemaining: (prizeId: string, remaining: number) => void;
+  /** Thay toàn bộ lịch sử quay (đồng bộ Supabase dùng sau khi merge). */
+  replaceSpinHistory: (history: SpinHistoryEntry[]) => void;
 };
 
 function bumpDailyXp(state: ProgressState, amount: number) {
@@ -222,6 +262,12 @@ export const useProgress = create<ProgressState>()(
       claimedStageRewards: {},
       equippedAccessories: {},
       activeCompanion: "world",
+      spinTickets: { easy: 0, medium: 0, hard: 0 },
+      spinHistory: [],
+      spinStock: {},
+      stickers: [],
+      spinUnlockedAccessories: {},
+      rarePets: [],
       courses: {},
       activeDays: {},
 
@@ -267,12 +313,39 @@ export const useProgress = create<ProgressState>()(
               (state.petGrowth?.[state.activeCourseId] ?? 0) + growthGain,
           };
           const stars = (state.stars ?? 0) + (perfect ? 1 : 0);
+          /* VÉ VÒNG QUAY: chỉ cấp khi bé hoàn thành MỚI một bài thật
+             (học lại bài cũ / bài ôn "mistakes"-"srs" không sinh vé —
+             tránh cày vé): bài thường → vé Dễ, bài hoàn hảo → vé
+             Trung bình; nếu chính bài này làm một CHẶNG thành hoàn
+             thành (so số chặng xong trước/sau bằng cùng hàm đếm của hệ
+             thú cưng/adventure) → thêm 1 vé Khó. XP 15/+5 giữ nguyên. */
+          const spinTickets = (() => {
+            const current = state.spinTickets ?? { easy: 0, medium: 0, hard: 0 };
+            if (lessonId === "mistakes" || lessonId === "srs") return current;
+            const prevCompleted =
+              (state.courses ?? {})[state.activeCourseId]?.completedLessons ?? {};
+            if (prevCompleted[lessonId]) return current;
+            const allLessons = useCourseContent(state.activeCourseId).allLessons;
+            const nextCompleted: Record<string, true> = {
+              ...prevCompleted,
+              [lessonId]: true,
+            };
+            const stageJustCompleted =
+              completedStageCount(allLessons, nextCompleted) >
+              completedStageCount(allLessons, prevCompleted);
+            const next = { ...current };
+            for (const tier of ticketsForCompletion({ perfect, stageJustCompleted })) {
+              next[tier] = (next[tier] ?? 0) + 1;
+            }
+            return next;
+          })();
           return {
             streak,
             lastActiveDay: today,
             activeDays,
             petGrowth,
             stars,
+            spinTickets,
             ...daily,
             ...courseUpdate,
           };
@@ -410,6 +483,23 @@ export const useProgress = create<ProgressState>()(
           const item = accessoryById(courseId, accessoryId);
           if (!item) return state;
           if (!catalog.courses.some((c) => c.id === courseId)) return state;
+          // Phụ kiện trúng ở VÒNG QUAY đã mở VĨNH VIỄN — mặc/bỏ mặc
+          // được ngay, không cần qua mốc chặng (nhánh riêng để giữ
+          // nguyên luật mở theo chặng ở dưới).
+          if (
+            (state.spinUnlockedAccessories?.[courseId] ?? []).includes(accessoryId)
+          ) {
+            const equippedSpin = state.equippedAccessories?.[courseId] ?? [];
+            const nextSpin = equippedSpin.includes(accessoryId)
+              ? equippedSpin.filter((id) => id !== accessoryId)
+              : [...equippedSpin, accessoryId];
+            return {
+              equippedAccessories: {
+                ...(state.equippedAccessories ?? {}),
+                [courseId]: nextSpin,
+              },
+            };
+          }
           const completed =
             (state.courses ?? {})[courseId]?.completedLessons ?? {};
           const doneStages = completedStageCount(
@@ -445,6 +535,10 @@ export const useProgress = create<ProgressState>()(
 
       setActiveCompanion: (mode) =>
         set((state) => {
+          // Phượng Hoàng Cầu Vồng chỉ đồng hành khi bé đã TRÚNG ở vòng quay.
+          if (mode === "phuong-hoang") {
+            if (!(state.rarePets ?? []).includes(RARE_PET.id)) return state;
+          }
           if (mode === "legendary") {
             const totals = Object.fromEntries(
               catalog.courses.map((c) => [c.id, c.lessonCount])
@@ -453,6 +547,135 @@ export const useProgress = create<ProgressState>()(
           }
           return { activeCompanion: mode };
         }),
+
+      /* -------------------- Vòng quay + Kho báu -------------------- */
+
+      applySpinWin: (tier, prize) => {
+        if (!prize) return null;
+        const ticketsNow = get().spinTickets ?? { easy: 0, medium: 0, hard: 0 };
+        if ((ticketsNow[tier] ?? 0) <= 0) return null;
+        const entryId = createSpinId("spin");
+        const now = Date.now();
+        let applied = false;
+        set((state) => {
+          const tickets = state.spinTickets ?? { easy: 0, medium: 0, hard: 0 };
+          if ((tickets[tier] ?? 0) <= 0) return state;
+          applied = true;
+          const patch: Partial<ProgressState> = {
+            spinTickets: { ...tickets, [tier]: (tickets[tier] ?? 0) - 1 },
+          };
+          if (prize.kind === "xp" && prize.amount > 0) {
+            // Ghi sổ XP đúng như addBonusXp: XP khóa đang học + XP
+            // hôm nay + lịch sử ngày (tách biến để tránh vòng lặp import
+            // hành vi — cùng helper bumpDailyXp/pruneDays của store).
+            const today = dayString(new Date());
+            const daily = bumpDailyXp(state, prize.amount);
+            const days = state.activeDays ?? {};
+            const prevDay = days[today] ?? { xp: 0, lessons: 0, perfect: 0 };
+            patch.dailyXp = daily.dailyXp;
+            patch.dailyXpDay = daily.dailyXpDay;
+            patch.activeDays = pruneDays({
+              ...days,
+              [today]: { ...prevDay, xp: prevDay.xp + prize.amount },
+            });
+            Object.assign(
+              patch,
+              updateCourse(state, state.activeCourseId, (c) => ({
+                ...c,
+                xp: c.xp + prize.amount,
+              }))
+            );
+          } else if (prize.kind === "stars") {
+            // "Xu" của vòng quay chính là SAO — cộng vào ví sao sẵn có.
+            patch.stars = (state.stars ?? 0) + prize.amount;
+          } else if (prize.kind === "food") {
+            patch.petFood = (state.petFood ?? 0) + prize.amount;
+          } else if (prize.kind === "accessory" && prize.accessoryGroup) {
+            // Mở VĨNH VIỄN món của nhóm này cho CẢ BA thú.
+            const unlocked = { ...(state.spinUnlockedAccessories ?? {}) };
+            for (const target of spinGroupTargets(prize.accessoryGroup)) {
+              const list = unlocked[target.courseId] ?? [];
+              if (!list.includes(target.accessoryId)) {
+                unlocked[target.courseId] = [...list, target.accessoryId];
+              }
+            }
+            patch.spinUnlockedAccessories = unlocked;
+          } else if (prize.kind === "sticker") {
+            const owned = state.stickers ?? [];
+            const stickerId =
+              prize.stickerId ?? nextUncollectedSticker(owned);
+            if (stickerId && !owned.includes(stickerId)) {
+              patch.stickers = [...owned, stickerId];
+            } else {
+              // Đã có sticker đó / sưu tập đủ bộ → đổi 10 sao, không mất quà.
+              patch.stars = (state.stars ?? 0) + 10;
+            }
+          } else if (prize.kind === "rare-pet") {
+            const owned = state.rarePets ?? [];
+            if (!owned.includes(RARE_PET.id)) {
+              patch.rarePets = [...owned, RARE_PET.id];
+            } else {
+              // Trùng pet hiếm → đổi 25 sao, không mất quà.
+              patch.stars = (state.stars ?? 0) + 25;
+            }
+          } else if (prize.kind === "real") {
+            // Trừ tồn kho NGAY khi trúng; quà vào Kho báu chờ trao.
+            const current = (state.spinStock ?? {})[prize.id] ?? prize.stock;
+            if (current !== null && current !== undefined) {
+              patch.spinStock = {
+                ...(state.spinStock ?? {}),
+                [prize.id]: Math.max(0, current - 1),
+              };
+            }
+          }
+          const entry: SpinHistoryEntry = {
+            id: entryId,
+            ownerId: null,
+            at: now,
+            tier,
+            prizeId: prize.id,
+            prizeName: prize.name,
+            prizeEmoji: prize.emoji,
+            kind: prize.kind,
+            amount: prize.amount,
+            cash: prize.kind === "real" && prize.cash,
+            imageUrl: prize.imageUrl ?? null,
+            realStatus: prize.kind === "real" ? "pending" : null,
+            givenAt: null,
+            updatedAt: now,
+          };
+          patch.spinHistory = [entry, ...(state.spinHistory ?? [])].slice(0, 300);
+          return patch;
+        });
+        return applied ? entryId : null;
+      },
+
+      markSpinPrizeGiven: (historyId) =>
+        set((state) => ({
+          spinHistory: (state.spinHistory ?? []).map((entry) =>
+            entry.id === historyId &&
+            entry.kind === "real" &&
+            entry.realStatus !== "given"
+              ? {
+                  ...entry,
+                  realStatus: "given" as const,
+                  givenAt: Date.now(),
+                  updatedAt: Date.now(),
+                }
+              : entry
+          ),
+        })),
+
+      setSpinStockRemaining: (prizeId, remaining) =>
+        set((state) => ({
+          spinStock: {
+            ...(state.spinStock ?? {}),
+            [prizeId]: Math.max(0, Math.floor(remaining)),
+          },
+        })),
+
+      replaceSpinHistory: (history) =>
+        set({ spinHistory: (history ?? []).slice(0, 300) }),
 
       setLearnerLevel: (level) => set({ learnerLevel: level }),
 
@@ -480,7 +703,14 @@ export const useProgress = create<ProgressState>()(
       name: "progress-v2",
       storage: createJSONStorage(() => AsyncStorage),
       migrate: (persisted: unknown) => {
-        const old = persisted as Record<string, unknown>;
+        // Đợt chỉnh vòng quay (người dùng chốt 09/11): ví xu riêng đã
+        // bỏ ("xu" = sao) — làm sạch khóa `coins` khỏi dữ liệu đã lưu;
+        // khóa pet hiếm cũ "ky-lan" được đổi sang "phuong-hoang" ở các
+        // field bên dưới (activeCompanion / rarePets / lịch sử quay).
+        const { coins: _legacyCoins, ...old } = persisted as Record<
+          string,
+          unknown
+        >;
         if (old.courses) {
           return {
             activeDays: {},
@@ -498,8 +728,30 @@ export const useProgress = create<ProgressState>()(
               (old.claimedStageRewards as Record<string, number[]>) ?? {},
             equippedAccessories:
               (old.equippedAccessories as Record<string, string[]>) ?? {},
-            activeCompanion:
-              (old.activeCompanion as "world" | "legendary") ?? "world",
+            activeCompanion: (old.activeCompanion === "ky-lan" ||
+            old.activeCompanion === "phuong-hoang"
+              ? "phuong-hoang"
+              : (old.activeCompanion as "world" | "legendary") ??
+                "world") as "world" | "legendary" | "phuong-hoang",
+            spinTickets: (old.spinTickets as Record<SpinTier, number>) ?? {
+              easy: 0,
+              medium: 0,
+              hard: 0,
+            },
+            spinHistory: (
+              (old.spinHistory as SpinHistoryEntry[]) ?? []
+            ).map((entry) =>
+              entry && (entry.kind as string) === "coins"
+                ? { ...entry, kind: "stars" as const }
+                : entry
+            ),
+            spinStock: (old.spinStock as Record<string, number>) ?? {},
+            stickers: (old.stickers as string[]) ?? [],
+            spinUnlockedAccessories:
+              (old.spinUnlockedAccessories as Record<string, string[]>) ?? {},
+            rarePets: ((old.rarepets as string[]) ?? []).map((id) =>
+              id === "ky-lan" ? "phuong-hoang" : id
+            ),
           } as ProgressState;
         }
         // Migrate v1 flat progress → per-course.
@@ -533,6 +785,12 @@ export const useProgress = create<ProgressState>()(
           claimedStageRewards: {},
           equippedAccessories: {},
           activeCompanion: "world" as const,
+          spinTickets: { easy: 0, medium: 0, hard: 0 },
+          spinHistory: [],
+          spinStock: {},
+          stickers: [],
+          spinUnlockedAccessories: {},
+          rarePets: [],
           themePreference: (old.themePreference as ThemePreference) ?? "system",
           activeDays: (old.activeDays as Record<string, DayActivity>) ?? {},
           courses: {
