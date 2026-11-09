@@ -75,6 +75,14 @@ export default function AdventureMapScreen() {
             {kingdom.targetLanguage} · Đã xong {done}/{total} bài
           </Text>
         </View>
+        <Pressable
+          onPress={() => router.push("/pet")}
+          accessibilityRole="button"
+          accessibilityLabel="Mở trang Thú cưng"
+          style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.8 }]}
+        >
+          <Text style={styles.petIcon}>🐾</Text>
+        </Pressable>
       </View>
 
       <View style={styles.switchRow}>
@@ -138,6 +146,7 @@ const useStyles = makeThemedStyles((colors) =>
       ...shadow.soft,
     },
     backIcon: { fontSize: 22, fontWeight: "900", color: colors.neutral700 },
+    petIcon: { fontSize: 22 },
     title: { fontSize: 20, fontWeight: "900" },
     subtitle: { fontSize: 13, fontWeight: "700", color: colors.textMuted },
     switchRow: {
