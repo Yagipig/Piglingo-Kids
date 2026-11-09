@@ -1,0 +1,350 @@
+{
+  "予": {
+    "def": "I, me; to give",
+    "strokes": 4,
+    "radical": 6,
+    "reading": "YO SHA ATAERU ARAKAJIME"
+  },
+  "人": {
+    "def": "man; people; mankind; someone else",
+    "strokes": 2,
+    "radical": 9,
+    "reading": "JIN NIN HITO"
+  },
+  "今": {
+    "def": "now, today, modern era",
+    "strokes": 4,
+    "radical": 9,
+    "reading": "KON KIN IMA"
+  },
+  "会": {
+    "def": "assemble, meet together; meeting",
+    "strokes": 6,
+    "radical": 9,
+    "reading": "KAI E AU ATSUMARU"
+  },
+  "先": {
+    "def": "first, former, previous",
+    "strokes": 6,
+    "radical": 10,
+    "reading": "SEN SAKI SAKINJIRU MAZU"
+  },
+  "内": {
+    "def": "inside",
+    "strokes": 4,
+    "radical": 13,
+    "reading": "DAI NAI UCHI IRU IRERU"
+  },
+  "切": {
+    "def": "cut, mince, slice, carve",
+    "strokes": 4,
+    "radical": 18,
+    "reading": "SETSU SAI KIRU KIRE KIRI"
+  },
+  "助": {
+    "def": "help, aid, assist",
+    "strokes": 7,
+    "radical": 19,
+    "reading": "JO SHO TASUKERU SUKE"
+  },
+  "友": {
+    "def": "friend, companion; fraternity",
+    "strokes": 4,
+    "radical": 29,
+    "reading": "YUU TOMO"
+  },
+  "口": {
+    "def": "mouth; open end; entrance, gate",
+    "strokes": 3,
+    "radical": 30,
+    "reading": "KOU KU KUCHI"
+  },
+  "叱": {
+    "def": "scold, shout at, bawl out",
+    "strokes": 5,
+    "radical": 30,
+    "reading": "SHITSU SHICHI SHIKARU"
+  },
+  "呼": {
+    "def": "breathe sigh, exhale; call, shout",
+    "strokes": 8,
+    "radical": 30,
+    "reading": "KO YOBU"
+  },
+  "困": {
+    "def": "to surround, besiege; to be surrounded; difficult; hexagram ䷮",
+    "strokes": 7,
+    "radical": 31,
+    "reading": "KON KOMARU KURUSHIMU"
+  },
+  "土": {
+    "def": "soil, earth; items made of earth",
+    "strokes": 3,
+    "radical": 32,
+    "reading": "DO TO TSUCHI"
+  },
+  "大": {
+    "def": "big, great, vast, large, high",
+    "strokes": 3,
+    "radical": 37,
+    "reading": "TAI DAI TA OOKII HAJIME OOINI"
+  },
+  "学": {
+    "def": "learning, knowledge; school",
+    "strokes": 8,
+    "radical": 39,
+    "reading": "GAKU MANABU"
+  },
+  "小": {
+    "def": "small, tiny, insignificant",
+    "strokes": 3,
+    "radical": 42,
+    "reading": "SHOU CHIISAI KO O"
+  },
+  "山": {
+    "def": "mountain, hill, peak",
+    "strokes": 3,
+    "radical": 46,
+    "reading": "SAN SEN YAMA"
+  },
+  "川": {
+    "def": "stream, river; flow; boil",
+    "strokes": 3,
+    "radical": 47,
+    "reading": "SEN KAWA"
+  },
+  "年": {
+    "def": "year; new-years; person's age",
+    "strokes": 6,
+    "radical": 51,
+    "reading": "NEN TOSHI MINORU YOWAI"
+  },
+  "忘": {
+    "def": "forget; neglect; miss, omit",
+    "strokes": 7,
+    "radical": 61,
+    "reading": "BOU WASURERU"
+  },
+  "日": {
+    "def": "sun; day; daytime",
+    "strokes": 4,
+    "radical": 72,
+    "reading": "NICHI JITSU HI KA HIBI"
+  },
+  "明": {
+    "def": "bright, light, brilliant; clear",
+    "strokes": 8,
+    "radical": 72,
+    "reading": "MEI MYOU AKARUI AKIRAKA AKERU"
+  },
+  "時": {
+    "def": "time, season; era, age, period",
+    "strokes": 10,
+    "radical": 72,
+    "reading": "JI SHI TOKI KORE"
+  },
+  "書": {
+    "def": "book, letter, document; writings",
+    "strokes": 10,
+    "radical": 73,
+    "reading": "SHO KAKU FUMI"
+  },
+  "月": {
+    "def": "moon; month; Kangxi radical 74",
+    "strokes": 4,
+    "radical": 74,
+    "reading": "GETSU GATSU TSUKI"
+  },
+  "木": {
+    "def": "tree; wood, lumber; wooden",
+    "strokes": 4,
+    "radical": 75,
+    "reading": "BOKU MOKU KI"
+  },
+  "本": {
+    "def": "root, origin, source; basis",
+    "strokes": 5,
+    "radical": 75,
+    "reading": "HON MOTO"
+  },
+  "来": {
+    "def": "come, coming; return, returning",
+    "strokes": 7,
+    "radical": 75,
+    "reading": "RAI KURU KITARU"
+  },
+  "校": {
+    "def": "school; military field officer",
+    "strokes": 10,
+    "radical": 75,
+    "reading": "KOU KYOU KASE KURABERU KANGAERU"
+  },
+  "案": {
+    "def": "table, bench; legal case",
+    "strokes": 10,
+    "radical": 75,
+    "reading": "AN TSUKUE KANGAERU"
+  },
+  "母": {
+    "def": "mother; female elders; female",
+    "strokes": 5,
+    "radical": 80,
+    "reading": "BO BOU MO HAHA"
+  },
+  "水": {
+    "def": "water, liquid, lotion, juice",
+    "strokes": 4,
+    "radical": 85,
+    "reading": "SUI MIZU"
+  },
+  "火": {
+    "def": "fire, flame; burn; anger, rage",
+    "strokes": 4,
+    "radical": 86,
+    "reading": "KA KO HI YAKU"
+  },
+  "物": {
+    "def": "thing, substance, creature",
+    "strokes": 8,
+    "radical": 93,
+    "reading": "MOTSU BUTSU MONO"
+  },
+  "生": {
+    "def": "life, living, lifetime; birth",
+    "strokes": 5,
+    "radical": 100,
+    "reading": "SEI SHOU HAERU OU UMARERU"
+  },
+  "田": {
+    "def": "field, arable land, cultivated",
+    "strokes": 5,
+    "radical": 102,
+    "reading": "DEN TEN TA KARI"
+  },
+  "社": {
+    "def": "god of the soil and altars to him; group of families; company, society",
+    "strokes": 8,
+    "radical": 113,
+    "reading": "SHA JA YASHIRO KUMIAI KOSO"
+  },
+  "窓": {
+    "def": "window",
+    "strokes": 11,
+    "radical": 116,
+    "reading": "SOU MADO"
+  },
+  "符": {
+    "def": "i.d. tag, tally, symbol, charm",
+    "strokes": 11,
+    "radical": 118,
+    "reading": "FU BU WARIFU"
+  },
+  "約": {
+    "def": "treaty, agreement, covenant",
+    "strokes": 9,
+    "radical": 120,
+    "reading": "YAKU TSUZUMERU TSUZUMAYAKA"
+  },
+  "聞": {
+    "def": "hear; smell; make known; news",
+    "strokes": 14,
+    "radical": 128,
+    "reading": "BUN MON KIKU KIKOERU KIKOE"
+  },
+  "行": {
+    "def": "go; walk; move, travel; circulate; Kangxi radical 144",
+    "strokes": 6,
+    "radical": 144,
+    "reading": "KOU GYOU AN IKU YUKU OKONAU"
+  },
+  "褒": {
+    "def": "praise, commend, honor, cite",
+    "strokes": 15,
+    "radical": 145,
+    "reading": "HOU HOMERU"
+  },
+  "見": {
+    "def": "see, observe, behold; perceive; Kangxi radical 147",
+    "strokes": 7,
+    "radical": 147,
+    "reading": "KEN MIRU MIERU MAMIERU"
+  },
+  "話": {
+    "def": "speech, talk, language; dialect",
+    "strokes": 13,
+    "radical": 149,
+    "reading": "WA KAI HANASU HANASHI"
+  },
+  "語": {
+    "def": "language, words; saying, expression",
+    "strokes": 14,
+    "radical": 149,
+    "reading": "GO GYO KATARU KOTOBA TSUGERU"
+  },
+  "読": {
+    "def": "read, study; pronounce",
+    "strokes": 14,
+    "radical": 149,
+    "reading": "TOKU TOU DOKU YOMU YOMI"
+  },
+  "買": {
+    "def": "buy, purchase; bribe, persuade",
+    "strokes": 12,
+    "radical": 154,
+    "reading": "BAI KAU"
+  },
+  "車": {
+    "def": "cart, vehicle; carry in a cart; Kangxi radical 159",
+    "strokes": 7,
+    "radical": 159,
+    "reading": "SHA KYO KURUMA"
+  },
+  "遅": {
+    "def": "late, tardy; slow; delay",
+    "strokes": 12,
+    "radical": 162,
+    "reading": "CHI OSOI OKURERU MATSU"
+  },
+  "金": {
+    "def": "gold; metals in general; money; Kangxi radical 167",
+    "strokes": 8,
+    "radical": 167,
+    "reading": "KIN KON KANE"
+  },
+  "間": {
+    "def": "interval, space; place, between",
+    "strokes": 12,
+    "radical": 169,
+    "reading": "KAN KEN AIDA MA SHIZUKA"
+  },
+  "雨": {
+    "def": "rain; rainy; Kangxi radical 173",
+    "strokes": 8,
+    "radical": 173,
+    "reading": "U AME AMA"
+  },
+  "電": {
+    "def": "electricity, electric; lightning",
+    "strokes": 13,
+    "radical": 173,
+    "reading": "DEN TEN INAZUMA"
+  },
+  "食": {
+    "def": "eat; meal; food; Kangxi radical 184",
+    "strokes": 9,
+    "radical": 184,
+    "reading": "SHOKU SHI JIKI KUU KURAU TABERU"
+  },
+  "飲": {
+    "def": "drink; swallow; kind of drink",
+    "strokes": 12,
+    "radical": 184,
+    "reading": "IN ON NOMU"
+  },
+  "駅": {
+    "def": "relay station",
+    "strokes": 14,
+    "radical": 187,
+    "reading": "EKI UMAYA"
+  }
+}

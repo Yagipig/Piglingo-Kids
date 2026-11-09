@@ -1,0 +1,1688 @@
+{
+  "一": {
+    "def": "one; a, an; alone",
+    "strokes": 1,
+    "radical": 1,
+    "reading": "yī"
+  },
+  "七": {
+    "def": "seven",
+    "strokes": 2,
+    "radical": 1,
+    "reading": "qī"
+  },
+  "三": {
+    "def": "three",
+    "strokes": 3,
+    "radical": 1,
+    "reading": "sān"
+  },
+  "下": {
+    "def": "under, underneath, below; down; inferior; bring down",
+    "strokes": 3,
+    "radical": 1,
+    "reading": "xià"
+  },
+  "不": {
+    "def": "no, not; un-; negative prefix",
+    "strokes": 4,
+    "radical": 1,
+    "reading": "bù"
+  },
+  "业": {
+    "def": "profession, business; GB radical 111",
+    "strokes": 5,
+    "radical": 1,
+    "reading": "yè"
+  },
+  "么": {
+    "def": "interrogative particle; small",
+    "strokes": 3,
+    "radical": 4,
+    "reading": "me"
+  },
+  "九": {
+    "def": "nine",
+    "strokes": 2,
+    "radical": 5,
+    "reading": "jiǔ"
+  },
+  "习": {
+    "def": "practice; flapping wings",
+    "strokes": 3,
+    "radical": 5,
+    "reading": "xí"
+  },
+  "买": {
+    "def": "buy, purchase; bribe, persuade",
+    "strokes": 6,
+    "radical": 5,
+    "reading": "mǎi"
+  },
+  "事": {
+    "def": "affair, matter, business; to serve; accident, incident",
+    "strokes": 8,
+    "radical": 6,
+    "reading": "shì"
+  },
+  "二": {
+    "def": "two; twice",
+    "strokes": 2,
+    "radical": 7,
+    "reading": "èr"
+  },
+  "云": {
+    "def": "say, speak; clouds",
+    "strokes": 4,
+    "radical": 7,
+    "reading": "yún"
+  },
+  "五": {
+    "def": "five; surname",
+    "strokes": 4,
+    "radical": 7,
+    "reading": "wǔ"
+  },
+  "亮": {
+    "def": "bright, brilliant, radiant, light",
+    "strokes": 9,
+    "radical": 8,
+    "reading": "liàng"
+  },
+  "人": {
+    "def": "man; people; mankind; someone else",
+    "strokes": 2,
+    "radical": 9,
+    "reading": "rén"
+  },
+  "件": {
+    "def": "numerary adjunct for article; matter",
+    "strokes": 6,
+    "radical": 9,
+    "reading": "jiàn"
+  },
+  "休": {
+    "def": "rest, stop; retire; do not!",
+    "strokes": 6,
+    "radical": 9,
+    "reading": "xiū"
+  },
+  "众": {
+    "def": "multitude, crowd; masses, public",
+    "strokes": 6,
+    "radical": 9,
+    "reading": "zhòng"
+  },
+  "会": {
+    "def": "assemble, meet together; meeting",
+    "strokes": 6,
+    "radical": 9,
+    "reading": "huì"
+  },
+  "传": {
+    "def": "summon; propagate, transmit",
+    "strokes": 6,
+    "radical": 9,
+    "reading": "chuán"
+  },
+  "体": {
+    "def": "body; group, class, body, unit; inferior",
+    "strokes": 7,
+    "radical": 9,
+    "reading": "tǐ"
+  },
+  "作": {
+    "def": "make; work; compose, write; act, perform",
+    "strokes": 7,
+    "radical": 9,
+    "reading": "zuò"
+  },
+  "你": {
+    "def": "you, second person pronoun",
+    "strokes": 7,
+    "radical": 9,
+    "reading": "nǐ"
+  },
+  "便": {
+    "def": "convenience, ease; expedient",
+    "strokes": 9,
+    "radical": 9,
+    "reading": "biàn"
+  },
+  "保": {
+    "def": "protect, safeguard, defend, care",
+    "strokes": 9,
+    "radical": 9,
+    "reading": "bǎo"
+  },
+  "信": {
+    "def": "trust, believe; letter",
+    "strokes": 9,
+    "radical": 9,
+    "reading": "xìn"
+  },
+  "候": {
+    "def": "wait; expect; visit; greet",
+    "strokes": 10,
+    "radical": 9,
+    "reading": "hòu"
+  },
+  "儿": {
+    "def": "son, child; Kangxi radical 10",
+    "strokes": 2,
+    "radical": 10,
+    "reading": "ér"
+  },
+  "兔": {
+    "def": "rabbit, hare",
+    "strokes": 8,
+    "radical": 10,
+    "reading": "tù"
+  },
+  "八": {
+    "def": "eight; all around, all sides",
+    "strokes": 2,
+    "radical": 12,
+    "reading": "bā"
+  },
+  "公": {
+    "def": "fair, equitable; public; duke",
+    "strokes": 4,
+    "radical": 12,
+    "reading": "gōng"
+  },
+  "六": {
+    "def": "number six",
+    "strokes": 4,
+    "radical": 12,
+    "reading": "liù"
+  },
+  "共": {
+    "def": "together with, all, total; to share",
+    "strokes": 6,
+    "radical": 12,
+    "reading": "gòng"
+  },
+  "关": {
+    "def": "frontier pass; close; relation",
+    "strokes": 6,
+    "radical": 12,
+    "reading": "guān"
+  },
+  "再": {
+    "def": "again, twice, re-",
+    "strokes": 6,
+    "radical": 13,
+    "reading": "zài"
+  },
+  "冰": {
+    "def": "ice; ice-cold",
+    "strokes": 6,
+    "radical": 15,
+    "reading": "bīng"
+  },
+  "冷": {
+    "def": "cold, cool; lonely",
+    "strokes": 7,
+    "radical": 15,
+    "reading": "lěng"
+  },
+  "净": {
+    "def": "clean, pure; cleanse",
+    "strokes": 8,
+    "radical": 15,
+    "reading": "jìng"
+  },
+  "减": {
+    "def": "decrease, subtract, diminish",
+    "strokes": 11,
+    "radical": 15,
+    "reading": "jiǎn"
+  },
+  "刀": {
+    "def": "knife; old coin; measure",
+    "strokes": 2,
+    "radical": 18,
+    "reading": "dāo"
+  },
+  "到": {
+    "def": "go to, arrive, been to",
+    "strokes": 8,
+    "radical": 18,
+    "reading": "dào"
+  },
+  "剪": {
+    "def": "scissors; cut, divide, separate",
+    "strokes": 11,
+    "radical": 18,
+    "reading": "jiǎn"
+  },
+  "力": {
+    "def": "power, capability, influence; Kangxi radical 19",
+    "strokes": 2,
+    "radical": 19,
+    "reading": "lì"
+  },
+  "功": {
+    "def": "achievement, merit, good result",
+    "strokes": 5,
+    "radical": 19,
+    "reading": "gōng"
+  },
+  "动": {
+    "def": "move, happen; movement, action",
+    "strokes": 6,
+    "radical": 19,
+    "reading": "dòng"
+  },
+  "努": {
+    "def": "to exert, strive, make an effort; to pout",
+    "strokes": 7,
+    "radical": 19,
+    "reading": "nǔ"
+  },
+  "化": {
+    "def": "change, convert, reform; -ize",
+    "strokes": 4,
+    "radical": 21,
+    "reading": "huà"
+  },
+  "医": {
+    "def": "cure, heal; doctor, medical",
+    "strokes": 7,
+    "radical": 23,
+    "reading": "yī"
+  },
+  "十": {
+    "def": "ten, tenth; complete; perfect",
+    "strokes": 2,
+    "radical": 24,
+    "reading": "shí"
+  },
+  "卖": {
+    "def": "sell; betray; show off",
+    "strokes": 8,
+    "radical": 24,
+    "reading": "mài"
+  },
+  "卡": {
+    "def": "card, punch card; calorie",
+    "strokes": 5,
+    "radical": 25,
+    "reading": "kǎ"
+  },
+  "发": {
+    "def": "issue, dispatch, send out; hair",
+    "strokes": 5,
+    "radical": 29,
+    "reading": "fā"
+  },
+  "叔": {
+    "def": "father's younger brother",
+    "strokes": 8,
+    "radical": 29,
+    "reading": "shū"
+  },
+  "右": {
+    "def": "right; west; right-wing",
+    "strokes": 5,
+    "radical": 30,
+    "reading": "yòu"
+  },
+  "司": {
+    "def": "take charge of, control, manage; officer",
+    "strokes": 5,
+    "radical": 30,
+    "reading": "sī"
+  },
+  "告": {
+    "def": "tell, announce, inform; accuse",
+    "strokes": 7,
+    "radical": 30,
+    "reading": "gào"
+  },
+  "哥": {
+    "def": "elder brother",
+    "strokes": 10,
+    "radical": 30,
+    "reading": "gē"
+  },
+  "唱": {
+    "def": "sing, chant, call; ditty, song",
+    "strokes": 11,
+    "radical": 30,
+    "reading": "chàng"
+  },
+  "商": {
+    "def": "commerce, business, trade",
+    "strokes": 11,
+    "radical": 30,
+    "reading": "shāng"
+  },
+  "嘴": {
+    "def": "mouth, lips",
+    "strokes": 16,
+    "radical": 30,
+    "reading": "zuǐ"
+  },
+  "四": {
+    "def": "four",
+    "strokes": 5,
+    "radical": 31,
+    "reading": "sì"
+  },
+  "回": {
+    "def": "return, turn around; a time",
+    "strokes": 6,
+    "radical": 31,
+    "reading": "huí"
+  },
+  "围": {
+    "def": "surround, encircle, corral",
+    "strokes": 7,
+    "radical": 31,
+    "reading": "wéi"
+  },
+  "图": {
+    "def": "diagram; chart, map, picture",
+    "strokes": 8,
+    "radical": 31,
+    "reading": "tú"
+  },
+  "地": {
+    "def": "earth; soil, ground; region",
+    "strokes": 6,
+    "radical": 32,
+    "reading": "de"
+  },
+  "圾": {
+    "def": "garbage, rubbish; shaking; danger",
+    "strokes": 6,
+    "radical": 32,
+    "reading": "jī"
+  },
+  "垃": {
+    "def": "garbage, refuse, waste",
+    "strokes": 8,
+    "radical": 32,
+    "reading": "lā"
+  },
+  "境": {
+    "def": "boundary, frontier; area, region",
+    "strokes": 14,
+    "radical": 32,
+    "reading": "jìng"
+  },
+  "外": {
+    "def": "out, outside, external; foreign",
+    "strokes": 5,
+    "radical": 36,
+    "reading": "wài"
+  },
+  "多": {
+    "def": "much, many; more than, over",
+    "strokes": 6,
+    "radical": 36,
+    "reading": "duō"
+  },
+  "大": {
+    "def": "big, great, vast, large, high",
+    "strokes": 3,
+    "radical": 37,
+    "reading": "dà"
+  },
+  "天": {
+    "def": "sky, heaven; god, celestial",
+    "strokes": 4,
+    "radical": 37,
+    "reading": "tiān"
+  },
+  "太": {
+    "def": "very, too, much; big; extreme",
+    "strokes": 4,
+    "radical": 37,
+    "reading": "tài"
+  },
+  "头": {
+    "def": "head; top; chief, first; boss",
+    "strokes": 5,
+    "radical": 37,
+    "reading": "tóu"
+  },
+  "套": {
+    "def": "case, cover, wrapper, envelope",
+    "strokes": 10,
+    "radical": 37,
+    "reading": "tào"
+  },
+  "女": {
+    "def": "woman, girl; feminine; Kangxi radical 38; 10th lunar mansion, determinative star ε Aquarii (Albali)",
+    "strokes": 3,
+    "radical": 38,
+    "reading": "nǚ"
+  },
+  "奶": {
+    "def": "milk; woman's breasts; nurse",
+    "strokes": 5,
+    "radical": 38,
+    "reading": "nǎi"
+  },
+  "好": {
+    "def": "good, excellent, fine; well",
+    "strokes": 6,
+    "radical": 38,
+    "reading": "hǎo"
+  },
+  "妈": {
+    "def": "mother, mama",
+    "strokes": 6,
+    "radical": 38,
+    "reading": "mā"
+  },
+  "妹": {
+    "def": "younger sister",
+    "strokes": 8,
+    "radical": 38,
+    "reading": "mèi"
+  },
+  "姐": {
+    "def": "elder sister, young lady",
+    "strokes": 8,
+    "radical": 38,
+    "reading": "jiě"
+  },
+  "姨": {
+    "def": "mother/wife's sister; concubine",
+    "strokes": 9,
+    "radical": 38,
+    "reading": "yí"
+  },
+  "婆": {
+    "def": "old woman; grandmother",
+    "strokes": 11,
+    "radical": 38,
+    "reading": "pó"
+  },
+  "子": {
+    "def": "offspring, child; fruit, seed of; first earthly branch",
+    "strokes": 3,
+    "radical": 39,
+    "reading": "zǐ"
+  },
+  "学": {
+    "def": "learning, knowledge; school",
+    "strokes": 8,
+    "radical": 39,
+    "reading": "xué"
+  },
+  "孩": {
+    "def": "baby, child; children",
+    "strokes": 9,
+    "radical": 39,
+    "reading": "hái"
+  },
+  "完": {
+    "def": "complete, finish, settle; whole",
+    "strokes": 7,
+    "radical": 40,
+    "reading": "wán"
+  },
+  "宜": {
+    "def": "suitable, right, fitting, proper",
+    "strokes": 8,
+    "radical": 40,
+    "reading": "yí"
+  },
+  "家": {
+    "def": "house, home, residence; family",
+    "strokes": 10,
+    "radical": 40,
+    "reading": "jiā"
+  },
+  "对": {
+    "def": "correct, right; facing, opposed",
+    "strokes": 5,
+    "radical": 41,
+    "reading": "duì"
+  },
+  "少": {
+    "def": "few, less, inadequate",
+    "strokes": 4,
+    "radical": 42,
+    "reading": "shǎo"
+  },
+  "工": {
+    "def": "labor, work; worker, laborer",
+    "strokes": 3,
+    "radical": 48,
+    "reading": "gōng"
+  },
+  "左": {
+    "def": "left; east; unorthodox, improper",
+    "strokes": 5,
+    "radical": 48,
+    "reading": "zuǒ"
+  },
+  "巾": {
+    "def": "kerchief; towel; turban; Kangxi radical 50",
+    "strokes": 3,
+    "radical": 50,
+    "reading": "jīn"
+  },
+  "帽": {
+    "def": "hat, cap; cap-like tops",
+    "strokes": 12,
+    "radical": 50,
+    "reading": "mào"
+  },
+  "干": {
+    "def": "oppose, offend; invade; dried",
+    "strokes": 3,
+    "radical": 51,
+    "reading": "gàn"
+  },
+  "广": {
+    "def": "wide, extensive, broad; rad. 53",
+    "strokes": 3,
+    "radical": 53,
+    "reading": "guǎng"
+  },
+  "店": {
+    "def": "shop, store; inn, hotel",
+    "strokes": 8,
+    "radical": 53,
+    "reading": "diàn"
+  },
+  "弟": {
+    "def": "young brother; junior; I, me",
+    "strokes": 7,
+    "radical": 57,
+    "reading": "dì"
+  },
+  "彩": {
+    "def": "hue, color; variegated colors",
+    "strokes": 11,
+    "radical": 59,
+    "reading": "cǎi"
+  },
+  "怎": {
+    "def": "what? why? how?",
+    "strokes": 9,
+    "radical": 61,
+    "reading": "zěn"
+  },
+  "息": {
+    "def": "rest, put stop to, end, cease",
+    "strokes": 10,
+    "radical": 61,
+    "reading": "xī"
+  },
+  "懂": {
+    "def": "understand, comprehend",
+    "strokes": 15,
+    "radical": 61,
+    "reading": "dǒng"
+  },
+  "成": {
+    "def": "completed, finished, fixed",
+    "strokes": 7,
+    "radical": 62,
+    "reading": "chéng"
+  },
+  "手": {
+    "def": "hand",
+    "strokes": 4,
+    "radical": 64,
+    "reading": "shǒu"
+  },
+  "打": {
+    "def": "strike, hit, beat; fight; attack",
+    "strokes": 5,
+    "radical": 64,
+    "reading": "dǎ"
+  },
+  "托": {
+    "def": "to hold up with palm; to support, rely on",
+    "strokes": 6,
+    "radical": 64,
+    "reading": "tuō"
+  },
+  "把": {
+    "def": "hold, take; guard; regard as",
+    "strokes": 7,
+    "radical": 64,
+    "reading": "bǎ"
+  },
+  "护": {
+    "def": "protect, guard, defend, shelter",
+    "strokes": 7,
+    "radical": 64,
+    "reading": "hù"
+  },
+  "报": {
+    "def": "report, tell, announce",
+    "strokes": 7,
+    "radical": 64,
+    "reading": "bào"
+  },
+  "摩": {
+    "def": "rub, scour, grind; friction",
+    "strokes": 15,
+    "radical": 64,
+    "reading": "mó"
+  },
+  "故": {
+    "def": "ancient, old; reason, because",
+    "strokes": 9,
+    "radical": 66,
+    "reading": "gù"
+  },
+  "文": {
+    "def": "literature, culture, writing",
+    "strokes": 4,
+    "radical": 67,
+    "reading": "wén"
+  },
+  "新": {
+    "def": "new, recent, fresh, modern",
+    "strokes": 13,
+    "radical": 69,
+    "reading": "xīn"
+  },
+  "方": {
+    "def": "a square, rectangle; a region; local",
+    "strokes": 4,
+    "radical": 70,
+    "reading": "fāng"
+  },
+  "旅": {
+    "def": "trip, journey; travel; traveler; hexagram ䷷",
+    "strokes": 10,
+    "radical": 70,
+    "reading": "lǚ"
+  },
+  "日": {
+    "def": "sun; day; daytime",
+    "strokes": 4,
+    "radical": 72,
+    "reading": "rì"
+  },
+  "明": {
+    "def": "bright, light, brilliant; clear",
+    "strokes": 8,
+    "radical": 72,
+    "reading": "míng"
+  },
+  "星": {
+    "def": "a star, planet; any point of light; 25th lunar mansion, determinative star α Hydrae (Alphard)",
+    "strokes": 9,
+    "radical": 72,
+    "reading": "xīng"
+  },
+  "春": {
+    "def": "spring; wanton",
+    "strokes": 9,
+    "radical": 72,
+    "reading": "chūn"
+  },
+  "是": {
+    "def": "indeed, yes, right; to be; demonstrative pronoun, this, that",
+    "strokes": 9,
+    "radical": 72,
+    "reading": "shì"
+  },
+  "晴": {
+    "def": "clear weather, fine weather",
+    "strokes": 12,
+    "radical": 72,
+    "reading": "qíng"
+  },
+  "月": {
+    "def": "moon; month; Kangxi radical 74",
+    "strokes": 4,
+    "radical": 74,
+    "reading": "yuè"
+  },
+  "服": {
+    "def": "clothes; wear, dress",
+    "strokes": 8,
+    "radical": 74,
+    "reading": "fú"
+  },
+  "本": {
+    "def": "root, origin, source; basis",
+    "strokes": 5,
+    "radical": 75,
+    "reading": "běn"
+  },
+  "朵": {
+    "def": "cluster of flowers; earlobe",
+    "strokes": 6,
+    "radical": 75,
+    "reading": "duǒ"
+  },
+  "机": {
+    "def": "desk; machine; moment",
+    "strokes": 6,
+    "radical": 75,
+    "reading": "jī"
+  },
+  "条": {
+    "def": "clause, condition; string, stripe",
+    "strokes": 7,
+    "radical": 75,
+    "reading": "tiáo"
+  },
+  "来": {
+    "def": "come, coming; return, returning",
+    "strokes": 7,
+    "radical": 75,
+    "reading": "lái"
+  },
+  "林": {
+    "def": "forest, grove; surname",
+    "strokes": 8,
+    "radical": 75,
+    "reading": "lín"
+  },
+  "果": {
+    "def": "fruit; result",
+    "strokes": 8,
+    "radical": 75,
+    "reading": "guǒ"
+  },
+  "染": {
+    "def": "dye; be contagious; infect",
+    "strokes": 9,
+    "radical": 75,
+    "reading": "rǎn"
+  },
+  "树": {
+    "def": "tree; plant; set up, establish",
+    "strokes": 9,
+    "radical": 75,
+    "reading": "shù"
+  },
+  "棕": {
+    "def": "hemp palm; palm tree",
+    "strokes": 12,
+    "radical": 75,
+    "reading": "zōng"
+  },
+  "森": {
+    "def": "forest; luxuriant vegetation",
+    "strokes": 12,
+    "radical": 75,
+    "reading": "sēn"
+  },
+  "橙": {
+    "def": "orange",
+    "strokes": 16,
+    "radical": 75,
+    "reading": "chéng"
+  },
+  "歌": {
+    "def": "song, lyrics; sing, chant; praise",
+    "strokes": 14,
+    "radical": 76,
+    "reading": "gē"
+  },
+  "步": {
+    "def": "step, pace; walk, stroll",
+    "strokes": 7,
+    "radical": 77,
+    "reading": "bù"
+  },
+  "比": {
+    "def": "to compare, liken; comparison; than; hexagram ䷇",
+    "strokes": 4,
+    "radical": 81,
+    "reading": "bǐ"
+  },
+  "毕": {
+    "def": "end, finish, conclude; completed",
+    "strokes": 6,
+    "radical": 81,
+    "reading": "bì"
+  },
+  "气": {
+    "def": "steam, vapor; Kangxi radical 84",
+    "strokes": 4,
+    "radical": 84,
+    "reading": "qì"
+  },
+  "汁": {
+    "def": "juice, liquor, fluid, sap, gravy, sauce",
+    "strokes": 5,
+    "radical": 85,
+    "reading": "zhī"
+  },
+  "污": {
+    "def": "filthy, dirty, impure, polluted",
+    "strokes": 6,
+    "radical": 85,
+    "reading": "wū"
+  },
+  "汤": {
+    "def": "hot water; soup, gravy, broth",
+    "strokes": 6,
+    "radical": 85,
+    "reading": "tāng"
+  },
+  "汽": {
+    "def": "steam, vapor, gas",
+    "strokes": 7,
+    "radical": 85,
+    "reading": "qì"
+  },
+  "没": {
+    "def": "not, have not, none; drown, sink",
+    "strokes": 7,
+    "radical": 85,
+    "reading": "méi"
+  },
+  "河": {
+    "def": "river; stream; the Yellow River",
+    "strokes": 8,
+    "radical": 85,
+    "reading": "hé"
+  },
+  "泳": {
+    "def": "dive; swim",
+    "strokes": 8,
+    "radical": 85,
+    "reading": "yǒng"
+  },
+  "洋": {
+    "def": "ocean, sea; foreign; western",
+    "strokes": 9,
+    "radical": 85,
+    "reading": "yáng"
+  },
+  "流": {
+    "def": "flow, circulate, drift; class",
+    "strokes": 10,
+    "radical": 85,
+    "reading": "liú"
+  },
+  "海": {
+    "def": "sea, ocean; maritime",
+    "strokes": 10,
+    "radical": 85,
+    "reading": "hǎi"
+  },
+  "淇": {
+    "def": "river in Henan province",
+    "strokes": 11,
+    "radical": 85,
+    "reading": "qí"
+  },
+  "淋": {
+    "def": "drip, soak, drench; perfectly",
+    "strokes": 11,
+    "radical": 85,
+    "reading": "lín"
+  },
+  "游": {
+    "def": "to swim; float, drift; wander, roam",
+    "strokes": 12,
+    "radical": 85,
+    "reading": "yóu"
+  },
+  "源": {
+    "def": "spring; source, head; surname",
+    "strokes": 13,
+    "radical": 85,
+    "reading": "yuán"
+  },
+  "演": {
+    "def": "perform, put on; exercise",
+    "strokes": 14,
+    "radical": 85,
+    "reading": "yǎn"
+  },
+  "火": {
+    "def": "fire, flame; burn; anger, rage",
+    "strokes": 4,
+    "radical": 86,
+    "reading": "huǒ"
+  },
+  "灰": {
+    "def": "ashes; dust; lime, mortar",
+    "strokes": 6,
+    "radical": 86,
+    "reading": "huī"
+  },
+  "烧": {
+    "def": "burn; bake; heat; roast",
+    "strokes": 10,
+    "radical": 86,
+    "reading": "shāo"
+  },
+  "热": {
+    "def": "hot; heat; fever; restless; zeal",
+    "strokes": 10,
+    "radical": 86,
+    "reading": "rè"
+  },
+  "然": {
+    "def": "yes, certainly; pledge, promise",
+    "strokes": 12,
+    "radical": 86,
+    "reading": "rán"
+  },
+  "熊": {
+    "def": "a bear; brilliant; bright; surname",
+    "strokes": 14,
+    "radical": 86,
+    "reading": "xióng"
+  },
+  "爱": {
+    "def": "love, be fond of, like",
+    "strokes": 10,
+    "radical": 87,
+    "reading": "ài"
+  },
+  "爷": {
+    "def": "father, grandfather",
+    "strokes": 6,
+    "radical": 88,
+    "reading": "yé"
+  },
+  "爸": {
+    "def": "father, papa",
+    "strokes": 8,
+    "radical": 88,
+    "reading": "bà"
+  },
+  "牛": {
+    "def": "cow, ox, bull; Kangxi radical 93; 9th lunar mansion, determinative star β Capricorni (Dabih)",
+    "strokes": 4,
+    "radical": 93,
+    "reading": "niú"
+  },
+  "物": {
+    "def": "thing, substance, creature",
+    "strokes": 8,
+    "radical": 93,
+    "reading": "wù"
+  },
+  "狗": {
+    "def": "dog, Canis familiaris",
+    "strokes": 8,
+    "radical": 94,
+    "reading": "gǒu"
+  },
+  "猫": {
+    "def": "cat",
+    "strokes": 12,
+    "radical": 94,
+    "reading": "māo"
+  },
+  "环": {
+    "def": "jade ring or bracelet; ring",
+    "strokes": 8,
+    "radical": 96,
+    "reading": "huán"
+  },
+  "球": {
+    "def": "ball, sphere, globe; round",
+    "strokes": 11,
+    "radical": 96,
+    "reading": "qiú"
+  },
+  "理": {
+    "def": "reason, logic; manage",
+    "strokes": 11,
+    "radical": 96,
+    "reading": "lǐ"
+  },
+  "生": {
+    "def": "life, living, lifetime; birth",
+    "strokes": 5,
+    "radical": 100,
+    "reading": "shēng"
+  },
+  "电": {
+    "def": "electricity; electric; lightning",
+    "strokes": 5,
+    "radical": 102,
+    "reading": "diàn"
+  },
+  "疼": {
+    "def": "aches, pains; be fond of; love",
+    "strokes": 10,
+    "radical": 104,
+    "reading": "téng"
+  },
+  "病": {
+    "def": "illness, sickness, disease",
+    "strokes": 10,
+    "radical": 104,
+    "reading": "bìng"
+  },
+  "白": {
+    "def": "white; pure, unblemished; bright",
+    "strokes": 5,
+    "radical": 106,
+    "reading": "bái"
+  },
+  "目": {
+    "def": "eye; look, see; division, topic; Kangxi radical 109",
+    "strokes": 5,
+    "radical": 109,
+    "reading": "mù"
+  },
+  "真": {
+    "def": "real, actual, true, genuine",
+    "strokes": 10,
+    "radical": 109,
+    "reading": "zhēn"
+  },
+  "眼": {
+    "def": "eye; eyelet, hole, opening",
+    "strokes": 11,
+    "radical": 109,
+    "reading": "yǎn"
+  },
+  "睛": {
+    "def": "eyeball; pupil of eye",
+    "strokes": 13,
+    "radical": 109,
+    "reading": "jīng"
+  },
+  "知": {
+    "def": "know, perceive, comprehend",
+    "strokes": 8,
+    "radical": 111,
+    "reading": "zhī"
+  },
+  "礼": {
+    "def": "social custom; manners; courtesy; rites",
+    "strokes": 6,
+    "radical": 113,
+    "reading": "lǐ"
+  },
+  "社": {
+    "def": "god of the soil and altars to him; group of families; company, society",
+    "strokes": 8,
+    "radical": 113,
+    "reading": "shè"
+  },
+  "离": {
+    "def": "rare beast; strange; elegant",
+    "strokes": 11,
+    "radical": 114,
+    "reading": "lí"
+  },
+  "空": {
+    "def": "empty, hollow, bare, deserted",
+    "strokes": 8,
+    "radical": 116,
+    "reading": "kōng"
+  },
+  "站": {
+    "def": "stand up; a stand, station",
+    "strokes": 10,
+    "radical": 117,
+    "reading": "zhàn"
+  },
+  "笔": {
+    "def": "writing brush; write; stroke",
+    "strokes": 10,
+    "radical": 118,
+    "reading": "bǐ"
+  },
+  "答": {
+    "def": "answer, reply; return; assent to",
+    "strokes": 12,
+    "radical": 118,
+    "reading": "dá"
+  },
+  "篮": {
+    "def": "basket",
+    "strokes": 16,
+    "radical": 118,
+    "reading": "lán"
+  },
+  "粉": {
+    "def": "powder, face powder; plaster",
+    "strokes": 10,
+    "radical": 119,
+    "reading": "fěn"
+  },
+  "糖": {
+    "def": "sugar; candy; sweets",
+    "strokes": 16,
+    "radical": 119,
+    "reading": "táng"
+  },
+  "系": {
+    "def": "system; line, link, connection",
+    "strokes": 7,
+    "radical": 120,
+    "reading": "xì"
+  },
+  "紫": {
+    "def": "purple, violet; amethyst; surname",
+    "strokes": 12,
+    "radical": 120,
+    "reading": "zǐ"
+  },
+  "红": {
+    "def": "red, vermillion; blush, flush",
+    "strokes": 6,
+    "radical": 120,
+    "reading": "hóng"
+  },
+  "约": {
+    "def": "treaty, agreement, covenant",
+    "strokes": 6,
+    "radical": 120,
+    "reading": "yuē"
+  },
+  "纸": {
+    "def": "paper",
+    "strokes": 7,
+    "radical": 120,
+    "reading": "zhǐ"
+  },
+  "练": {
+    "def": "to practice, drill, exercise, train",
+    "strokes": 8,
+    "radical": 120,
+    "reading": "liàn"
+  },
+  "经": {
+    "def": "classic works; pass through",
+    "strokes": 8,
+    "radical": 120,
+    "reading": "jīng"
+  },
+  "络": {
+    "def": "enmesh, wrap around; web, net",
+    "strokes": 9,
+    "radical": 120,
+    "reading": "luò"
+  },
+  "统": {
+    "def": "govern, command, control; unite",
+    "strokes": 9,
+    "radical": 120,
+    "reading": "tǒng"
+  },
+  "绩": {
+    "def": "spin; achievements",
+    "strokes": 11,
+    "radical": 120,
+    "reading": "jì"
+  },
+  "绿": {
+    "def": "green; chlorine",
+    "strokes": 11,
+    "radical": 120,
+    "reading": "lǜ"
+  },
+  "网": {
+    "def": "net; network; Kangxi radical 122",
+    "strokes": 6,
+    "radical": 122,
+    "reading": "wǎng"
+  },
+  "考": {
+    "def": "examine, test; investigate",
+    "strokes": 6,
+    "radical": 125,
+    "reading": "kǎo"
+  },
+  "耳": {
+    "def": "ear; merely, only; handle; Kangxi radical 128",
+    "strokes": 6,
+    "radical": 128,
+    "reading": "ěr"
+  },
+  "脑": {
+    "def": "brain",
+    "strokes": 10,
+    "radical": 130,
+    "reading": "nǎo"
+  },
+  "脚": {
+    "def": "leg, foot; base, leg, foundation",
+    "strokes": 11,
+    "radical": 130,
+    "reading": "jiǎo"
+  },
+  "自": {
+    "def": "self, private, personal; from; Kangxi radical 132",
+    "strokes": 6,
+    "radical": 132,
+    "reading": "zì"
+  },
+  "舞": {
+    "def": "dance, posture, prance; brandish",
+    "strokes": 14,
+    "radical": 136,
+    "reading": "wǔ"
+  },
+  "船": {
+    "def": "ship, boat, vessel",
+    "strokes": 11,
+    "radical": 137,
+    "reading": "chuán"
+  },
+  "色": {
+    "def": "color, tint, hue, shade; form, body; beauty, desire for beauty; Kangxi radical 139",
+    "strokes": 6,
+    "radical": 139,
+    "reading": "sè"
+  },
+  "节": {
+    "def": "knot, node, joint; section",
+    "strokes": 6,
+    "radical": 140,
+    "reading": "jié"
+  },
+  "药": {
+    "def": "leaf of Dahurian angelica plant; medicine",
+    "strokes": 9,
+    "radical": 140,
+    "reading": "yào"
+  },
+  "萨": {
+    "def": "Buddhist gods or immortals",
+    "strokes": 11,
+    "radical": 140,
+    "reading": "sà"
+  },
+  "蓝": {
+    "def": "blue; indigo plant; surname",
+    "strokes": 14,
+    "radical": 140,
+    "reading": "lán"
+  },
+  "虹": {
+    "def": "rainbow",
+    "strokes": 9,
+    "radical": 142,
+    "reading": "hóng"
+  },
+  "蜡": {
+    "def": "wax; candle; waxy, glazed; maggot; (same as 䄍) meaning imperial harvest",
+    "strokes": 14,
+    "radical": 142,
+    "reading": "là"
+  },
+  "行": {
+    "def": "go; walk; move, travel; circulate; Kangxi radical 144",
+    "strokes": 6,
+    "radical": 144,
+    "reading": "xíng"
+  },
+  "衣": {
+    "def": "clothes, clothing; cover, skin; Kangxi radical 145",
+    "strokes": 6,
+    "radical": 145,
+    "reading": "yī"
+  },
+  "表": {
+    "def": "show, express, manifest, display",
+    "strokes": 8,
+    "radical": 145,
+    "reading": "biǎo"
+  },
+  "衫": {
+    "def": "shirt; robe; gown; jacket",
+    "strokes": 8,
+    "radical": 145,
+    "reading": "shān"
+  },
+  "衬": {
+    "def": "underwear; inner garments",
+    "strokes": 8,
+    "radical": 145,
+    "reading": "chèn"
+  },
+  "袜": {
+    "def": "socks, stockings",
+    "strokes": 10,
+    "radical": 145,
+    "reading": "wà"
+  },
+  "被": {
+    "def": "passive indicator 'by'; bedding",
+    "strokes": 11,
+    "radical": 145,
+    "reading": "bèi"
+  },
+  "裙": {
+    "def": "skirt, apron, petticoat",
+    "strokes": 12,
+    "radical": 145,
+    "reading": "qún"
+  },
+  "裤": {
+    "def": "trousers, pants",
+    "strokes": 12,
+    "radical": 145,
+    "reading": "kù"
+  },
+  "见": {
+    "def": "see, observe, behold; perceive",
+    "strokes": 4,
+    "radical": 147,
+    "reading": "jiàn"
+  },
+  "观": {
+    "def": "see, observe, view; appearance",
+    "strokes": 6,
+    "radical": 147,
+    "reading": "guān"
+  },
+  "视": {
+    "def": "look at, inspect, observe, see",
+    "strokes": 8,
+    "radical": 113,
+    "reading": "shì"
+  },
+  "认": {
+    "def": "recognize, know, understand",
+    "strokes": 4,
+    "radical": 149,
+    "reading": "rèn"
+  },
+  "识": {
+    "def": "recognize, understand, know",
+    "strokes": 7,
+    "radical": 149,
+    "reading": "shí"
+  },
+  "试": {
+    "def": "test, try, experiment",
+    "strokes": 8,
+    "radical": 149,
+    "reading": "shì"
+  },
+  "请": {
+    "def": "ask, request; invite; please",
+    "strokes": 10,
+    "radical": 149,
+    "reading": "qǐng"
+  },
+  "谢": {
+    "def": "thank; decline",
+    "strokes": 12,
+    "radical": 149,
+    "reading": "xiè"
+  },
+  "贵": {
+    "def": "expensive, costly, valuable",
+    "strokes": 9,
+    "radical": 154,
+    "reading": "guì"
+  },
+  "资": {
+    "def": "property; wealth; capital",
+    "strokes": 10,
+    "radical": 154,
+    "reading": "zī"
+  },
+  "走": {
+    "def": "walk, go on foot; run; leave; Kangxi radical 156",
+    "strokes": 7,
+    "radical": 156,
+    "reading": "zǒu"
+  },
+  "起": {
+    "def": "rise, stand up; go up; begin",
+    "strokes": 10,
+    "radical": 156,
+    "reading": "qǐ"
+  },
+  "越": {
+    "def": "exceed, go beyond; the more ...",
+    "strokes": 12,
+    "radical": 156,
+    "reading": "yuè"
+  },
+  "足": {
+    "def": "foot; attain, satisfy, enough; Kangxi radical 156",
+    "strokes": 7,
+    "radical": 157,
+    "reading": "zú"
+  },
+  "跑": {
+    "def": "run, flee, leave in hurry",
+    "strokes": 12,
+    "radical": 157,
+    "reading": "pǎo"
+  },
+  "跳": {
+    "def": "jump, leap, vault, bounce; dance",
+    "strokes": 13,
+    "radical": 157,
+    "reading": "tiào"
+  },
+  "踢": {
+    "def": "kick",
+    "strokes": 15,
+    "radical": 157,
+    "reading": "tī"
+  },
+  "身": {
+    "def": "body; trunk, hull; Kangxi radical 158",
+    "strokes": 7,
+    "radical": 158,
+    "reading": "shēn"
+  },
+  "车": {
+    "def": "cart, vehicle; carry in cart",
+    "strokes": 4,
+    "radical": 159,
+    "reading": "chē"
+  },
+  "软": {
+    "def": "soft, flexible, pliable; weak",
+    "strokes": 8,
+    "radical": 159,
+    "reading": "ruǎn"
+  },
+  "载": {
+    "def": "load; carry; transport, convey",
+    "strokes": 10,
+    "radical": 159,
+    "reading": "zài"
+  },
+  "运": {
+    "def": "luck, fortune; ship, transport",
+    "strokes": 7,
+    "radical": 162,
+    "reading": "yùn"
+  },
+  "近": {
+    "def": "near, close; approach; intimate",
+    "strokes": 8,
+    "radical": 162,
+    "reading": "jìn"
+  },
+  "远": {
+    "def": "distant, remote, far; profound",
+    "strokes": 7,
+    "radical": 162,
+    "reading": "yuǎn"
+  },
+  "连": {
+    "def": "join, connect; continuous; even",
+    "strokes": 8,
+    "radical": 162,
+    "reading": "lián"
+  },
+  "邮": {
+    "def": "postal, mail; post office",
+    "strokes": 7,
+    "radical": 163,
+    "reading": "yóu"
+  },
+  "酒": {
+    "def": "wine, spirits, liquor, alcoholic beverage",
+    "strokes": 10,
+    "radical": 164,
+    "reading": "jiǔ"
+  },
+  "酪": {
+    "def": "cream, cheese; koumiss",
+    "strokes": 13,
+    "radical": 164,
+    "reading": "lào"
+  },
+  "金": {
+    "def": "gold; metals in general; money; Kangxi radical 167",
+    "strokes": 8,
+    "radical": 167,
+    "reading": "jīn"
+  },
+  "钱": {
+    "def": "money, currency, coins",
+    "strokes": 10,
+    "radical": 167,
+    "reading": "qián"
+  },
+  "铅": {
+    "def": "lead (element 82, Pb)",
+    "strokes": 10,
+    "radical": 167,
+    "reading": "qiān"
+  },
+  "银": {
+    "def": "silver; cash, money, wealth",
+    "strokes": 11,
+    "radical": 167,
+    "reading": "yín"
+  },
+  "闪": {
+    "def": "flash; avoid, dodge, evade",
+    "strokes": 5,
+    "radical": 169,
+    "reading": "shǎn"
+  },
+  "问": {
+    "def": "ask about, inquire after",
+    "strokes": 6,
+    "radical": 169,
+    "reading": "wèn"
+  },
+  "闹": {
+    "def": "quarrel; dispute hotly",
+    "strokes": 8,
+    "radical": 169,
+    "reading": "nào"
+  },
+  "闻": {
+    "def": "hear; smell; make known; news",
+    "strokes": 9,
+    "radical": 169,
+    "reading": "wén"
+  },
+  "阳": {
+    "def": "'male' principle; light; sun",
+    "strokes": 6,
+    "radical": 170,
+    "reading": "yáng"
+  },
+  "阿": {
+    "def": "prefix for people's names; used in transliteration",
+    "strokes": 8,
+    "radical": 170,
+    "reading": "ā"
+  },
+  "院": {
+    "def": "courtyard, yard, court; school",
+    "strokes": 9,
+    "radical": 170,
+    "reading": "yuàn"
+  },
+  "雨": {
+    "def": "rain; rainy; Kangxi radical 173",
+    "strokes": 8,
+    "radical": 173,
+    "reading": "yǔ"
+  },
+  "雪": {
+    "def": "snow; wipe away shame, avenge",
+    "strokes": 11,
+    "radical": 173,
+    "reading": "xuě"
+  },
+  "面": {
+    "def": "face; surface; plane; side, dimension; Kangxi radical 176",
+    "strokes": 9,
+    "radical": 176,
+    "reading": "miàn"
+  },
+  "鞋": {
+    "def": "shoes, footwear in general",
+    "strokes": 15,
+    "radical": 177,
+    "reading": "xié"
+  },
+  "题": {
+    "def": "forehead; title, headline; theme",
+    "strokes": 15,
+    "radical": 181,
+    "reading": "tí"
+  },
+  "风": {
+    "def": "wind; air; manners, atmosphere",
+    "strokes": 4,
+    "radical": 182,
+    "reading": "fēng"
+  },
+  "飞": {
+    "def": "fly; go quickly; dart; high",
+    "strokes": 3,
+    "radical": 183,
+    "reading": "fēi"
+  },
+  "饼": {
+    "def": "rice-cakes, biscuits",
+    "strokes": 9,
+    "radical": 184,
+    "reading": "bǐng"
+  },
+  "马": {
+    "def": "horse; surname; Kangxi radical 187",
+    "strokes": 3,
+    "radical": 187,
+    "reading": "mǎ"
+  },
+  "鱼": {
+    "def": "fish; surname; Kangxi radical 195",
+    "strokes": 8,
+    "radical": 195,
+    "reading": "yú"
+  },
+  "鸟": {
+    "def": "bird; Kangxi radical 196",
+    "strokes": 5,
+    "radical": 196,
+    "reading": "niǎo"
+  },
+  "黄": {
+    "def": "yellow; surname",
+    "strokes": 11,
+    "radical": 201,
+    "reading": "huáng"
+  },
+  "黑": {
+    "def": "black; dark; evil, sinister; Kangxi radical 203",
+    "strokes": 12,
+    "radical": 203,
+    "reading": "hēi"
+  },
+  "鼻": {
+    "def": "nose; first; Kangxi radical 209",
+    "strokes": 14,
+    "radical": 209,
+    "reading": "bí"
+  }
+}

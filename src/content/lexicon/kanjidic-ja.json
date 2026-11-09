@@ -1,0 +1,689 @@
+{
+  "予": {
+    "on": [
+      "ヨ",
+      "シャ"
+    ],
+    "kun": [
+      "あらかじ.め"
+    ],
+    "gloss": "beforehand; previous; myself",
+    "strokes": 4
+  },
+  "人": {
+    "on": [
+      "ジン",
+      "ニン"
+    ],
+    "kun": [
+      "ひと",
+      "り",
+      "と"
+    ],
+    "gloss": "person",
+    "strokes": 2
+  },
+  "今": {
+    "on": [
+      "コン",
+      "キン"
+    ],
+    "kun": [
+      "いま"
+    ],
+    "gloss": "now",
+    "strokes": 4
+  },
+  "会": {
+    "on": [
+      "カイ",
+      "エ"
+    ],
+    "kun": [
+      "あ.う",
+      "あ.わせる",
+      "あつ.まる"
+    ],
+    "gloss": "meeting; meet; party",
+    "strokes": 6
+  },
+  "先": {
+    "on": [
+      "セン"
+    ],
+    "kun": [
+      "さき",
+      "ま.ず"
+    ],
+    "gloss": "before; ahead; previous",
+    "strokes": 6
+  },
+  "内": {
+    "on": [
+      "ナイ",
+      "ダイ"
+    ],
+    "kun": [
+      "うち"
+    ],
+    "gloss": "inside; within; between",
+    "strokes": 4
+  },
+  "切": {
+    "on": [
+      "セツ",
+      "サイ"
+    ],
+    "kun": [
+      "き.る",
+      "き.り",
+      "ぎ.り",
+      "き.れる",
+      "き.れ",
+      "ぎ.れ"
+    ],
+    "gloss": "cut; cutoff; be sharp",
+    "strokes": 4
+  },
+  "助": {
+    "on": [
+      "ジョ"
+    ],
+    "kun": [
+      "たす.ける",
+      "たす.かる",
+      "す.ける",
+      "すけ"
+    ],
+    "gloss": "help; rescue; assist",
+    "strokes": 7
+  },
+  "友": {
+    "on": [
+      "ユウ"
+    ],
+    "kun": [
+      "とも"
+    ],
+    "gloss": "friend",
+    "strokes": 4
+  },
+  "口": {
+    "on": [
+      "コウ",
+      "ク"
+    ],
+    "kun": [
+      "くち"
+    ],
+    "gloss": "mouth",
+    "strokes": 3
+  },
+  "叱": {
+    "on": [
+      "シツ",
+      "シチ",
+      "カ"
+    ],
+    "kun": [
+      "しか.る"
+    ],
+    "gloss": "scold; reprove",
+    "strokes": 5
+  },
+  "呼": {
+    "on": [
+      "コ"
+    ],
+    "kun": [
+      "よ.ぶ"
+    ],
+    "gloss": "call; call out to; invite",
+    "strokes": 8
+  },
+  "困": {
+    "on": [
+      "コン"
+    ],
+    "kun": [
+      "こま.る"
+    ],
+    "gloss": "quandary; become distressed; annoyed",
+    "strokes": 7
+  },
+  "土": {
+    "on": [
+      "ド",
+      "ト"
+    ],
+    "kun": [
+      "つち"
+    ],
+    "gloss": "soil; earth; ground",
+    "strokes": 3
+  },
+  "大": {
+    "on": [
+      "ダイ",
+      "タイ"
+    ],
+    "kun": [
+      "おお",
+      "おお.きい",
+      "おお.いに"
+    ],
+    "gloss": "large; big",
+    "strokes": 3
+  },
+  "学": {
+    "on": [
+      "ガク"
+    ],
+    "kun": [
+      "まな.ぶ"
+    ],
+    "gloss": "study; learning; science",
+    "strokes": 8
+  },
+  "小": {
+    "on": [
+      "ショウ"
+    ],
+    "kun": [
+      "ちい.さい",
+      "こ",
+      "お",
+      "さ"
+    ],
+    "gloss": "little; small",
+    "strokes": 3
+  },
+  "山": {
+    "on": [
+      "サン",
+      "セン"
+    ],
+    "kun": [
+      "やま"
+    ],
+    "gloss": "mountain",
+    "strokes": 3
+  },
+  "川": {
+    "on": [
+      "セン"
+    ],
+    "kun": [
+      "かわ"
+    ],
+    "gloss": "stream; river; river or three-stroke river radical (no. 47)",
+    "strokes": 3
+  },
+  "年": {
+    "on": [
+      "ネン"
+    ],
+    "kun": [
+      "とし"
+    ],
+    "gloss": "year; counter for years",
+    "strokes": 6
+  },
+  "忘": {
+    "on": [
+      "ボウ"
+    ],
+    "kun": [
+      "わす.れる"
+    ],
+    "gloss": "forget",
+    "strokes": 7
+  },
+  "日": {
+    "on": [
+      "ニチ",
+      "ジツ"
+    ],
+    "kun": [
+      "ひ",
+      "び",
+      "か"
+    ],
+    "gloss": "day; sun; Japan",
+    "strokes": 4
+  },
+  "明": {
+    "on": [
+      "メイ",
+      "ミョウ",
+      "ミン"
+    ],
+    "kun": [
+      "あ.かり",
+      "あか.るい",
+      "あか.るむ",
+      "あか.らむ",
+      "あき.らか",
+      "あ.ける",
+      "あ.け",
+      "あ.く",
+      "あ.くる",
+      "あ.かす"
+    ],
+    "gloss": "bright; light",
+    "strokes": 8
+  },
+  "時": {
+    "on": [
+      "ジ"
+    ],
+    "kun": [
+      "とき",
+      "どき"
+    ],
+    "gloss": "time; hour",
+    "strokes": 10
+  },
+  "書": {
+    "on": [
+      "ショ"
+    ],
+    "kun": [
+      "か.く",
+      "が.き",
+      "がき"
+    ],
+    "gloss": "write",
+    "strokes": 10
+  },
+  "月": {
+    "on": [
+      "ゲツ",
+      "ガツ"
+    ],
+    "kun": [
+      "つき"
+    ],
+    "gloss": "month; moon",
+    "strokes": 4
+  },
+  "木": {
+    "on": [
+      "ボク",
+      "モク"
+    ],
+    "kun": [
+      "き",
+      "こ"
+    ],
+    "gloss": "tree; wood",
+    "strokes": 4
+  },
+  "本": {
+    "on": [
+      "ホン"
+    ],
+    "kun": [
+      "もと"
+    ],
+    "gloss": "book; present; main",
+    "strokes": 5
+  },
+  "来": {
+    "on": [
+      "ライ",
+      "タイ"
+    ],
+    "kun": [
+      "く.る",
+      "きた.る",
+      "きた.す",
+      "き.たす",
+      "き.たる",
+      "き",
+      "こ"
+    ],
+    "gloss": "come; due; next",
+    "strokes": 7
+  },
+  "校": {
+    "on": [
+      "コウ",
+      "キョウ"
+    ],
+    "gloss": "exam; school; printing",
+    "strokes": 10
+  },
+  "案": {
+    "on": [
+      "アン"
+    ],
+    "kun": [
+      "つくえ"
+    ],
+    "gloss": "plan; suggestion; draft",
+    "strokes": 10
+  },
+  "母": {
+    "on": [
+      "ボ"
+    ],
+    "kun": [
+      "はは",
+      "も"
+    ],
+    "gloss": "mother",
+    "strokes": 5
+  },
+  "水": {
+    "on": [
+      "スイ"
+    ],
+    "kun": [
+      "みず"
+    ],
+    "gloss": "water",
+    "strokes": 4
+  },
+  "火": {
+    "on": [
+      "カ"
+    ],
+    "kun": [
+      "ひ",
+      "び",
+      "ほ"
+    ],
+    "gloss": "fire",
+    "strokes": 4
+  },
+  "物": {
+    "on": [
+      "ブツ",
+      "モツ"
+    ],
+    "kun": [
+      "もの"
+    ],
+    "gloss": "thing; object; matter",
+    "strokes": 8
+  },
+  "生": {
+    "on": [
+      "セイ",
+      "ショウ"
+    ],
+    "kun": [
+      "い.きる",
+      "い.かす",
+      "い.ける",
+      "う.まれる",
+      "うま.れる",
+      "う.まれ",
+      "うまれ",
+      "う.む",
+      "お.う",
+      "は.える",
+      "は.やす",
+      "き",
+      "なま",
+      "な.る",
+      "な.す",
+      "む.す",
+      "う"
+    ],
+    "gloss": "life; genuine; birth",
+    "strokes": 5
+  },
+  "田": {
+    "on": [
+      "デン"
+    ],
+    "kun": [
+      "た"
+    ],
+    "gloss": "rice field; rice paddy",
+    "strokes": 5
+  },
+  "社": {
+    "on": [
+      "シャ"
+    ],
+    "kun": [
+      "やしろ"
+    ],
+    "gloss": "company; firm; office",
+    "strokes": 7
+  },
+  "窓": {
+    "on": [
+      "ソウ",
+      "ス"
+    ],
+    "kun": [
+      "まど",
+      "てんまど",
+      "けむだし"
+    ],
+    "gloss": "window; pane",
+    "strokes": 11
+  },
+  "符": {
+    "on": [
+      "フ"
+    ],
+    "gloss": "token; sign; mark",
+    "strokes": 11
+  },
+  "約": {
+    "on": [
+      "ヤク"
+    ],
+    "kun": [
+      "つづ.まる",
+      "つづ.める",
+      "つづま.やか"
+    ],
+    "gloss": "promise; approximately; shrink",
+    "strokes": 9
+  },
+  "聞": {
+    "on": [
+      "ブン",
+      "モン"
+    ],
+    "kun": [
+      "き.く",
+      "き.こえる"
+    ],
+    "gloss": "hear; ask; listen",
+    "strokes": 14
+  },
+  "行": {
+    "on": [
+      "コウ",
+      "ギョウ",
+      "アン"
+    ],
+    "kun": [
+      "い.く",
+      "ゆ.く",
+      "ゆ.き",
+      "ゆき",
+      "い.き",
+      "いき",
+      "おこな.う",
+      "おこ.なう"
+    ],
+    "gloss": "going; journey; carry out",
+    "strokes": 6
+  },
+  "褒": {
+    "on": [
+      "ホウ"
+    ],
+    "kun": [
+      "ほ.める"
+    ],
+    "gloss": "praise; extol",
+    "strokes": 15
+  },
+  "見": {
+    "on": [
+      "ケン"
+    ],
+    "kun": [
+      "み.る",
+      "み.える",
+      "み.せる"
+    ],
+    "gloss": "see; hopes; chances",
+    "strokes": 7
+  },
+  "話": {
+    "on": [
+      "ワ"
+    ],
+    "kun": [
+      "はな.す",
+      "はなし"
+    ],
+    "gloss": "tale; talk",
+    "strokes": 13
+  },
+  "語": {
+    "on": [
+      "ゴ"
+    ],
+    "kun": [
+      "かた.る",
+      "かた.らう"
+    ],
+    "gloss": "word; speech; language",
+    "strokes": 14
+  },
+  "読": {
+    "on": [
+      "ドク",
+      "トク",
+      "トウ"
+    ],
+    "kun": [
+      "よ.む",
+      "よ.み"
+    ],
+    "gloss": "read",
+    "strokes": 14
+  },
+  "買": {
+    "on": [
+      "バイ"
+    ],
+    "kun": [
+      "か.う"
+    ],
+    "gloss": "buy",
+    "strokes": 12
+  },
+  "車": {
+    "on": [
+      "シャ"
+    ],
+    "kun": [
+      "くるま"
+    ],
+    "gloss": "car",
+    "strokes": 7
+  },
+  "遅": {
+    "on": [
+      "チ"
+    ],
+    "kun": [
+      "おく.れる",
+      "おく.らす",
+      "おそ.い"
+    ],
+    "gloss": "slow; late; back",
+    "strokes": 12
+  },
+  "金": {
+    "on": [
+      "キン",
+      "コン",
+      "ゴン"
+    ],
+    "kun": [
+      "かね",
+      "かな",
+      "がね"
+    ],
+    "gloss": "gold",
+    "strokes": 8
+  },
+  "間": {
+    "on": [
+      "カン",
+      "ケン"
+    ],
+    "kun": [
+      "あいだ",
+      "ま",
+      "あい"
+    ],
+    "gloss": "interval; space",
+    "strokes": 12
+  },
+  "雨": {
+    "on": [
+      "ウ"
+    ],
+    "kun": [
+      "あめ",
+      "あま",
+      "さめ"
+    ],
+    "gloss": "rain",
+    "strokes": 8
+  },
+  "電": {
+    "on": [
+      "デン"
+    ],
+    "gloss": "electricity",
+    "strokes": 13
+  },
+  "食": {
+    "on": [
+      "ショク",
+      "ジキ"
+    ],
+    "kun": [
+      "く.う",
+      "く.らう",
+      "た.べる",
+      "は.む"
+    ],
+    "gloss": "eat; food",
+    "strokes": 9
+  },
+  "飲": {
+    "on": [
+      "イン",
+      "オン"
+    ],
+    "kun": [
+      "の.む",
+      "の.み"
+    ],
+    "gloss": "drink; smoke; take",
+    "strokes": 12
+  },
+  "駅": {
+    "on": [
+      "エキ"
+    ],
+    "gloss": "station",
+    "strokes": 14
+  }
+}

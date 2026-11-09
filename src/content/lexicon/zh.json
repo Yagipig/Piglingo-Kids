@@ -1,0 +1,1322 @@
+{
+  "一": {
+    "hsk": 1,
+    "pinyin": "yī",
+    "gloss": "one; single; a (article)",
+    "zipf": 6.3
+  },
+  "七": {
+    "hsk": 1,
+    "pinyin": "qī",
+    "gloss": "seven; 7",
+    "zipf": 4.8
+  },
+  "三": {
+    "hsk": 1,
+    "pinyin": "sān",
+    "gloss": "three; 3",
+    "zipf": 6
+  },
+  "下载": {
+    "hsk": 5,
+    "pinyin": "xià zǎi",
+    "gloss": "to download; also pr. [xia4zai4]",
+    "trad": "下載",
+    "zipf": 5
+  },
+  "不": {
+    "hsk": 1,
+    "pinyin": "bù",
+    "gloss": "no; not so; (bound form) not; un-",
+    "zipf": 6.8
+  },
+  "九": {
+    "hsk": 1,
+    "pinyin": "jiǔ",
+    "gloss": "nine; 9",
+    "zipf": 4.8
+  },
+  "买": {
+    "hsk": 1,
+    "pinyin": "mǎi",
+    "gloss": "to buy; to purchase",
+    "trad": "買",
+    "zipf": 5.6
+  },
+  "二": {
+    "hsk": 1,
+    "pinyin": "èr",
+    "gloss": "two; 2; (Beijing dialect) stupid",
+    "zipf": 5.4
+  },
+  "二十": {
+    "pinyin": "èr shí",
+    "gloss": "twenty; 20",
+    "zipf": 4.2
+  },
+  "云": {
+    "hsk": 4,
+    "pinyin": "yún",
+    "gloss": "(classical) to say",
+    "zipf": 5
+  },
+  "五": {
+    "hsk": 1,
+    "pinyin": "wǔ",
+    "gloss": "five; 5",
+    "zipf": 5.1
+  },
+  "休息": {
+    "hsk": 1,
+    "pinyin": "xiū xi",
+    "gloss": "rest; to rest",
+    "zipf": 4.7
+  },
+  "传统": {
+    "hsk": 5,
+    "pinyin": "chuán tǒng",
+    "gloss": "tradition; traditional",
+    "trad": "傳統",
+    "zipf": 5.4
+  },
+  "你好": {
+    "pinyin": "nǐ hǎo",
+    "gloss": "hello; hi",
+    "zipf": 4.7
+  },
+  "便宜": {
+    "hsk": 1,
+    "pinyin": "pián yi",
+    "gloss": "cheap; inexpensive; a petty advantage; to let sb off lightly",
+    "zipf": 4.6
+  },
+  "保护": {
+    "hsk": 4,
+    "pinyin": "bǎo hù",
+    "gloss": "to protect; to defend; to safeguard",
+    "trad": "保護",
+    "zipf": 5.5
+  },
+  "信息": {
+    "hsk": 4,
+    "pinyin": "xìn xī",
+    "gloss": "information; news; message",
+    "zipf": 5.5
+  },
+  "儿子": {
+    "hsk": 1,
+    "pinyin": "ér zi",
+    "gloss": "son",
+    "trad": "兒子",
+    "zipf": 5.3
+  },
+  "兔子": {
+    "hsk": 5,
+    "pinyin": "tù zi",
+    "gloss": "hare; rabbit",
+    "zipf": 4
+  },
+  "八": {
+    "hsk": 1,
+    "pinyin": "bā",
+    "gloss": "eight",
+    "zipf": 4.7
+  },
+  "公共汽车": {
+    "hsk": 2,
+    "pinyin": "gōng gòng qì chē",
+    "gloss": "bus",
+    "trad": "公共汽車",
+    "zipf": 3.4
+  },
+  "公司": {
+    "hsk": 1,
+    "pinyin": "gōng sī",
+    "gloss": "company; firm; corporation",
+    "zipf": 6
+  },
+  "六": {
+    "hsk": 1,
+    "pinyin": "liù",
+    "gloss": "six; 6",
+    "zipf": 5
+  },
+  "再见": {
+    "hsk": 1,
+    "pinyin": "zài jiàn",
+    "gloss": "goodbye; see you again later",
+    "trad": "再見",
+    "zipf": 4.5
+  },
+  "冰淇淋": {
+    "pinyin": "bīng qí lín",
+    "gloss": "ice cream",
+    "zipf": 4
+  },
+  "冷": {
+    "hsk": 1,
+    "pinyin": "lěng",
+    "gloss": "cold",
+    "zipf": 4.6
+  },
+  "减少": {
+    "hsk": 4,
+    "pinyin": "jiǎn shǎo",
+    "gloss": "to lessen; to decrease; to reduce; to lower",
+    "trad": "減少",
+    "zipf": 5.2
+  },
+  "到": {
+    "hsk": 1,
+    "pinyin": "dào",
+    "gloss": "to reach; to arrive; to leave for; to go to; to (a place); until (a time); up to (a point)",
+    "zipf": 6.5
+  },
+  "剪刀": {
+    "hsk": 5,
+    "pinyin": "jiǎn dāo",
+    "gloss": "scissors",
+    "zipf": 3.7
+  },
+  "动物": {
+    "hsk": 3,
+    "pinyin": "dòng wù",
+    "gloss": "animal",
+    "trad": "動物",
+    "zipf": 5.2
+  },
+  "努力": {
+    "hsk": 3,
+    "pinyin": "nǔ lì",
+    "gloss": "to make an effort; to try hard; to strive; hard-working; conscientious",
+    "zipf": 5.4
+  },
+  "医生": {
+    "hsk": 1,
+    "pinyin": "yī shēng",
+    "gloss": "doctor; medical practitioner",
+    "trad": "醫生",
+    "zipf": 5.1
+  },
+  "医院": {
+    "hsk": 1,
+    "pinyin": "yī yuàn",
+    "gloss": "hospital",
+    "trad": "醫院",
+    "zipf": 5.3
+  },
+  "十": {
+    "hsk": 1,
+    "pinyin": "shí",
+    "gloss": "ten; 10",
+    "zipf": 4.7
+  },
+  "十一": {
+    "pinyin": "shí yī",
+    "gloss": "eleven; 11",
+    "zipf": 4.2
+  },
+  "十三": {
+    "pinyin": "shí sān",
+    "gloss": "thirteen; 13",
+    "zipf": 4.2
+  },
+  "十二": {
+    "pinyin": "shí èr",
+    "gloss": "twelve; 12",
+    "zipf": 4.3
+  },
+  "十五": {
+    "pinyin": "shí wǔ",
+    "gloss": "fifteen; 15",
+    "zipf": 4.3
+  },
+  "十四": {
+    "pinyin": "shí sì",
+    "gloss": "fourteen; 14",
+    "zipf": 4.1
+  },
+  "卖": {
+    "hsk": 1,
+    "pinyin": "mài",
+    "gloss": "to sell; to betray; to spare no effort",
+    "trad": "賣",
+    "zipf": 5.2
+  },
+  "卡车": {
+    "hsk": 7,
+    "pinyin": "kǎ chē",
+    "gloss": "truck",
+    "trad": "卡車",
+    "zipf": 4.2
+  },
+  "发烧": {
+    "hsk": 3,
+    "pinyin": "fā shāo",
+    "gloss": "to have a high temperature (from illness); to have a fever; (fig.) to be fascinated with; to obsess over; (fig.) flourishing; thriving; popular",
+    "trad": "發燒",
+    "zipf": 3.9
+  },
+  "叔叔": {
+    "hsk": 3,
+    "pinyin": "shū shu",
+    "gloss": "father's younger brother; paternal uncle; form of address used by children for a male one generation older",
+    "zipf": 4.2
+  },
+  "右": {
+    "hsk": 2,
+    "pinyin": "yòu",
+    "gloss": "(bound form) right; right-hand side; (bound form) (politics) right of center; (bound form) (old) west",
+    "zipf": 4.6
+  },
+  "哥哥": {
+    "hsk": 1,
+    "pinyin": "gē ge",
+    "gloss": "older brother",
+    "zipf": 4.9
+  },
+  "唱歌": {
+    "hsk": 1,
+    "pinyin": "chàng gē",
+    "gloss": "to sing a song",
+    "zipf": 4.3
+  },
+  "商店": {
+    "hsk": 1,
+    "pinyin": "shāng diàn",
+    "gloss": "store; shop",
+    "zipf": 4.6
+  },
+  "嘴": {
+    "hsk": 3,
+    "pinyin": "zuǐ",
+    "gloss": "mouth; beak; nozzle",
+    "zipf": 4.7
+  },
+  "四": {
+    "hsk": 1,
+    "pinyin": "sì",
+    "gloss": "four; 4",
+    "zipf": 5.2
+  },
+  "回答": {
+    "hsk": 3,
+    "pinyin": "huí dá",
+    "gloss": "to reply; to answer; reply; answer",
+    "zipf": 5
+  },
+  "围巾": {
+    "hsk": 5,
+    "pinyin": "wéi jīn",
+    "gloss": "scarf; shawl",
+    "trad": "圍巾",
+    "zipf": 3.5
+  },
+  "地图": {
+    "hsk": 3,
+    "pinyin": "dì tú",
+    "gloss": "map",
+    "trad": "地圖",
+    "zipf": 4.8
+  },
+  "地球": {
+    "hsk": 4,
+    "pinyin": "dì qiú",
+    "gloss": "the earth",
+    "zipf": 5
+  },
+  "垃圾": {
+    "hsk": 4,
+    "pinyin": "lā jī",
+    "gloss": "trash; refuse; garbage",
+    "zipf": 4.7
+  },
+  "外公": {
+    "hsk": 5,
+    "pinyin": "wài gōng",
+    "gloss": "(coll.) mother's father; maternal grandfather",
+    "zipf": 3.6
+  },
+  "外套": {
+    "hsk": 4,
+    "pinyin": "wài tào",
+    "gloss": "outer garment; jacket; coat",
+    "zipf": 3.9
+  },
+  "外婆": {
+    "hsk": 5,
+    "pinyin": "wài pó",
+    "gloss": "(coll.) mother's mother; maternal grandmother",
+    "zipf": 3.7
+  },
+  "多少钱": {
+    "zipf": 4.3
+  },
+  "大学": {
+    "hsk": 1,
+    "pinyin": "dà xué",
+    "gloss": "university; college",
+    "trad": "大學",
+    "zipf": 5.6
+  },
+  "大自然": {
+    "hsk": 4,
+    "pinyin": "dà zì rán",
+    "gloss": "nature (the natural world)",
+    "zipf": 4
+  },
+  "太阳": {
+    "hsk": 3,
+    "pinyin": "tài yang",
+    "gloss": "sun; sunlight; sunshine; temple (on the side of the human head) (abbr. for 太陽穴|太阳穴[tai4 yang2 xue2])",
+    "trad": "太陽",
+    "zipf": 4.9
+  },
+  "头": {
+    "hsk": 2,
+    "pinyin": "tóu",
+    "gloss": "head; hair style; the top",
+    "trad": "頭",
+    "zipf": 5.1
+  },
+  "头发": {
+    "hsk": 3,
+    "pinyin": "tóu fa",
+    "gloss": "hair (on the head)",
+    "trad": "頭髮",
+    "zipf": 4.7
+  },
+  "头疼": {
+    "hsk": 6,
+    "pinyin": "tóu téng",
+    "gloss": "headache",
+    "trad": "頭疼",
+    "zipf": 3.8
+  },
+  "女儿": {
+    "hsk": 1,
+    "pinyin": "nǚ ér",
+    "gloss": "daughter",
+    "trad": "女兒",
+    "zipf": 5.2
+  },
+  "奶奶": {
+    "hsk": 2,
+    "pinyin": "nǎi nai",
+    "gloss": "(informal) grandma (paternal grandmother); (respectful) mistress of the house; (coll.) boobies",
+    "zipf": 4.5
+  },
+  "奶酪": {
+    "pinyin": "nǎi lào",
+    "gloss": "cheese",
+    "zipf": 3.5
+  },
+  "妈妈": {
+    "hsk": 1,
+    "pinyin": "mā ma",
+    "gloss": "mama; mommy; mother",
+    "trad": "媽媽",
+    "zipf": 5.2
+  },
+  "妹妹": {
+    "hsk": 1,
+    "pinyin": "mèi mei",
+    "gloss": "younger sister; young woman",
+    "zipf": 4.8
+  },
+  "姐姐": {
+    "hsk": 1,
+    "pinyin": "jiě jie",
+    "gloss": "older sister",
+    "zipf": 4.9
+  },
+  "学习": {
+    "hsk": 1,
+    "pinyin": "xué xí",
+    "gloss": "to learn; to study",
+    "trad": "學習",
+    "zipf": 5.5
+  },
+  "学生": {
+    "hsk": 1,
+    "pinyin": "xué sheng",
+    "gloss": "student; schoolchild",
+    "trad": "學生",
+    "zipf": 5.7
+  },
+  "孩子": {
+    "hsk": 1,
+    "pinyin": "hái zi",
+    "gloss": "child",
+    "zipf": 5.6
+  },
+  "完": {
+    "hsk": 2,
+    "pinyin": "wán",
+    "gloss": "to finish; to be over; whole",
+    "zipf": 5.2
+  },
+  "家人": {
+    "hsk": 1,
+    "pinyin": "jiā rén",
+    "gloss": "family member; (old) servant",
+    "zipf": 4.9
+  },
+  "对不起": {
+    "hsk": 1,
+    "pinyin": "duì bu qǐ",
+    "gloss": "I'm sorry; excuse me; I beg your pardon; to let (sb) down; to disappoint",
+    "trad": "對不起",
+    "zipf": 4.7
+  },
+  "工作": {
+    "hsk": 1,
+    "pinyin": "gōng zuò",
+    "gloss": "to work; (of a machine) to operate; job",
+    "zipf": 6
+  },
+  "左": {
+    "hsk": 2,
+    "pinyin": "zuǒ",
+    "gloss": "left; the Left (politics); east",
+    "zipf": 4.8
+  },
+  "帽子": {
+    "hsk": 4,
+    "pinyin": "mào zi",
+    "gloss": "hat; cap; (fig.) label",
+    "zipf": 4.2
+  },
+  "干净": {
+    "hsk": 3,
+    "pinyin": "gān jìng",
+    "gloss": "clean; neat",
+    "trad": "乾淨",
+    "zipf": 4.7
+  },
+  "广告": {
+    "hsk": 4,
+    "pinyin": "guǎng gào",
+    "gloss": "to advertise; a commercial; advertisement",
+    "trad": "廣告",
+    "zipf": 5.1
+  },
+  "弟弟": {
+    "hsk": 1,
+    "pinyin": "dì di",
+    "gloss": "younger brother",
+    "zipf": 4.7
+  },
+  "彩虹": {
+    "hsk": 6,
+    "pinyin": "cǎi hóng",
+    "gloss": "rainbow",
+    "zipf": 4.1
+  },
+  "怎么走": {
+    "zipf": 4.5
+  },
+  "懂": {
+    "hsk": 2,
+    "pinyin": "dǒng",
+    "gloss": "to understand; to comprehend",
+    "zipf": 5
+  },
+  "成功": {
+    "hsk": 4,
+    "pinyin": "chéng gōng",
+    "gloss": "to succeed; success; successful; fruitful",
+    "zipf": 5.5
+  },
+  "成绩": {
+    "hsk": 3,
+    "pinyin": "chéng jì",
+    "gloss": "achievement; performance records; grades",
+    "trad": "成績",
+    "zipf": 5
+  },
+  "手": {
+    "hsk": 2,
+    "pinyin": "shǒu",
+    "gloss": "hand; (formal) to hold; person engaged in certain types of work",
+    "zipf": 5.3
+  },
+  "手机": {
+    "hsk": 1,
+    "pinyin": "shǒu jī",
+    "gloss": "cell phone; mobile phone",
+    "trad": "手機",
+    "zipf": 5.4
+  },
+  "打篮球": {
+    "zipf": 3.3
+  },
+  "把": {
+    "hsk": 3,
+    "pinyin": "bǎ",
+    "gloss": "to hold; to grasp; to hold a baby in position to help it urinate or defecate; handlebar",
+    "zipf": 6.2
+  },
+  "报纸": {
+    "hsk": 3,
+    "pinyin": "bào zhǐ",
+    "gloss": "newspaper; newsprint",
+    "trad": "報紙",
+    "zipf": 4.8
+  },
+  "摩托车": {
+    "hsk": 6,
+    "pinyin": "mó tuō chē",
+    "gloss": "(loanword) motorbike; motorcycle",
+    "trad": "摩托車",
+    "zipf": 4.1
+  },
+  "故事": {
+    "hsk": 3,
+    "pinyin": "gù shi",
+    "gloss": "narrative; story; tale",
+    "zipf": 5.5
+  },
+  "文化": {
+    "hsk": 3,
+    "pinyin": "wén huà",
+    "gloss": "culture; civilization; cultural",
+    "zipf": 5.7
+  },
+  "新闻": {
+    "hsk": 3,
+    "pinyin": "xīn wén",
+    "gloss": "news",
+    "trad": "新聞",
+    "zipf": 5.6
+  },
+  "方便": {
+    "hsk": 3,
+    "pinyin": "fāng biàn",
+    "gloss": "convenient; suitable; to facilitate; to make things easy; having money to spare",
+    "zipf": 4.8
+  },
+  "旅游": {
+    "hsk": 2,
+    "pinyin": "lǚ yóu",
+    "gloss": "trip; journey; tourism",
+    "trad": "旅遊",
+    "zipf": 5.3
+  },
+  "明星": {
+    "hsk": 5,
+    "pinyin": "míng xīng",
+    "gloss": "star; celebrity",
+    "zipf": 4.8
+  },
+  "春节": {
+    "hsk": 2,
+    "pinyin": "Chūn jié",
+    "gloss": "Spring Festival (Chinese New Year)",
+    "trad": "春節",
+    "zipf": 4.3
+  },
+  "是": {
+    "hsk": 1,
+    "pinyin": "shì",
+    "gloss": "to be (followed by substantives only); correct; right; true; (respectful acknowledgement of a command) very well",
+    "zipf": 7.2
+  },
+  "晴天": {
+    "hsk": 2,
+    "pinyin": "qíng tiān",
+    "gloss": "clear sky; sunny day",
+    "zipf": 3.5
+  },
+  "月亮": {
+    "hsk": 3,
+    "pinyin": "yuè liang",
+    "gloss": "the moon",
+    "zipf": 4.3
+  },
+  "本子": {
+    "hsk": 2,
+    "pinyin": "běn zi",
+    "gloss": "book; notebook; Japanese-style self-published comic (esp. an erotic one), aka \"dōjinshi\"",
+    "zipf": 3.7
+  },
+  "果汁": {
+    "hsk": 4,
+    "pinyin": "guǒ zhī",
+    "gloss": "fruit juice",
+    "zipf": 3.6
+  },
+  "树": {
+    "hsk": 3,
+    "pinyin": "shù",
+    "gloss": "tree; to cultivate; to set up",
+    "trad": "樹",
+    "zipf": 4.7
+  },
+  "棕色": {
+    "hsk": 6,
+    "pinyin": "zōng sè",
+    "gloss": "brown",
+    "zipf": 3.7
+  },
+  "森林": {
+    "hsk": 4,
+    "pinyin": "sēn lín",
+    "gloss": "forest",
+    "zipf": 4.8
+  },
+  "橙色": {
+    "pinyin": "chéng sè",
+    "gloss": "orange (color)",
+    "zipf": 3.6
+  },
+  "比": {
+    "hsk": 2,
+    "pinyin": "bǐ",
+    "gloss": "to compare; (followed by a noun and adjective) more {adj.} than {noun}; ratio",
+    "zipf": 5.8
+  },
+  "比萨": {
+    "pinyin": "bǐ sà",
+    "gloss": "(loanword) pizza",
+    "trad": "比薩",
+    "zipf": 3.4
+  },
+  "毕业": {
+    "hsk": 4,
+    "pinyin": "bì yè",
+    "gloss": "graduation; to graduate; to finish school",
+    "trad": "畢業",
+    "zipf": 5
+  },
+  "气候": {
+    "hsk": 4,
+    "pinyin": "qì hòu",
+    "gloss": "(meteorology) climate; (fig.) climate; prevailing conditions (in human affairs)",
+    "trad": "氣候",
+    "zipf": 4.7
+  },
+  "污染": {
+    "hsk": 4,
+    "pinyin": "wū rǎn",
+    "gloss": "(lit. and fig.) to pollute; to contaminate",
+    "zipf": 4.8
+  },
+  "汤": {
+    "hsk": 4,
+    "pinyin": "tāng",
+    "gloss": "soup; hot or boiling water; decoction of medicinal herbs",
+    "trad": "湯",
+    "zipf": 4.4
+  },
+  "汽车": {
+    "hsk": 3,
+    "pinyin": "qì chē",
+    "gloss": "car; automobile; bus",
+    "trad": "汽車",
+    "zipf": 5.2
+  },
+  "没关系": {
+    "hsk": 1,
+    "pinyin": "méi guān xi",
+    "gloss": "it doesn't matter",
+    "trad": "沒關係",
+    "zipf": 4.4
+  },
+  "河流": {
+    "hsk": 5,
+    "pinyin": "hé liú",
+    "gloss": "river",
+    "zipf": 4.5
+  },
+  "海洋": {
+    "hsk": 4,
+    "pinyin": "hǎi yáng",
+    "gloss": "ocean",
+    "zipf": 4.7
+  },
+  "游泳": {
+    "hsk": 2,
+    "pinyin": "yóu yǒng",
+    "gloss": "swimming; to swim",
+    "zipf": 4.5
+  },
+  "火车": {
+    "hsk": 1,
+    "pinyin": "huǒ chē",
+    "gloss": "train",
+    "trad": "火車",
+    "zipf": 4.7
+  },
+  "灰色": {
+    "hsk": 5,
+    "pinyin": "huī sè",
+    "gloss": "gray; ash gray; grizzly",
+    "zipf": 4.1
+  },
+  "热": {
+    "hsk": 1,
+    "pinyin": "rè",
+    "gloss": "to warm up; to heat up; hot (of weather)",
+    "trad": "熱",
+    "zipf": 5
+  },
+  "热闹": {
+    "hsk": 4,
+    "pinyin": "rè nao",
+    "gloss": "lively; bustling; full of activity; to make things lively; to have a good time; a scene of bustling activity; excitement",
+    "trad": "熱鬧",
+    "zipf": 4.1
+  },
+  "熊猫": {
+    "pinyin": "xióng māo",
+    "gloss": "panda",
+    "trad": "熊貓",
+    "zipf": 4
+  },
+  "爱好": {
+    "hsk": 2,
+    "pinyin": "ài hào",
+    "gloss": "to like; to be fond of; to take pleasure in; to be keen on; interest; hobby",
+    "trad": "愛好",
+    "zipf": 4.3
+  },
+  "爷爷": {
+    "hsk": 2,
+    "pinyin": "yé ye",
+    "gloss": "(coll.) paternal grandfather; grandpa",
+    "trad": "爺爺",
+    "zipf": 4.5
+  },
+  "爸爸": {
+    "hsk": 1,
+    "pinyin": "bà ba",
+    "gloss": "(coll.) father; dad",
+    "zipf": 4.9
+  },
+  "牛": {
+    "hsk": 3,
+    "pinyin": "niú",
+    "gloss": "ox; cow; bull",
+    "zipf": 4.8
+  },
+  "狗": {
+    "hsk": 1,
+    "pinyin": "gǒu",
+    "gloss": "dog",
+    "zipf": 5.2
+  },
+  "猫": {
+    "hsk": 1,
+    "pinyin": "māo",
+    "gloss": "cat; (dialect) to hide oneself; (loanword) (coll.) modem",
+    "trad": "貓",
+    "zipf": 4.7
+  },
+  "环境": {
+    "hsk": 3,
+    "pinyin": "huán jìng",
+    "gloss": "environment; circumstances; surroundings",
+    "trad": "環境",
+    "zipf": 5.5
+  },
+  "生病": {
+    "hsk": 1,
+    "pinyin": "shēng bìng",
+    "gloss": "to fall ill",
+    "zipf": 4.2
+  },
+  "电子邮件": {
+    "hsk": 3,
+    "pinyin": "diàn zǐ yóu jiàn",
+    "gloss": "email",
+    "trad": "電子郵件",
+    "zipf": 3.8
+  },
+  "电脑": {
+    "hsk": 1,
+    "pinyin": "diàn nǎo",
+    "gloss": "computer",
+    "trad": "電腦",
+    "zipf": 5.1
+  },
+  "电视": {
+    "hsk": 1,
+    "pinyin": "diàn shì",
+    "gloss": "television; TV",
+    "trad": "電視",
+    "zipf": 5.2
+  },
+  "白色": {
+    "hsk": 2,
+    "pinyin": "bái sè",
+    "gloss": "white; fig. reactionary; anti-communist",
+    "zipf": 4.6
+  },
+  "眼睛": {
+    "hsk": 2,
+    "pinyin": "yǎn jing",
+    "gloss": "eye",
+    "zipf": 5
+  },
+  "知识": {
+    "hsk": 4,
+    "pinyin": "zhī shi",
+    "gloss": "knowledge; intellectual",
+    "trad": "知識",
+    "zipf": 5.2
+  },
+  "礼物": {
+    "hsk": 3,
+    "pinyin": "lǐ wù",
+    "gloss": "gift; present",
+    "trad": "禮物",
+    "zipf": 4.7
+  },
+  "社会": {
+    "hsk": 4,
+    "pinyin": "shè huì",
+    "gloss": "society",
+    "trad": "社會",
+    "zipf": 6
+  },
+  "离": {
+    "hsk": 2,
+    "pinyin": "lí",
+    "gloss": "to leave; to part from; to be away from",
+    "trad": "離",
+    "zipf": 5
+  },
+  "空气": {
+    "hsk": 4,
+    "pinyin": "kōng qì",
+    "gloss": "air; atmosphere",
+    "trad": "空氣",
+    "zipf": 4.8
+  },
+  "粉色": {
+    "pinyin": "fěn sè",
+    "gloss": "pink",
+    "zipf": 3.7
+  },
+  "糖果": {
+    "hsk": 6,
+    "pinyin": "táng guǒ",
+    "gloss": "candy",
+    "zipf": 4.1
+  },
+  "紫色": {
+    "pinyin": "zǐ sè",
+    "gloss": "purple; violet (color)",
+    "zipf": 3.9
+  },
+  "红色": {
+    "hsk": 2,
+    "pinyin": "hóng sè",
+    "gloss": "red (color); revolutionary",
+    "trad": "紅色",
+    "zipf": 4.8
+  },
+  "纸": {
+    "hsk": 3,
+    "pinyin": "zhǐ",
+    "gloss": "variant of 紙|纸[zhi3]",
+    "trad": "帋",
+    "zipf": 4.5
+  },
+  "练习": {
+    "hsk": 3,
+    "pinyin": "liàn xí",
+    "gloss": "to practice; exercise; drill",
+    "trad": "練習",
+    "zipf": 4.4
+  },
+  "经理": {
+    "hsk": 3,
+    "pinyin": "jīng lǐ",
+    "gloss": "manager; director",
+    "trad": "經理",
+    "zipf": 4.7
+  },
+  "绿色": {
+    "hsk": 2,
+    "pinyin": "lǜ sè",
+    "gloss": "green",
+    "trad": "綠色",
+    "zipf": 4.8
+  },
+  "网站": {
+    "hsk": 3,
+    "pinyin": "wǎng zhàn",
+    "gloss": "website",
+    "trad": "網站",
+    "zipf": 5.8
+  },
+  "网络": {
+    "hsk": 5,
+    "pinyin": "wǎng luò",
+    "gloss": "network; Internet",
+    "trad": "網絡",
+    "zipf": 5.5
+  },
+  "考试": {
+    "hsk": 2,
+    "pinyin": "kǎo shì",
+    "gloss": "to take an exam; exam",
+    "trad": "考試",
+    "zipf": 4.9
+  },
+  "耳朵": {
+    "hsk": 3,
+    "pinyin": "ěr duo",
+    "gloss": "ear; handle (on a cup)",
+    "zipf": 4.3
+  },
+  "脚": {
+    "hsk": 3,
+    "pinyin": "jiǎo",
+    "gloss": "foot; leg (of an animal or an object); base (of an object)",
+    "trad": "腳",
+    "zipf": 4.9
+  },
+  "自行车": {
+    "hsk": 3,
+    "pinyin": "zì xíng chē",
+    "gloss": "bicycle; bike",
+    "trad": "自行車",
+    "zipf": 4.4
+  },
+  "船": {
+    "hsk": 3,
+    "pinyin": "chuán",
+    "gloss": "variant of 船[chuan2]",
+    "trad": "舩",
+    "zipf": 4.8
+  },
+  "节日": {
+    "hsk": 3,
+    "pinyin": "jié rì",
+    "gloss": "holiday; festival",
+    "trad": "節日",
+    "zipf": 4.5
+  },
+  "节目": {
+    "hsk": 3,
+    "pinyin": "jié mù",
+    "gloss": "(TV or radio) program; show; item; act; segment; number (on the program of a concert, variety show or cultural event); a planned activity (in one's schedule)",
+    "trad": "節目",
+    "zipf": 5.2
+  },
+  "节约": {
+    "hsk": 4,
+    "pinyin": "jié yuē",
+    "gloss": "to economize; to conserve (resources); economy",
+    "trad": "節約",
+    "zipf": 4.2
+  },
+  "药": {
+    "hsk": 2,
+    "pinyin": "yào",
+    "gloss": "leaf of the iris; variant of 藥|药[yao4]",
+    "trad": "葯",
+    "zipf": 4.7
+  },
+  "蓝色": {
+    "hsk": 2,
+    "pinyin": "lán sè",
+    "gloss": "blue (color)",
+    "trad": "藍色",
+    "zipf": 4.5
+  },
+  "蜡笔": {
+    "pinyin": "là bǐ",
+    "gloss": "crayon (wax type)",
+    "trad": "蠟筆",
+    "zipf": 3.1
+  },
+  "衣服": {
+    "hsk": 1,
+    "pinyin": "yī fu",
+    "gloss": "clothes",
+    "zipf": 4.9
+  },
+  "表演": {
+    "hsk": 3,
+    "pinyin": "biǎo yǎn",
+    "gloss": "play; show; performance",
+    "zipf": 5
+  },
+  "衬衫": {
+    "hsk": 3,
+    "pinyin": "chèn shān",
+    "gloss": "shirt; blouse",
+    "trad": "襯衫",
+    "zipf": 4
+  },
+  "袜子": {
+    "hsk": 4,
+    "pinyin": "wà zi",
+    "gloss": "socks; stockings",
+    "trad": "襪子",
+    "zipf": 3.9
+  },
+  "被": {
+    "hsk": 3,
+    "pinyin": "bèi",
+    "gloss": "quilt; to cover (with); (literary) to suffer (a misfortune)",
+    "zipf": 6.4
+  },
+  "裤子": {
+    "hsk": 2,
+    "pinyin": "kù zi",
+    "gloss": "trousers; pants",
+    "trad": "褲子",
+    "zipf": 4.3
+  },
+  "观众": {
+    "hsk": 4,
+    "pinyin": "guān zhòng",
+    "gloss": "spectators; audience; visitors (to an exhibition etc)",
+    "trad": "觀眾",
+    "zipf": 4.9
+  },
+  "认真": {
+    "hsk": 3,
+    "pinyin": "rèn zhēn",
+    "gloss": "conscientious; earnest; serious",
+    "trad": "認真",
+    "zipf": 5
+  },
+  "请": {
+    "hsk": 1,
+    "pinyin": "qǐng",
+    "gloss": "to ask; to invite; please (do sth)",
+    "trad": "請",
+    "zipf": 5.8
+  },
+  "谢谢": {
+    "hsk": 1,
+    "pinyin": "xiè xie",
+    "gloss": "to thank; thanks; thank you",
+    "trad": "謝謝",
+    "zipf": 5.2
+  },
+  "贵": {
+    "hsk": 1,
+    "pinyin": "guì",
+    "gloss": "expensive; (bound form) highly valued; precious; (bound form) noble; of high rank",
+    "trad": "貴",
+    "zipf": 4.6
+  },
+  "资源": {
+    "hsk": 5,
+    "pinyin": "zī yuán",
+    "gloss": "natural resource (such as water or minerals); resource (such as manpower or tourism)",
+    "trad": "資源",
+    "zipf": 5.5
+  },
+  "越来越": {
+    "hsk": 2,
+    "pinyin": "yuè lái yuè",
+    "gloss": "more and more",
+    "trad": "越來越",
+    "zipf": 5.1
+  },
+  "跑步": {
+    "hsk": 2,
+    "pinyin": "pǎo bù",
+    "gloss": "to run; to jog; (military) to march at the double",
+    "zipf": 3.8
+  },
+  "跳舞": {
+    "hsk": 2,
+    "pinyin": "tiào wǔ",
+    "gloss": "to dance",
+    "zipf": 4.3
+  },
+  "踢足球": {
+    "zipf": 3.4
+  },
+  "身体": {
+    "hsk": 2,
+    "pinyin": "shēn tǐ",
+    "gloss": "the body; one's health",
+    "trad": "身體",
+    "zipf": 5.2
+  },
+  "车站": {
+    "hsk": 2,
+    "pinyin": "chē zhàn",
+    "gloss": "rail station; bus stop",
+    "trad": "車站",
+    "zipf": 4.5
+  },
+  "软件": {
+    "hsk": 5,
+    "pinyin": "ruǎn jiàn",
+    "gloss": "software",
+    "trad": "軟件",
+    "zipf": 5.1
+  },
+  "运动": {
+    "hsk": 2,
+    "pinyin": "yùn dòng",
+    "gloss": "to move; to exercise; sports",
+    "trad": "運動",
+    "zipf": 5.6
+  },
+  "近": {
+    "hsk": 2,
+    "pinyin": "jìn",
+    "gloss": "near; close to; approximately",
+    "zipf": 5.2
+  },
+  "远": {
+    "hsk": 2,
+    "pinyin": "yuǎn",
+    "gloss": "far; distant; remote",
+    "trad": "遠",
+    "zipf": 5.1
+  },
+  "连衣裙": {
+    "pinyin": "lián yī qún",
+    "gloss": "a one-piece dress",
+    "trad": "連衣裙",
+    "zipf": 3.3
+  },
+  "酒店": {
+    "hsk": 2,
+    "pinyin": "jiǔ diàn",
+    "gloss": "wine shop; pub (public house); hotel",
+    "zipf": 4.9
+  },
+  "金色": {
+    "pinyin": "jīn sè",
+    "gloss": "golden; gold (color)",
+    "zipf": 4.1
+  },
+  "钱": {
+    "hsk": 1,
+    "pinyin": "qián",
+    "gloss": "coin; money; unit of weight, one tenth of a tael 兩|两[liang3]",
+    "trad": "錢",
+    "zipf": 5.7
+  },
+  "铅笔": {
+    "hsk": 3,
+    "pinyin": "qiān bǐ",
+    "gloss": "(lead) pencil",
+    "trad": "鉛筆",
+    "zipf": 3.6
+  },
+  "银色": {
+    "pinyin": "yín sè",
+    "gloss": "silver (color)",
+    "trad": "銀色",
+    "zipf": 3.7
+  },
+  "闪电": {
+    "hsk": 6,
+    "pinyin": "shǎn diàn",
+    "gloss": "lightning",
+    "trad": "閃電",
+    "zipf": 4.1
+  },
+  "问题": {
+    "hsk": 1,
+    "pinyin": "wèn tí",
+    "gloss": "question; problem; issue",
+    "trad": "問題",
+    "zipf": 6.2
+  },
+  "阿姨": {
+    "hsk": 3,
+    "pinyin": "ā yí",
+    "gloss": "maternal aunt; term of address for a woman of one's mother's generation; childcare worker; nanny",
+    "zipf": 4.3
+  },
+  "雨": {
+    "hsk": 1,
+    "pinyin": "yǔ",
+    "gloss": "rain",
+    "zipf": 4.5
+  },
+  "雪": {
+    "hsk": 1,
+    "pinyin": "xuě",
+    "gloss": "snow; (literary) to wipe away (a humiliation etc)",
+    "zipf": 4.3
+  },
+  "面条": {
+    "pinyin": "miàn tiáo",
+    "gloss": "noodles",
+    "trad": "麵條",
+    "zipf": 3.8
+  },
+  "鞋子": {
+    "pinyin": "xié zi",
+    "gloss": "shoe",
+    "zipf": 4.1
+  },
+  "风": {
+    "hsk": 3,
+    "pinyin": "fēng",
+    "gloss": "wind; news; style",
+    "trad": "風",
+    "zipf": 4.9
+  },
+  "飞机": {
+    "hsk": 1,
+    "pinyin": "fēi jī",
+    "gloss": "airplane",
+    "trad": "飛機",
+    "zipf": 5.2
+  },
+  "饼干": {
+    "hsk": 4,
+    "pinyin": "bǐng gān",
+    "gloss": "biscuit; cracker; cookie",
+    "trad": "餅乾",
+    "zipf": 3.9
+  },
+  "马": {
+    "hsk": 3,
+    "pinyin": "mǎ",
+    "gloss": "horse; horse or cavalry piece in Chinese chess; knight in Western chess",
+    "trad": "馬",
+    "zipf": 5.4
+  },
+  "鱼": {
+    "hsk": 2,
+    "pinyin": "yú",
+    "gloss": "fish; used in the names of various aquatic animals that are not fish (including abalone 鮑魚|鲍鱼[bao4 yu2], alligators and crocodiles 鱷魚|鳄鱼[e4 yu2] and octopi 章魚|章鱼[zhang1 yu2])",
+    "trad": "魚",
+    "zipf": 4.8
+  },
+  "鸟": {
+    "hsk": 2,
+    "pinyin": "niǎo",
+    "gloss": "bird; \"bird\" radical in Chinese characters (Kangxi radical 196); (dialect) to pay attention to",
+    "trad": "鳥",
+    "zipf": 4.7
+  },
+  "黄色": {
+    "hsk": 3,
+    "pinyin": "huáng sè",
+    "gloss": "yellow; vulgar; lewd; pornographic",
+    "trad": "黃色",
+    "zipf": 4.5
+  },
+  "黑色": {
+    "hsk": 2,
+    "pinyin": "hēi sè",
+    "gloss": "black",
+    "zipf": 4.7
+  },
+  "鼻子": {
+    "hsk": 4,
+    "pinyin": "bí zi",
+    "gloss": "nose",
+    "zipf": 4.2
+  }
+}

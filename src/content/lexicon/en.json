@@ -1,0 +1,1533 @@
+{
+  "advised": {
+    "ipa": "/ædˈvaɪzd/",
+    "cefr": "A2",
+    "ngslRank": 1745,
+    "gloss": "s. having received information"
+  },
+  "ago": {
+    "ipa": "/əˈɡoʊ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 372,
+    "frq": 316,
+    "gloss": "s. gone by; or in the past"
+  },
+  "agreed": {
+    "ipa": "/əˈɡɹid/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 420,
+    "frq": 16194,
+    "gloss": "s. united by being of the same opinion"
+  },
+  "airplane": {
+    "ipa": "/ˈɛɹˌpɫeɪn/",
+    "cefr": "A1",
+    "frq": 3519,
+    "gloss": "n. an aircraft that has a fixed wing and is powered by propellers or jets"
+  },
+  "already": {
+    "ipa": "/ɔˈɹɛdi/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 302,
+    "frq": 334,
+    "gloss": "r. prior to a specified or implied time"
+  },
+  "apple": {
+    "ipa": "/ˈæpəɫ/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 2695,
+    "gloss": "n. fruit with red or yellow or green skin and sweet to tart crisp whitish flesh"
+  },
+  "asked": {
+    "ipa": "/ˈæskt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 134,
+    "gloss": "v inquire about"
+  },
+  "aunt": {
+    "ipa": "/ˈænt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2781,
+    "frq": 4166,
+    "gloss": "n. the sister of your father or mother; the wife of your uncle"
+  },
+  "baby": {
+    "ipa": "/ˈbeɪbi/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 871,
+    "frq": 588,
+    "gloss": "n. a very young child (birth to 1 year) who has not yet begun to walk or talk"
+  },
+  "bag": {
+    "ipa": "/ˈbæɡ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1252,
+    "frq": 1008,
+    "gloss": "n. a flexible container with a single opening"
+  },
+  "banana": {
+    "ipa": "/bəˈnænə/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 4677,
+    "gloss": "n. any of several tropical and subtropical treelike herbs of the genus Musa having a terminal crown of large entire leaves and usually bearing hanging clusters of elongated fruits"
+  },
+  "bicycle": {
+    "ipa": "/ˈbaɪsɪkəɫ/",
+    "cefr": "A1",
+    "frq": 4366,
+    "gloss": "n. a wheeled vehicle that has two wheels and is moved by foot pedals"
+  },
+  "bird": {
+    "ipa": "/ˈbɝd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1271,
+    "frq": 1122,
+    "gloss": "n. warm-blooded egg-laying vertebrates characterized by feathers and forelimbs modified as wings"
+  },
+  "black": {
+    "ipa": "/ˈbɫæk/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 411,
+    "frq": 253,
+    "gloss": "n. the quality or state of the achromatic color of least lightness (bearing the least resemblance to white)"
+  },
+  "blue": {
+    "ipa": "/ˈbɫu/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 858,
+    "frq": 842,
+    "gloss": "n. blue color or pigment; resembling the color of the clear sky in the daytime"
+  },
+  "boat": {
+    "ipa": "/ˈboʊt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1304,
+    "frq": 1231,
+    "gloss": "n. a small vessel for travel on water"
+  },
+  "book": {
+    "ipa": "/ˈbʊk/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 171,
+    "frq": 241,
+    "gloss": "n. a written work or composition that has been published (printed on pages bound together)"
+  },
+  "bread": {
+    "ipa": "/ˈbɹɛd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2262,
+    "frq": 2113,
+    "gloss": "n. food made from dough of flour or meal and usually raised with yeast or baking powder and then baked"
+  },
+  "brother": {
+    "ipa": "/ˈbɹəðɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 821,
+    "frq": 614,
+    "gloss": "n. a male with the same parents as someone else"
+  },
+  "brown": {
+    "ipa": "/ˈbɹaʊn/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1913,
+    "frq": 1769,
+    "gloss": "n. an orange of low brightness and saturation"
+  },
+  "built": {
+    "ipa": "/ˈbɪɫt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 221,
+    "gloss": "s. (used of soaps or cleaning agents) having a substance (an abrasive or filler) added to increase effectiveness"
+  },
+  "bus": {
+    "ipa": "/ˈbəs/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 810,
+    "frq": 1453,
+    "gloss": "n. a vehicle carrying many passengers; used for public transport"
+  },
+  "cake": {
+    "ipa": "/ˈkeɪk/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2173,
+    "frq": 2540,
+    "gloss": "n. a block of solid substance (such as soap or wax)"
+  },
+  "can": {
+    "ipa": "/ˈkæn/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 38,
+    "frq": 37,
+    "gloss": "n. airtight sealed metal container for food or drink or paint etc."
+  },
+  "candy": {
+    "ipa": "/ˈkændi/",
+    "cefr": "A1",
+    "frq": 3446,
+    "gloss": "n. a rich sweet made of flavored sugar and often combined with fruit or nuts"
+  },
+  "car": {
+    "ipa": "/ˈkɑɹ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 260,
+    "frq": 289,
+    "gloss": "n. a motor vehicle with four wheels; usually propelled by an internal combustion engine"
+  },
+  "carrying": {
+    "ipa": "/ˈkæɹiɪŋ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 446,
+    "frq": 13464,
+    "gloss": "v move while supporting, either in a vehicle or in one's hands or on one's body"
+  },
+  "cat": {
+    "ipa": "/ˈkæt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1678,
+    "frq": 1775,
+    "gloss": "n. feline mammal usually having thick soft fur and no ability to roar: domestic cats; wildcats"
+  },
+  "charity": {
+    "ipa": "/ˈtʃɛɹɪti/",
+    "cefr": "B1",
+    "ngslRank": 2354,
+    "frq": 3287,
+    "gloss": "n. a foundation created to promote the public good (not for assistance to any particular individuals)"
+  },
+  "cheese": {
+    "ipa": "/ˈtʃiz/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2585,
+    "frq": 2104,
+    "gloss": "n. a solid food prepared from the pressed curd of milk"
+  },
+  "children": {
+    "ipa": "/ˈtʃɪɫdɹən/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 102,
+    "gloss": "n a young person of either sex"
+  },
+  "cleaned": {
+    "ipa": "/ˈkɫind/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 842,
+    "frq": 34719,
+    "gloss": "v make clean by removing dirt, filth, or unwanted substances from"
+  },
+  "climate change": {
+    "ipa": "/ˈklaimit tʃeindʒ/",
+    "cefr": "B2"
+  },
+  "clock": {
+    "ipa": "/ˈkɫɑk/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 932,
+    "frq": 2635,
+    "gloss": "n. a timepiece that shows the time of day"
+  },
+  "cloud": {
+    "ipa": "/ˈkɫaʊd/",
+    "cefr": "A1",
+    "ngslRank": 2090,
+    "frq": 1914,
+    "gloss": "n. any collection of particles (e.g., smoke or dust) or gases that is visible"
+  },
+  "coat": {
+    "ipa": "/ˈkoʊt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1863,
+    "frq": 2247,
+    "gloss": "n. an outer garment that has sleeves and covers the body from shoulder down; worn outdoors"
+  },
+  "cold": {
+    "ipa": "/ˈkoʊɫd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 867,
+    "frq": 885,
+    "gloss": "n. a mild viral infection involving the nose and respiratory passages (but not the lungs)"
+  },
+  "color": {
+    "ipa": "/ˈkəɫɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 378,
+    "frq": 697,
+    "gloss": "n. a visual attribute of things that results from the light they emit or transmit or reflect"
+  },
+  "computer": {
+    "ipa": "/kəmˈpjutɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 429,
+    "frq": 589,
+    "gloss": "n. a machine for performing calculations automatically"
+  },
+  "cookie": {
+    "ipa": "/ˈkʊki/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 3269,
+    "gloss": "n. any of various small flat sweet cakes (`biscuit' is the British term)"
+  },
+  "could": {
+    "ipa": "/ˈkʊd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 66,
+    "frq": 71,
+    "gloss": "imp. of Can"
+  },
+  "cousin": {
+    "ipa": "/ˈkəzən/",
+    "cefr": "A1",
+    "ngslRank": 2361,
+    "frq": 2714,
+    "gloss": "n. the child of your aunt or uncle"
+  },
+  "cow": {
+    "ipa": "/ˈkaʊ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2551,
+    "frq": 3078,
+    "gloss": "n. female of domestic cattle: \"`moo-cow' is a child's term\""
+  },
+  "crayon": {
+    "ipa": "/ˈkɹeɪˌɑn/",
+    "dolch": true,
+    "frq": 12296,
+    "gloss": "n. writing implement consisting of a colored stick of composition wax used for writing and drawing"
+  },
+  "culture": {
+    "ipa": "/ˈkəɫtʃɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 568,
+    "frq": 611,
+    "gloss": "n. a particular society at a particular time and place"
+  },
+  "cut": {
+    "ipa": "/ˈkət/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 456,
+    "frq": 414,
+    "gloss": "n. a share of the profits"
+  },
+  "dad": {
+    "ipa": "/ˈdæd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1632,
+    "frq": 1814,
+    "gloss": "n. an informal term for a father; probably derived from baby talk"
+  },
+  "daughter": {
+    "ipa": "/ˈdɔtɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 927,
+    "frq": 634,
+    "gloss": "n. a female human offspring"
+  },
+  "delivered": {
+    "ipa": "/dɪˈɫɪvɝd/",
+    "cefr": "B1",
+    "ngslRank": 1064,
+    "frq": 35878,
+    "gloss": "v deliver (a speech, oration, or idea)"
+  },
+  "designer": {
+    "ipa": "/dɪˈzaɪnɝ/",
+    "cefr": "B1",
+    "ngslRank": 2178,
+    "frq": 2426,
+    "gloss": "n. a person who devises plots or intrigues"
+  },
+  "desk": {
+    "ipa": "/ˈdɛsk/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1588,
+    "frq": 1659,
+    "gloss": "n. a piece of furniture with a writing surface and usually drawers or other compartments"
+  },
+  "did": {
+    "ipa": "/ˈdɪd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 21,
+    "gloss": "v engage in"
+  },
+  "doctor": {
+    "ipa": "/ˈdɑktɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 763,
+    "frq": 570,
+    "gloss": "n. a licensed medical practitioner"
+  },
+  "dog": {
+    "ipa": "/ˈdɔɡ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 895,
+    "frq": 753,
+    "gloss": "n. a member of the genus Canis (probably descended from the common wolf) that has been domesticated by man since prehistoric times; occurs in many breeds"
+  },
+  "dress": {
+    "ipa": "/ˈdɹɛs/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 899,
+    "frq": 1437,
+    "gloss": "n. a one-piece garment for a woman; has skirt and bodice"
+  },
+  "duck": {
+    "ipa": "/ˈdək/",
+    "cefr": "A2",
+    "dolch": true,
+    "frq": 3521,
+    "gloss": "n. small wild or domesticated web-footed broad-billed swimming bird usually having a depressed body and short legs"
+  },
+  "ear": {
+    "ipa": "/ˈiɹ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1664,
+    "frq": 1337,
+    "gloss": "n. the sense organ for hearing and equilibrium"
+  },
+  "egg": {
+    "ipa": "/ˈɛɡ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1381,
+    "frq": 1376,
+    "gloss": "n. animal reproductive body consisting of an ovum or embryo together with nutritive and protective envelopes; especially the thin-shelled reproductive body laid by e.g. female birds"
+  },
+  "eight": {
+    "ipa": "/ˈeɪt/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 739,
+    "gloss": "n. the cardinal number that is the sum of seven and one"
+  },
+  "eleven": {
+    "ipa": "/ˈiɫɛvən/",
+    "cefr": "A1",
+    "frq": 4273,
+    "gloss": "n. the cardinal number that is the sum of ten and one"
+  },
+  "energy": {
+    "ipa": "/ˈɛnɝdʒi/",
+    "cefr": "B2",
+    "dolch": true,
+    "ngslRank": 831,
+    "frq": 615,
+    "gloss": "n. (physics) a thermodynamic quantity equivalent to the capacity of a physical system to do work; the units of energy are joules or ergs"
+  },
+  "engineer": {
+    "ipa": "/ˈɛndʒəˈnɪɹ/",
+    "cefr": "A1",
+    "ngslRank": 1312,
+    "frq": 1997,
+    "gloss": "n. a person who uses scientific knowledge to solve practical problems"
+  },
+  "environment": {
+    "ipa": "/ɪnˈvaɪɹənmənt/",
+    "cefr": "B2",
+    "ngslRank": 712,
+    "frq": 855,
+    "gloss": "n. the totality of surrounding conditions"
+  },
+  "ever": {
+    "ipa": "/ˈɛvɝ/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 317,
+    "frq": 280,
+    "gloss": "r. at any time"
+  },
+  "explained": {
+    "ipa": "/ɪksˈpɫeɪnd/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 489,
+    "frq": 29044,
+    "gloss": "v make plain and comprehensible"
+  },
+  "eye": {
+    "ipa": "/ˈaɪ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 391,
+    "frq": 242,
+    "gloss": "n. the organ of sight"
+  },
+  "family": {
+    "ipa": "/ˈfæməɫi/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 172,
+    "frq": 147,
+    "gloss": "n. a social unit living together"
+  },
+  "farmer": {
+    "ipa": "/ˈfɑɹmɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1580,
+    "frq": 1589,
+    "gloss": "n. a person who operates a farm"
+  },
+  "fifteen": {
+    "ipa": "/ˈfɪfˈtin/",
+    "cefr": "A1",
+    "frq": 2995,
+    "gloss": "n. the cardinal number that is the sum of fourteen and one"
+  },
+  "finally": {
+    "ipa": "/ˈfaɪnəɫi/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 499,
+    "frq": 470,
+    "gloss": "r. after an unspecified period of time or an especially long delay"
+  },
+  "fish": {
+    "ipa": "/ˈfɪʃ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 828,
+    "frq": 947,
+    "gloss": "n. any of various mostly cold-blooded aquatic vertebrates usually having scales and breathing through gills"
+  },
+  "five": {
+    "ipa": "/ˈfaɪv/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 299,
+    "gloss": "n. the cardinal number that is the sum of four and one"
+  },
+  "forest": {
+    "ipa": "/ˈfɔɹəst/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 1527,
+    "frq": 1108,
+    "gloss": "n. the trees and other plants in a large densely wooded area"
+  },
+  "four": {
+    "ipa": "/ˈfɔɹ/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 247,
+    "gloss": "n. the cardinal number that is the sum of three and one"
+  },
+  "fourteen": {
+    "ipa": "/ˈfɔɹˈtin/",
+    "cefr": "A1",
+    "frq": 5498,
+    "gloss": "n. the cardinal number that is the sum of thirteen and one"
+  },
+  "friend": {
+    "ipa": "/ˈfɹɛnd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 208,
+    "frq": 265,
+    "gloss": "n. a person you know well and regard with affection and trust"
+  },
+  "future": {
+    "ipa": "/ˈfjutʃɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 370,
+    "frq": 654,
+    "gloss": "n. the time yet to come"
+  },
+  "given": {
+    "ipa": "/ˈɡɪvən/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 77,
+    "frq": 3017,
+    "gloss": "n. an assumption that is taken for granted"
+  },
+  "global warming": {
+    "ipa": "/ˈɡləubəl ˈwɔ:miŋ/",
+    "cefr": "B2"
+  },
+  "globe": {
+    "ipa": "/ˈɡɫoʊb/",
+    "cefr": "A2",
+    "frq": 4735,
+    "gloss": "n. a sphere on which a map (especially of the earth) is represented"
+  },
+  "golden": {
+    "ipa": "/ˈɡoʊɫdən/",
+    "cefr": "A2",
+    "ngslRank": 2653,
+    "frq": 1821,
+    "gloss": "s. marked by peace and prosperity"
+  },
+  "grandma": {
+    "ipa": "/ˈɡɹændmɑ/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 9804,
+    "gloss": "n. the mother of your father or mother"
+  },
+  "grandpa": {
+    "ipa": "/ˈɡɹændˌpɑ/",
+    "cefr": "A1",
+    "frq": 14478,
+    "gloss": "n the father of your father or mother"
+  },
+  "gray": {
+    "ipa": "/ˈɡɹeɪ/",
+    "cefr": "A1",
+    "ngslRank": 1849,
+    "frq": 1939,
+    "gloss": "n. a neutral achromatic color midway between white and black"
+  },
+  "green": {
+    "ipa": "/ˈɡɹin/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 940,
+    "frq": 890,
+    "gloss": "n. green color or pigment; resembling the color of growing grass"
+  },
+  "had": {
+    "ipa": "/ˈhæd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 8,
+    "gloss": "v have or possess, either in a concrete or an abstract sense"
+  },
+  "hair": {
+    "ipa": "/ˈhɛɹ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 913,
+    "frq": 602,
+    "gloss": "n. a covering for the body (or parts of it) consisting of a dense growth of threadlike structures (as on the human head); helps to prevent heat loss"
+  },
+  "hand": {
+    "ipa": "/ˈhænd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 198,
+    "frq": 174,
+    "gloss": "n. the (prehensile) extremity of the superior limb"
+  },
+  "has": {
+    "ipa": "/ˈhæz/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 8,
+    "gloss": "n (astronomy) the angular distance of a celestial point measured westward along the celestial equator from the zenith crossing; the right ascension for an observer at a particular location and time of day"
+  },
+  "hat": {
+    "ipa": "/ˈhæt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1750,
+    "frq": 2015,
+    "gloss": "n. headdress that protects the head from bad weather; has shaped crown and usually a brim"
+  },
+  "have": {
+    "ipa": "/ˈhæv/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 8,
+    "frq": 8,
+    "gloss": "v. have or possess, either in a concrete or an abstract sense"
+  },
+  "head": {
+    "ipa": "/ˈhɛd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 259,
+    "frq": 251,
+    "gloss": "n. the upper part of the human body or the front part of the body in animals; contains the face and brains"
+  },
+  "holding": {
+    "ipa": "/ˈhoʊɫdɪŋ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 222,
+    "frq": 5325,
+    "gloss": "n the act of retaining something"
+  },
+  "horse": {
+    "ipa": "/ˈhɔɹs/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1139,
+    "frq": 1279,
+    "gloss": "n. solid-hoofed herbivorous quadruped domesticated since prehistoric times"
+  },
+  "hot": {
+    "ipa": "/ˈhɑt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 885,
+    "frq": 721,
+    "gloss": "a. used of physical heat; having a high or higher than desirable temperature or giving off heat or feeling or causing a sensation of heat or burning"
+  },
+  "ice cream": {
+    "cefr": "A1"
+  },
+  "if": {
+    "ipa": "/ˈɪf/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 34,
+    "frq": 40,
+    "gloss": "conj. In case that; granting, allowing, or supposing that; --"
+  },
+  "internet": {
+    "ipa": "/ˈɪntɝˌnɛt/",
+    "cefr": "A1",
+    "frq": 1467,
+    "gloss": "n. a computer network consisting of a worldwide network of computer networks that use the TCP/IP network protocols to facilitate data transmission and exchange"
+  },
+  "invented": {
+    "ipa": "/ˌɪnˈvɛntəd/",
+    "cefr": "A2",
+    "ngslRank": 2627,
+    "frq": 25212,
+    "gloss": "v come up with (an idea, plan, explanation, theory, or principle) after a mental effort"
+  },
+  "juice": {
+    "ipa": "/ˈdʒus/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 2310,
+    "gloss": "n. the liquid part that can be extracted from plant or animal tissue by squeezing or cooking"
+  },
+  "known": {
+    "ipa": "/ˈnoʊn/",
+    "cefr": "B2",
+    "dolch": true,
+    "ngslRank": 41,
+    "frq": 4353,
+    "gloss": "a. apprehended with certainty"
+  },
+  "leg": {
+    "ipa": "/ˈɫɛɡ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1097,
+    "frq": 856,
+    "gloss": "n. a human limb; commonly used to refer to a whole limb but technically only the part of the limb between the knee and ankle"
+  },
+  "lightning": {
+    "ipa": "/ˈɫaɪtnɪŋ/",
+    "cefr": "B1",
+    "frq": 4562,
+    "gloss": "n. abrupt electric discharge from cloud to cloud or from cloud to earth accompanied by the emission of light"
+  },
+  "made": {
+    "ipa": "/ˈmeɪd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 48,
+    "gloss": "s. produced by a manufacturing process; rope and nails\""
+  },
+  "map": {
+    "ipa": "/ˈmæp/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1212,
+    "frq": 1542,
+    "gloss": "n. a diagrammatic representation of the earth's surface (or part of it)"
+  },
+  "might": {
+    "ipa": "/ˈmaɪt/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 159,
+    "frq": 175,
+    "gloss": "n. physical strength"
+  },
+  "milk": {
+    "ipa": "/ˈmɪɫk/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1789,
+    "frq": 2033,
+    "gloss": "n. a white nutritious liquid secreted by mammals and used as food by human beings"
+  },
+  "miss": {
+    "ipa": "/ˈmɪs/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 645,
+    "frq": 833,
+    "gloss": "n. a failure to hit (or meet or find etc)"
+  },
+  "mom": {
+    "ipa": "/ˈmɑm/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2131,
+    "frq": 1609,
+    "gloss": "n informal terms for a mother"
+  },
+  "motorbike": {
+    "ipa": "/ˈmoʊtɝˌbaɪk/",
+    "cefr": "B2",
+    "frq": 22347,
+    "gloss": "v. ride a motorcycle"
+  },
+  "mouth": {
+    "ipa": "/ˈmaʊθ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1439,
+    "frq": 1060,
+    "gloss": "n. the opening through which food is taken in and vocalizations emerge"
+  },
+  "never": {
+    "ipa": "/ˈnɛvɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 162,
+    "frq": 138,
+    "gloss": "r. not ever; at no time in the past or future"
+  },
+  "nine": {
+    "ipa": "/ˈnaɪn/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 1154,
+    "gloss": "n. the cardinal number that is the sum of eight and one"
+  },
+  "noodle": {
+    "ipa": "/ˈnudəɫ/",
+    "frq": 7939,
+    "gloss": "n. a ribbonlike strip of pasta"
+  },
+  "nose": {
+    "ipa": "/ˈnoʊz/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2114,
+    "frq": 1735,
+    "gloss": "n. the organ of smell and entrance to the respiratory tract; the prominent part of the face of man or other mammals"
+  },
+  "notebook": {
+    "ipa": "/ˈnoʊtˌbʊk/",
+    "cefr": "A1",
+    "frq": 4427,
+    "gloss": "n. a book with blank pages for recording notes or memoranda"
+  },
+  "one": {
+    "ipa": "/ˈwən/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 35,
+    "frq": 51,
+    "gloss": "n. the smallest whole number or a numeral representing this number"
+  },
+  "orange": {
+    "ipa": "/ˈɔɹəndʒ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2499,
+    "frq": 3145,
+    "gloss": "n. round yellow to orange fruit of any of several citrus trees"
+  },
+  "ordered": {
+    "ipa": "/ˈɔɹdɝd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 215,
+    "frq": 16328,
+    "gloss": "a. having a systematic arrangement; especially having elements succeeding in order according to rule"
+  },
+  "painted": {
+    "ipa": "/ˈpeɪntɪd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 672,
+    "frq": 6503,
+    "gloss": "a. coated with paint"
+  },
+  "pants": {
+    "ipa": "/ˈpænts/",
+    "cefr": "A1",
+    "dolch": true,
+    "gloss": "n underpants worn by women"
+  },
+  "paper": {
+    "ipa": "/ˈpeɪpɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 425,
+    "frq": 519,
+    "gloss": "n. a material made of cellulose pulp derived mainly from wood or rags or certain grasses"
+  },
+  "parents": {
+    "ipa": "/ˈpɛɹənts/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 297,
+    "gloss": "n a father or mother; one who begets or one who gives birth to or nurtures and raises a child; a relative who plays the role of guardian"
+  },
+  "pass": {
+    "ipa": "/ˈpæs/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 416,
+    "frq": 441,
+    "gloss": "n. (military) a written leave of absence"
+  },
+  "pen": {
+    "ipa": "/ˈpɛn/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2320,
+    "frq": 3583,
+    "gloss": "n. a writing implement with a point from which ink flows"
+  },
+  "pencil": {
+    "ipa": "/ˈpɛnsəɫ/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 4410,
+    "gloss": "n. a thin cylindrical pointed writing implement; a rod of marking substance encased in wood"
+  },
+  "pilot": {
+    "ipa": "/ˈpaɪɫət/",
+    "cefr": "A2",
+    "ngslRank": 1796,
+    "frq": 1772,
+    "gloss": "n. someone who is licensed to operate an aircraft in flight"
+  },
+  "pink": {
+    "ipa": "/ˈpɪŋk/",
+    "cefr": "A1",
+    "ngslRank": 2238,
+    "frq": 2488,
+    "gloss": "n. a light shade of red"
+  },
+  "pizza": {
+    "ipa": "/ˈpitsə/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 3918,
+    "gloss": "n. Italian open pie made of thin bread dough spread with a spiced mixture of e.g. tomato sauce and cheese"
+  },
+  "planted": {
+    "ipa": "/ˈpɫæntɪd/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 671,
+    "frq": 19596,
+    "gloss": "a. set in the soil for growth"
+  },
+  "plastic": {
+    "ipa": "/ˈpɫæstɪk/",
+    "cefr": "A2",
+    "ngslRank": 1850,
+    "frq": 1523,
+    "gloss": "n. generic name for certain synthetic or semisynthetic materials that can be molded or extruded into objects or films or filaments or used for making e.g. coatings and adhesives"
+  },
+  "pollution": {
+    "ipa": "/pəˈɫuʃən/",
+    "cefr": "A1",
+    "ngslRank": 2164,
+    "frq": 2913,
+    "gloss": "n. undesirable state of the natural environment being contaminated with harmful substances as a consequence of human activities"
+  },
+  "population": {
+    "ipa": "/ˌpɑpjəˈɫeɪʃən/",
+    "cefr": "A2",
+    "ngslRank": 710,
+    "frq": 642,
+    "gloss": "n. the people who inhabit a territory or state"
+  },
+  "promised": {
+    "ipa": "/ˈpɹɑməst/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 829,
+    "frq": 10015,
+    "gloss": "v make a promise or commitment"
+  },
+  "protect": {
+    "ipa": "/pɹəˈtɛkt/",
+    "cefr": "B1",
+    "dolch": true,
+    "ngslRank": 903,
+    "frq": 749,
+    "gloss": "v. shield from danger, injury, destruction, or damage"
+  },
+  "purple": {
+    "ipa": "/ˈpɝpəɫ/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 3894,
+    "gloss": "n. a purple color or pigment"
+  },
+  "rabbit": {
+    "ipa": "/ˈɹæbət/",
+    "cefr": "A1",
+    "frq": 4373,
+    "gloss": "n. any of various burrowing animals of the family Leporidae having long ears and short tails; some domesticated and raised for pets or food"
+  },
+  "rain": {
+    "ipa": "/ˈɹeɪn/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1232,
+    "frq": 1550,
+    "gloss": "n. water falling in drops from vapor condensed in the atmosphere"
+  },
+  "rainbow": {
+    "ipa": "/ˈɹeɪnˌboʊ/",
+    "cefr": "B2",
+    "frq": 7427,
+    "gloss": "n. an arc of colored light in the sky caused by refraction of the sun's rays by rain"
+  },
+  "rains": {
+    "ipa": "/ˈɹeɪnz/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1232,
+    "gloss": "n water falling in drops from vapor condensed in the atmosphere"
+  },
+  "recently": {
+    "ipa": "/ˈɹisənɫi/",
+    "cefr": "A2",
+    "ngslRank": 638,
+    "frq": 699,
+    "gloss": "r. in the recent past"
+  },
+  "recycle": {
+    "ipa": "/ɹiˈsaɪkəɫ/",
+    "cefr": "A2",
+    "frq": 5806,
+    "gloss": "v. cause to repeat a cycle"
+  },
+  "red": {
+    "ipa": "/ˈɹɛd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 800,
+    "frq": 598,
+    "gloss": "n. red color or pigment; the chromatic color resembling the hue of blood"
+  },
+  "refused": {
+    "ipa": "/ɹəfˈjuzd/",
+    "cefr": "B1",
+    "ngslRank": 1209,
+    "frq": 42178,
+    "gloss": "v show unwillingness towards"
+  },
+  "repaired": {
+    "ipa": "/ɹiˈpɛɹd/",
+    "cefr": "A2",
+    "ngslRank": 1878,
+    "frq": 29975,
+    "gloss": "v restore by replacing a part or putting together what is torn or broken"
+  },
+  "rice": {
+    "ipa": "/ˈɹaɪs/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2695,
+    "frq": 2740,
+    "gloss": "n. grains used as food either unpolished or more often polished"
+  },
+  "rich": {
+    "ipa": "/ˈɹɪtʃ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1012,
+    "frq": 1075,
+    "gloss": "a. possessing material wealth"
+  },
+  "robot": {
+    "ipa": "/ˈɹoʊˌbɑt/",
+    "cefr": "B1",
+    "dolch": true,
+    "frq": 4523,
+    "gloss": "n a mechanism that can move automatically"
+  },
+  "rubbish": {
+    "ipa": "/ˈɹəbɪʃ/",
+    "cefr": "B1",
+    "frq": 14955,
+    "gloss": "n. worthless material that is to be disposed of"
+  },
+  "ruler": {
+    "ipa": "/ˈɹuɫɝ/",
+    "cefr": "A1",
+    "frq": 5552,
+    "gloss": "n. a person who rules or commands"
+  },
+  "said": {
+    "ipa": "/ˈsɛd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 30,
+    "frq": 9053,
+    "gloss": "v express in words"
+  },
+  "scarf": {
+    "ipa": "/ˈskɑɹf/",
+    "cefr": "A2",
+    "frq": 6140,
+    "gloss": "n. a garment worn around the head or neck or shoulders for warmth or decoration"
+  },
+  "school": {
+    "ipa": "/ˈskuɫ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 146,
+    "frq": 125,
+    "gloss": "n. an educational institution"
+  },
+  "scissors": {
+    "ipa": "/ˈsɪzɝz/",
+    "cefr": "A2",
+    "dolch": true,
+    "frq": 8906,
+    "gloss": "n. an edge tool having two crossed pivoting blades"
+  },
+  "sent": {
+    "ipa": "/ˈsɛnt/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 323,
+    "gloss": "n. 100 senti equal 1 kroon in Estonia"
+  },
+  "seven": {
+    "ipa": "/ˈsɛvən/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 734,
+    "gloss": "n. the cardinal number that is the sum of six and one"
+  },
+  "shirt": {
+    "ipa": "/ˈʃɝt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1907,
+    "frq": 1771,
+    "gloss": "n. a garment worn on the upper half of the body"
+  },
+  "shoes": {
+    "ipa": "/ˈʃuz/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1476,
+    "gloss": "n a particular situation"
+  },
+  "since": {
+    "ipa": "/ˈsɪns/",
+    "cefr": "A2",
+    "dolch": true,
+    "ngslRank": 191,
+    "frq": 260,
+    "gloss": "adv. From a definite past time until now; as, he went a month"
+  },
+  "sister": {
+    "ipa": "/ˈsɪstɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 964,
+    "frq": 823,
+    "gloss": "n. a female person who has the same parents as another person"
+  },
+  "six": {
+    "ipa": "/ˈsɪks/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 424,
+    "gloss": "n. the cardinal number that is the sum of five and one"
+  },
+  "sixteen": {
+    "ipa": "/ˈsɪkˈstin/",
+    "cefr": "A1",
+    "frq": 5324,
+    "gloss": "n. the cardinal number that is the sum of fifteen and one"
+  },
+  "smartphone": {
+    "ipa": "/ˈsmɑɹtˌfoʊn/"
+  },
+  "snow": {
+    "ipa": "/ˈsnoʊ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1950,
+    "frq": 1781,
+    "gloss": "n. precipitation falling from clouds in the form of ice crystals"
+  },
+  "socks": {
+    "ipa": "/ˈsɑks/",
+    "cefr": "A2",
+    "dolch": true,
+    "gloss": "n hosiery consisting of a cloth covering for the foot; worn inside the shoe; reaches to between the ankle and the knee"
+  },
+  "son": {
+    "ipa": "/ˈsən/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 687,
+    "frq": 481,
+    "gloss": "n. a male human offspring"
+  },
+  "soup": {
+    "ipa": "/ˈsup/",
+    "cefr": "A1",
+    "frq": 2997,
+    "gloss": "n. liquid food especially of meat or fish or vegetable stock often containing pieces of solid food"
+  },
+  "spoken": {
+    "ipa": "/ˈspoʊkən/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 284,
+    "frq": 11639,
+    "gloss": "a. uttered through the medium of speech or characterized by speech; sometimes used in combination"
+  },
+  "standing": {
+    "ipa": "/ˈstændɪŋ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 309,
+    "frq": 3080,
+    "gloss": "n. social or financial or professional status or reputation"
+  },
+  "stolen": {
+    "ipa": "/ˈstoʊɫən/",
+    "cefr": "A2",
+    "ngslRank": 1707,
+    "frq": 7223,
+    "gloss": "v take without the owner's consent"
+  },
+  "suggested": {
+    "ipa": "/səˈdʒɛstɪd/",
+    "cefr": "A2",
+    "ngslRank": 329,
+    "frq": 11046,
+    "gloss": "v make a proposal, declare a plan for something"
+  },
+  "sun": {
+    "ipa": "/ˈsən/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1361,
+    "frq": 1233,
+    "gloss": "n. the star that is the source of light and heat for the planets in the solar system"
+  },
+  "taught": {
+    "ipa": "/ˈtɔt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 539,
+    "frq": 25489,
+    "gloss": "v impart skills or knowledge to"
+  },
+  "teacher": {
+    "ipa": "/ˈtitʃɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 496,
+    "frq": 371,
+    "gloss": "n. a person whose occupation is teaching"
+  },
+  "ten": {
+    "ipa": "/ˈtɛn/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 838,
+    "gloss": "n. the cardinal number that is the sum of nine and one; the base of the decimal system"
+  },
+  "that": {
+    "ipa": "/ˈðæt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 15,
+    "frq": 12,
+    "gloss": "pron., a., conj., &  As a demonstrative pronoun (pl. Those),"
+  },
+  "thirteen": {
+    "ipa": "/ˈθɝˈtin/",
+    "cefr": "A1",
+    "frq": 5649,
+    "gloss": "n. the cardinal number that is the sum of twelve and one"
+  },
+  "three": {
+    "ipa": "/ˈθɹi/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 135,
+    "gloss": "n. the cardinal number that is the sum of one and one and one"
+  },
+  "told": {
+    "ipa": "/ˈtoʊɫd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 103,
+    "gloss": "v express in words"
+  },
+  "tradition": {
+    "ipa": "/tɹəˈdɪʃən/",
+    "cefr": "A2",
+    "ngslRank": 1338,
+    "frq": 1243,
+    "gloss": "n. an inherited pattern of thought or action"
+  },
+  "train": {
+    "ipa": "/ˈtɹeɪn/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 289,
+    "frq": 1516,
+    "gloss": "n. public transport provided by a line of railway cars coupled together and drawn by a locomotive"
+  },
+  "truck": {
+    "ipa": "/ˈtɹək/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2113,
+    "frq": 1237,
+    "gloss": "n. an automotive vehicle suitable for hauling"
+  },
+  "twelve": {
+    "ipa": "/ˈtwɛɫv/",
+    "cefr": "A1",
+    "frq": 3218,
+    "gloss": "n. the cardinal number that is the sum of eleven and one"
+  },
+  "two": {
+    "ipa": "/ˈtu/",
+    "cefr": "A1",
+    "dolch": true,
+    "frq": 80,
+    "gloss": "n. the cardinal number that is the sum of one and one or a numeral representing this number"
+  },
+  "uncle": {
+    "ipa": "/ˈəŋkəɫ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2694,
+    "frq": 3345,
+    "gloss": "n. the brother of your father or mother; the husband of your aunt"
+  },
+  "unless": {
+    "ipa": "/ənˈɫɛs/",
+    "cefr": "B1",
+    "ngslRank": 1005,
+    "frq": 1332,
+    "gloss": "conj. Upon any less condition than (the fact or thing stated"
+  },
+  "volunteer": {
+    "ipa": "/ˌvɑɫənˈtɪɹ/",
+    "cefr": "B1",
+    "ngslRank": 1962,
+    "frq": 2284,
+    "gloss": "n. (military) a person who freely enlists for service"
+  },
+  "was": {
+    "ipa": "/ˈwɑz/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2,
+    "gloss": "n a state in northwestern United States on the Pacific"
+  },
+  "water": {
+    "ipa": "/ˈwɔtɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 322,
+    "frq": 226,
+    "gloss": "n. binary compound that occurs at room temperature as a clear colorless odorless tasteless liquid; freezes into ice below 0 degrees centigrade and boils above 100 degrees centigrade; widely used as a solvent"
+  },
+  "wearing": {
+    "ipa": "/ˈwɛɹɪŋ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 526,
+    "frq": 18793,
+    "gloss": "n (geology) the mechanical process of wearing or grinding something down (as by particles washing over it)"
+  },
+  "were": {
+    "ipa": "/ˈwɝ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 2,
+    "gloss": "v have the quality of being; (copula, used with an adjective or a predicate noun)"
+  },
+  "what": {
+    "ipa": "/ˈhwət/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 51,
+    "frq": 34,
+    "gloss": "pron., a., & adv. As an interrogative pronoun, used in asking"
+  },
+  "when": {
+    "ipa": "/ˈhwɛn/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 46,
+    "frq": 57,
+    "gloss": "adv. At what time; -- used interrogatively."
+  },
+  "where": {
+    "ipa": "/ˈhwɛɹ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 86,
+    "frq": 169,
+    "gloss": "pron. & conj. Whether."
+  },
+  "whether": {
+    "ipa": "/ˈhwɛðɝ/",
+    "cefr": "B1",
+    "ngslRank": 273,
+    "frq": 321,
+    "gloss": "pron. Which (of two); which one (of two); -- used"
+  },
+  "which": {
+    "ipa": "/ˈhwɪtʃ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 39,
+    "frq": 58,
+    "gloss": "a. Of what sort or kind; what; what a; who."
+  },
+  "white": {
+    "ipa": "/ˈhwaɪt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 482,
+    "frq": 301,
+    "gloss": "n. a member of the Caucasoid race"
+  },
+  "who": {
+    "ipa": "/ˈhu/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 44,
+    "frq": 38,
+    "gloss": "n a United Nations agency to coordinate international health activities and to help governments improve health services"
+  },
+  "whom": {
+    "ipa": "/ˈhum/",
+    "cefr": "A2",
+    "ngslRank": 44,
+    "frq": 1018,
+    "gloss": "pron. The objective case of who. See Who."
+  },
+  "whose": {
+    "ipa": "/ˈhuz/",
+    "cefr": "A1",
+    "ngslRank": 44,
+    "frq": 527,
+    "gloss": "pron. The possessive case of who or which. See Who, and Which."
+  },
+  "why": {
+    "ipa": "/ˈhwaɪ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 154,
+    "frq": 158,
+    "gloss": "n. the cause or intention underlying an action or situation, especially in the phrase `the whys and wherefores'"
+  },
+  "will": {
+    "ipa": "/ˈwɪɫ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 28,
+    "frq": 48,
+    "gloss": "n. a fixed and persistent intent or purpose"
+  },
+  "wind": {
+    "ipa": "/ˈwaɪnd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1013,
+    "frq": 1092,
+    "gloss": "n. air moving (sometimes with considerable force) from an area of high pressure to an area of low pressure"
+  },
+  "wish": {
+    "ipa": "/ˈwɪʃ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 524,
+    "frq": 1055,
+    "gloss": "n. a specific feeling of desire"
+  },
+  "would": {
+    "ipa": "/ˈwʊd/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 36,
+    "frq": 41,
+    "gloss": "imp. of Will"
+  },
+  "written": {
+    "ipa": "/ˈɹɪtən/",
+    "cefr": "B1",
+    "dolch": true,
+    "ngslRank": 121,
+    "frq": 3581,
+    "gloss": "a. set down in writing in any of various ways"
+  },
+  "yellow": {
+    "ipa": "/ˈjɛɫoʊ/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 1827,
+    "frq": 1665,
+    "gloss": "n. yellow color or pigment; the chromatic color resembling the hue of sunflowers or ripe lemons"
+  },
+  "yet": {
+    "ipa": "/ˈjɛt/",
+    "cefr": "A1",
+    "dolch": true,
+    "ngslRank": 311,
+    "frq": 275,
+    "gloss": "r. up to the present time"
+  }
+}
