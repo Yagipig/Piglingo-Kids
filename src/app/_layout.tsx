@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
 import React, { useEffect, useState } from "react";
 
+import { PhoneFrame } from "@/components/phone-frame";
 import { TimeLimitGuard } from "@/features/parents/TimeLimitGuard";
 import { useParentSettings } from "@/features/parents/useParentSettings";
 import { AuthProvider } from "@/features/supabase/AuthContext";
@@ -108,6 +109,10 @@ export default function RootLayout() {
       <RewardsRunner hydrated={hydrated} />
       <KidsTimeLimit>
         <StatusBar style={scheme === "dark" ? "light" : "dark"} />
+        {/* Khung mobile-first dùng chung (Phase 2 redesign): cột nội
+            dung giới hạn bề rộng kiểu điện thoại, căn giữa trên màn
+            rộng, nền trời/biển trang trí hai bên. Mọi route thừa hưởng. */}
+        <PhoneFrame>
         <Stack
           screenOptions={{
             headerShown: false,
@@ -133,6 +138,7 @@ export default function RootLayout() {
           <Stack.Screen name="game-speed" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-letters" options={{ presentation: "modal" }} />
         </Stack>
+        </PhoneFrame>
       </KidsTimeLimit>
     </AuthProvider>
   );
