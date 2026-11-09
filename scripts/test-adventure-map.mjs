@@ -54,12 +54,14 @@ const require = createRequire(import.meta.url);
 const adventure = require(path.join(outDir, 'lib', 'adventure.js'));
 const content = require(path.join(outDir, 'lib', 'content.js'));
 const {
+  STAGE_DECORATION_EMOJIS,
   STAGE_SIZE,
   buildAdventureLayout,
   buildStages,
   chestStateForStage,
   checkpointState,
   isStageComplete,
+  planHop,
   stageCompletedCount,
 } = adventure;
 const { catalog, effectiveFrontierIndex, useCourseContent } = content;
@@ -274,6 +276,110 @@ check('hình học: khóa 103 bài cũng đủ 18 biển + 18 rương, y tăng �
   for (let i = 1; i < layout.points.length; i++) {
     assert.ok(layout.points[i].y > layout.points[i - 1].y, `bài ${i}`);
   }
+});
+
+check('Đợt A — trang trí tranh phiêu lưu: mỗi chặng 1 đảo + 1 vật trang trí, mây rải dọc bản đồ', () => {
+  const all = courses['en-vi'];
+  const layout = buildAdventureLayout(all, 360);
+  assert.equal(layout.islands.length, 18);
+  assert.equal(layout.decorations.length, 18);
+  assert.ok(layout.clouds.length >= 10, 'bản đồ dài phải có nhiều mây');
+  layout.islands.forEach((island, i) => {
+    assert.equal(island.stageIndex, i);
+    assert.ok(island.rx > 100 && island.rx <= 178, `đảo ${i} rx=${island.rx}`);
+    assert.ok(island.ry >= 190 && island.ry <= 290, `đảo ${i} ry=${island.ry}`);
+    // Tâm đảo nằm trong cột; ellipse được phép tràn mép (SVG tự cắt,
+    // đúng kiểu đảo bị cắt bởi khung tranh) nhưng không được lệch hẳn ra ngoài.
+    assert.ok(island.x >= 60 && island.x <= 300, `đảo ${i} tâm x=${island.x}`);
+  });
+  layout.decorations.forEach((deco, i) => {
+    assert.equal(deco.emoji, STAGE_DECORATION_EMOJIS[i % STAGE_DECORATION_EMOJIS.length]);
+    assert.ok(deco.x >= 34 && deco.x <= 326, `trang trí ${i} x=${deco.x}`);
+  });
+  for (const cloud of layout.clouds) {
+    assert.ok(cloud.x >= 54 && cloud.x <= 306, `mây x=${cloud.x}`);
+    assert.ok(cloud.scale >= 0.75 && cloud.scale <= 1.2, `mây scale=${cloud.scale}`);
+    assert.ok(cloud.y < layout.height, 'mây nằm trong chiều cao bản đồ');
+  }
+});
+
+check('Đợt A — đảo/mây/trang trí tất định: dựng 2 lần deep-equal ở cả 320px và 480px', () => {
+  for (const width of [320, 480]) {
+    const a = buildAdventureLayout(courses['ja-vi'], width);
+    const b = buildAdventureLayout(courses['ja-vi'], width);
+    assert.deepEqual(
+      { islands: a.islands, clouds: a.clouds, decorations: a.decorations },
+      { islands: b.islands, clouds: b.clouds, decorations: b.decorations },
+    );
+  }
+});
+
+check('Đợt A — planHop: chưa từng mở (seen=null) → đứng yên tại biên, mốc = biên', () => {
+  assert.deepEqual(planHop(null, 44, 108), {
+    shouldHop: false,
+    fromIndex: 44,
+    toIndex: 44,
+    newSeen: 44,
+  });
+  assert.deepEqual(planHop(null, 0, 108), {
+    shouldHop: false,
+    fromIndex: 0,
+    toIndex: 0,
+    newSeen: 0,
+  });
+});
+
+check('Đợt A — planHop: biên tiến so với mốc → nhảy từ điểm mốc tới điểm hiện tại', () => {
+  assert.deepEqual(planHop(44, 45, 108), {
+    shouldHop: true,
+    fromIndex: 44,
+    toIndex: 45,
+    newSeen: 45,
+  });
+  // Học liền nhiều bài mới quay lại: nhảy một mạch qua các điểm giữa.
+  assert.deepEqual(planHop(10, 30, 108), {
+    shouldHop: true,
+    fromIndex: 10,
+    toIndex: 30,
+    newSeen: 30,
+  });
+  // Học xong toàn khóa: biên thô = total, điểm đích hiển thị kẹp ở bài cuối.
+  assert.deepEqual(planHop(107, 108, 108), {
+    shouldHop: true,
+    fromIndex: 107,
+    toIndex: 107,
+    newSeen: 108,
+  });
+});
+
+check('Đợt A — planHop: biên bằng mốc → đứng yên, mốc giữ nguyên', () => {
+  assert.deepEqual(planHop(45, 45, 108), {
+    shouldHop: false,
+    fromIndex: 45,
+    toIndex: 45,
+    newSeen: 45,
+  });
+});
+
+check('Đợt A — planHop: hạ cấp độ (biên lùi) → KHÔNG nhảy ngược, mốc lùi theo biên', () => {
+  assert.deepEqual(planHop(81, 44, 108), {
+    shouldHop: false,
+    fromIndex: 44,
+    toIndex: 44,
+    newSeen: 44,
+  });
+  assert.deepEqual(planHop(108, 0, 108), {
+    shouldHop: false,
+    fromIndex: 0,
+    toIndex: 0,
+    newSeen: 0,
+  });
+});
+
+check('Đợt A — planHop: khóa rỗng (total=0) → không nhảy, không crash', () => {
+  const plan = planHop(null, 0, 0);
+  assert.equal(plan.shouldHop, false);
+  assert.equal(planHop(3, 5, 0).shouldHop, false);
 });
 
 check('baseline nội dung giữ nguyên: 80 unit / 314 bài / 2488 exercise', () => {
