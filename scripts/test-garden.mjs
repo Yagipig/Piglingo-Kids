@@ -196,10 +196,19 @@ check('5. Thời lượng ước tính: 4 → 2 phút, 7 → 4 phút, 11 → 6 p
 });
 
 check('6. Mission lock + CTA theo công thức khóa duy nhất', () => {
-  assert.equal(missionLocked(false, 5, 2), true);
-  assert.equal(missionLocked(true, 5, 2), false);
-  assert.equal(missionLocked(false, 2, 2), false);
-  assert.equal(missionLocked(false, 1, 2), false);
+  // REDESIGN PHASE 2 (Hướng 1 — cấp độ = điểm bắt đầu mở bài theo tầng):
+  // missionLocked đổi chữ ký thành (unlockedAll, completed, globalIndex,
+  // frontierIndex), trong đó frontierIndex là BIÊN HIỆU LỰC (tiến độ thật
+  // + sàn cấp độ, tính bằng effectiveFrontierIndex trong content.ts).
+  assert.equal(missionLocked(false, false, 5, 2), true); // chưa xong, khác biên → khóa
+  assert.equal(missionLocked(true, false, 5, 2), false); // mở khóa toàn bộ → mở
+  assert.equal(missionLocked(false, false, 2, 2), false); // đúng bài ở biên → mở
+  assert.equal(missionLocked(false, true, 1, 2), false); // đã xong → luôn mở để ôn
+  // Thay đổi CHỦ ĐÍCH so với công thức cũ (globalIndex > currentIndex):
+  // bài TRƯỚC biên mà CHƯA học thì nay KHÓA (trước đây mặc định mở vì
+  // coi như đã hoàn thành). Đây là cốt lõi của sàn cấp độ: chưa học thì
+  // chưa mở, trừ đúng bài bắt đầu tại biên.
+  assert.equal(missionLocked(false, false, 1, 2), true);
 
   const { allLessons } = useCourseContent('en-vi');
   const ref5 = allLessons[5];

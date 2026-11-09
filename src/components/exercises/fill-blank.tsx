@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { makeThemedStyles, radius } from "@/lib/theme";
+import { makeThemedStyles, radius, spacing, typography } from "@/lib/theme";
 import type { FillBlankExercise } from "@/lib/types";
 
 import { OptionCard, type OptionState } from "./option-card";
@@ -84,27 +84,40 @@ export function FillBlank({ exercise, answer, onAnswer, status }: FillBlankProps
 
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
-    container: { gap: 16 },
-    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
+    container: { gap: spacing.lg },
+    title: {
+      fontSize: typography.h1.fontSize,
+      lineHeight: typography.h1.lineHeight,
+      fontWeight: "900",
+      color: colors.neutral700,
+    },
     bubble: {
       backgroundColor: colors.selectedBg,
+      borderWidth: 2,
+      borderColor: colors.sky,
       borderRadius: radius.xl,
-      padding: 16,
+      padding: spacing.lg,
       alignSelf: "flex-start",
       maxWidth: "100%",
     },
     bubbleTail: {
       position: "absolute",
-      bottom: -8,
+      bottom: -10,
       left: 28,
       width: 18,
       height: 18,
       backgroundColor: colors.selectedBg,
+      borderRightWidth: 2,
+      borderBottomWidth: 2,
+      borderColor: colors.sky,
       transform: [{ rotate: "45deg" }],
       borderBottomRightRadius: 4,
     },
     sentence: { fontSize: 22, fontWeight: "700", color: colors.text },
-    translation: { fontSize: 15, color: colors.textMuted },
-    options: { gap: 10, marginTop: 8 },
+    translation: {
+      fontSize: typography.body.fontSize,
+      color: colors.textMuted,
+    },
+    options: { gap: spacing.md, marginTop: spacing.sm },
   })
 );

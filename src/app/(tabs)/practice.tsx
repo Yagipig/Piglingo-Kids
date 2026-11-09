@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
 import { Flag } from "@/components/flag";
+import { Card, ProgressBar } from "@/components/ui";
 import { ScreenBackground } from "@/components/screen-background";
 import { SpeakerButton } from "@/components/speaker-button";
 import { useCourseContent } from "@/lib/content";
@@ -120,7 +121,7 @@ export default function PracticeScreen() {
           </Pressable>
         ))}
 
-        <View style={styles.card}>
+        <Card style={styles.cardGap}>
           <View style={styles.cardHeader}>
             <MaterialCommunityIcons
               name="treasure-chest"
@@ -134,9 +135,9 @@ export default function PracticeScreen() {
           {quests.map((quest) => (
             <QuestRow key={quest.id} quest={quest} />
           ))}
-        </View>
+        </Card>
 
-        <View style={styles.card}>
+        <Card style={styles.cardGap}>
           <View style={styles.cardHeader}>
             <MaterialCommunityIcons name="brain" size={24} color={colors.indigo} />
             <Text style={styles.cardTitle} maxFontSizeMultiplier={1.3}>
@@ -154,19 +155,19 @@ export default function PracticeScreen() {
             disabled={dueWords.length === 0}
             onPress={() => router.push("/lesson/srs")}
           />
-        </View>
+        </Card>
 
-        <View style={styles.card}>
+        <Card style={styles.cardGap}>
           <View style={styles.cardHeader}>
             <Ionicons name="bandage" size={24} color={colors.rose} />
             <Text style={styles.cardTitle} maxFontSizeMultiplier={1.3}>
-              Mistakes
+              Lỗi sai
             </Text>
           </View>
           <Text style={styles.cardSubtitle} maxFontSizeMultiplier={1.3}>
             {courseProgress.mistakes.length === 0
               ? "Không có lỗi nào cần ôn. Giỏi lắm!"
-              : `${courseProgress.mistakes.length} exercise${courseProgress.mistakes.length === 1 ? "" : "s"} to fix.`}
+              : `${courseProgress.mistakes.length} câu cần luyện lại.`}
           </Text>
           <DuoButton
             label="Luyện các câu sai"
@@ -174,13 +175,13 @@ export default function PracticeScreen() {
             disabled={courseProgress.mistakes.length === 0}
             onPress={() => router.push("/lesson/mistakes")}
           />
-        </View>
+        </Card>
 
-        <View style={styles.card}>
+        <Card style={styles.cardGap}>
           <View style={styles.cardHeader}>
             <Ionicons name="book" size={24} color={colors.green} />
             <Text style={styles.cardTitle} maxFontSizeMultiplier={1.3}>
-              Words ({words.length})
+              Từ đã học ({words.length})
             </Text>
           </View>
           {words.length === 0 ? (
@@ -215,27 +216,24 @@ export default function PracticeScreen() {
                         </Text>
                       ) : null}
                     </View>
-                    <View style={styles.strengthTrack}>
-                      <View
-                        style={[
-                          styles.strengthFill,
-                          {
-                            width: `${strength}%`,
-                            backgroundColor:
-                              strength >= 70
-                                ? colors.green
-                                : strength >= 40
-                                  ? colors.amber
-                                  : colors.rose,
-                          },
-                        ]}
-                      />
-                    </View>
+                    <ProgressBar
+                      value={strength / 100}
+                      height={10}
+                      color={
+                        strength >= 70
+                          ? colors.green
+                          : strength >= 40
+                            ? colors.amber
+                            : colors.rose
+                      }
+                      style={styles.strengthBar}
+                      accessibilityLabel={`Độ nhớ của từ ${word.target}: ${Math.round(strength)}%`}
+                    />
                   </View>
                 );
               })
           )}
-        </View>
+        </Card>
       </ScrollView>
       </SafeAreaView>
     </ScreenBackground>
@@ -245,35 +243,28 @@ export default function PracticeScreen() {
 function QuestRow({ quest }: { quest: Quest }) {
   const colors = useThemeColors();
   const styles = useStyles();
-  const pct =
-    quest.target > 0 ? Math.min(100, Math.max(0, (quest.value / quest.target) * 100)) : 0;
+  const ratio =
+    quest.target > 0 ? Math.min(1, Math.max(0, quest.value / quest.target)) : 0;
   return (
     <View style={styles.questRow}>
       <View style={{ flex: 1, gap: 6 }}>
-        <Text
-          style={[styles.questLabel, quest.done && { color: colors.textMuted }]}
-          maxFontSizeMultiplier={1.3}
-        >
-          {quest.label}
-        </Text>
-        <View style={styles.questTrack}>
-          <View
-            style={[
-              styles.questFill,
-              { width: `${pct}%` },
-              quest.done && { backgroundColor: colors.green },
-            ]}
-          />
+        <View style={styles.questLabelRow}>
           <Text
-            style={[
-              styles.questCount,
-              (pct >= 50 || quest.done) && { color: "#131f24" },
-            ]}
-            maxFontSizeMultiplier={1.1}
+            style={[styles.questLabel, quest.done && { color: colors.textMuted }]}
+            maxFontSizeMultiplier={1.3}
           >
+            {quest.label}
+          </Text>
+          <Text style={styles.questCount} maxFontSizeMultiplier={1.1}>
             {quest.value}/{quest.target}
           </Text>
         </View>
+        <ProgressBar
+          value={ratio}
+          height={12}
+          color={quest.done ? colors.green : colors.amber}
+          accessibilityLabel={`${quest.label}: ${quest.value} trên ${quest.target}`}
+        />
       </View>
       <Ionicons
         name={quest.done ? "checkmark-circle" : "ellipse-outline"}
@@ -307,15 +298,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   courseRow: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: -8 },
   courseLabel: { fontSize: 14, fontWeight: "700", color: colors.textMuted },
   cardHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
-  card: {
-    borderWidth: 2,
-    borderColor: colors.neutral200,
-    borderRadius: radius.xl,
-    padding: 18,
-    gap: 12,
-    backgroundColor: colors.surface,
-    ...shadow.card,
-  },
+  cardGap: { gap: 12 },
   cardTitle: { fontSize: 19, fontWeight: "800", color: colors.neutral700 },
   cardSubtitle: { fontSize: 14, color: colors.textMuted },
   wordRow: {
@@ -328,35 +311,18 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   wordNative: { fontSize: 13, color: colors.textMuted },
   dueBadge: { fontSize: 11, fontWeight: "700", color: colors.rose, marginTop: 2 },
   dueSoon: { fontSize: 11, color: colors.textMuted, marginTop: 2 },
-  strengthTrack: {
-    width: 64,
-    height: 10,
-    borderRadius: radius.full,
-    backgroundColor: colors.neutral200,
-    overflow: "hidden",
-  },
-  strengthFill: { height: "100%", borderRadius: radius.full },
+  strengthBar: { width: 64 },
   questRow: { flexDirection: "row", alignItems: "center", gap: 12 },
-  questLabel: { fontSize: 15, fontWeight: "700", color: colors.text },
-  questTrack: {
-    height: 16,
-    borderRadius: radius.full,
-    backgroundColor: colors.neutral200,
-    overflow: "hidden",
-    justifyContent: "center",
+  questLabelRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
   },
-  questFill: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    bottom: 0,
-    borderRadius: radius.full,
-    backgroundColor: colors.amber,
-  },
+  questLabel: { fontSize: 15, fontWeight: "700", color: colors.text, flexShrink: 1 },
   questCount: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: "800",
-    color: colors.neutral700,
-    textAlign: "center",
+    color: colors.textMuted,
   },
 }));

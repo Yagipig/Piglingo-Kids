@@ -1,10 +1,10 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DuoButton } from "@/components/duo-button";
+import { GameHeader, WinCard } from "@/components/game-ui";
+import { Card } from "@/components/ui";
 import { SpeakerButton } from "@/components/speaker-button";
 import { useSfx } from "@/lib/audio";
 import { useCourseContent } from "@/lib/content";
@@ -90,19 +90,7 @@ export default function GameLettersScreen() {
 
   return (
     <SafeAreaView style={styles.screen} edges={["top", "left", "right"]}>
-      <View style={styles.topBar}>
-        <Pressable
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Quay lại"
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.neutral700} />
-        </Pressable>
-        <Text style={styles.title} maxFontSizeMultiplier={1.3}>
-          🔤 Đoán chữ bí mật
-        </Text>
-      </View>
+      <GameHeader title="🔤 Đoán chữ bí mật" />
 
       <ScrollView contentContainerStyle={styles.body}>
         {!current ? (
@@ -121,13 +109,13 @@ export default function GameLettersScreen() {
               </Text>
             </View>
 
-            <View style={styles.wordCard}>
+            <Card accentColor={colors.amber} style={styles.wordCard}>
               <Text style={styles.bigEmoji}>{current.word.emoji}</Text>
               <Text style={styles.native} maxFontSizeMultiplier={1.3}>
                 {current.word.native}
               </Text>
               <SpeakerButton text={current.word.target} size={48} />
-            </View>
+            </Card>
 
             <View style={styles.blanks}>
               {[...form].map((ch, i) => (
@@ -145,23 +133,23 @@ export default function GameLettersScreen() {
             </Text>
 
             {won ? (
-              <View style={styles.winBox}>
+              <WinCard>
                 <Text style={styles.resultText} maxFontSizeMultiplier={1.3}>
                   🎉 Đúng rồi! Từ bí mật là “{current.word.target}”
                   {current.word.romanization ? ` (${current.word.romanization})` : ""}.
                   Em được thưởng {WIN_XP} XP!
                 </Text>
                 <DuoButton label="Ván mới" onPress={restart} />
-              </View>
+              </WinCard>
             ) : lost ? (
-              <View style={styles.loseBox}>
+              <WinCard tone="lose">
                 <Text style={styles.resultText} maxFontSizeMultiplier={1.3}>
                   Hết lượt rồi! Từ bí mật là “{current.word.target}”
                   {current.word.romanization ? ` (${current.word.romanization})` : ""} —{" "}
                   {current.word.native}. Chơi lại nhé!
                 </Text>
                 <DuoButton label="Ván mới" onPress={restart} />
-              </View>
+              </WinCard>
             ) : (
               <View style={styles.keyboard}>
                 {KEY_ROWS.map((row) => (
@@ -211,15 +199,6 @@ export default function GameLettersScreen() {
 
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  backButton: { padding: 6 },
-  title: { flex: 1, fontSize: 20, fontWeight: "800", color: colors.neutral700 },
   body: { padding: 20, gap: 16, paddingBottom: 60 },
   intro: { fontSize: 15, color: colors.textMuted, lineHeight: 21 },
   heartsRow: { flexDirection: "row", alignItems: "center", gap: 10 },
@@ -229,11 +208,7 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 14,
-    borderWidth: 2,
-    borderColor: colors.amber,
     backgroundColor: colors.amber + "14",
-    borderRadius: radius.xl,
-    padding: 16,
   },
   bigEmoji: { fontSize: 44 },
   native: { flex: 1, fontSize: 20, fontWeight: "800", color: colors.neutral700 },
@@ -251,7 +226,13 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   keyboard: { gap: 8 },
   keyRow: { flexDirection: "row", justifyContent: "center", gap: 6 },
   key: {
-    minWidth: 31,
+    // Phím co giãn theo bề rộng hàng (flex: 1) thay cho minWidth cố
+    // định: hàng 10 phím × 31px + gap từng tràn ngang trên điện thoại
+    // hẹp (360–390px), cắt phím ở hai đầu. Giữ minHeight 48 (chuẩn
+    // chạm Phase 4).
+    flex: 1,
+    minHeight: 48,
+    justifyContent: "center",
     paddingHorizontal: 6,
     paddingVertical: 11,
     borderRadius: radius.md,
@@ -263,24 +244,6 @@ const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   keyHit: { backgroundColor: colors.correctBg, borderColor: colors.correctText },
   keyMiss: { backgroundColor: colors.neutral100, opacity: 0.6 },
   keyText: { fontSize: 15, fontWeight: "800", color: colors.neutral700 },
-  winBox: {
-    borderWidth: 2,
-    borderColor: colors.amber,
-    backgroundColor: colors.amber + "1A",
-    borderRadius: radius.xl,
-    padding: 18,
-    gap: 10,
-    alignItems: "center",
-  },
-  loseBox: {
-    borderWidth: 2,
-    borderColor: colors.wrongText,
-    backgroundColor: colors.wrongBg,
-    borderRadius: radius.xl,
-    padding: 18,
-    gap: 10,
-    alignItems: "center",
-  },
   resultText: {
     fontSize: 15,
     fontWeight: "700",

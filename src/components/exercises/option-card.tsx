@@ -2,7 +2,14 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { haptics } from "@/lib/haptics";
-import { radius, useThemeColors, type ThemeColors } from "@/lib/theme";
+import {
+  radius,
+  shadow,
+  spacing,
+  typography,
+  useThemeColors,
+  type ThemeColors,
+} from "@/lib/theme";
 
 export type OptionState = "idle" | "selected" | "correct" | "wrong";
 
@@ -75,30 +82,33 @@ export function OptionCard({
 const styles = StyleSheet.create({
   card: {
     borderWidth: 2,
-    borderRadius: radius.lg,
+    borderRadius: radius.xl,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadow.soft,
   },
   full: {
     flexDirection: "row",
-    gap: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    gap: spacing.md,
+    paddingVertical: spacing.lg + 2,
+    paddingHorizontal: spacing.lg,
+    minHeight: 64,
     width: "100%",
   },
   compact: {
     flexBasis: "47%",
     flexGrow: 1,
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    gap: 8,
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.md,
+    minHeight: 96,
+    gap: spacing.sm,
   },
-  emoji: { fontSize: 40 },
+  emoji: { fontSize: 44 },
   textWrap: { flexShrink: 1 },
-  text: { fontSize: 17, fontWeight: "700", textAlign: "center" },
+  text: {
+    fontSize: typography.title.fontSize,
+    lineHeight: typography.title.lineHeight,
+    fontWeight: "700",
+    textAlign: "center",
+  },
 });

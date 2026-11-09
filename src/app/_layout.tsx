@@ -3,10 +3,13 @@ import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
 import React, { useEffect, useState } from "react";
 
+import { PhoneFrame } from "@/components/phone-frame";
 import { TimeLimitGuard } from "@/features/parents/TimeLimitGuard";
 import { useParentSettings } from "@/features/parents/useParentSettings";
 import { AuthProvider } from "@/features/supabase/AuthContext";
 import { useGlobalRewardsSync } from "@/lib/globalRewardsSync";
+import { useSpinConfigSync } from "@/lib/spinConfigSync";
+import { useSpinHistorySync } from "@/lib/useSpinHistorySync";
 import { useProgress } from "@/lib/store";
 import { useFamilyRewardsSync } from "@/lib/useFamilyRewardsSync";
 import { useProgressSync } from "@/lib/useProgressSync";
@@ -32,6 +35,8 @@ function ProgressSyncRunner({ hydrated }: { hydrated: boolean }) {
 function RewardsRunner({ hydrated }: { hydrated: boolean }) {
   useGlobalRewardsSync();
   useFamilyRewardsSync(hydrated);
+  useSpinConfigSync();
+  useSpinHistorySync(hydrated);
   useRewardCelebration(hydrated);
   return null;
 }
@@ -53,7 +58,8 @@ function KidsTimeLimit({ children }: { children: React.ReactNode }) {
     segments[0] === "parents" ||
     segments[0] === "account" ||
     segments[0] === "onboarding" ||
-    segments[0] === "admin-rewards";
+    segments[0] === "admin-rewards" ||
+    segments[0] === "admin-spin";
   const parentConfigured = settings.updatedAt > 0;
   if (!isLoaded) return <>{children}</>;
   return (
@@ -108,6 +114,10 @@ export default function RootLayout() {
       <RewardsRunner hydrated={hydrated} />
       <KidsTimeLimit>
         <StatusBar style={scheme === "dark" ? "light" : "dark"} />
+        {/* Khung mobile-first dùng chung (Phase 2 redesign): cột nội
+            dung giới hạn bề rộng kiểu điện thoại, căn giữa trên màn
+            rộng, nền trời/biển trang trí hai bên. Mọi route thừa hưởng. */}
+        <PhoneFrame>
         <Stack
           screenOptions={{
             headerShown: false,
@@ -118,21 +128,32 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="courses" options={{ presentation: "modal" }} />
           <Stack.Screen name="lesson/[id]" options={{ presentation: "fullScreenModal" }} />
+          <Stack.Screen name="map/[courseId]" options={{ presentation: "fullScreenModal" }} />
+          <Stack.Screen name="pet" options={{ presentation: "modal" }} />
           <Stack.Screen name="guidebook/[unitId]" options={{ presentation: "modal" }} />
           <Stack.Screen name="parents" options={{ presentation: "modal" }} />
           <Stack.Screen name="rewards" options={{ presentation: "modal" }} />
           <Stack.Screen name="achievements" options={{ presentation: "modal" }} />
           <Stack.Screen name="competitions" options={{ presentation: "modal" }} />
           <Stack.Screen name="admin-rewards" options={{ presentation: "modal" }} />
+          <Stack.Screen name="spin" options={{ presentation: "modal" }} />
+          <Stack.Screen name="treasure" options={{ presentation: "modal" }} />
+          <Stack.Screen name="admin-spin" options={{ presentation: "modal" }} />
           <Stack.Screen name="celebration" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="account" options={{ presentation: "modal" }} />
           <Stack.Screen name="speaking" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-listen" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-speak" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-read" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-write" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-memory" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-listen" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-scramble" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-speed" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-letters" options={{ presentation: "modal" }} />
         </Stack>
+        </PhoneFrame>
       </KidsTimeLimit>
     </AuthProvider>
   );

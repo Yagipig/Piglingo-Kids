@@ -66,6 +66,37 @@ export default function ProfileScreen() {
     setBackgroundImage(null);
     setBgMessage("Đã xóa ảnh nền, app quay về nền mặc định.");
   };
+
+  const avatarImage = progress.avatarImage ?? null;
+  const { setAvatarImage } = progress;
+  const [avBusy, setAvBusy] = useState(false);
+  const [avMessage, setAvMessage] = useState<string | null>(null);
+
+  const handlePickAvatar = async () => {
+    setAvBusy(true);
+    setAvMessage(null);
+    try {
+      const result = await pickBackgroundImage();
+      if (result.status === "ok") {
+        setAvatarImage(result.dataUrl);
+        setAvMessage("Đã đặt ảnh của bé 🎉 Mở bản đồ là thấy ảnh ở điểm dừng của bé ngay.");
+      } else if (result.status === "denied") {
+        setAvMessage(
+          "App chưa được cấp quyền xem thư viện ảnh. Em nhờ ba/mẹ cấp quyền trong phần Cài đặt của máy nhé."
+        );
+      } else if (result.status === "error") {
+        setAvMessage(result.message);
+      }
+      // "cancelled": người dùng tự đóng trình chọn ảnh, không cần thông báo.
+    } finally {
+      setAvBusy(false);
+    }
+  };
+
+  const handleRemoveAvatar = () => {
+    setAvatarImage(null);
+    setAvMessage("Đã xóa ảnh, app quay về heo Piglingo mặc định.");
+  };
   const { user } = useAuth();
   const unlockedAll = isAllUnlocked(progress, user?.email);
   const [unlockCode, setUnlockCode] = useState("");
@@ -396,6 +427,46 @@ export default function ProfileScreen() {
 
         <View style={styles.settingsCard}>
           <View style={styles.settingsHeader}>
+            <Ionicons name="person-circle-outline" size={22} color={colors.amber} />
+            <Text style={styles.settingsTitle} maxFontSizeMultiplier={1.3}>
+              🧒 Ảnh của bé
+            </Text>
+          </View>
+          {avatarImage ? (
+            <Image
+              source={{ uri: avatarImage }}
+              style={styles.avatarPreview}
+              contentFit="cover"
+              accessibilityLabel="Ảnh của bé hiện tại"
+            />
+          ) : (
+            <Text style={styles.settingsHint} maxFontSizeMultiplier={1.3}>
+              Chọn một ảnh của bé trong thư viện. Ảnh sẽ hiện ở điểm dừng của
+              bé trên bản đồ đường đi và cạnh heo Piglingo ở trang chủ, thay
+              cho heo mặc định.
+            </Text>
+          )}
+          <DuoButton
+            label={avBusy ? "Đang mở thư viện..." : "Chọn ảnh từ thư viện"}
+            onPress={handlePickAvatar}
+            disabled={avBusy}
+          />
+          {avatarImage ? (
+            <DuoButton
+              label="Xóa ảnh, dùng heo mặc định"
+              variant="white"
+              onPress={handleRemoveAvatar}
+            />
+          ) : null}
+          {avMessage ? (
+            <Text style={styles.unlockMessage} maxFontSizeMultiplier={1.3}>
+              {avMessage}
+            </Text>
+          ) : null}
+        </View>
+
+        <View style={styles.settingsCard}>
+          <View style={styles.settingsHeader}>
             <Ionicons name="image-outline" size={22} color={colors.rose} />
             <Text style={styles.settingsTitle} maxFontSizeMultiplier={1.3}>
               🖼️ Ảnh nền ứng dụng
@@ -494,6 +565,15 @@ export default function ProfileScreen() {
 const useStyles = makeThemedStyles((colors) => StyleSheet.create({
   screen: { flex: 1 },
   bgPreview: { width: "100%", height: 150, borderRadius: radius.lg },
+  avatarPreview: {
+    width: 96,
+    height: 96,
+    borderRadius: 999,
+    alignSelf: "center",
+    borderWidth: 3,
+    borderColor: colors.amber,
+    backgroundColor: colors.surface,
+  },
   body: { padding: 20, gap: 20, paddingBottom: 60 },
   header: { alignItems: "center", gap: 8, paddingTop: 12 },
   avatarRing: {

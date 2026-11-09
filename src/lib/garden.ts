@@ -7,7 +7,13 @@ import {
   type GlobalReward,
   type RewardProgressState,
 } from "./rewards";
-import { catalog, difficultyLabel, getPack, type LessonRef } from "./content";
+import {
+  catalog,
+  difficultyLabel,
+  getPack,
+  isLockedAtFrontier,
+  type LessonRef,
+} from "./content";
 import { kingdomForCourse } from "./kingdoms";
 
 /**
@@ -359,13 +365,21 @@ export function estimateMinutes(exerciseCount: number): number {
   return Math.max(1, Math.round(exerciseCount * 0.5));
 }
 
-/** Công thức khóa DUY NHẤT của app — giữ nguyên như bản đồ hiện tại. */
+/**
+ * Công thức khóa DUY NHẤT của app — ủy quyền cho `isLockedAtFrontier`
+ * trong content.ts (Hướng 1: cấp độ = điểm bắt đầu mở bài theo tầng).
+ * `frontierIndex` là BIÊN HIỆU LỰC do nơi gọi tính bằng
+ * `effectiveFrontierIndex` (tiến độ thật + sàn cấp độ): bài bị khóa khi
+ * chưa hoàn thành, không phải bài ở biên, và chưa mở khóa toàn bộ. Bài
+ * đã hoàn thành không bao giờ bị khóa lại.
+ */
 export function missionLocked(
   unlockedAll: boolean,
+  completed: boolean,
   globalIndex: number,
-  currentIndex: number,
+  frontierIndex: number,
 ): boolean {
-  return !unlockedAll && globalIndex > currentIndex;
+  return isLockedAtFrontier({ unlockedAll, completed, globalIndex, frontierIndex });
 }
 
 /** Chip loại hoạt động suy từ type/mode thật của exercises, tối đa 4 chip. */
@@ -419,13 +433,14 @@ export function missionView(
   ref: LessonRef,
   opts: {
     completedLessons: Record<string, true>;
+    /** Biên hiệu lực (đã gồm sàn cấp độ) — nơi gọi tính bằng `effectiveFrontierIndex`. */
     currentIndex: number;
     unlockedAll: boolean;
     totalLessons: number;
   },
 ): MissionView {
   const completed = !!opts.completedLessons[ref.lesson.id];
-  const locked = missionLocked(opts.unlockedAll, ref.globalIndex, opts.currentIndex);
+  const locked = missionLocked(opts.unlockedAll, completed, ref.globalIndex, opts.currentIndex);
   const unitDone = ref.unit.lessons.filter(
     (lesson) => opts.completedLessons[lesson.id],
   ).length;

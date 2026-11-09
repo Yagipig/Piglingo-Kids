@@ -28,7 +28,7 @@ import Svg, {
   Text as SvgText,
 } from "react-native-svg";
 
-import type { LessonRef } from "@/lib/content";
+import { isLockedAtFrontier, type LessonRef } from "@/lib/content";
 import { MAP_VIEWBOX, PROVINCE_SHAPES } from "@/lib/province-shapes";
 import {
   PROVINCES,
@@ -171,7 +171,12 @@ export type WorldMapCourseData = {
   units: UnitPack[];
   lessonsByUnit: Map<string, LessonRef[]>;
   completedLessons: Record<string, true>;
-  /** globalIndex của bài hiện tại trong khóa (currentLessonIndex). */
+  /**
+   * globalIndex của bài hiện tại trong khóa = BIÊN HIỆU LỰC (tiến độ
+   * thật + sàn cấp độ, tính ở màn cha bằng `effectiveFrontierIndex`).
+   * Mọi quyết định khóa/hiện tại trong bản đồ đều suy từ mốc này qua
+   * `isLockedAtFrontier` — cùng một helper với MissionPanel.
+   */
   currentIndex: number;
   totalLessons: number;
 };
@@ -836,48 +841,65 @@ function ProvinceDetailPanel({
             >
               {lessons.map((ref, i) => {
                 const done = !!course.completedLessons[ref.lesson.id];
-                const locked = !unlockedAll && ref.globalIndex > course.currentIndex;
+                const locked = isLockedAtFrontier({
+                  unlockedAll,
+                  completed: done,
+                  globalIndex: ref.globalIndex,
+                  frontierIndex: course.currentIndex,
+                });
                 const current = !done && ref.globalIndex === course.currentIndex;
                 return (
                   <Pressable
                     key={ref.lesson.id}
                     onPress={() => onMissionPress(ref, course.courseId)}
                     accessibilityRole="button"
-                    accessibilityLabel={`${model.unit?.title}, bài ${i + 1}${done ? ", đã hoàn thành" : locked ? ", đang khóa" : ""}`}
+                    accessibilityLabel={`${model.unit?.title}, bài ${i + 1}, là bài ${ref.globalIndex + 1} trên ${course.totalLessons} toàn khóa${done ? ", đã hoàn thành" : locked ? ", đang khóa" : ""}`}
                     accessibilityState={{ disabled: locked, selected: current }}
                     style={({ pressed }) => [
-                      styles.lessonChip,
-                      done && styles.lessonChipDone,
-                      locked && styles.lessonChipLocked,
-                      current && styles.lessonChipCurrent,
+                      styles.lessonChipWrap,
                       pressed && { opacity: 0.85 },
                     ]}
                   >
-                    <Text
+                    <View
                       style={[
-                        styles.lessonChipText,
-                        done && styles.lessonChipTextDone,
-                        locked && styles.lessonChipTextLocked,
+                        styles.lessonChip,
+                        done && styles.lessonChipDone,
+                        locked && styles.lessonChipLocked,
+                        current && styles.lessonChipCurrent,
                       ]}
-                      maxFontSizeMultiplier={1.1}
                     >
-                      {i + 1}
+                      <Text
+                        style={[
+                          styles.lessonChipText,
+                          done && styles.lessonChipTextDone,
+                          locked && styles.lessonChipTextLocked,
+                        ]}
+                        maxFontSizeMultiplier={1.1}
+                      >
+                        {i + 1}
+                      </Text>
+                      {done ? (
+                        <View style={styles.chipBadge}>
+                          <Text style={styles.chipBadgeText}>⭐</Text>
+                        </View>
+                      ) : locked ? (
+                        <View style={styles.chipBadge}>
+                          <Text style={styles.chipBadgeText}>🔒</Text>
+                        </View>
+                      ) : null}
+                    </View>
+                    {/* Số bài TOÀN CỤC dưới mỗi điểm: nhìn là biết bài khóa
+                        ngay trước điểm bắt đầu là 81, bài đang mở là 82. */}
+                    <Text style={styles.lessonChipGlobal} maxFontSizeMultiplier={1.1}>
+                      {ref.globalIndex + 1}/{course.totalLessons}
                     </Text>
-                    {done ? (
-                      <View style={styles.chipBadge}>
-                        <Text style={styles.chipBadgeText}>⭐</Text>
-                      </View>
-                    ) : locked ? (
-                      <View style={styles.chipBadge}>
-                        <Text style={styles.chipBadgeText}>🔒</Text>
-                      </View>
-                    ) : null}
                   </Pressable>
                 );
               })}
             </ScrollView>
             <Text style={styles.detailHint} maxFontSizeMultiplier={1.3}>
-              Chạm vào một điểm để xem nhiệm vụ của bài học nhé.
+              Chạm vào một điểm để xem nhiệm vụ của bài học nhé. Số nhỏ dưới mỗi
+              điểm là bài thứ mấy trong toàn khóa.
             </Text>
           </View>
         ) : course ? (
@@ -1044,11 +1066,21 @@ export const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(function World
       const doneCount = lessons.filter(
         (l) => activeCourse.completedLessons[l.lesson.id]
       ).length;
-      const first = lessons[0];
       const isCurrent = lessons.some((l) => l.globalIndex === activeCourse.currentIndex);
       const unitDone = lessons.length > 0 && doneCount === lessons.length;
-      const locked =
-        !unlockedAll && !!first && first.globalIndex > activeCourse.currentIndex;
+      // Tỉnh khóa khi MỌI bài trong unit đều khóa theo cùng helper dùng
+      // cho chip bài học (bài trước sàn cấp độ chưa học cũng tính khóa,
+      // bài đã hoàn thành luôn tính mở để ôn).
+      const anyOpen = lessons.some(
+        (l) =>
+          !isLockedAtFrontier({
+            unlockedAll,
+            completed: !!activeCourse.completedLessons[l.lesson.id],
+            globalIndex: l.globalIndex,
+            frontierIndex: activeCourse.currentIndex,
+          })
+      );
+      const locked = lessons.length > 0 && !anyOpen;
       const state: ProvinceVisualState = !unit
         ? "info"
         : unitDone
@@ -1669,6 +1701,8 @@ const useStyles = makeThemedStyles((colors) =>
     },
     guideButtonText: { fontSize: 12.5, fontWeight: "800", color: colors.neutral700 },
     chipRow: { gap: 10, paddingTop: 12, paddingBottom: 2, paddingRight: 6 },
+    lessonChipWrap: { alignItems: "center", gap: 3 },
+    lessonChipGlobal: { fontSize: 10, fontWeight: "800", color: colors.textMuted },
     lessonChip: {
       width: 46,
       height: 46,

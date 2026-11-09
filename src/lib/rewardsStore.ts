@@ -8,9 +8,17 @@ import {
   type GlobalReward,
 } from "./rewards";
 import { DEFAULT_GLOBAL_REWARDS } from "./rewards-defaults";
+import { DEFAULT_SPIN_CONFIG, type SpinConfig } from "./spin";
 
 export interface GlobalConfigCache {
   rewards: GlobalReward[];
+  /** Thời điểm tải/công bố cấu hình này (epoch ms). */
+  fetchedAt: number;
+  source: "supabase" | "admin-local";
+}
+
+export interface SpinConfigCache {
+  config: SpinConfig;
   /** Thời điểm tải/công bố cấu hình này (epoch ms). */
   fetchedAt: number;
   source: "supabase" | "admin-local";
@@ -28,6 +36,10 @@ type RewardsState = {
   globalConfigCache: GlobalConfigCache | null;
   /** Nháp admin trên máy này; chưa phải cấu hình đã công bố toàn app. */
   adminDraft: GlobalReward[] | null;
+  /** Cache cấu hình vòng quay may mắn (app_config key "spin_config"). */
+  spinConfigCache: SpinConfigCache | null;
+  /** Nháp admin vòng quay trên máy này; chưa công bố. */
+  spinAdminDraft: SpinConfig | null;
   celebratedCourseIds: string[];
   celebratedAllCourses: boolean;
 
@@ -45,6 +57,12 @@ type RewardsState = {
     fetchedAt?: number,
   ) => void;
   setAdminDraft: (rewards: GlobalReward[] | null) => void;
+  setSpinConfigCache: (
+    config: SpinConfig,
+    source: SpinConfigCache["source"],
+    fetchedAt?: number,
+  ) => void;
+  setSpinAdminDraft: (config: SpinConfig | null) => void;
   markCelebrated: (target: string, allCourseIds?: string[]) => void;
 };
 
@@ -54,6 +72,8 @@ export const useRewardsStore = create<RewardsState>()(
       familyRewards: [],
       globalConfigCache: null,
       adminDraft: null,
+      spinConfigCache: null,
+      spinAdminDraft: null,
       celebratedCourseIds: [],
       celebratedAllCourses: false,
 
@@ -115,6 +135,17 @@ export const useRewardsStore = create<RewardsState>()(
 
       setAdminDraft: (rewards) => set({ adminDraft: rewards }),
 
+      setSpinConfigCache: (config, source, fetchedAt = Date.now()) =>
+        set({
+          spinConfigCache: {
+            config,
+            fetchedAt,
+            source,
+          },
+        }),
+
+      setSpinAdminDraft: (config) => set({ spinAdminDraft: config }),
+
       markCelebrated: (target, allCourseIds = []) =>
         set((state) => {
           if (target === "all-courses") {
@@ -139,6 +170,8 @@ export const useRewardsStore = create<RewardsState>()(
         familyRewards: state.familyRewards,
         globalConfigCache: state.globalConfigCache,
         adminDraft: state.adminDraft,
+        spinConfigCache: state.spinConfigCache,
+        spinAdminDraft: state.spinAdminDraft,
         celebratedCourseIds: state.celebratedCourseIds,
         celebratedAllCourses: state.celebratedAllCourses,
       }),
@@ -152,4 +185,14 @@ export function effectiveGlobalRewards(state: {
 }): GlobalReward[] {
   const rewards = state.globalConfigCache?.rewards ?? DEFAULT_GLOBAL_REWARDS;
   return [...rewards].sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
+/**
+ * Cấu hình vòng quay đang hiệu lực ở phía client: cache đã tải/công bố,
+ * chưa có thì dùng bộ mặc định trong spin.ts (app chạy đầy đủ offline).
+ */
+export function effectiveSpinConfig(state: {
+  spinConfigCache: SpinConfigCache | null;
+}): SpinConfig {
+  return state.spinConfigCache?.config ?? DEFAULT_SPIN_CONFIG;
 }

@@ -3,7 +3,15 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { SpeakerButton } from "@/components/speaker-button";
 import { haptics } from "@/lib/haptics";
-import { makeThemedStyles, radius, useThemeColors } from "@/lib/theme";
+import {
+  makeThemedStyles,
+  radius,
+  shadow,
+  spacing,
+  touchTargets,
+  typography,
+  useThemeColors,
+} from "@/lib/theme";
 import type { WordBankExercise } from "@/lib/types";
 
 type WordBankProps = {
@@ -112,39 +120,56 @@ function Chip({
 
 const useStyles = makeThemedStyles((colors) =>
   StyleSheet.create({
-    container: { gap: 20 },
-    title: { fontSize: 24, fontWeight: "800", color: colors.neutral700 },
-    promptRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+    container: { gap: spacing.xl },
+    title: {
+      fontSize: typography.h1.fontSize,
+      lineHeight: typography.h1.lineHeight,
+      fontWeight: "900",
+      color: colors.neutral700,
+    },
+    promptRow: { flexDirection: "row", alignItems: "center", gap: spacing.md },
     prompt: { fontSize: 20, fontWeight: "700", color: colors.text, flexShrink: 1 },
     answerArea: {
-      minHeight: 64,
+      minHeight: 68,
       borderWidth: 2,
       borderStyle: "dashed",
       borderColor: colors.neutral300,
       backgroundColor: colors.neutral100,
-      borderRadius: radius.lg,
+      borderRadius: radius.xl,
       flexDirection: "row",
       flexWrap: "wrap",
-      gap: 8,
-      paddingVertical: 10,
-      paddingHorizontal: 10,
+      gap: spacing.sm,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.md,
       alignItems: "center",
     },
     pool: {
       flexDirection: "row",
       flexWrap: "wrap",
-      gap: 8,
+      gap: spacing.sm,
       justifyContent: "center",
     },
     chip: {
       backgroundColor: colors.surface,
       borderWidth: 2,
       borderColor: colors.neutral200,
-      borderRadius: radius.lg,
-      paddingHorizontal: 16,
-      paddingVertical: 12,
+      borderRadius: radius.xl,
+      minHeight: touchTargets.min,
+      justifyContent: "center",
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      ...shadow.soft,
     },
-    chipGhost: { backgroundColor: colors.neutral200, borderColor: colors.neutral200 },
-    chipText: { fontSize: 17, fontWeight: "600", color: colors.text },
+    chipGhost: {
+      backgroundColor: colors.neutral200,
+      borderColor: colors.neutral200,
+      shadowOpacity: 0,
+      elevation: 0,
+    },
+    chipText: {
+      fontSize: typography.title.fontSize,
+      fontWeight: "600",
+      color: colors.text,
+    },
   })
 );

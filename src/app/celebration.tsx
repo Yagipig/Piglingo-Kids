@@ -7,10 +7,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { CelebrationBurst } from "@/components/celebration";
 import { DuoButton } from "@/components/duo-button";
+import { Card } from "@/components/ui";
 import { FamilyRewardCard, GlobalRewardCard } from "@/components/reward-cards";
 import { useAuth } from "@/features/supabase/AuthContext";
+import {
+  buildStages,
+  isStageComplete,
+  stageCompletedCount,
+} from "@/lib/adventure";
 import { useSfx } from "@/lib/audio";
-import { catalog } from "@/lib/content";
+import { catalog, useCourseContent } from "@/lib/content";
+import { kingdomForCourse } from "@/lib/kingdoms";
+import { stageReward } from "@/lib/pets";
 import {
   evaluateCondition,
   scopedFamilyRewards,
@@ -19,8 +27,8 @@ import {
   type RewardCondition,
 } from "@/lib/rewards";
 import { effectiveGlobalRewards, useRewardsStore } from "@/lib/rewardsStore";
-import { useProgress } from "@/lib/store";
-import { makeThemedStyles, radius, shadow } from "@/lib/theme";
+import { useProgress, XP_PER_LESSON, XP_PERFECT_BONUS } from "@/lib/store";
+import { makeThemedStyles, radius, shadow, typography } from "@/lib/theme";
 
 function isCompletionRewardForCourse(reward: GlobalReward, courseId: string): boolean {
   return (
@@ -48,7 +56,12 @@ function conditionIsCompletion(condition: RewardCondition, courseId: string | nu
  */
 export default function CelebrationScreen() {
   const styles = useStyles();
-  const params = useLocalSearchParams<{ course?: string; scope?: string }>();
+  const params = useLocalSearchParams<{
+    course?: string;
+    scope?: string;
+    stage?: string;
+    justClaimed?: string;
+  }>();
   const progress = useProgress();
   const { user } = useAuth();
   const familyRewards = useRewardsStore((state) => state.familyRewards);
@@ -89,6 +102,176 @@ export default function CelebrationScreen() {
       ),
     [courseId, familyRewards, progress, user?.id],
   );
+
+  /* ----- Nhánh RƯƠNG CHẶNG: /celebration?course=..&stage=N ---------
+     Ăn mừng cho chặng đã hoàn thành trên bản đồ đường đi. Từ Đợt B+C,
+     bản đồ đã gọi `claimStageReward` TRƯỚC khi điều hướng tới đây khi
+     rương chưa nhận (param `justClaimed=1`) — màn này chỉ HIỂN THỊ quà
+     vừa nhận từ store, tự nó không cộng gì thêm; mở lại rương đã nhận
+     (không có param) thì chỉ hiện lại phần quà của chặng. Không gắn
+     phần thưởng gia đình. Không có param `stage` thì hành vi cũ (mốc
+     100% khóa) giữ nguyên tuyệt đối. */
+  const stageContent = useCourseContent(courseId ?? "en-vi");
+  const stageModel = useMemo(() => {
+    if (params.stage == null || params.stage === "" || courseId == null) {
+      return null;
+    }
+    const stageIndex = Number(params.stage);
+    if (!Number.isInteger(stageIndex) || stageIndex < 0) return null;
+    const stage = buildStages(stageContent.allLessons)[stageIndex];
+    if (!stage) return null;
+    const completedMap = progress.courses?.[courseId]?.completedLessons ?? {};
+    const stageNumber = stage.index + 1;
+    return {
+      stage,
+      done: stageCompletedCount(stage, completedMap),
+      complete: isStageComplete(stage, completedMap),
+      kingdom: kingdomForCourse(courseId),
+      courseXp: progress.courses?.[courseId]?.xp ?? 0,
+      courseName: course?.targetLanguage ?? "",
+      reward: stageReward(stageNumber),
+      claimed: (progress.claimedStageRewards?.[courseId] ?? []).includes(
+        stageNumber
+      ),
+      justClaimed: params.justClaimed === "1",
+      wallet: {
+        stars: progress.stars ?? 0,
+        food: progress.petFood ?? 0,
+        keys: progress.unlockKeys ?? 0,
+      },
+    };
+  }, [
+    params.stage,
+    params.justClaimed,
+    courseId,
+    course,
+    stageContent.allLessons,
+    progress,
+  ]);
+
+  if (stageModel) {
+    const {
+      stage,
+      done,
+      complete,
+      kingdom,
+      courseXp,
+      courseName,
+      reward,
+      claimed,
+      justClaimed,
+      wallet,
+    } = stageModel;
+    const stageBaseXp = XP_PER_LESSON * stage.lessons.length;
+    return (
+      <SafeAreaView style={styles.screen}>
+        <CelebrationBurst active={complete} />
+        <ScrollView contentContainerStyle={styles.body}>
+          <Animated.View entering={ZoomIn.springify().damping(13)} style={styles.mascotWrap}>
+            <Image
+              source={require("@/assets/images/mascot-celebrate.png")}
+              style={styles.mascot}
+              contentFit="contain"
+              accessibilityLabel="Nhân vật Piglingo ăn mừng"
+            />
+          </Animated.View>
+
+          <Animated.Text entering={FadeInUp.delay(100)} style={styles.chest}>
+            {complete ? "🎁" : "🔒"}
+          </Animated.Text>
+          <Animated.Text entering={FadeInUp.delay(160)} style={styles.title}>
+            {complete
+              ? `Con đã mở rương Chặng ${stage.index + 1}!`
+              : `Rương Chặng ${stage.index + 1} chưa mở được`}
+          </Animated.Text>
+          <Animated.Text entering={FadeInUp.delay(220)} style={styles.subtitle}>
+            {kingdom ? `${kingdom.kingdomName} · ` : ""}
+            {courseName} — Chặng “{stage.title}”, Bài {stage.startGlobal + 1}–
+            {stage.endGlobal + 1} trong toàn khóa. Con đã học xong {done}/
+            {stage.lessons.length} bài của chặng này.
+          </Animated.Text>
+
+          {complete ? (
+            <Animated.View entering={FadeInUp.delay(280)} style={styles.cardWrap}>
+              <Text style={styles.stars}>⭐⭐⭐</Text>
+              <Card
+                accentColor={kingdom?.palette.primary}
+                style={styles.infoCard}
+              >
+                {justClaimed ? (
+                  <>
+                    <Text style={styles.infoLine}>
+                      🎁 Quà trong rương vừa về túi của bé:
+                    </Text>
+                    <Text style={styles.infoLine}>
+                      ⚡ +{reward.xpBonus} XP thưởng · ⭐ +{reward.stars} sao
+                      (đang có {wallet.stars} sao)
+                    </Text>
+                    <Text style={styles.infoLine}>
+                      🍎 +{reward.food} thức ăn cho thú cưng (đang có{" "}
+                      {wallet.food})
+                      {reward.key > 0
+                        ? ` · 🔑 +${reward.key} chìa khóa bí mật (đang có ${wallet.keys})`
+                        : ""}
+                    </Text>
+                  </>
+                ) : claimed ? (
+                  <>
+                    <Text style={styles.infoLine}>
+                      Rương này bé đã nhận quà rồi nè! Quà của chặng là: ⚡ +
+                      {reward.xpBonus} XP thưởng, ⭐ +{reward.stars} sao, 🍎 +
+                      {reward.food} thức ăn cho thú
+                      {reward.key > 0 ? `, 🔑 +${reward.key} chìa khóa bí mật` : ""}.
+                    </Text>
+                    <Text style={styles.infoLine}>
+                      Ví của bé lúc này: ⭐ {wallet.stars} sao · 🍎 {wallet.food}{" "}
+                      thức ăn · 🔑 {wallet.keys} chìa khóa.
+                    </Text>
+                  </>
+                ) : (
+                  <Text style={styles.infoLine}>
+                    🎉 Chặng này mang về ít nhất {stageBaseXp} XP (mỗi bài{" "}
+                    {XP_PER_LESSON} XP, bài không sai câu nào còn +
+                    {XP_PERFECT_BONUS} XP nữa). Quay lại bản đồ và chạm vào
+                    rương để nhận quà cho thú cưng nhé!
+                  </Text>
+                )}
+                <Text style={styles.infoLine}>
+                  ⭐ Tổng XP của vương quốc này: {courseXp} XP.
+                </Text>
+                <Text style={styles.infoLine}>
+                  Vào trang Thú cưng 🐾 để cho thú ăn, mặc phụ kiện và dùng
+                  chìa khóa bí mật nhé!
+                </Text>
+              </Card>
+            </Animated.View>
+          ) : (
+            <Animated.Text entering={FadeInUp.delay(280)} style={styles.subtitle}>
+              Học xong mọi bài của Chặng {stage.index + 1} trên bản đồ đường
+              đi là rương tự mở. Cố lên, nhà thám hiểm nhí!
+            </Animated.Text>
+          )}
+
+          <View style={styles.actions}>
+            <DuoButton
+              label="🗺️ Quay lại bản đồ"
+              size="lg"
+              onPress={() =>
+                router.canGoBack()
+                  ? router.back()
+                  : router.replace("/(tabs)")
+              }
+            />
+            <DuoButton
+              label="Về trang chủ"
+              variant="white"
+              onPress={() => router.replace("/(tabs)")}
+            />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 
   const headline = isAllCourses
     ? "Chúc mừng! Con đã hoàn thành hành trình khám phá ngôn ngữ!"
@@ -192,24 +375,33 @@ const useStyles = makeThemedStyles((colors) =>
     mascot: { width: 138, height: 138 },
     chest: { fontSize: 54, marginTop: -18 },
     title: {
-      fontSize: 27,
-      lineHeight: 35,
+      fontSize: typography.display.fontSize,
+      lineHeight: typography.display.lineHeight,
       fontWeight: "900",
       textAlign: "center",
       color: colors.neutral700,
     },
     subtitle: {
-      fontSize: 15,
-      lineHeight: 22,
+      fontSize: typography.body.fontSize,
+      lineHeight: typography.body.lineHeight,
       textAlign: "center",
       color: colors.textMuted,
       maxWidth: 560,
     },
     cardWrap: { width: "100%", alignSelf: "stretch" },
+    stars: { fontSize: 40, textAlign: "center", marginBottom: 8 },
+    infoCard: { gap: 8 },
+    infoLine: {
+      fontSize: 14.5,
+      lineHeight: 21,
+      fontWeight: "600",
+      color: colors.text,
+    },
     sectionTitle: {
       alignSelf: "flex-start",
       marginTop: 10,
-      fontSize: 19,
+      fontSize: typography.h2.fontSize,
+      lineHeight: typography.h2.lineHeight,
       fontWeight: "900",
       color: colors.neutral700,
     },

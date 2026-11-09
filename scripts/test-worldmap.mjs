@@ -23,10 +23,12 @@
  *    chạm sau khi kéo không chọn nhầm tỉnh.
  *  - Dữ liệu hình tỉnh (runtime): đủ 34 mục, mọi id tỉnh trong
  *    provinces.ts đều có hình, cx/cy nằm trong viewBox, d bắt đầu "M".
- *  - src/app/(tabs)/index.tsx: dùng WorldMap, 2 thanh nút hai bên
- *    (trái: ngôn ngữ KINGDOMS + miền centerOnRegion; phải: zoomIn /
- *    zoomOut / centerOnCurrent + Nhiệm vụ / Thành tích / Phần thưởng /
- *    Cuộc thi), giữ MissionPanel + nút Tiếp tục học (centerOnUnit).
+ *  - src/app/(tabs)/index.tsx: TỪ PHASE 3 (09/11/2026) là HOME
+ *    DASHBOARD — bản đồ tỉnh không còn render ở trang chủ (file
+ *    world-map.tsx + dữ liệu tỉnh vẫn giữ trong repo và vẫn được các
+ *    check trong file này bảo vệ); dashboard có Tiếp tục học, Nhiệm
+ *    vụ hôm nay, thẻ vương quốc mở /map/[courseId] và lối tắt Cuộc
+ *    thi / Phần thưởng / Thành tích.
  * Chạy: node scripts/test-worldmap.mjs
  */
 import { execFileSync } from "node:child_process";
@@ -154,28 +156,26 @@ check("mọi cx/cy nằm trong viewBox",
   ));
 
 // --- index.tsx ---
+// Phase 3 redesign (09/11/2026): trang chủ đổi thành HOME DASHBOARD —
+// bản đồ tỉnh KHÔNG còn render ở trang chủ, bản đồ học chính chuyển
+// sang bản đồ đường đi /map/[courseId]. Khối check cũ (WorldMap +
+// 2 thanh nút + MissionPanel ở trang chủ) được thay bằng các khẳng
+// định về dashboard mới dưới đây; dữ liệu tỉnh + world-map.tsx vẫn
+// được bảo vệ bởi các check runtime/file ở trên và dưới.
 const index = read("src/app/(tabs)/index.tsx");
-check("index.tsx import WorldMap", index.includes('from "@/components/world-map"'));
-check("index.tsx render <WorldMap", index.includes("<WorldMap"));
+check("Phase 3: index.tsx KHÔNG còn import world-map", !index.includes("components/world-map"));
+check("Phase 3: index.tsx KHÔNG còn render <WorldMap", !index.includes("<WorldMap"));
 check("index.tsx KHÔNG còn render LandCard", !index.includes("<LandCard"));
 check("index.tsx KHÔNG còn render MagicalGardenScene", !index.includes("<MagicalGardenScene"));
-check("index.tsx KHÔNG còn hàng chip vương quốc trên đầu", !index.includes("styles.kingdomRow") && !index.includes("styles.kingdomChip") && !index.includes("kingdomChipText"));
-check("index.tsx KHÔNG còn nút khối lớp cũ (BAND_BUTTONS/centerOnBand)", !index.includes("BAND_BUTTONS") && !index.includes("centerOnBand"));
-check("thanh trái: 3 nút ngôn ngữ qua KINGDOMS + targetLanguage", index.includes("railLeft") && index.includes("KINGDOMS.map") && index.includes("item.targetLanguage"));
-check("thanh trái: 3 nút miền gọi centerOnRegion", index.includes("centerOnRegion") && index.includes("REGION_BUTTONS"));
-check("thanh phải tồn tại (railRight)", index.includes("railRight"));
-check("thanh phải: nút phóng to gọi zoomIn", index.includes("zoomIn()") && index.includes("Phóng to bản đồ"));
-check("thanh phải: nút thu nhỏ gọi zoomOut", index.includes("zoomOut()") && index.includes("Thu nhỏ bản đồ"));
-check("thanh phải: nút về tỉnh đang học gọi centerOnCurrent", index.includes("centerOnCurrent()") && index.includes("Về tỉnh đang học"));
-check("thanh phải: nút Nhiệm vụ mở panel chứa GardenDashboard", index.includes("Nhiệm vụ") && index.includes("<GardenDashboard"));
-check("panel Nhiệm vụ & thành tích còn tiêu đề như cũ", index.includes("🎯 Nhiệm vụ & thành tích"));
-check("thanh phải: nút Thành tích đi route /achievements", index.includes('router.push("/achievements")'));
-check("thanh phải: nút Phần thưởng đi route /rewards", index.includes('router.push("/rewards")'));
-check("thanh phải: nút Cuộc thi đi route /competitions", index.includes('router.push("/competitions")'));
-check("MissionPanel vẫn được render ở trang chủ", index.includes("<MissionPanel"));
-check("nút Tiếp tục học vẫn còn và bay camera (centerOnUnit)", index.includes("<ContinueButton") && index.includes("centerOnUnit"));
-check("đổi khóa qua thanh ngôn ngữ vẫn gọi setActiveCourse", index.includes("setActiveCourse(courseId)"));
-check("nút 2 thanh có nhãn chữ nhỏ (railLabel)", index.includes("railLabel") && index.includes("Đang học") && index.includes("Phần thưởng") && index.includes("Cuộc thi"));
+check("Phase 3: dashboard có thẻ Tiếp tục học (ContinueButton)", index.includes("<ContinueButton"));
+check("Phase 3: dashboard có Nhiệm vụ hôm nay từ dailyQuests", index.includes("Nhiệm vụ hôm nay") && index.includes("dailyQuests"));
+check("Phase 3: dashboard chào theo cấp bậc ranks.ts (rankForXp)", index.includes("rankForXp"));
+check("Phase 3: mục Vương quốc ngôn ngữ mở bản đồ đường đi /map/", index.includes("Vương quốc ngôn ngữ") && index.includes("/map/"));
+check("Phase 3: lối tắt Cuộc thi đi route /competitions", index.includes('router.push("/competitions")'));
+check("Phase 3: lối tắt Phần thưởng đi route /rewards", index.includes('router.push("/rewards")'));
+check("Phase 3: lối tắt Thành tích đi route /achievements", index.includes('router.push("/achievements")'));
+check("đổi khóa qua thẻ vương quốc vẫn gọi setActiveCourse", index.includes("setActiveCourse(courseId)"));
+check("world-map.tsx vẫn được GIỮ trong repo (chỉ ngừng import ở trang chủ)", existsSync(join(root, mapPath)));
 
 // --- Các file cũ được giữ nguyên ---
 check("land-card.tsx vẫn còn (giữ file)", existsSync(join(root, "src/components/land-card.tsx")));
