@@ -175,6 +175,16 @@ type ProgressState = {
   setSchoolBand: (band: SchoolBand) => void;
   /** Cộng XP thưởng (game, hoạt động phụ) vào khóa hiện tại + XP ngày. */
   addBonusXp: (amount: number) => void;
+  /**
+   * Hoàn thành MỘT buổi luyện kỹ năng (Nghe/Nói/Đọc/Viết — xem
+   * lib/skills.ts): cộng XP đúng công thức bài học (15 XP, hoàn hảo
+   * +5) vào khóa đang học + sổ XP ngày, đồng thời ghi buổi vào nhật
+   * ký ngày (`activeDays.lessons` +1, hoàn hảo thì `perfect` +1) để
+   * NHIỆM VỤ NGÀY đếm cả buổi luyện như một bài. KHÔNG đánh dấu hoàn
+   * thành bài học nào, KHÔNG cấp vé vòng quay, không cộng điểm thú /
+   * sao — vé và quà chỉ sinh từ completeLesson như luật đã chốt.
+   */
+  completeSkillSession: (perfect: boolean) => void;
   setMusicOn: (on: boolean) => void;
   /** Ghi nhận điểm game Đố nhanh; chỉ giữ lại kỷ lục cao nhất. */
   recordSpeedScore: (score: number) => void;
@@ -695,6 +705,31 @@ export const useProgress = create<ProgressState>()(
           const courseUpdate = updateCourse(state, state.activeCourseId, (c) => ({
             ...c,
             xp: c.xp + amount,
+          }));
+          return { activeDays, ...daily, ...courseUpdate };
+        }),
+
+      completeSkillSession: (perfect) =>
+        set((state) => {
+          // Cùng sổ sách với completeLesson (XP khóa + XP ngày + nhật
+          // ký ngày) nhưng KHÔNG đụng completedLessons / streak /
+          // spinTickets / petGrowth / stars.
+          const earned = XP_PER_LESSON + (perfect ? XP_PERFECT_BONUS : 0);
+          const today = dayString(new Date());
+          const daily = bumpDailyXp(state, earned);
+          const days = state.activeDays ?? {};
+          const prevDay = days[today] ?? { xp: 0, lessons: 0, perfect: 0 };
+          const activeDays = pruneDays({
+            ...days,
+            [today]: {
+              xp: prevDay.xp + earned,
+              lessons: prevDay.lessons + 1,
+              perfect: prevDay.perfect + (perfect ? 1 : 0),
+            },
+          });
+          const courseUpdate = updateCourse(state, state.activeCourseId, (c) => ({
+            ...c,
+            xp: c.xp + earned,
           }));
           return { activeDays, ...daily, ...courseUpdate };
         }),
