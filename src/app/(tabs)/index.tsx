@@ -339,6 +339,11 @@ export default function LearnScreen() {
                 label="Kỹ năng"
                 onPress={() => router.push("/skills")}
               />
+              <ShortcutCard
+                emoji="📖"
+                label="Sổ tay"
+                onPress={() => router.push("/guidebook")}
+              />
             </View>
 
             <Text style={styles.footerNote} maxFontSizeMultiplier={1.25}>

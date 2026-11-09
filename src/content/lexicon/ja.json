@@ -1,0 +1,1239 @@
+{
+  "あ": {
+    "jlpt": "N4",
+    "zipf": 5.5
+  },
+  "あお": {
+    "jlpt": "N5",
+    "zipf": 5.5,
+    "jmGloss": "blue; azure",
+    "pitch": 1,
+    "pitchReading": "あお"
+  },
+  "あか": {
+    "jlpt": "N5",
+    "zipf": 4.2,
+    "jmGloss": "red; crimson",
+    "pitch": 1,
+    "pitchReading": "あか"
+  },
+  "あかちゃん": {
+    "jlpt": "N4",
+    "zipf": 4.2,
+    "jmGloss": "baby; infant",
+    "pitch": 1,
+    "pitchReading": "あかちゃん"
+  },
+  "あし": {
+    "jlpt": "N5",
+    "zipf": 3.6,
+    "jmGloss": "foot; paw",
+    "pitch": 2,
+    "pitchReading": "あし"
+  },
+  "あたま": {
+    "jlpt": "N5",
+    "zipf": 4.8,
+    "jmGloss": "head",
+    "pitch": 3,
+    "pitchReading": "あたま"
+  },
+  "あつい": {
+    "jlpt": "N5",
+    "zipf": 3.2,
+    "jmGloss": "hot; warm",
+    "pitch": 2,
+    "pitchReading": "あつい"
+  },
+  "あめ": {
+    "jlpt": "N5",
+    "zipf": 3.6,
+    "jmGloss": "rain",
+    "pitch": 1,
+    "pitchReading": "あめ"
+  },
+  "ありがとう": {
+    "jlpt": "N3",
+    "zipf": 5.7,
+    "jmGloss": "thank you; thanks",
+    "pitch": 2,
+    "pitchReading": "ありがとう"
+  },
+  "い": {
+    "jlpt": "N3",
+    "zipf": 6.6
+  },
+  "いいえ": {
+    "jlpt": "N5",
+    "zipf": 4.2,
+    "jmGloss": "no"
+  },
+  "いえ": {
+    "jlpt": "N5",
+    "zipf": 5.3,
+    "jmGloss": "house; residence",
+    "pitch": 2,
+    "pitchReading": "いえ"
+  },
+  "いただく": {
+    "jlpt": "N4",
+    "zipf": 4.2,
+    "jmGloss": "to receive; to get",
+    "pitch": 0,
+    "pitchReading": "いただく"
+  },
+  "いち": {
+    "jlpt": "N5",
+    "zipf": 4.5,
+    "jmGloss": "one; 1",
+    "pitch": 2,
+    "pitchReading": "いち"
+  },
+  "いぬ": {
+    "jlpt": "N5",
+    "zipf": 3.5,
+    "jmGloss": "dog (Canis (lupus) familiaris); canine",
+    "pitch": 2,
+    "pitchReading": "いぬ"
+  },
+  "う": {
+    "zipf": 6.6
+  },
+  "え": {
+    "jlpt": "N5",
+    "zipf": 5.9
+  },
+  "えんぴつ": {
+    "jlpt": "N5",
+    "zipf": 2.7,
+    "jmGloss": "(wooden) pencil",
+    "pitch": 0,
+    "pitchReading": "えんぴつ"
+  },
+  "お": {
+    "jlpt": "N3",
+    "zipf": 6.3
+  },
+  "おかあさん": {
+    "jlpt": "N5",
+    "zipf": 3.4,
+    "jmGloss": "mother; mom",
+    "pitch": 2,
+    "pitchReading": "おかあさん"
+  },
+  "おかし": {
+    "jlpt": "N5",
+    "zipf": 3.6,
+    "jmGloss": "confections; sweets",
+    "pitch": 2,
+    "pitchReading": "おかし"
+  },
+  "おじいさん": {
+    "jlpt": "N5",
+    "zipf": 3.5,
+    "jmGloss": "grandfather",
+    "pitch": 2,
+    "pitchReading": "おじいさん"
+  },
+  "おっしゃる": {
+    "jlpt": "N4",
+    "zipf": 3.7,
+    "jmGloss": "to say; to speak",
+    "pitch": 3,
+    "pitchReading": "おっしゃる"
+  },
+  "おとうさん": {
+    "jlpt": "N5",
+    "zipf": 3.2,
+    "jmGloss": "father; dad",
+    "pitch": 2,
+    "pitchReading": "おとうさん"
+  },
+  "おにいさん": {
+    "jlpt": "N5",
+    "zipf": 3.1,
+    "jmGloss": "older brother; elder brother",
+    "pitch": 2,
+    "pitchReading": "おにいさん"
+  },
+  "おねえさん": {
+    "jlpt": "N5",
+    "zipf": 3.3,
+    "jmGloss": "older sister; elder sister",
+    "pitch": 2,
+    "pitchReading": "おねえさん"
+  },
+  "おはよう": {
+    "jlpt": "N2",
+    "zipf": 4.8,
+    "jmGloss": "good morning",
+    "pitch": 0,
+    "pitchReading": "おはよう"
+  },
+  "おばあさん": {
+    "jlpt": "N5",
+    "zipf": 3.4,
+    "jmGloss": "grandmother",
+    "pitch": 2,
+    "pitchReading": "おばあさん"
+  },
+  "おやすみ": {
+    "jlpt": "N2",
+    "zipf": 4.5,
+    "jmGloss": "good night",
+    "pitch": 0,
+    "pitchReading": "おやすみ"
+  },
+  "か": {
+    "jlpt": "N3",
+    "zipf": 6.9
+  },
+  "かぜ": {
+    "jlpt": "N5",
+    "zipf": 3.5,
+    "jmGloss": "wind; breeze",
+    "pitch": 0,
+    "pitchReading": "かぜ"
+  },
+  "かばん": {
+    "jlpt": "N5",
+    "zipf": 3.7,
+    "jmGloss": "bag; satchel",
+    "pitch": 0,
+    "pitchReading": "かばん"
+  },
+  "かみ": {
+    "jlpt": "N5",
+    "zipf": 3.9,
+    "jmGloss": "hair (on the head)",
+    "pitch": 2,
+    "pitchReading": "かみ"
+  },
+  "かも": {
+    "zipf": 5.8,
+    "jmGloss": "may; might"
+  },
+  "がっこう": {
+    "jlpt": "N5",
+    "zipf": 4.7,
+    "jmGloss": "school",
+    "pitch": 0,
+    "pitchReading": "がっこう"
+  },
+  "き": {
+    "jlpt": "N5",
+    "zipf": 6.1
+  },
+  "きいろ": {
+    "jlpt": "N5",
+    "zipf": 2.4,
+    "jmGloss": "yellow; amber",
+    "pitch": 0,
+    "pitchReading": "きいろ"
+  },
+  "ぎゅうにゅう": {
+    "jlpt": "N5",
+    "zipf": 1.4,
+    "jmGloss": "(cow's) milk",
+    "pitch": 0,
+    "pitchReading": "ぎゅうにゅう"
+  },
+  "く": {
+    "jlpt": "N5",
+    "zipf": 5.2
+  },
+  "くち": {
+    "jlpt": "N5",
+    "zipf": 3.8,
+    "jmGloss": "mouth",
+    "pitch": 0,
+    "pitchReading": "くち"
+  },
+  "くつ": {
+    "jlpt": "N5",
+    "zipf": 3.4,
+    "jmGloss": "shoe; shoes",
+    "pitch": 2,
+    "pitchReading": "くつ"
+  },
+  "くつした": {
+    "jlpt": "N5",
+    "zipf": 2.2,
+    "jmGloss": "socks; sock",
+    "pitch": 2,
+    "pitchReading": "くつした"
+  },
+  "くも": {
+    "jlpt": "N4",
+    "zipf": 3.3,
+    "jmGloss": "cloud",
+    "pitch": 1,
+    "pitchReading": "くも"
+  },
+  "くらい": {
+    "jlpt": "N5",
+    "zipf": 5.6,
+    "jmGloss": "approximately; about",
+    "pitch": 0,
+    "pitchReading": "くらい"
+  },
+  "くるま": {
+    "jlpt": "N5",
+    "zipf": 3.1,
+    "jmGloss": "car; automobile",
+    "pitch": 0,
+    "pitchReading": "くるま"
+  },
+  "くろ": {
+    "jlpt": "N5",
+    "zipf": 3.8,
+    "jmGloss": "black",
+    "pitch": 1,
+    "pitchReading": "くろ"
+  },
+  "け": {
+    "jlpt": "N4",
+    "zipf": 5.1
+  },
+  "けしゴム": {
+    "jlpt": "N4",
+    "zipf": 1.2,
+    "jmGloss": "eraser; rubber",
+    "pitch": 0,
+    "pitchReading": "けしゴム"
+  },
+  "こ": {
+    "jlpt": "N4",
+    "zipf": 5.4
+  },
+  "こんにちは": {
+    "jlpt": "N3",
+    "zipf": 4.7,
+    "jmGloss": "hello; good day",
+    "pitch": 5,
+    "pitchReading": "こんにちは"
+  },
+  "こんばんは": {
+    "jlpt": "N2",
+    "zipf": 4.3,
+    "jmGloss": "good evening",
+    "pitch": 5,
+    "pitchReading": "こんばんは"
+  },
+  "ご": {
+    "jlpt": "N5",
+    "zipf": 5.8,
+    "jmGloss": "five; 5",
+    "pitch": 1,
+    "pitchReading": "ご"
+  },
+  "さ": {
+    "jlpt": "N3",
+    "zipf": 6.7
+  },
+  "さかな": {
+    "jlpt": "N5",
+    "zipf": 3.6,
+    "jmGloss": "fish",
+    "pitch": 0,
+    "pitchReading": "さかな"
+  },
+  "させる": {
+    "zipf": 5.5,
+    "jmGloss": "to make (someone) do",
+    "pitch": 0,
+    "pitchReading": "させる"
+  },
+  "さむい": {
+    "jlpt": "N5",
+    "zipf": 3.1,
+    "jmGloss": "cold (e.g. weather)",
+    "pitch": 2,
+    "pitchReading": "さむい"
+  },
+  "さようなら": {
+    "jlpt": "N2",
+    "zipf": 3.8,
+    "jmGloss": "farewell; adieu",
+    "pitch": 4,
+    "pitchReading": "さようなら"
+  },
+  "さん": {
+    "jlpt": "N5",
+    "zipf": 6.1,
+    "jmGloss": "three; 3",
+    "pitch": 0,
+    "pitchReading": "さん"
+  },
+  "し": {
+    "jlpt": "N5",
+    "zipf": 7.2
+  },
+  "しろ": {
+    "jlpt": "N5",
+    "zipf": 5.2,
+    "jmGloss": "white",
+    "pitch": 1,
+    "pitchReading": "しろ"
+  },
+  "しんかんせん": {
+    "jlpt": "N2",
+    "zipf": 1.9,
+    "jmGloss": "Shinkansen; bullet train",
+    "pitch": 3,
+    "pitchReading": "しんかんせん"
+  },
+  "じてんしゃ": {
+    "jlpt": "N5",
+    "zipf": 2.6,
+    "jmGloss": "bicycle; bike",
+    "pitch": 2,
+    "pitchReading": "じてんしゃ"
+  },
+  "す": {
+    "jlpt": "N3",
+    "zipf": 5.3
+  },
+  "すいか": {
+    "zipf": 2.8,
+    "jmGloss": "watermelon (Citrullus lanatus)",
+    "pitch": 0,
+    "pitchReading": "すいか"
+  },
+  "すぎる": {
+    "jlpt": "N4",
+    "zipf": 5.3,
+    "jmGloss": "to exceed",
+    "pitch": 2,
+    "pitchReading": "すぎる"
+  },
+  "ずに": {
+    "zipf": 5.8,
+    "jmGloss": "without doing"
+  },
+  "せ": {
+    "zipf": 6.1
+  },
+  "せんせい": {
+    "jlpt": "N5",
+    "zipf": 3.2,
+    "jmGloss": "teacher; instructor",
+    "pitch": 3,
+    "pitchReading": "せんせい"
+  },
+  "そ": {
+    "zipf": 4.8
+  },
+  "た": {
+    "jlpt": "N3",
+    "zipf": 7.4
+  },
+  "たいよう": {
+    "jlpt": "N3",
+    "zipf": 2.7,
+    "jmGloss": "Sun",
+    "pitch": 1,
+    "pitchReading": "たいよう"
+  },
+  "たまご": {
+    "jlpt": "N5",
+    "zipf": 4.8,
+    "jmGloss": "eggs; egg",
+    "pitch": 2,
+    "pitchReading": "たまご"
+  },
+  "ために": {
+    "zipf": 6.1,
+    "jmGloss": "for; for the sake of",
+    "pitch": 2,
+    "pitchReading": "ために"
+  },
+  "たら": {
+    "zipf": 6.3,
+    "jmGloss": "if; when",
+    "pitch": 1,
+    "pitchReading": "たら"
+  },
+  "ち": {
+    "jlpt": "N4",
+    "zipf": 5.2
+  },
+  "つ": {
+    "zipf": 5.7
+  },
+  "て": {
+    "jlpt": "N5",
+    "zipf": 7.5
+  },
+  "ても": {
+    "zipf": 6.9,
+    "jmGloss": "even if; even though"
+  },
+  "でんしゃ": {
+    "jlpt": "N5",
+    "zipf": 3.9,
+    "jmGloss": "train; electric train",
+    "pitch": 0,
+    "pitchReading": "でんしゃ"
+  },
+  "と": {
+    "jlpt": "N3",
+    "zipf": 7.2
+  },
+  "とけい": {
+    "jlpt": "N5",
+    "zipf": 2.6,
+    "jmGloss": "clock; watch",
+    "pitch": 0,
+    "pitchReading": "とけい"
+  },
+  "ところ": {
+    "jlpt": "N5",
+    "zipf": 5.7,
+    "jmGloss": "was just doing; have just done",
+    "pitch": 0,
+    "pitchReading": "ところ"
+  },
+  "ともだち": {
+    "jlpt": "N5",
+    "zipf": 3.6,
+    "jmGloss": "friend; companion",
+    "pitch": 0,
+    "pitchReading": "ともだち"
+  },
+  "な": {
+    "jlpt": "N3",
+    "zipf": 7.1
+  },
+  "なさる": {
+    "jlpt": "N4",
+    "zipf": 3.2,
+    "jmGloss": "to do",
+    "pitch": 2,
+    "pitchReading": "なさる"
+  },
+  "なな": {
+    "zipf": 6.8,
+    "jmGloss": "seven",
+    "pitch": 1,
+    "pitchReading": "なな"
+  },
+  "なら": {
+    "zipf": 6.2,
+    "jmGloss": "if; in case",
+    "pitch": 1,
+    "pitchReading": "なら"
+  },
+  "に": {
+    "jlpt": "N5",
+    "zipf": 7.5
+  },
+  "にじ": {
+    "jlpt": "N2",
+    "zipf": 5.1,
+    "jmGloss": "rainbow",
+    "pitch": 0,
+    "pitchReading": "にじ"
+  },
+  "ぬ": {
+    "zipf": 5
+  },
+  "ね": {
+    "jlpt": "N3",
+    "zipf": 6.6
+  },
+  "ねこ": {
+    "jlpt": "N5",
+    "zipf": 4.2,
+    "jmGloss": "cat (esp. the domestic cat, Felis catus); feline",
+    "pitch": 1,
+    "pitchReading": "ねこ"
+  },
+  "のに": {
+    "zipf": 5.8,
+    "jmGloss": "although; despite"
+  },
+  "はい": {
+    "jlpt": "N5",
+    "zipf": 5.1,
+    "jmGloss": "yes; that is correct",
+    "pitch": 1,
+    "pitchReading": "はい"
+  },
+  "はず": {
+    "jlpt": "N4",
+    "zipf": 5.3,
+    "jmGloss": "should (be); bound (to be)",
+    "pitch": 0,
+    "pitchReading": "はず"
+  },
+  "はずがない": {
+    "zipf": 5.3,
+    "jmGloss": "it cannot be that ...; it is highly unlikely that ..."
+  },
+  "はち": {
+    "jlpt": "N5",
+    "zipf": 5.2,
+    "jmGloss": "eight; 8",
+    "pitch": 2,
+    "pitchReading": "はち"
+  },
+  "はな": {
+    "jlpt": "N5",
+    "zipf": 3.8,
+    "jmGloss": "nose",
+    "pitch": 0,
+    "pitchReading": "はな"
+  },
+  "ば": {
+    "jlpt": "N3",
+    "zipf": 6.3,
+    "jmGloss": "if ... then; when"
+  },
+  "ばかり": {
+    "zipf": 5.2,
+    "jmGloss": "only; merely"
+  },
+  "ひこうき": {
+    "jlpt": "N5",
+    "zipf": 3.4,
+    "jmGloss": "airplane; aeroplane",
+    "pitch": 2,
+    "pitchReading": "ひこうき"
+  },
+  "ふね": {
+    "jlpt": "N4",
+    "zipf": 4.8,
+    "jmGloss": "ship; boat",
+    "pitch": 1,
+    "pitchReading": "ふね"
+  },
+  "ほん": {
+    "jlpt": "N5",
+    "zipf": 4.5,
+    "jmGloss": "book; volume",
+    "pitch": 1,
+    "pitchReading": "ほん"
+  },
+  "ぼうし": {
+    "jlpt": "N5",
+    "zipf": 3,
+    "jmGloss": "hat; cap",
+    "pitch": 0,
+    "pitchReading": "ぼうし"
+  },
+  "まいる": {
+    "jlpt": "N4",
+    "zipf": 2.6,
+    "jmGloss": "to go; to come",
+    "pitch": 1,
+    "pitchReading": "まいる"
+  },
+  "みかん": {
+    "zipf": 3.9,
+    "jmGloss": "mandarin (esp. the satsuma mandarin (Citrus unshiu)); mandarin orange",
+    "pitch": 1,
+    "pitchReading": "みかん"
+  },
+  "みず": {
+    "jlpt": "N5",
+    "zipf": 5.5,
+    "jmGloss": "water (esp. cool or cold)",
+    "pitch": 0,
+    "pitchReading": "みず"
+  },
+  "みどり": {
+    "jlpt": "N5",
+    "zipf": 3.9,
+    "jmGloss": "green",
+    "pitch": 1,
+    "pitchReading": "みどり"
+  },
+  "みみ": {
+    "jlpt": "N5",
+    "zipf": 5.5,
+    "jmGloss": "ear",
+    "pitch": 2,
+    "pitchReading": "みみ"
+  },
+  "め": {
+    "jlpt": "N5",
+    "zipf": 5.2,
+    "jmGloss": "eye; eyeball",
+    "pitch": 1,
+    "pitchReading": "め"
+  },
+  "ゆき": {
+    "jlpt": "N5",
+    "zipf": 4.4,
+    "jmGloss": "snow; snowfall",
+    "pitch": 2,
+    "pitchReading": "ゆき"
+  },
+  "ように": {
+    "zipf": 6.3,
+    "jmGloss": "in order to",
+    "pitch": 1,
+    "pitchReading": "ように"
+  },
+  "よん": {
+    "jlpt": "N3",
+    "zipf": 3.7,
+    "jmGloss": "four; 4",
+    "pitch": 1,
+    "pitchReading": "よん"
+  },
+  "りんご": {
+    "zipf": 3.9,
+    "jmGloss": "apple (fruit)",
+    "pitch": 0,
+    "pitchReading": "りんご"
+  },
+  "ろく": {
+    "jlpt": "N5",
+    "zipf": 4.8,
+    "jmGloss": "six; 6",
+    "pitch": 2,
+    "pitchReading": "ろく"
+  },
+  "わけ": {
+    "jlpt": "N4",
+    "zipf": 5.5,
+    "jmGloss": "reason; grounds"
+  },
+  "ア": {
+    "zipf": 4.3
+  },
+  "アイス": {
+    "zipf": 4.3,
+    "jmGloss": "ice cream",
+    "pitch": 1,
+    "pitchReading": "アイス"
+  },
+  "イ": {
+    "zipf": 4.4
+  },
+  "ウ": {
+    "zipf": 3.7
+  },
+  "エ": {
+    "zipf": 4
+  },
+  "オ": {
+    "zipf": 4.1
+  },
+  "オレンジ": {
+    "zipf": 4.3,
+    "jmGloss": "orange (fruit, colour)",
+    "pitch": 2,
+    "pitchReading": "オレンジ"
+  },
+  "カ": {
+    "zipf": 4.2
+  },
+  "キ": {
+    "zipf": 3.9
+  },
+  "ク": {
+    "zipf": 3.9
+  },
+  "コート": {
+    "jlpt": "N5",
+    "zipf": 4.4,
+    "jmGloss": "coat",
+    "pitch": 1,
+    "pitchReading": "コート"
+  },
+  "シャツ": {
+    "jlpt": "N5",
+    "zipf": 4.7,
+    "jmGloss": "shirt (undergarment); undershirt",
+    "pitch": 1,
+    "pitchReading": "シャツ"
+  },
+  "ズボン": {
+    "jlpt": "N5",
+    "zipf": 4.1,
+    "jmGloss": "trousers; pants",
+    "pitch": 2,
+    "pitchReading": "ズボン"
+  },
+  "トラック": {
+    "jlpt": "N3",
+    "zipf": 4.6,
+    "jmGloss": "truck; lorry",
+    "pitch": 2,
+    "pitchReading": "トラック"
+  },
+  "ドレス": {
+    "jlpt": "N3",
+    "zipf": 4.4,
+    "jmGloss": "dress",
+    "pitch": 1,
+    "pitchReading": "ドレス"
+  },
+  "ノート": {
+    "jlpt": "N5",
+    "zipf": 4.5,
+    "jmGloss": "notebook; copy-book",
+    "pitch": 1,
+    "pitchReading": "ノート"
+  },
+  "バイク": {
+    "zipf": 4.6,
+    "jmGloss": "motorcycle; motorbike",
+    "pitch": 1,
+    "pitchReading": "バイク"
+  },
+  "バス": {
+    "jlpt": "N5",
+    "zipf": 5,
+    "jmGloss": "bus",
+    "pitch": 1,
+    "pitchReading": "バス"
+  },
+  "バナナ": {
+    "zipf": 4.2,
+    "jmGloss": "banana",
+    "pitch": 1,
+    "pitchReading": "バナナ"
+  },
+  "パン": {
+    "jlpt": "N5",
+    "zipf": 4.9,
+    "jmGloss": "bread; (sweet) pastry",
+    "pitch": 1,
+    "pitchReading": "パン"
+  },
+  "ピンク": {
+    "jlpt": "N2",
+    "zipf": 4.5,
+    "jmGloss": "pink",
+    "pitch": 1,
+    "pitchReading": "ピンク"
+  },
+  "ペン": {
+    "jlpt": "N5",
+    "zipf": 4.4,
+    "jmGloss": "pen",
+    "pitch": 1,
+    "pitchReading": "ペン"
+  },
+  "マフラー": {
+    "jlpt": "N2",
+    "zipf": 3.8,
+    "jmGloss": "(thick) scarf; muffler",
+    "pitch": 1,
+    "pitchReading": "マフラー"
+  },
+  "予約": {
+    "jlpt": "N4",
+    "zipf": 5,
+    "jmReading": "よやく",
+    "jmGloss": "reservation; appointment",
+    "pitch": 0,
+    "pitchReading": "よやく"
+  },
+  "人": {
+    "jlpt": "N5",
+    "zipf": 6.6,
+    "jmReading": "ひと",
+    "jmGloss": "person; someone",
+    "pitch": 0,
+    "pitchReading": "ひと"
+  },
+  "今": {
+    "jlpt": "N5",
+    "zipf": 6.1,
+    "jmReading": "いま",
+    "jmGloss": "now; the present time",
+    "pitch": 1,
+    "pitchReading": "いま"
+  },
+  "会": {
+    "zipf": 5.6,
+    "jmReading": "かい",
+    "jmGloss": "meeting; assembly",
+    "pitch": 1,
+    "pitchReading": "かい"
+  },
+  "会いたい": {
+    "zipf": 5
+  },
+  "会った": {
+    "zipf": 4.8
+  },
+  "先": {
+    "jlpt": "N5",
+    "zipf": 5.5,
+    "jmReading": "さき",
+    "jmGloss": "head (of a line); front",
+    "pitch": 0,
+    "pitchReading": "さき"
+  },
+  "切符": {
+    "jlpt": "N5",
+    "zipf": 3.7,
+    "jmReading": "きっぷ",
+    "jmGloss": "ticket",
+    "pitch": 0,
+    "pitchReading": "きっぷ"
+  },
+  "助ける": {
+    "jlpt": "N3",
+    "zipf": 4,
+    "jmReading": "たすける",
+    "jmGloss": "to help; to assist",
+    "pitch": 3,
+    "pitchReading": "たすける"
+  },
+  "友": {
+    "jlpt": "N3",
+    "zipf": 4.8,
+    "jmReading": "とも",
+    "jmGloss": "friend; companion",
+    "pitch": 1,
+    "pitchReading": "とも"
+  },
+  "叱られた": {
+    "zipf": 3.5
+  },
+  "呼ばれた": {
+    "zipf": 5
+  },
+  "困る": {
+    "jlpt": "N5",
+    "zipf": 4.5,
+    "jmReading": "こまる",
+    "jmGloss": "to be troubled; to have difficulty",
+    "pitch": 2,
+    "pitchReading": "こまる"
+  },
+  "土": {
+    "jlpt": "N3",
+    "zipf": 4.8,
+    "jmReading": "つち",
+    "jmGloss": "earth; soil",
+    "pitch": 2,
+    "pitchReading": "つち"
+  },
+  "大": {
+    "jlpt": "N3",
+    "zipf": 5.8,
+    "jmReading": "だい",
+    "jmGloss": "large; big",
+    "pitch": 1,
+    "pitchReading": "だい"
+  },
+  "学": {
+    "jlpt": "N3",
+    "zipf": 4.9,
+    "jmReading": "がく",
+    "jmGloss": "learning; scholarship",
+    "pitch": 0,
+    "pitchReading": "がく"
+  },
+  "小": {
+    "jlpt": "N3",
+    "zipf": 5,
+    "jmReading": "しょう",
+    "jmGloss": "smallness; small item",
+    "pitch": 1,
+    "pitchReading": "しょう"
+  },
+  "山": {
+    "jlpt": "N5",
+    "zipf": 5,
+    "jmReading": "やま",
+    "jmGloss": "mountain; hill",
+    "pitch": 2,
+    "pitchReading": "やま"
+  },
+  "川": {
+    "zipf": 4.8,
+    "jmReading": "かわ",
+    "jmGloss": "river; stream",
+    "pitch": 2,
+    "pitchReading": "かわ"
+  },
+  "年": {
+    "jlpt": "N5",
+    "zipf": 6.3,
+    "jmReading": "とし",
+    "jmGloss": "year",
+    "pitch": 2,
+    "pitchReading": "とし"
+  },
+  "忘れ物": {
+    "jlpt": "N4",
+    "zipf": 3.5,
+    "jmReading": "わすれもの",
+    "jmGloss": "lost article; thing left behind",
+    "pitch": 0,
+    "pitchReading": "わすれもの"
+  },
+  "日": {
+    "jlpt": "N4",
+    "zipf": 6.4,
+    "jmReading": "ひ",
+    "jmGloss": "day; days",
+    "pitch": 0,
+    "pitchReading": "ひ"
+  },
+  "明": {
+    "zipf": 4.4,
+    "jmReading": "めい",
+    "jmGloss": "brightness",
+    "pitch": 1,
+    "pitchReading": "めい"
+  },
+  "時": {
+    "zipf": 6.1,
+    "jmReading": "とき",
+    "jmGloss": "time; hour",
+    "pitch": 2,
+    "pitchReading": "とき"
+  },
+  "書いた": {
+    "zipf": 5.2
+  },
+  "書いて": {
+    "zipf": 5.2
+  },
+  "書かれた": {
+    "zipf": 4.8
+  },
+  "月": {
+    "jlpt": "N4",
+    "zipf": 6.2,
+    "jmReading": "つき",
+    "jmGloss": "Moon",
+    "pitch": 2,
+    "pitchReading": "つき"
+  },
+  "木": {
+    "jlpt": "N5",
+    "zipf": 5,
+    "jmReading": "き",
+    "jmGloss": "tree; shrub",
+    "pitch": 1,
+    "pitchReading": "き"
+  },
+  "本": {
+    "jlpt": "N5",
+    "zipf": 5.7,
+    "jmReading": "ほん",
+    "jmGloss": "book; volume",
+    "pitch": 1,
+    "pitchReading": "ほん"
+  },
+  "来て": {
+    "zipf": 5.7
+  },
+  "校": {
+    "zipf": 4.4,
+    "jmReading": "こう",
+    "jmGloss": "school",
+    "pitch": 1,
+    "pitchReading": "こう"
+  },
+  "案内": {
+    "jlpt": "N4",
+    "zipf": 4.7,
+    "jmReading": "あんない",
+    "jmGloss": "guidance; leading (the way)",
+    "pitch": 3,
+    "pitchReading": "あんない"
+  },
+  "母": {
+    "jlpt": "N5",
+    "zipf": 5.1,
+    "jmReading": "はは",
+    "jmGloss": "mother",
+    "pitch": 1,
+    "pitchReading": "はは"
+  },
+  "水": {
+    "jlpt": "N5",
+    "zipf": 5.3,
+    "jmReading": "みず",
+    "jmGloss": "water (esp. cool or cold)",
+    "pitch": 0,
+    "pitchReading": "みず"
+  },
+  "火": {
+    "jlpt": "N4",
+    "zipf": 4.9,
+    "jmReading": "ひ",
+    "jmGloss": "fire; flame",
+    "pitch": 1,
+    "pitchReading": "ひ"
+  },
+  "生": {
+    "jlpt": "N3",
+    "zipf": 5.5,
+    "jmReading": "せい",
+    "jmGloss": "life; living",
+    "pitch": 1,
+    "pitchReading": "せい"
+  },
+  "田": {
+    "jlpt": "N3",
+    "zipf": 4.2,
+    "jmReading": "た",
+    "jmGloss": "rice field",
+    "pitch": 1,
+    "pitchReading": "た"
+  },
+  "社": {
+    "zipf": 5.1,
+    "jmReading": "しゃ",
+    "jmGloss": "company; firm",
+    "pitch": 1,
+    "pitchReading": "しゃ"
+  },
+  "窓口": {
+    "jlpt": "N2",
+    "zipf": 4,
+    "jmReading": "まどぐち",
+    "jmGloss": "counter; window",
+    "pitch": 2,
+    "pitchReading": "まどぐち"
+  },
+  "聞いた": {
+    "zipf": 5.5
+  },
+  "聞いて": {
+    "zipf": 5.5
+  },
+  "聞かれた": {
+    "zipf": 4.8
+  },
+  "行かせる": {
+    "zipf": 4.8
+  },
+  "行きたい": {
+    "zipf": 5.3
+  },
+  "行きましょう": {
+    "zipf": 5.1
+  },
+  "行った": {
+    "zipf": 5.7
+  },
+  "行って": {
+    "zipf": 5.7
+  },
+  "褒められた": {
+    "zipf": 4.3
+  },
+  "見た": {
+    "zipf": 6.2
+  },
+  "見たい": {
+    "zipf": 5.9
+  },
+  "見て": {
+    "zipf": 6.2
+  },
+  "見られた": {
+    "zipf": 5.8
+  },
+  "話したい": {
+    "zipf": 5.1
+  },
+  "語": {
+    "zipf": 5,
+    "jmReading": "ご",
+    "jmGloss": "language",
+    "pitch": 1,
+    "pitchReading": "ご"
+  },
+  "読ませる": {
+    "zipf": 4.2
+  },
+  "読まれた": {
+    "zipf": 4.2
+  },
+  "読んだ": {
+    "zipf": 5.2
+  },
+  "読んで": {
+    "zipf": 5.2
+  },
+  "買いたい": {
+    "zipf": 4.9
+  },
+  "車": {
+    "jlpt": "N5",
+    "zipf": 5.6,
+    "jmReading": "くるま",
+    "jmGloss": "car; automobile",
+    "pitch": 0,
+    "pitchReading": "くるま"
+  },
+  "遅れる": {
+    "jlpt": "N4",
+    "zipf": 3.9,
+    "jmReading": "おくれる",
+    "jmGloss": "to be late; to be delayed",
+    "pitch": 0,
+    "pitchReading": "おくれる"
+  },
+  "金": {
+    "jlpt": "N3",
+    "zipf": 5.6,
+    "jmReading": "きん",
+    "jmGloss": "gold (metal)",
+    "pitch": 1,
+    "pitchReading": "きん"
+  },
+  "間": {
+    "jlpt": "N4",
+    "zipf": 5.5,
+    "jmReading": "あいだ",
+    "jmGloss": "space (between); gap",
+    "pitch": 0,
+    "pitchReading": "あいだ"
+  },
+  "雨": {
+    "jlpt": "N5",
+    "zipf": 4.9,
+    "jmReading": "あめ",
+    "jmGloss": "rain",
+    "pitch": 1,
+    "pitchReading": "あめ"
+  },
+  "電": {
+    "zipf": 4.6
+  },
+  "食べた": {
+    "zipf": 5.5
+  },
+  "食べたい": {
+    "zipf": 5.4
+  },
+  "食べて": {
+    "zipf": 5.5
+  },
+  "食べよう": {
+    "zipf": 4
+  },
+  "食べられた": {
+    "zipf": 5.3
+  },
+  "飲んだ": {
+    "zipf": 5
+  },
+  "飲んで": {
+    "zipf": 5.1
+  },
+  "駅": {
+    "jlpt": "N5",
+    "zipf": 5.3,
+    "jmReading": "えき",
+    "jmGloss": "railway station; train station",
+    "pitch": 1,
+    "pitchReading": "えき"
+  }
+}

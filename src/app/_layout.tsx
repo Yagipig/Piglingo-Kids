@@ -130,6 +130,7 @@ export default function RootLayout() {
           <Stack.Screen name="lesson/[id]" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="map/[courseId]" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="pet" options={{ presentation: "modal" }} />
+          <Stack.Screen name="guidebook/index" options={{ presentation: "modal" }} />
           <Stack.Screen name="guidebook/[unitId]" options={{ presentation: "modal" }} />
           <Stack.Screen name="parents" options={{ presentation: "modal" }} />
           <Stack.Screen name="rewards" options={{ presentation: "modal" }} />
@@ -147,6 +148,7 @@ export default function RootLayout() {
           <Stack.Screen name="skills-speak" options={{ presentation: "modal" }} />
           <Stack.Screen name="skills-read" options={{ presentation: "modal" }} />
           <Stack.Screen name="skills-write" options={{ presentation: "modal" }} />
+          <Stack.Screen name="data-sources" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-memory" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-listen" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-scramble" options={{ presentation: "modal" }} />

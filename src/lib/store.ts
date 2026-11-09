@@ -20,7 +20,7 @@ import {
   type SpinPrize,
   type SpinTier,
 } from "./spin";
-import { isDue, reviewWord, type SrsEntry } from "./srs";
+import { isDue, normalizeSrsRecord, reviewWord, type SrsEntry } from "./srs";
 import type { SchoolBand } from "./types";
 
 export const XP_PER_LESSON = 15;
@@ -747,10 +747,28 @@ export const useProgress = create<ProgressState>()(
           unknown
         >;
         if (old.courses) {
+          // Đợt FSRS (09/11/2026): entry srs dạng SM-2 cũ ({interval,
+          // ease, streak}) trong dữ liệu đã persist được chuyển sang
+          // entry FSRS ngay tại migrate — giữ nguyên dueAt, suy
+          // reps/lapses/stability/difficulty từ wordStats đi kèm.
+          // Entry đã ở dạng FSRS thì normalize giữ nguyên. Các field
+          // khác của từng khóa giữ nguyên không đổi.
+          const normalizedCourses = Object.fromEntries(
+            Object.entries(
+              old.courses as Record<string, CourseProgress>
+            ).map(([courseId, course]) => [
+              courseId,
+              {
+                ...course,
+                srs: normalizeSrsRecord(course.srs ?? {}, course.wordStats ?? {}),
+              },
+            ])
+          );
           return {
             activeDays: {},
             themePreference: "system" as ThemePreference,
             ...old,
+            courses: normalizedCourses,
             schoolBand: (old.schoolBand as SchoolBand) ?? "tieu-hoc",
             avatarImage: (old.avatarImage as string | null) ?? null,
             petGrowth: (old.petGrowth as Record<string, number>) ?? {},
@@ -834,7 +852,9 @@ export const useProgress = create<ProgressState>()(
               completedLessons: legacy.completedLessons ?? {},
               mistakes: legacy.mistakes ?? [],
               wordStats: legacy.wordStats ?? {},
-              srs: legacy.srs ?? {},
+              // Đợt FSRS: srs v1 là entry SM-2 cũ — chuyển đổi kèm
+              // wordStats (reps/lapses/lastReview), giữ nguyên dueAt.
+              srs: normalizeSrsRecord(legacy.srs ?? {}, legacy.wordStats ?? {}),
             },
           },
         };
@@ -929,6 +949,9 @@ export function lastSevenDays(state: Pick<ProgressState, "activeDays">) {
   return out;
 }
 
+// isDue (lib/srs) tự chuẩn hóa entry SM-2 cũ sang FSRS trước khi so
+// dueAt (chuyển đổi lười), và dueAt được giữ nguyên khi chuyển đổi —
+// nên hàm này đúng cả với dữ liệu persist chưa qua migrate FSRS.
 export function dueSrsWords(srs: Record<string, SrsEntry> = {}, now = Date.now()) {
   return Object.entries(srs ?? {})
     .filter(([, entry]) => isDue(entry, now))
