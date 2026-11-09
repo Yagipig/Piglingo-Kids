@@ -142,6 +142,11 @@ export default function RootLayout() {
           <Stack.Screen name="celebration" options={{ presentation: "fullScreenModal" }} />
           <Stack.Screen name="account" options={{ presentation: "modal" }} />
           <Stack.Screen name="speaking" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-listen" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-speak" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-read" options={{ presentation: "modal" }} />
+          <Stack.Screen name="skills-write" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-memory" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-listen" options={{ presentation: "modal" }} />
           <Stack.Screen name="game-scramble" options={{ presentation: "modal" }} />
