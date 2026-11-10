@@ -167,7 +167,7 @@ const lingua = readJson('src/content/lingua-libre.json');
 ok('Lingua Libre: mọi bản ghi có giấy phép thuộc danh sách cho phép (CC0/CC BY), target là từ thật, file local đúng dung lượng', () => {
   const allowed = ['CC0', 'CC BY', 'CC BY 4.0', 'CC BY 3.0', 'CC BY 2.0'];
   const entries = Object.entries(lingua);
-  assert.equal(entries.length, 6);
+  assert.equal(entries.length, 9);
   let bytes = 0;
   for (const [key, rec] of entries) {
     assert.ok(allowed.includes(rec.licenseShortName), `giấy phép không được phép: ${rec.licenseShortName}`);
@@ -179,7 +179,7 @@ ok('Lingua Libre: mọi bản ghi có giấy phép thuộc danh sách cho phép 
     assert.equal(statSync(file).size, rec.bytes, `${rec.localFile} sai dung lượng`);
     bytes += rec.bytes;
   }
-  assert.equal(bytes, 26594);
+  assert.equal(bytes, 40910);
 });
 ok('Lingua Libre: manifest giọng thật khớp metadata và tách riêng khỏi TTS mặc định', () => {
   const manifest = readText('src/content/real-audio-manifest.ts');
