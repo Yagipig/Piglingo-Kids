@@ -158,17 +158,21 @@ ok('toàn bộ từ tiếng Nhật đi trọn đường chi tiết + kanjidic t�
   assert.ok(n >= 214, `chỉ duyệt ${n} từ Nhật`);
 });
 
-ok('ca sự cố: dog (đủ dữ liệu) / horse (có giọng thật) / duck (thiếu cả hai) đều an toàn', () => {
+ok('ca sự cố: dog (đủ dữ liệu) / horse (có giọng thật) / green (thiếu cả hai) đều an toàn', () => {
+  // Vai "thiếu cả hai" trước đây là duck — từ phiên bổ sung Lingua Libre 2
+  // (10/11/2026) duck ĐÃ có giọng thật nên green (chưa có giọng thật, chưa
+  // có câu ví dụ) thay vai này; duck vẫn được duyệt trong vòng lặp toàn bộ từ.
   const en = vocabs['en-vi'];
-  for (const t of ['dog', 'horse', 'duck']) {
+  for (const t of ['dog', 'horse', 'green']) {
     assert.ok(en.has(t), `pack Anh thiếu từ ${t}`);
     detailPath('en-vi', en.get(t));
   }
   assert.equal(hasRealVoice('en-vi', 'horse'), true);
   assert.equal(hasRealVoice('en-vi', 'dog'), true);
-  assert.equal(hasRealVoice('en-vi', 'duck'), false);
+  assert.equal(hasRealVoice('en-vi', 'duck'), true);
+  assert.equal(hasRealVoice('en-vi', 'green'), false);
   assert.ok(exampleSentence('en-vi', 'dog'), 'dog phải có câu ví dụ');
-  assert.equal(exampleSentence('en-vi', 'duck'), undefined);
+  assert.equal(exampleSentence('en-vi', 'green'), undefined);
 });
 
 ok('manifest giọng thật: mọi key thuộc từ vựng thật, khớp lingua-libre.json, file mp3 tồn tại', () => {
