@@ -122,7 +122,7 @@ const SOURCES: SourceEntry[] = [
     use: "Một số bản ghi giọng người thật cho từng từ, phát qua nút “Nghe giọng thật”; từ chưa có bản ghi vẫn dùng giọng đọc của thiết bị.",
     license: "Giấy phép theo từng file — đợt này chỉ dùng CC0",
     credit:
-      "Các bản ghi Lingua Libre đã đóng gói đều là CC0 và đã kiểm chứng trên trang file Wikimedia Commons: “dog” — Sravani Jampana; “cat” — Muldoonsamuel55; “bird” — Muldoonsamuel55; “fish” — Grendelkhan; “horse” — Grendelkhan; “blue” — Samuel Muldoon. Giấy phép đầy đủ và nguồn từng file được lưu trong dữ liệu của ứng dụng.",
+      "Các bản ghi Lingua Libre đã đóng gói đều là CC0 và đã kiểm chứng trên trang file Wikimedia Commons: “dog” — Sravani Jampana; “cat” — Muldoonsamuel55; “bird” — Muldoonsamuel55; “fish” — Grendelkhan; “rabbit” — Grendelkhan; “horse” — Grendelkhan; “cow” — Muldoonsamuel55; “duck” — Grendelkhan; “blue” — Samuel Muldoon. Giấy phép đầy đủ và nguồn từng file được lưu trong dữ liệu của ứng dụng.",
   },
   {
     name: "Hanzi Writer + dữ liệu Make Me a Hanzi",
