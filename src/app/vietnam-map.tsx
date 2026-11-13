@@ -63,12 +63,15 @@ export default function VietnamMapScreen() {
     return orderedCourses
       .map((course) => {
         const pack = getPack(course.id);
+        // Pack chia theo sections (khối lớp); unit của khóa là toàn bộ
+        // unit trong các section, giữ đúng thứ tự hành trình.
+        const units = pack.sections.flatMap((section) => section.units);
         const unitIndex = unitIndexForProvince(
           selection.journeyIndex,
-          pack.units.length
+          units.length
         );
         if (unitIndex == null) return null;
-        return { course, unit: pack.units[unitIndex] };
+        return { course, unit: units[unitIndex] };
       })
       .filter((row): row is NonNullable<typeof row> => row != null);
   }, [selection]);
@@ -367,5 +370,6 @@ const useStyles = makeThemedStyles((colors) =>
     courseRowPressed: { opacity: 0.7 },
     courseRowText: { flex: 1, fontSize: 13, fontWeight: "600", color: colors.text },
     courseRowArrow: { fontSize: 12, fontWeight: "800", color: colors.skyDark },
+    credit: { fontSize: 11, lineHeight: 16, color: colors.textMuted, textAlign: "center" },
   })
 );
