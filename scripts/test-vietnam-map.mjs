@@ -46,7 +46,9 @@ execFileSync(
 );
 
 const require = createRequire(import.meta.url);
-const { PROVINCES, SEA_POINTS } = require(path.join(outDir, "provinces.js"));
+const { PROVINCES, SEA_POINTS, unitIndexForProvince } = require(
+  path.join(outDir, "provinces.js")
+);
 const { SATELLITE_PROVINCE_POSITIONS, SATELLITE_SEA_POSITIONS } = require(
   path.join(outDir, "vietnam-map-positions.js")
 );
@@ -144,6 +146,44 @@ if (existsSync(assetPath)) {
     "ảnh JPEG đúng 646×550 như màn hình khai báo",
     size != null && size.w === 646 && size.h === 550,
     size ? `thực tế ${size.w}×${size.h}` : "không đọc được SOF"
+  );
+}
+
+/* ------------- Thẻ tỉnh: ánh xạ bài học không lỗi ------------- */
+// Mô phỏng đúng logic của màn vietnam-map khi bấm ghim tỉnh: pack
+// KHÔNG có mảng units phẳng — phải flatten sections → units trước
+// khi gọi unitIndexForProvince (bản đầu đọc thẳng pack.units nên
+// bấm ghim tỉnh là trắng trang trên Preview PR #15).
+const screenSource = readFileSync(
+  path.join(root, "src", "app", "vietnam-map.tsx"),
+  "utf8"
+);
+check(
+  "màn bản đồ flatten sections → units, không đọc thẳng pack.units",
+  screenSource.includes("sections.flatMap") &&
+    !screenSource.includes("pack.units")
+);
+for (const courseId of ["en-vi", "ja-vi", "zh-vi"]) {
+  const pack = JSON.parse(
+    readFileSync(path.join(root, "src", "content", "packs", `${courseId}.json`), "utf8")
+  );
+  const units = pack.sections.flatMap((s) => s.units);
+  let withUnit = 0;
+  let titlesOk = true;
+  for (let j = 0; j < PROVINCES.length; j++) {
+    const ui = unitIndexForProvince(j, units.length);
+    if (ui != null) {
+      withUnit += 1;
+      const unit = units[ui];
+      if (!unit || typeof unit.title !== "string" || unit.title.length === 0) {
+        titlesOk = false;
+      }
+    }
+  }
+  check(
+    `${courseId}: mọi tỉnh tra được unit hợp lệ, số tỉnh có bài = số unit (${units.length})`,
+    titlesOk && withUnit === units.length,
+    `tỉnh có bài=${withUnit}`
   );
 }
 
