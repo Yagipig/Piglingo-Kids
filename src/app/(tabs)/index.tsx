@@ -345,6 +345,13 @@ export default function LearnScreen() {
                 onPress={() => router.push("/guidebook")}
               />
             </View>
+            <View style={styles.shortcutRow}>
+              <ShortcutCard
+                emoji="🗺️"
+                label="Bản đồ Việt Nam"
+                onPress={() => router.push("/vietnam-map")}
+              />
+            </View>
 
             <Text style={styles.footerNote} maxFontSizeMultiplier={1.25}>
               Muốn bắt đầu từ tầng cao hơn? Đổi cấp độ của em ở tab Hồ sơ —
